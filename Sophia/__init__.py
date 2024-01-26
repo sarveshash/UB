@@ -5,7 +5,7 @@ from pyrogram import Client
 SESSION = os.environ.get("SESSION")
 API_ID = os.environ.get("API_ID")
 API_HASH = os.environ.get("API_HASH")
-OWNER_ID = os.environ.get("OWNER_ID")
+OWNER_ID = f"{os.environ.get("OWNER_ID")}"
 print(OWNER_ID)
 HANDLER = ["~",".","!","/","$","#"]
 
