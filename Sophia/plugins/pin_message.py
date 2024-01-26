@@ -5,6 +5,6 @@ from pyrogram import filters
 import asyncio
 import os
 
-@Sophia.on_message(filters.command("pin", prefix=HANDLER) & filters.user(OWN))
+@Sophia.on_message(filters.command("pin", prefixes=HANDLER) & filters.user(OWN))
 async def pin_message(_, message):
     await message.reply("under development")
