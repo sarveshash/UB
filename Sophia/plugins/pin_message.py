@@ -13,7 +13,7 @@ async def pin_message(_, message):
             await message.edit("Dᴏɴᴇ ✅")
         except Exception as e:
             if str(e) == """Telegram says: [400 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "messages.UpdatePinnedMessage")""":
-                await message.edit("Mᴀsᴛᴇʀ, ᴡᴇ ɴᴇᴇᴅ ᴀᴅᴍɪɴ ʀɪɢʜᴛs ᴛᴏ ᴅᴏ ᴛʜɪs")
+                await message.edit("Mᴀsᴛᴇʀ, ᴡᴇ ɴᴇᴇᴅ ᴀᴅᴍɪɴ ʀɪɢʜᴛs ᴛᴏ ᴅᴏ ᴛʜɪs ❌")
                 return
             await message.edit(f"**Sᴏʀʀʏ, ᴍᴀsᴛᴇʀ sᴏᴍᴛʜɪɴɢ ᴡᴇɴᴛ ᴡʀᴏɴɢ ᴘʟᴇᴀsᴇ ᴄʜᴇᴀᴄᴋ ᴇʀʀᴏʀs 💔**\n\n`{e}`")
     else:
@@ -28,7 +28,7 @@ async def pin_message(_, message):
             await message.edit("Dᴏɴᴇ ✅")
         except Exception as e:
             if str(e) == """Telegram says: [400 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "messages.UpdatePinnedMessage")""":
-                await message.edit("Mᴀsᴛᴇʀ, ᴡᴇ ɴᴇᴇᴅ ᴀᴅᴍɪɴ ʀɪɢʜᴛs ᴛᴏ ᴅᴏ ᴛʜɪs")
+                await message.edit("Mᴀsᴛᴇʀ, ᴡᴇ ɴᴇᴇᴅ ᴀᴅᴍɪɴ ʀɪɢʜᴛs ᴛᴏ ᴅᴏ ᴛʜɪs ❌")
                 return
             await message.edit(f"**Sᴏʀʀʏ, ᴍᴀsᴛᴇʀ sᴏᴍᴛʜɪɴɢ ᴡᴇɴᴛ ᴡʀᴏɴɢ ᴘʟᴇᴀsᴇ ᴄʜᴇᴀᴄᴋ ᴇʀʀᴏʀs 💔**\n\n`{e}`")
     else:
