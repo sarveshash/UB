@@ -9,5 +9,3 @@ OWNER_ID = os.environ.get("OWNER_ID")
 HANDLER = ["~",".","!","/","$","#"]
 
 Sophia = Client(session_string=SESSION, api_id=API_ID, api_hash=API_HASH, name="Sophia")
-UB = Sophia
-system = Sophia
