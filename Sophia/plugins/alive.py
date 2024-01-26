@@ -2,6 +2,7 @@ from Sophia import HANDLER, OWNER_ID
 from Sophia.__main__ import Sophia
 from pyrogram import *
 import asyncio
+import os
 
 @Sophia.on_message(filters.command("alive", prefixes=HANDLER) & filters.user(f"{os.environ.get("OWNER_ID")}"))
 async def Sophia_Alive(_, message):
