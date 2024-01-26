@@ -19,11 +19,6 @@
       }
    ],
    "env": {
-      "OWNER_ID": {
-         "description": "UserBot's Owner ID",
-         "required": true,
-         "value": ""
-      },
       "API_ID": {
          "description": "Get API_ID from my.telegram.org, used for telethon based modules.",
          "required": true,
