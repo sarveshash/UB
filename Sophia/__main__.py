@@ -4,5 +4,3 @@ import os
 
 if __name__ == "__main__":
   Sophia.run()
-  print("◖⁠⚆⁠ᴥ⁠⚆⁠◗ i'm ded")
-  exit()
