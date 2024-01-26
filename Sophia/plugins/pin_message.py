@@ -9,7 +9,7 @@ import os
 async def pin_message(_, message):
     if message.reply_to_message:
         try:
-            await bot.pin_chat_message(message.chat.id, message.reply_to_message_id)
+            await Sophia.pin_chat_message(message.chat.id, message.reply_to_message_id)
             await message.edit("success")
         except Exception as e:
             await message.edit(f"**Sorry Master Somthing Went Wrong 💔**\n\n`{e}`")
