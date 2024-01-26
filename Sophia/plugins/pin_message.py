@@ -10,8 +10,21 @@ async def pin_message(_, message):
     if message.reply_to_message:
         try:
             await Sophia.pin_chat_message(message.chat.id, message.reply_to_message_id)
-            await message.edit("success")
+            await message.edit("Dᴏɴᴇ ✅")
         except Exception as e:
-            await message.edit(f"**Sorry Master Somthing Went Wrong 💔**\n\n`{e}`")
+            await message.edit(f"**Sᴏʀʀʏ, ᴍᴀsᴛᴇʀ sᴏᴍᴛʜɪɴɢ ᴡᴇɴᴛ ᴡʀᴏɴɢ ᴘʟᴇᴀsᴇ ᴄʜᴇᴀᴄᴋ ᴇʀʀᴏʀs 💔**\n\n`{e}`")
     else:
-        await message.edit("**Master Please reply to message for pin it 💖**")
+        await message.edit("**Mᴀsᴛᴇʀ, Pʟᴇᴀsᴇ ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴍᴇssᴀɢᴇ ғᴏʀ ᴘɪɴɴɪɴɢ ɪᴛ ❤️**")
+
+
+@Sophia.on_message(filters.command("unpin", prefixes=HANDLER) & filters.user(OWN))
+async def pin_message(_, message):
+    if message.reply_to_message:
+        try:
+            await Sophia.unpin_chat_message(message.chat.id, message.reply_to_message_id)
+            await message.edit("Dᴏɴᴇ ✅")
+        except Exception as e:
+            await message.edit(f"**Sᴏʀʀʏ, ᴍᴀsᴛᴇʀ sᴏᴍᴛʜɪɴɢ ᴡᴇɴᴛ ᴡʀᴏɴɢ ᴘʟᴇᴀsᴇ ᴄʜᴇᴀᴄᴋ ᴇʀʀᴏʀs 💔**\n\n`{e}`")
+    else:
+        await message.edit("**Mᴀsᴛᴇʀ, Pʟᴇᴀsᴇ ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴍᴇssᴀɢᴇ ғᴏʀ ᴜɴᴘɪɴɴɪɴɢ ɪᴛ ❤️**")
+        
