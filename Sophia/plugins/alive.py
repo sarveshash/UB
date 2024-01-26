@@ -11,7 +11,7 @@ from subprocess import getoutput as run
 async def Sophia_Alive(_, message):
     await message.edit("◖⁠⚆⁠ᴥ⁠⚆⁠◗ Loading...")
     await asyncio.sleep(1.2)
-    bot_inf = Sophia.get_me()
+    bot_inf = await Sophia.get_me()
     Name_of_ubot = bot_inf.first_name
     try:
         py_ver = run("python --version")
