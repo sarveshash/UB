@@ -1,4 +1,5 @@
 from Sophia import HANDLER
+from Sophia import MY_VERSION as Root_version
 from Sophia.__main__ import Sophia
 from config import OWNER_ID as OWN
 from pyrogram import filters
@@ -22,11 +23,12 @@ async def Sophia_Alive(_, message):
 ━━━━━━━━━━━━━━━━━━━
 
 ❥ **Owner**: {Name_of_ubot}
-❥ **My Version**: unknown
+❥ **My Version**: `{Root_version}`
 ❥ **Python Version**: `{py_ver}`
 ❥ **Pyrogram Version:** `{ver_pyro}`
 
 ━━━━━━━━━━━━━━━━━━━
 **Join Please @FutureCity005 & @Hyper_Speed0 ✨🥀**
 """
+    await message.delete()
     await Sophia.send_photo(message.chat.id, photo="https://telegra.ph/file/c74ff3e597f9598ca7cbb.jpg", caption=TEXT)
