@@ -2,7 +2,7 @@ import os
 import sys
 from pyrogram import Client
 
-SESSION = os.environ.get("STRING_SESSION")
+SESSION = os.environ.get("SESSION")
 API_ID = os.environ.get("API_ID")
 API_HASH = os.environ.get("API_HASH")
 OWNER_ID = os.environ.get("OWNER_ID")
