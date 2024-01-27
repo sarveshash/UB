@@ -11,9 +11,10 @@ async def ignored_private_chat(_, message):
 
     # Check if the user has been warned before
     if user_id not in warning_count:
-        warning_count[user_id] = 1
-    else:
-        warning_count[user_id] += 1
+        warning_count[user_id] = 0
+
+    # Increment the warning count
+    warning_count[user_id] += 1
 
     # Warn the user
     if warning_count[user_id] == 1:
