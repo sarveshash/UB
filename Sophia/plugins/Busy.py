@@ -5,8 +5,6 @@ from pyrogram import filters
 import asyncio
 import os
 
-is_busy = {}
-
 @Sophia.on_message(filters.command(["busy", "afk", "offline"], prefixes=HANDLER) & filters.user(OWN))
 async def set_busy(_, message):
     is_busy = True
