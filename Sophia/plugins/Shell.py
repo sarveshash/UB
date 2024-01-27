@@ -8,7 +8,10 @@ import os
 
 @Sophia.on_message(filters.command(["sh", "shell", "bash"], prefixes=HANDLER) & filters.user(OWN))
 def shell(_, message):
+    if len(message.command) < 2:
+        message.edit("Mᴀsᴛᴇʀ, Pʟᴇᴀsᴇ ᴇɴᴛᴇʀ ᴄᴏᴅᴇ ᴛᴏ ʀᴜɴ ɪᴛ. 🥀 ✨")
+        return
     code = message.text.replace(message.text.split(" ")[0], "")
     message.edit("Pʀᴏᴄᴇssɪɴɢ...")
     output = run(code)
-    message.edit(f"{output}")
+    message.edit(f"```shell\n{output}```")
