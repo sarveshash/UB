@@ -18,14 +18,15 @@ async def ignored_private_chat(_, message):
 
     # Warn the user
     if warning_count[user_id] == 1:
-        await message.reply("Sᴏʀʀʏ, ɪ ᴄᴀɴ'ᴛ ᴅᴏ Aɴʏᴛʜɪɴɢ Aғᴛᴇʀ Yᴏᴜ Sᴇɴᴛ ᴍᴇ Aɴᴏᴛʜᴇʀ Msɢ. Bᴄᴢ. ɪ ᴡɪʟʟ Bʟᴏᴄᴋ Yᴏᴜ 💯 (IT'S RULE I CAN'T BREAK IT)")
+        await message.reply("Sᴏʀʀʏ, Yᴏᴜ ᴀʀᴇ Iɢɴᴏʀᴇᴅ Bʏ ᴍʏ Lᴏᴠᴇʟʏ ❤️ Mᴀsᴛᴇʀ, Iғ Yᴏᴜ Sᴇɴᴅ Aɴʏ Mᴇssᴀɢᴇ Aɢᴀɪɴ Yᴏᴜ Wɪʟʟ Bᴇ Gᴇᴛ Bʟᴏᴄᴋᴇᴅ.")
+        await Sophia.archive_chats([message.chat.id])
     elif warning_count[user_id] == 2:
-        await message.reply("This is your second warning. If you send another message, you will be blocked.")
+        await message.reply("This is your second warning. If you send another message, you will be blocked. (IT'S RULE I CAN'T BREAK IT)")
     elif warning_count[user_id] >= 3:
         try:
-            # Archive the chat and block the user
-            await Sophia.archive_chats([message.chat.id])
+            await message.reply("I CAN DO NOTHING, JUST GO TO THE HELL BYE")
             await Sophia.block_user(user_id)
+            await Sophia.send_message(OWNER_ID, "Master, I have Been Blocked A user From Ignored User List He/She Disturbing me i do that Hehe, If You Want Unblock Him/Her, Here is Username @{message.from_user.username}")
         except Exception as e:
             print(e)
             await Sophia.send_message(OWNER_ID, f"Sorry Master, I got an error when archiving and blocking Ignored User. Check Errors Below 💔\n {e}")
