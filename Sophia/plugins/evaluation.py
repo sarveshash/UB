@@ -3,7 +3,7 @@ import sys
 import traceback
 from Sophia import HANDLER
 from Sophia.__main__ import Sophia
-from config import OWNER_ID as OWN
+from config import OWNER_ID
 from pyrogram import filters
 import asyncio
 import os
