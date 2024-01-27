@@ -3,11 +3,13 @@ from Sophia.__main__ import Sophia
 from config import OWNER_ID, IGNORED_USERS_ID
 from pyrogram import filters
 
-warning_count = {}
+
 
 @Sophia.on_message(filters.private & filters.user(IGNORED_USERS_ID))
 async def ignored_private_chat(_, message):
     user_id = message.from_user.id
+
+    warning_count = {}
 
     # Check if the user has been warned before
     if user_id not in warning_count:
