@@ -12,6 +12,6 @@ def shell(_, message):
         message.edit("Mᴀsᴛᴇʀ, Pʟᴇᴀsᴇ ᴇɴᴛᴇʀ ᴄᴏᴅᴇ ᴛᴏ ʀᴜɴ ɪᴛ. 🥀 ✨")
         return
     code = message.text.replace(message.text.split(" ")[0], "")
-    message.edit("Pʀᴏᴄᴇssɪɴɢ...")
+    message1 = message.reply_text("Pʀᴏᴄᴇssɪɴɢ...")
     output = run(code)
-    message.edit(f"```shell\n{output}```")
+    message1.edit(f"Oᴜᴛᴘᴜᴛ:\n`{output}`")
