@@ -47,15 +47,16 @@ async def eval(client, message):
     final_output += f"<code>{cmd}</code>\n\n"
     final_output += "<b>OUTPUT</b>:\n"
     final_output += f"<code>{evaluation.strip()}</code> \n"
+    output_code = f"""```python\n{evaluation.strip()}```"""
 
-    if len(final_output) > 4096:
+    if len(output_code) > 4096:
         with io.BytesIO(str.encode(final_output)) as out_file:
             out_file.name = "eval.txt"
             await reply_to_.reply_document(
                 document=out_file, caption=cmd, disable_notification=True
             )
     else:
-        await reply_to_.reply_text(final_output)
+        await reply_to_.reply_text(output_code)
     await status_message.delete()
 
 
