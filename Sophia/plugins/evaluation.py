@@ -43,7 +43,7 @@ async def eval(client, message):
     else:
         evaluation = "Success"
 
-    final_output = "<b>EVAL</b>: "
+    final_output = "<b>INPUT</b>: "
     final_output += f"<code>{cmd}</code>\n\n"
     final_output += "<b>OUTPUT</b>:\n"
     final_output += f"<code>{evaluation.strip()}</code> \n"
