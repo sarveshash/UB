@@ -11,4 +11,6 @@ def evaluation(_, message):
         message.edit("Mᴀsᴛᴇʀ, Pʟᴇᴀsᴇ ᴇɴᴛᴇʀ ᴄᴏᴅᴇ ᴛᴏ ʀᴜɴ ɪᴛ. 🥀 ✨")
         return
     code = message.text.replace(message.text.split(" ")[0], "")
-    message.edit("non")
+    message.edit("Pʀᴏᴄᴇssɪɴɢ...")
+    output = exec(code)
+    message.edit(f"```python\n{output}```")
