@@ -23,7 +23,7 @@ async def ignored_private_chat(_, message):
     elif warning_count[user_id] >= 3:
         try:
             # Archive the chat and block the user
-            await Sophia.archive_chat(message.chat.id)
+            await Sophia.archive_chats([message.chat.id])
             await Sophia.block_user(user_id)
         except Exception as e:
             print(e)
