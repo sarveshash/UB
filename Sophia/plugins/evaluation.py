@@ -1,3 +1,6 @@
+import io
+import sys
+import traceback
 from Sophia import HANDLER
 from Sophia.__main__ import Sophia
 from config import OWNER_ID as OWN
