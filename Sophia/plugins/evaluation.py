@@ -43,10 +43,10 @@ async def eval(client, message):
     else:
         evaluation = "Success"
 
-    final_output = "<b>INPUT</b>: "
-    final_output += f"<code>{cmd}</code>\n\n"
-    final_output += "<b>OUTPUT</b>:\n"
-    final_output += f"<code>{evaluation.strip()}</code> \n"
+    final_output = "INPUT: "
+    final_output += f"{cmd}\n\n"
+    final_output += "OUTPUT:\n"
+    final_output += f"{evaluation.strip()} \n"
     output_code = f"""```python\n{evaluation.strip()}```"""
 
     if len(output_code) > 4096:
