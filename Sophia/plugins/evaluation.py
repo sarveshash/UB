@@ -47,7 +47,7 @@ async def eval(client, message):
     final_output += f"<code>{cmd}</code>\n\n"
     final_output += "<b>OUTPUT</b>:\n"
     final_output += f"<code>{evaluation.strip()}</code> \n"
-    output_code = f"""```python\n{evaluation.strip()}```"""
+    output_code = f"""```python\n<code>{evaluation.strip()}</code>```"""
 
     if len(output_code) > 4096:
         with io.BytesIO(str.encode(final_output)) as out_file:
