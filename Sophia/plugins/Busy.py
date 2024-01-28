@@ -1,5 +1,6 @@
 from pyrogram import filters
 from Sophia import HANDLER
+from pyrogram.types import ChatType
 from Sophia.__main__ import Sophia
 from config import OWNER_ID as OWN
 from Restart import restart_program
