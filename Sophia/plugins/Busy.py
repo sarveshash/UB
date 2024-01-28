@@ -22,9 +22,9 @@ async def set_into_busy(_, message):
             if message.from_user.id == IGNORED_USERS_ID:
                 return
             await message.reply_text("**Sorry**, My **Master** is Currently In Offline Can you Come Later?")
-        @Sophia.on_message(filters.regex("Otazuki"), ~filters.user(OWN) & filters.group)
+        @Sophia.on_message(filters.regex("Otazuki"), filters.group)
         async def say_master_busy_in_Group(_, message):
-            if message.from_user.id == IGNORED_USERS_ID:
+            if message.from_user.id == IGNORED_USERS_ID or message.from_user.id == OWN:
                 return
             await message.reply_text("**Sorry**, My **Master** is Currently In Offline Can you Come Later?")
         @Sophia.on_message(filters.user(OWN))
