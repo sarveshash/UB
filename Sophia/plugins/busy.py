@@ -33,7 +33,7 @@ async def set_into_busy(_, message):
             if message.from_user.id == IGNORED_USERS_ID:
                 return
             if Does_Reason_Available == True:
-                await message.reply_text(f"**Sorry**, My Master is Currently Offline\n**Because**: `{Reason_Of_Busy}`")
+                await message.reply_text(f"**Sorry**, My Master is Currently Offline ❌\n**Because**: `{Reason_Of_Busy}`")
             else:
                 await message.reply_text("**Sorry**, My **Master** is Currently In Offline Can you Come Later?")
         @Sophia.on_message(filters.user(OWN))
