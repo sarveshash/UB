@@ -14,6 +14,7 @@ async def spam(_, message):
     if len(message.text.split()) <2:
           return await message.reply_text("Master, give a input to spam")
     if spam_stop == True:
+        global spam_stop
         spam_stop == False
         await message.reply_text("Use This command Once More Again")
         return
