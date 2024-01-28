@@ -13,6 +13,8 @@ async def spam(_, message):
     global is_spam_running, spam_stop
     if len(message.text.split()) <2:
           return await message.reply_text("Master, give a input to spam")
+    if spam_stop == True:
+        spam_stop == False
     text = message.text.split(None, 1)[1]
     is_spam_running = True
     await message.reply("Spam Started ⚡")
@@ -22,7 +24,7 @@ async def spam(_, message):
 @Sophia.on_message(filters.command(["stopspam", "sspam", "endspam"], prefixes=HANDLER) & filters.user(OWN))
 async def spam_stoper(_, message):
     global is_spam_running, spam_stop
-    if is_spam_running == True:
+    if is_spam_running == False:
         spam_stop = True
         is_spam_running = False
         await message.reply_text("I stopped That spam successfully ✅")
