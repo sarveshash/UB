@@ -1,4 +1,4 @@
-from Sophia import Sophia
+from Sophia import Sophia, Sophia_StartMSG
 from pyrogram import Client, filters
 import os
 import logging
