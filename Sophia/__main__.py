@@ -1,5 +1,5 @@
 from Sophia import Sophia
-from pyrogram import Client, filters, idle
+from pyrogram import Client, filters
 import os
 import logging
 
@@ -10,9 +10,9 @@ logging.basicConfig(
 )
 
 if __name__ == "__main__":
-  Sophia.start()
-  with Sophia:
-      Sophia.send_message(-1001859707851, "This Is Test Start msg of Sophia")
-  idle()
-  Sophia.stop()
+  Sophia_StartMSG.start()
+  with Sophia_StartMSG:
+      Sophia_StartMSG.send_message(-1001859707851, "This Is Test Start msg of Sophia")
+  Sophia_StartMSG.stop()
+  Sophia.run()
   
