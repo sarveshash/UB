@@ -15,11 +15,11 @@ async def spam(_, message):
           return await message.reply_text("Master, give a input to spam")
     if spam_stop == True:
         spam_stop == False
-    text = message.text.split(None, 1)[1]
-    is_spam_running = True
-    await message.reply("Spam Started ⚡")
-    while spam_stop == False:
-        await Sophia.send_message(message.chat.id, text)
+        text = message.text.split(None, 1)[1]
+        is_spam_running = True
+        await message.reply("Spam Started ⚡")
+        while spam_stop == False:
+            await Sophia.send_message(message.chat.id, text)
 
 @Sophia.on_message(filters.command(["stopspam", "sspam", "endspam"], prefixes=HANDLER) & filters.user(OWN))
 async def spam_stoper(_, message):
