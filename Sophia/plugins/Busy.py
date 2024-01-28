@@ -1,6 +1,5 @@
 from pyrogram import filters
 from Sophia import HANDLER
-from pyrogram.types import ChatType
 from Sophia.__main__ import Sophia
 from config import OWNER_ID as OWN
 from Restart import restart_program
@@ -17,7 +16,7 @@ async def set_into_busy(_, message):
 
 @Sophia.on_message(~filters.user(OWN))
 async def say_master_is_busy(_, message):
-    if message.chat.type == ChatType.PRIVATE:
+    if message.chat.type == "private":
         await message.reply_text("Sorry My Master Is Currently Busy")
 
 if Busy_stats == True:
