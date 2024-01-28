@@ -13,11 +13,6 @@ async def spam(_, message):
     global is_spam_running, spam_stop
     if len(message.text.split()) <2:
           return await message.reply_text("Master, give a input to spam")
-    if spam_stop == True:
-        global spam_stop
-        spam_stop == False
-        await message.reply_text("Use This command Once More Again")
-        return
     text = message.text.split(None, 1)[1]
     is_spam_running = True
     await message.reply("Spam Started ⚡")
@@ -32,5 +27,7 @@ async def spam_stoper(_, message):
         spam_stop = True
         is_spam_running = False
         await message.reply_text("I stopped That spam successfully ✅")
+        await asyncio.sleep(0.3)
+        spam_stop = False
     else:
         await message.reply_text('No Spam Currently Running??')
