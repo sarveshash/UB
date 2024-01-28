@@ -17,7 +17,7 @@ async def Sophia_Alive(_, message):
     Name_of_ubot2 = bot_inf.last_name
     if Name_of_ubot2 == None:
         Name_of_ubot2 = ""
-    Name_of_ubot = f"{Name_of_ubot1}{Name_of_ubot1}"
+    Name_of_ubot = f"{Name_of_ubot1}{Name_of_ubot2}"
     try:
         py_ver = run("python --version")
     except Exception as e:
