@@ -7,7 +7,7 @@ from Restart import restart_program
 import os
 import re
 
-me = Sophia.get_me()
+me = await Sophia.get_me()
 OWNER_USERNAME = me.username
 
 Busy_stats = {}
