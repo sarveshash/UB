@@ -24,4 +24,5 @@ async def set_into_busy(_, message):
             await message.reply_text("Huh, My **Master** is Currently In **Offline** Can you Come **Later?**")
         @Sophia.on_message(filters.user(OWN))
         async def remove_busy_mode(_, message):
+            await message.reply_text("**Hi Master**, Welcome Back! 🥀")
             await restart_program()
