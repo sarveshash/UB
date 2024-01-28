@@ -11,7 +11,7 @@ def shell(_, message):
     if len(message.command) < 2:
         message.edit("Mᴀsᴛᴇʀ, Pʟᴇᴀsᴇ ᴇɴᴛᴇʀ ᴄᴏᴅᴇ ᴛᴏ ʀᴜɴ ɪᴛ. 🥀 ✨")
         return
-    code = " ".join(message.command[1:])
+    code = message.text.split(None, 1)[1]
     message_text = message.reply_text("Pʀᴏᴄᴇssɪɴɢ...")
     output = run(code)
     message_text.edit(f"Oᴜᴛᴘᴜᴛ:\n`{output}`")
