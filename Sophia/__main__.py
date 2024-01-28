@@ -9,9 +9,6 @@ logging.basicConfig(
     level=logging.INFO,
 )
 
-me = Sophia.get_me()
-OWNER_USERNAME = me.username
-
 if __name__ == "__main__":
   Sophia.run()
   
