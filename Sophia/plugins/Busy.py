@@ -1,6 +1,6 @@
 from pyrogram import filters
-from Sophia import HANDLER, OWNER_USERNAME
-from Sophia.__main__ import Sophia
+from Sophia import HANDLER
+from Sophia.__main__ import Sophia, OWNER_USERNAME
 from config import OWNER_ID as OWN
 from config import IGNORED_USERS_ID
 from Restart import restart_program
