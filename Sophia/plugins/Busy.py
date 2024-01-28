@@ -22,16 +22,11 @@ async def set_into_busy(_, message):
             if message.from_user.id == IGNORED_USERS_ID:
                 return
             await message.reply_text("**Sorry**, My **Master** is Currently In Offline Can you Come Later?")
-        @Sophia.on_message(filters.regex("Otazuki"), filters.group)
-        async def say_master_busy_in_Group(_, message):
-            if message.from_user.id == IGNORED_USERS_ID or message.from_user.id == OWN:
-                return
-            await message.reply_text("**Sorry**, My **Master** is Currently In Offline Can you Come Later?")
         @Sophia.on_message(filters.user(OWN))
         async def remove_busy_mode(_, message):
             if message.text == "Sᴏʀʀʏ, Yᴏᴜ ᴀʀᴇ ɪɢɴᴏʀᴇᴅ ʙʏ ᴍʏ ʟᴏᴠᴇʟʏ ❤️ Mᴀsᴛᴇʀ, ɪғ ʏᴏᴜ sᴇɴᴅ ᴀɴʏ ᴍᴇssᴀɢᴇ ᴀɢᴀɪɴ ʏᴏᴜ ᴡɪʟʟ ʙᴇ ɢᴇᴛ Bʟᴏᴄᴋᴇᴅ." or message.text == "This is your second warning. If you send another message, you will be blocked." or message.text == "Sorry, You Have Breaked Your Limits that's why I blocked You!":
                 return
             elif message.text.startswith("Master, I have Been Blocked A user From Ignored"):
                 return
-            await message.reply_text("**Hi Master**, Welcome Back! 🥀")
+            await message.reply_text("**Hello Master**, Welcome Back! 🥀")
             await restart_program()
