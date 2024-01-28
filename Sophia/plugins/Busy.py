@@ -13,15 +13,14 @@ async def set_into_busy(_, message):
     Busy_stats = True
     await message.reply_text("Master, I set you In Busy Mode!")
 
-
-@Sophia.on_message(~filters.user(OWN))
-async def say_master_is_busy(_, message):
-    if message.chat.type == "private":
+if Busy_stats == True:
+    @Sophia.on_message(filters.private & ~filters.user(OWN))
+    async def say_master_is_busy(_, message):
         await message.reply_text("Sorry My Master Is Currently Busy")
+        return
 
 if Busy_stats == True:
     @Sophia.on_message(filters.user(OWN))
     async def remove_busy_mode(_, message):
-        global Busy_stats
         await message.reply_text("I have Removed Your Offline Mode")
         await restart_program()
