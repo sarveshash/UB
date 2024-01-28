@@ -31,7 +31,7 @@ async def set_into_busy(_, message):
         @Sophia.on_message(filters.private & ~filters.user(OWN))
         async def say_master_is_busy(_, message):
             if message.from_user.id == IGNORED_USERS_ID:
-                return
+                print(" ")
             if Does_Reason_Available == True:
                 await message.reply_text(f"**Sorry**, My Master is Currently Offline ❌\n**Because**: `{Reason_Of_Busy}`")
             else:
@@ -39,8 +39,9 @@ async def set_into_busy(_, message):
         @Sophia.on_message(filters.user(OWN))
         async def remove_busy_mode(_, message):
             if message.text == "Sᴏʀʀʏ, Yᴏᴜ ᴀʀᴇ ɪɢɴᴏʀᴇᴅ ʙʏ ᴍʏ ʟᴏᴠᴇʟʏ ❤️ Mᴀsᴛᴇʀ, ɪғ ʏᴏᴜ sᴇɴᴅ ᴀɴʏ ᴍᴇssᴀɢᴇ ᴀɢᴀɪɴ ʏᴏᴜ ᴡɪʟʟ ʙᴇ ɢᴇᴛ Bʟᴏᴄᴋᴇᴅ." or message.text == "This is your second warning. If you send another message, you will be blocked." or message.text == "Sorry, You Have Breaked Your Limits that's why I blocked You!":
-                return
+                print(" ")
             elif message.text.startswith("Master, I have Been Blocked A user From Ignored"):
-                return
-            await message.reply_text("**Hello Master**, Welcome Back! 🥀")
-            await restart_program()
+                print(" ")
+            else:
+                await message.reply_text("**Hello Master**, Welcome Back! 🥀")
+                await restart_program()
