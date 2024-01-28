@@ -27,7 +27,7 @@ async def set_into_busy(_, message):
             OWNUSR_ASLINK = f"https://t.me/{OWNER_USERNAME}"
             OWNUSR_ASSHLINK = f"t.me/{OWNER_USERNAME}"
             OWNUSR_ASNRML = f"@{OWNER_USERNAME}"
-            @Sophia.on_message([OWNUSR_ASLINK, OWNUSR_ASSHLINK, OWNUSR_ASNRML, OWNER_USERNAME] & ~filters.user(OWN) & filters.group)
+            @Sophia.on_message(filters.regex([OWNUSR_ASLINK, OWNUSR_ASSHLINK, OWNUSR_ASNRML, OWNER_USERNAME]) & ~filters.user(OWN) & filters.group)
             async def Group_say_master_offline(_, message):
                 if message.from_user.id == IGNORED_USERS_ID:
                     return
