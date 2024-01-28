@@ -13,13 +13,12 @@ async def set_into_busy(_, message):
     Busy_stats = True
     await message.reply_text("Master, I set you In Busy Mode!")
 
-@Sophia.on_message(~filters.user(OWN))
-async def say_master_is_busy(_, message):
-    global Busy_stats
-    if Busy_stats == True:
+if Busy_stats == True:
+    @Sophia.on_message(~filters.user(OWN))
+    async def say_master_is_busy(_, message):
         if message.chat.type == ChatType.SUPERGROUP:
             print('ntg')
-        else:
+        elif message.chat.type == ChatType.PRIVATE:
             await message.reply_text("Sorry My Master Is Currently Busy")
 
 @Sophia.on_message(filters.user(OWN))
