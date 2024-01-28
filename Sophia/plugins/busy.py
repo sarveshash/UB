@@ -26,7 +26,7 @@ async def set_into_busy(_, message):
     if Does_Reason_Available == False:
         await message.reply_text("**Master**, I Set You In Offline Mode I will Reply to everyone who wants to talk you, bye 👋")
     else:
-        await message.reply_text(f"UwU, Master! I set you In offline mode successfully ✅\n**Reason:** `{Reason_Of_Busy}`")
+        await message.reply_text(f"**UwU**, I Have set you In offline mode successfully ✅\n**Reason:** `{Reason_Of_Busy}`")
     if Busy_stats == True:
         @Sophia.on_message(filters.private & ~filters.user(OWN))
         async def say_master_is_busy(_, message):
