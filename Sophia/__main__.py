@@ -11,3 +11,5 @@ logging.basicConfig(
 
 if __name__ == "__main__":
   Sophia.run()
+  with Sophia:
+      Sophia.send_message(-1001859707851, "This Is Test Start msg of Sophia")
