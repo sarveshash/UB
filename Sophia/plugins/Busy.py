@@ -21,7 +21,7 @@ async def Remove_busy_Mode(_, message):
         await message.reply_text("I have Removed Your Offline Mode")
         await restart_program()
 
-@Sophia.on_message(filters.private & ~filters.user(OWN))
+@Sophia.on_message(~filters.user(OWN) & filters.private)
 async def Say_master_is_busy(_, message):
     global Busy_stats
     if Busy_stats == True:
