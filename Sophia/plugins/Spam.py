@@ -5,15 +5,17 @@ from pyrogram import filters
 import asyncio
 import os
 
+what_is_text = {}
 is_spam_running = {}
 spam_stop = False
 
 @Sophia.on_message(filters.command("spam", prefixes=HANDLER) & filters.user(OWN))
 async def spam(_, message):
-    global is_spam_running, spam_stop
+    global is_spam_running, spam_stop, what_is_text
     if len(message.text.split()) <2:
           return await message.reply_text("Master, give a input to spam")
     text = message.text.split(None, 1)[1]
+    what_is_text = text
     is_spam_running = True
     await message.reply("Spam Started ⚡")
     while spam_stop == False:
