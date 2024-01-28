@@ -23,15 +23,19 @@ async def set_into_busy(_, message):
         Busy_stats = True
         Does_Reason_Available = True
         Reason_Of_Busy = " ".join(message.command[1:])
-    await message.reply_text("💖 **Master**, I Set You In Offline Mode I will Reply to everyone who wants to talk you, bye 👋")
+    if Does_Reason_Available == False:
+        await message.reply_text("💖 **Master**, I Set You In Offline Mode I will Reply to everyone who wants to talk you, bye 👋")
+    else:
+        await message.reply_text(f"UwU, Master! I set you In Offline mode successfully\nReason Of Offline: {Reason_Of_Busy}")
     if Busy_stats == True:
         @Sophia.on_message(filters.private & ~filters.user(OWN))
         async def say_master_is_busy(_, message):
             if message.from_user.id == IGNORED_USERS_ID:
                 return
             if Does_Reason_Available == True:
-                await message.reply_text(f"**Sorry**, My Master is Currently Offline Because: `{Reason_Of_Busy}`")
-            await message.reply_text("**Sorry**, My **Master** is Currently In Offline Can you Come Later?")
+                await message.reply_text(f"**Sorry**, My Master is Currently Offline Because: \n`{Reason_Of_Busy}`")
+            else:
+                await message.reply_text("**Sorry**, My **Master** is Currently In Offline Can you Come Later?")
         @Sophia.on_message(filters.user(OWN))
         async def remove_busy_mode(_, message):
             if message.text == "Sᴏʀʀʏ, Yᴏᴜ ᴀʀᴇ ɪɢɴᴏʀᴇᴅ ʙʏ ᴍʏ ʟᴏᴠᴇʟʏ ❤️ Mᴀsᴛᴇʀ, ɪғ ʏᴏᴜ sᴇɴᴅ ᴀɴʏ ᴍᴇssᴀɢᴇ ᴀɢᴀɪɴ ʏᴏᴜ ᴡɪʟʟ ʙᴇ ɢᴇᴛ Bʟᴏᴄᴋᴇᴅ." or message.text == "This is your second warning. If you send another message, you will be blocked." or message.text == "Sorry, You Have Breaked Your Limits that's why I blocked You!":
