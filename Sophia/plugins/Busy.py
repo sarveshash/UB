@@ -1,7 +1,8 @@
 from Sophia import HANDLER
 from Sophia.__main__ import Sophia
 from config import OWNER_ID as OWN
-from pyrogram import filters, ChatType
+from pyrogram import filters
+from pyrogram.types import ChatType
 import asyncio
 from Restart import restart_program
 import os
