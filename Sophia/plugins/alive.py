@@ -8,10 +8,10 @@ import asyncio
 import os
 from subprocess import getoutput as run
 
-@Sophia.on_message(filters.command(["alive", "start"], prefixes=HANDLER) & filters.user(OWN))
+@Sophia.on_message(filters.command("alive", prefixes=HANDLER) & filters.user(OWN))
 async def Sophia_Alive(_, message):
     await message.edit("`◖⁠⚆⁠ᴥ⁠⚆⁠◗ Loading...`")
-    await asyncio.sleep(1.2)
+    await asyncio.sleep(0.8)
     bot_inf = await Sophia.get_me()
     Name_of_ubot1 = bot_inf.first_name
     Name_of_ubot2 = bot_inf.last_name
