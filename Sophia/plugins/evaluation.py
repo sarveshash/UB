@@ -11,7 +11,7 @@ import os
 @Sophia.on_message(filters.user(OWNER_ID) & filters.command(["eval", "e", "python"], prefixes=HANDLER))
 async def eval(client, message):
     status_message = await message.reply_text("Pʀᴏᴄᴇssɪɴɢ...")
-    cmd = message.text.split(" ", maxsplit=1)[1]
+    cmd = " ".join(message.command[1:])
 
     reply_to_ = message
     if message.reply_to_message:
