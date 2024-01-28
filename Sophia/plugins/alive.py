@@ -8,12 +8,16 @@ import asyncio
 import os
 from subprocess import getoutput as run
 
-@Sophia.on_message(filters.command("alive", prefixes=HANDLER) & filters.user(OWN))
+@Sophia.on_message(filters.command(["alive", "start"], prefixes=HANDLER) & filters.user(OWN))
 async def Sophia_Alive(_, message):
-    await message.edit("◖⁠⚆⁠ᴥ⁠⚆⁠◗ Loading...")
+    await message.edit("`◖⁠⚆⁠ᴥ⁠⚆⁠◗ Loading...`")
     await asyncio.sleep(1.2)
     bot_inf = await Sophia.get_me()
-    Name_of_ubot = bot_inf.first_name
+    Name_of_ubot1 = bot_inf.first_name
+    Name_of_ubot2 = bot_inf.last_name
+    if Name_of_ubot2 == None:
+        Name_of_ubot2 = ""
+    Name_of_ubot = f"{Name_of_ubot1}{Name_of_ubot1}"
     try:
         py_ver = run("python --version")
     except Exception as e:
