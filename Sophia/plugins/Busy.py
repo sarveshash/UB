@@ -21,7 +21,7 @@ async def set_into_busy(_, message):
         async def say_master_is_busy(_, message):
             if message.from_user.id == IGNORED_USERS_ID:
                 return
-            await message.reply_text("**Sorry**, My **Master** is Currently In **Offline** Can you Come **Later?**")
+            await message.reply_text("**Sorry**, My **Master** is Currently In Offline Can you Come Later?")
         @Sophia.on_message(filters.user(OWN))
         async def remove_busy_mode(_, message):
             await message.reply_text("**Hi Master**, Welcome Back! 🥀")
