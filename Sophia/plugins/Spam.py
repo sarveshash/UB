@@ -24,7 +24,7 @@ async def spam(_, message):
 @Sophia.on_message(filters.command(["stopspam", "sspam", "endspam"], prefixes=HANDLER) & filters.user(OWN))
 async def spam_stoper(_, message):
     global is_spam_running, spam_stop
-    if is_spam_running == False:
+    if is_spam_running == True:
         spam_stop = True
         is_spam_running = False
         await message.reply_text("I stopped That spam successfully ✅")
