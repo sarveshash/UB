@@ -1,6 +1,6 @@
 from pyrogram import filters
 from config import OWNER_ID
-from Sophia HANDLER
+from Sophia import HANDLER
 from Sophia.__main__ import Sophia
 
 
