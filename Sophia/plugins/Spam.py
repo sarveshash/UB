@@ -4,6 +4,7 @@ from config import OWNER_ID as OWN
 from pyrogram import filters
 import asyncio
 import os
+from Restart import restart_program as spam_killer
 
 what_is_text = {}
 is_spam_running = {}
@@ -37,3 +38,9 @@ async def spam_stoper(_, message):
         await message.reply_text("I stopped That spam successfully ✅")
     else:
         await message.reply_text('No Spam Currently Running??')
+    @Sophia.on_message(filters.command(["fsspam", "killspam"], prefixes=HANDLER) & filters.user(OWN))
+    async def Kill_The_Spam(_, message):
+        await message.reply_text("Really Still Spam not stoped?, Ok let me stop it")
+        await asyncio.sleep(0.7)
+        await message.reply_test("**Warning ⚠️**: Its Restart All UserBot Process")
+        await spam_killer()
