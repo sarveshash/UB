@@ -1,6 +1,7 @@
 from Sophia import HANDLER
 from Sophia.__main__ import Sophia
 from config import OWNER_ID as OWN
+from config import Do_you_need_warnings
 from pyrogram import filters
 import asyncio
 import os
@@ -42,5 +43,7 @@ async def spam_stoper(_, message):
     async def Kill_The_Spam(_, message):
         await message.reply_text("Really Still Spam not stoped?, Ok let me stop it")
         await asyncio.sleep(0.7)
-        await message.reply_text("**Warning ⚠️**: Its Restart All UserBot Process")
-        await spam_killer()
+        if Do_you_need_warnings == True:
+            await message.reply_text("**Warning ⚠️**: Its Restart All UserBot Process")
+        else:
+            await spam_killer()
