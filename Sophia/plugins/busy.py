@@ -60,5 +60,5 @@ async def set_into_busy(_, message):
             elif message.text.startswith("Master, I have Been Blocked A user From Ignored"):
                 print(" ")
             else:
-                await message.reply_text("**Hello**, Master Welcome Back! 🥀\n\n **I missed you for:** `{formatted_elapsed_time}`🥺")
+                await message.reply_text(f"**Hello**, Master Welcome Back! 🥀\n I missed you for: `{formatted_elapsed_time}`🥺")
                 await restart_program()
