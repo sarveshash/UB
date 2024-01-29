@@ -35,7 +35,7 @@ async def unbanall(_, message):
             await message.reply("Found Banned Members: {}\nUnbanned Successfully: {}".format(len(BANNED), unban))
         except Exception as e:
             if str(e) == """Telegram says: [400 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "channels.GetParticipants")""":
-                await message.reply_text("**Sorry**, `I don't have Admin rights to do this`")
+                await message.reply_text("**Sorry**, `I don't have Admin rights to do this!. ❌`")
                 return
             await message.reply_text(f"**Sorry**, I got a error: `{e}`")
             print(e)
@@ -66,7 +66,7 @@ async def banall(_, message):
             await message.reply_text("Successfully Banned: {}\nRemaining Admins: {}".format(len(Members), len(Admins)))
         except Exception as e:
             if str(e) == """Telegram says: [400 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "channels.EditBanned")""":
-                await message.reply_text("**Sorry**, `I don't have Admin rights to do this`")
+                await message.reply_text("**Sorry**, `I don't have Admin rights to do this!. ❌`")
                 return
             await message.reply_text(f"**Sorry**, I got a error: `{e}`")
             print(e)
@@ -99,7 +99,7 @@ async def kickall(_, message):
             await message.reply_text("Successfully Kicked: {}\nRemaining Admins: {}".format(len(Members), len(Admins)))
         except Exception as e:
             if str(e) == """Telegram says: [400 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "channels.EditBanned")""":
-                await message.reply_text("**Sorry**, `I don't have Admin rights to do this`")
+                await message.reply_text("**Sorry**, `I don't have Admin rights to do this!. ❌`")
                 return
             await message.reply_text(f"**Sorry**, I got a error: {e}")
             print(e)
