@@ -43,9 +43,9 @@ async def set_into_busy(_, message):
             if message.from_user.id == IGNORED_USERS_ID:
                 print(" ")
             if Does_Reason_Available == True:
-                await message.reply_text(f"**Sorry**, My Master is Currently Offline ❌\n**Because**: `{Reason_Of_Busy}`\n**Offline Till** {formatted_elapsed_time}")
+                await message.reply_text(f"**Sorry**, My Master is Currently Offline ❌\n**Because**: `{Reason_Of_Busy}`\n\n**I haven't seen my Master since:** `{formatted_elapsed_time}`")
             else:
-                await message.reply_text(f"**Sorry**, My **Master** is Currently In Offline Can you Come Later?\n**Offline Till** {formatted_elapsed_time}")
+                await message.reply_text(f"**Sorry**, My **Master** is Currently In Offline Can you Come Later?\n\n**I haven't seen my Master since:** `{formatted_elapsed_time}`")
         @Sophia.on_message(filters.user(OWN))
         async def remove_busy_mode(_, message):
             from Sophia.plugins.Spam import what_is_text as TXT_FROM_SPAM
@@ -54,5 +54,5 @@ async def set_into_busy(_, message):
             elif message.text.startswith("Master, I have Been Blocked A user From Ignored"):
                 print(" ")
             else:
-                await message.reply_text("**Hello Master**, Welcome Back! 🥀")
+                await message.reply_text("**Hello**, Master Welcome Back! 🥀")
                 await restart_program()
