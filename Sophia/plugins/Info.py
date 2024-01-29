@@ -80,14 +80,14 @@ async def info(_, m):
         )
     elif not info.photo:
         user_id = info.id
-        first_name = f"{info.first_name}{info.last_name}"
+        full_name = f"{info.first_name}{info.last_name}"
         username = info.username
         user_bio = info.bio
         dc_id = info.dc_id
         user_link = f"[Link](tg://user?id={user_id})"
         await m.reply_text(
             text=no_reply_user.format(
-                user_id, dc_id, first_name, username, user_link, user_bio
+                user_id, dc_id, full_name, username, user_link, user_bio
             )
         )
     await msg.delete()
