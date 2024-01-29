@@ -1,4 +1,6 @@
 OWNER_ID = 5965055071 # Replace This To your Owner id
-#Sophia will make Them in archive and Sophia will Reply To Them. and block them
+# You will Get some Warning messages Using by some Commands if You don't Need Warning message Changed "False" And If you Need Change It "True" Don't add this → ""
+Do_you_need_warnings = True
+# Sophia will make Them in archive and Sophia will Reply To Them. and block them
 IGNORED_USERS_ID = [5215360022]
 
