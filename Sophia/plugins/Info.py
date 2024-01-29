@@ -67,11 +67,11 @@ async def info(_, m):
         file_id = info.photo.big_file_id
         photo = await Sophia.download_media(file_id)
         user_id = info.id
-        first_name = info.first_name
+        first_name = f"{info.first_name}{info.last_name}"
         username = info.username
         user_bio = info.bio
         dc_id = info.dc_id
-        user_link = f"[link](tg://user?id={user_id})"
+        user_link = f"[Link](tg://user?id={user_id})"
         await m.reply_photo(
             photo=photo,
             caption=no_reply_user.format(
