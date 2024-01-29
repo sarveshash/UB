@@ -1,6 +1,7 @@
 # Special Thanks to KoraXD for Giving This Code Follow Him Using this link Github.com/KoraXD
 # We Just Removed or Replaced or some i created, Some codes We not own this Codes This Codes Real Owner Is github.com/KoraXD
 # Thanks To KoraXD
+
 from Sophia import Sophia as bot
 from Sophia import HANDLER
 from config import OWNER_ID as OWN
@@ -15,7 +16,7 @@ async def is_admin(chat_id: int, user_id: int):
             return member.status in [enums.ChatMemberStatus.ADMINISTRATOR, enums.ChatMemberStatus.CREATOR]
     return False
 
-@bot.on_message(filters.command(["unbanall", "massunban"], prefixes=HANDLER) & filters.user(OWN))
+@bot.on_message(filters.command("unbanall", prefixes=HANDLER) & filters.user(OWN))
 async def unbanall(_, message):
     user_id = message.from_user.id
     chat_id = message.chat.id
@@ -33,10 +34,13 @@ async def unbanall(_, message):
                 unban += 1
             await message.reply("Found Banned Members: {}\nUnbanned Successfully: {}".format(len(BANNED), unban))
         except Exception as e:
-            await message.reply_text(f"**Sorry**, I got a error: {e}")
+            if str(e) == """Telegram says: [400 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "channels.GetParticipants")""":
+                await message.reply_text("**Sorry**, `I don't have Admin rights to do this`")
+                return
+            await message.reply_text(f"**Sorry**, I got a error: `{e}`")
             print(e)
 
-@bot.on_message(filters.command(["sbanall", "banall", "massban"], prefixes=HANDLER) & filters.user(OWN))
+@bot.on_message(filters.command("banall", prefixes=HANDLER) & filters.user(OWN))
 async def banall(_, message):
     chat_id = message.chat.id
     user_id = message.from_user.id
@@ -61,10 +65,13 @@ async def banall(_, message):
                     await bot.ban_chat_member(chat_id, user_id)
             await message.reply_text("Successfully Banned: {}\nRemaining Admins: {}".format(len(Members), len(Admins)))
         except Exception as e:
-            await message.reply_text(f"**Sorry**, I got a error: {e}")
+            if str(e) == """Telegram says: [400 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "channels.EditBanned")""":
+                await message.reply_text("**Sorry**, `I don't have Admin rights to do this`")
+                return
+            await message.reply_text(f"**Sorry**, I got a error: `{e}`")
             print(e)
 
-@bot.on_message(filters.command(["skickall", "kickall", "masskick"], prefixes=HANDLER) & filters.user(OWN))
+@bot.on_message(filters.command("kickall", prefixes=HANDLER) & filters.user(OWN))
 async def kickall(_, message):
     chat_id = message.chat.id
     user_id = message.from_user.id
@@ -91,5 +98,8 @@ async def kickall(_, message):
                     await bot.unban_chat_member(chat_id, user_id)
             await message.reply_text("Successfully Kicked: {}\nRemaining Admins: {}".format(len(Members), len(Admins)))
         except Exception as e:
+            if str(e) == """Telegram says: [400 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "channels.EditBanned")""":
+                await message.reply_text("**Sorry**, `I don't have Admin rights to do this`")
+                return
             await message.reply_text(f"**Sorry**, I got a error: {e}")
             print(e)
