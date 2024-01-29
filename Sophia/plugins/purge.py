@@ -10,10 +10,6 @@ from Sophia import HANDLER
 
 @bot.on_message(filters.command("purge", prefixes=HANDLER) & filters.user(OWNER_ID))
 async def purge(_, m):
-    if m.chat.type != ChatType.SUPERGROUP:
-        await m.reply_text("**Sorry**, I Cannot Purge Messages Here, Upgrade Your Group Into Supergroup!")
-        return
-
     if m.reply_to_message:
         message_ids = list(range(m.reply_to_message.id, m.id))
 
@@ -32,7 +28,7 @@ async def purge(_, m):
                 )
             await m.delete()
         except MessageDeleteForbidden:
-            await m.reply_text("**Sorry**, I Cannot delete all messages. The messages may be too old, I might not have delete rights, or this might not be a supergroup!.")
+            await m.reply_text("**Sorry**, I Cannot delete all messages. The messages may be too old, I might not have delete rights!.")
             return
         except RPCError as ef:
             await m.reply_text(f"""Some error occured, Error: {ef}""")
