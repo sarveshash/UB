@@ -45,12 +45,12 @@ no_reply_user = """ ╒═══「 Appraisal results:」
 
 **ɪᴅ**: `{}`
 **ᴅᴄ**: `{}`
-**ғɪʀsᴛ ɴᴀᴍᴇ**: {}
+**ғᴜʟʟ ɴᴀᴍᴇ**: {}
 **ᴜsᴇʀɴᴀᴍᴇ**: @{}
 **ᴘᴇʀᴍᴀʟɪɴᴋ**: {}
-**ᴜsᴇʀʙɪᴏ**: {}
+**ᴜsᴇʀʙɪᴏ**: `{}`
 
-**Powered by: @Hyper_Speed0 & @FutureCity005✨🥀**
+**Powered by: @Hyper_Speed0 & @FutureCity005 🥀**
 """
 
 
@@ -80,11 +80,11 @@ async def info(_, m):
         )
     elif not info.photo:
         user_id = info.id
-        first_name = info.first_name
+        first_name = f"{info.first_name}{info.last_name}"
         username = info.username
         user_bio = info.bio
         dc_id = info.dc_id
-        user_link = f"[link](tg://user?id={user_id})"
+        user_link = f"[Link](tg://user?id={user_id})"
         await m.reply_text(
             text=no_reply_user.format(
                 user_id, dc_id, first_name, username, user_link, user_bio
