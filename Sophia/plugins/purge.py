@@ -30,7 +30,7 @@ async def purge(_, m):
         except MessageDeleteForbidden:
             await m.reply_text("**Sorry**, I Cannot delete all messages. The messages may be too old, I might not have delete rights!.")
             return
-        except RPCError as ef:
+        except Exception as ef:
             await m.reply_text(f"""Some error occured, Error: {ef}""")
 
         count_del_msg = len(message_ids)
