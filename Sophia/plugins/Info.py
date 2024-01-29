@@ -67,7 +67,11 @@ async def info(_, m):
         file_id = info.photo.big_file_id
         photo = await Sophia.download_media(file_id)
         user_id = info.id
-        first_name = f"{info.first_name} {info.last_name}"
+        if info.last_name == None:
+            User_Name = info.first_name
+        else:
+            User_Name = f"{info.first_name} {info.last_name}"
+        first_name = User_Name
         username = info.username
         user_bio = info.bio
         dc_id = info.dc_id
@@ -80,7 +84,11 @@ async def info(_, m):
         )
     elif not info.photo:
         user_id = info.id
-        full_name = f"{info.first_name} {info.last_name}"
+        if info.last_name == None:
+            User_Name = info.first_name
+        else:
+            User_Name = f"{info.first_name} {info.last_name}"
+        full_name = User_Name
         username = info.username
         user_bio = info.bio
         dc_id = info.dc_id
