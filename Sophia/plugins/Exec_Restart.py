@@ -11,6 +11,7 @@ import os
 async def Call_Restart_Func(_, message):
     Restart_Msg = await message.edit("`Restarting Sophia....`")
     if Do_you_need_warnings == True:
+        await asyncio.sleep(0.4)
         await Restart_Msg.edit("**⚠️ Warning ⚠️** `This Will Restart All UserBot Process And You cannot cancel it now ❌`")
     else:
         await restart_program()
