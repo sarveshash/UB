@@ -36,4 +36,5 @@ async def purge(_, m):
         count_del_msg = len(message_ids)
 
         z = await m.reply_text(text=f"Successfully Deleted **{count_del_msg}** Messages...")
+        return
     await m.reply_text("Master, Please Reply to a message to start purge!")
