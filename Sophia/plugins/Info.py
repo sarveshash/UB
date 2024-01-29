@@ -57,8 +57,8 @@ no_reply_user = """ ╒═══「 Appraisal results:」
 @Sophia.on_message(filters.command("info", prefixes=HANDLER) & filters.user(OWNER_ID))
 async def info(_, m):
     m.reply_to_message
-    if len(m.command) < 2:
-        await m.reply_text("Reply to a User!")
+    if not message.reply_to_message:
+        await m.reply_text("Master, Please Reply to a User!")
         return
     id_user = m.reply_to_message.from_user.id
     msg = await m.reply_text("`Processing...`")
