@@ -9,8 +9,8 @@ async def id(_, m):
     reply = m.reply_to_message
     _reply = ""
     if not reply:
-        no_reply = f"**Your ID**: `{m.from_user.id}`\n\n"
-        no_reply += f"**Chat ID**: `{m.chat.id}`\n\n"
+        no_reply = f"**Your ID**: `{m.from_user.id}`\n"
+        no_reply += f"**Chat ID**: `{m.chat.id}`\n"
         no_reply += f"**Message ID**: `{m.id}`"
         await m.reply_text(text=(no_reply))
     if reply.from_user:
