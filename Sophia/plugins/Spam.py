@@ -33,7 +33,7 @@ async def spam_stoper(_, message):
         spam_stop = True
         is_spam_running = False
         await message.reply_text("I stopped That spam successfully ✅")
-        await asyncio.sleep(0.3)
+        await asyncio.sleep(1)
         spam_stop = False
     else:
         await message.reply_text('No Spam Currently Running??')
