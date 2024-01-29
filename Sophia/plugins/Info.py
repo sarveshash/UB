@@ -50,7 +50,7 @@ no_reply_user = """ ╒═══「 Appraisal results:」
 **ᴘᴇʀᴍᴀʟɪɴᴋ**: {}
 **ᴜsᴇʀʙɪᴏ**: {}
 
-**Powered by: @Hyper_Speed0 & @FutureCity005 ✨🥀**
+**Powered by: @Hyper_Speed0 & @FutureCity005✨🥀**
 """
 
 
