@@ -42,5 +42,5 @@ async def spam_stoper(_, message):
     async def Kill_The_Spam(_, message):
         await message.reply_text("Really Still Spam not stoped?, Ok let me stop it")
         await asyncio.sleep(0.7)
-        await message.reply_test("**Warning ⚠️**: Its Restart All UserBot Process")
+        await message.reply_text("**Warning ⚠️**: Its Restart All UserBot Process")
         await spam_killer()
