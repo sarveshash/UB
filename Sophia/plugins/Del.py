@@ -5,7 +5,7 @@ from pyrogram import filters
 import asyncio
 import os
 
-Number = ["1","2","3","4","5","6","7","8","9","0"]
+Number = ["1","2","3","4","5","6","7","8","9"]
 @Sophia.on_message(filters.command(['del', 'delete'], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def message_del(_, message):
     if message.reply_to_message:
@@ -16,7 +16,7 @@ async def message_del(_, message):
             await message.reply_text(f"Somthing went wrong please check errors:\n\n`{e}`")
     else:
         message_id = " ".join(message.command[1:])
-        if message_id.startswith(Number):
+        if message_id.startswith(["0", Number]):
             try:
                 await Sophia.delete_messages(message.chat.id, message_id)
                 await Sophia.delete_messages(message.chat.id, message.id)
