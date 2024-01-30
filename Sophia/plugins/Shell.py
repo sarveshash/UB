@@ -1,7 +1,7 @@
 from Sophia import HANDLER
 from Sophia.__main__ import Sophia
 from config import OWNER_ID as OWN
-from config import VIP_USERS_ID as loyal
+from config import SUDO_USERS_ID as loyal
 from pyrogram import filters
 from subprocess import getoutput as run
 import asyncio
