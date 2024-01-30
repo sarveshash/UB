@@ -4,6 +4,7 @@
 from Sophia import HANDLER
 from Sophia.__main__ import Sophia as bot
 from config import OWNER_ID
+from config import SUDO_USERS_ID
 from pyrogram import filters
 from pyrogram import *
 import asyncio
@@ -32,8 +33,12 @@ telegram_url = "https://google.com"
 
 bot_start_time = datetime.now()
 
-@bot.on_message(filters.command("ping", prefixes=HANDLER) & filters.user(OWNER_ID))
+@bot.on_message(filters.command("ping", prefixes=HANDLER))
 def ping_pong(client, message):
+    if message.from_user.id == OWNER_ID or message.from_user.id in SUDO_USERS_ID:
+        print("")
+    else:
+        return
     # Calculate the bot's response time
     start_time = bot_start_time
     end_time = datetime.now()
