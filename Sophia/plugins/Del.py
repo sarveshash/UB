@@ -16,7 +16,7 @@ async def message_del(_, message):
             await message.reply_text(f"Somthing went wrong please check errors:\n\n`{e}`")
     else:
         message_id = " ".join(message.command[1:])
-        if message_id.startswith(["0", Number]):
+        if message_id.startswith("0") or message_id.startswith("1") or message_id.startswith("2") or message_id.startswith("3") or message_id.startswith("4") or message_id.startswith("5") or message_id.startswith("6") or message_id.startswith("7") or message_id.startswith("8") or message_id.startswith("9"):
             try:
                 await Sophia.delete_messages(message.chat.id, message_id)
                 await Sophia.delete_messages(message.chat.id, message.id)
