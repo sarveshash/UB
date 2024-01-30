@@ -40,8 +40,8 @@ async def set_into_busy(_, message):
             minutes, seconds = divmod(remainder, 60)
             # Format the result
             formatted_elapsed_time = f"{hours}h {minutes}m {seconds}s"
-            if message.from_user.id == IGNORED_USERS_ID:
-                print(" ")
+            if message.from_user.id in IGNORED_USERS_ID:
+                return
             if Does_Reason_Available == True:
                 await message.reply_text(f"**Sorry**, `My Master is Currently Offline ❌`\n\n**Reason**: `{Reason_Of_Busy}`\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
             else:
