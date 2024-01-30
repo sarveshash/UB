@@ -22,6 +22,9 @@ def leave_chat(_, m):
         m.reply_text("Master, Give Group username or id to leave it.")
         return
     link = m.text.split(" ")[1]
+    if link.startswith("Here") or link.startswith("here"):
+        Sophia.leave_chat(message.chat.id)
+        return
     Sophia.leave_chat(link)
     chat = Sophia.get_chat(link)
     name = chat.title
