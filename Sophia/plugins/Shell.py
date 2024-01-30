@@ -9,7 +9,7 @@ import os
 
 @Sophia.on_message(filters.command(["sh", "shell", "bash"], prefixes=HANDLER))
 def shell(_, message):
-    if message.from_user.id == OWN or message.from_user.id == loyal:
+    if message.from_user.id == OWN or message.from_user.id in loyal:
         print("")
     else:
         return
