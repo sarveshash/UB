@@ -10,6 +10,8 @@ import os
 
 @Sophia.on_message(filters.user(OWNER_ID) & filters.command(["eval", "e", "python"], prefixes=HANDLER))
 async def eval(client, message):
+    if len(message.command) < 2:
+        return await message.reply_text("Master, Please Enter code to run it!. ✨ 🥀")
     status_message = await message.reply_text("`Processing...`")
     cmd = message.text.split(None, 1)[1]
 
