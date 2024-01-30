@@ -1,5 +1,5 @@
 from pyrogram import filters
-from config import OWNER_ID
+from config import OWNER_ID, SUDO_USERS_ID
 from Sophia import HANDLER
 from Sophia.__main__ import Sophia
 
@@ -49,6 +49,7 @@ no_reply_user = """ ╒═══「 Appraisal results:」
 **ᴜsᴇʀɴᴀᴍᴇ**: @{}
 **ᴘᴇʀᴍᴀʟɪɴᴋ**: {}
 **ᴜsᴇʀʙɪᴏ**: `{}`
+**sᴜᴅᴏ ᴜsᴇʀ**: `{}`
 
 **Powered by: @Hyper_Speed0 & @FutureCity005 🥀**
 """
@@ -71,15 +72,20 @@ async def info(_, m):
             User_Name = info.first_name
         else:
             User_Name = f"{info.first_name} {info.last_name}"
+        if m.reply_to_message.from_user.id in SUDO_USERS_ID:
+            sudo_stats = True
+        else:
+            sudo_stats = False
         first_name = User_Name
         username = info.username
         user_bio = info.bio
         dc_id = info.dc_id
         user_link = f"[Link](tg://user?id={user_id})"
+        is_sudo = sudo_stats
         await m.reply_photo(
             photo=photo,
             caption=no_reply_user.format(
-                user_id, dc_id, first_name, username, user_link, user_bio
+                user_id, dc_id, first_name, username, user_link, user_bio, is_sudo
             ),
         )
     elif not info.photo:
@@ -88,14 +94,19 @@ async def info(_, m):
             User_Name = info.first_name
         else:
             User_Name = f"{info.first_name} {info.last_name}"
+        if m.reply_to_message.from_user.id in SUDO_USERS_ID:
+            sudo_stats = True
+        else:
+            sudo_stats = False
         full_name = User_Name
         username = info.username
         user_bio = info.bio
         dc_id = info.dc_id
         user_link = f"[Link](tg://user?id={user_id})"
+        is_sudo = sudo_stats
         await m.reply_text(
             text=no_reply_user.format(
-                user_id, dc_id, full_name, username, user_link, user_bio
+                user_id, dc_id, full_name, username, user_link, user_bio, is_sudo
             )
         )
     await msg.delete()
