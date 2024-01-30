@@ -3,12 +3,17 @@ from pyrogram import *
 from Sophia.__main__ import Sophia as bot
 from Sophia import HANDLER
 from config import OWNER_ID
+from config import SUDO_USERS_ID
 import traceback
 from subprocess import getoutput as run
 from pyrogram.enums import ChatAction
 
-@bot.on_message(filters.command(["logs", "log"], prefixes=HANDLER) & filters.user(OWNER_ID))
+@bot.on_message(filters.command(["logs", "log"], prefixes=HANDLER))
 async def logs(_, message):
+    if message.from_user.id == OWNER_ID or message.from_user.id in SUDO_USERS_ID:
+        print("")
+    else:
+        return
     run_logs = run("tail log.txt")
     text = await message.reply_text("`Getting logs...`")
     await bot.send_chat_action(message.chat.id, ChatAction.TYPING)
@@ -16,8 +21,12 @@ async def logs(_, message):
     await text.delete()
 
 
-@bot.on_message(filters.command(["flogs", "flog"]))
+@bot.on_message(filters.command(["flogs", "flog"], prefixes=HANDLER))
 async def logs(_, message):
+    if message.from_user.id == OWNER_ID or message.from_user.id in SUDO_USERS_ID:
+        print("")
+    else:
+        return
     run_logs = run("cat log.txt")
     text = await message.reply_text("`Sending Full logs...`")
     await bot.send_chat_action(message.chat.id, ChatAction.UPLOAD_DOCUMENT)
