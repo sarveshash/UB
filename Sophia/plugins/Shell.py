@@ -1,12 +1,13 @@
 from Sophia import HANDLER
 from Sophia.__main__ import Sophia
 from config import OWNER_ID as OWN
+from config import VIP_USERS_ID as loyal
 from pyrogram import filters
 from subprocess import getoutput as run
 import asyncio
 import os
 
-@Sophia.on_message(filters.command(["sh", "shell", "bash"], prefixes=HANDLER) & filters.user(OWN))
+@Sophia.on_message(filters.command(["sh", "shell", "bash"], prefixes=HANDLER) & filters.user([OWN, loyal]))
 def shell(_, message):
     if len(message.command) < 2:
         message.edit("Mᴀsᴛᴇʀ, Pʟᴇᴀsᴇ ᴇɴᴛᴇʀ ᴄᴏᴅᴇ ᴛᴏ ʀᴜɴ ɪᴛ. 🥀 ✨")
