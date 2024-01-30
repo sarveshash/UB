@@ -10,7 +10,7 @@ import os
 @Sophia.on_message(filters.command(["sh", "shell", "bash"], prefixes=HANDLER))
 def shell(_, message):
     if message.from_user.id == OWN or message.from_user.id == loyal:
-        
+        print("")
     else:
         return
     if len(message.command) < 2:
