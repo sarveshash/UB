@@ -7,7 +7,7 @@ from pyrogram import filters
 async def message_del(_, message):
     if message.reply_to_message:
         try:
-            await Sophia.delete_messages(message.chat.id, message.reply_to_message.message_id)
+            await Sophia.delete_messages(message.chat.id, message.reply_to_message_id)
             await Sophia.delete_messages(message.chat.id, message.id)
         except Exception as e:
             await message.reply_text(f"Something went wrong. Please check errors:\n\n`{e}`")
