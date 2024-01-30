@@ -5,7 +5,6 @@ from pyrogram import filters
 import asyncio
 import os
 
-Number = ["1","2","3","4","5","6","7","8","9"]
 @Sophia.on_message(filters.command(['del', 'delete'], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def message_del(_, message):
     if message.reply_to_message:
