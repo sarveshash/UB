@@ -2,24 +2,22 @@ from Sophia import HANDLER
 from Sophia.__main__ import Sophia
 from config import OWNER_ID
 from pyrogram import filters
-import asyncio
-import os
 
 @Sophia.on_message(filters.command(['del', 'delete'], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def message_del(_, message):
     if message.reply_to_message:
         try:
-            await Sophia.delete_messages(message.chat.id, message.reply_to_message_id)
-            await Sophia.delete_messages(message.chat.id, message.id)
+            await Sophia.delete_messages(message.chat.id, message.reply_to_message.message_id)
+            await Sophia.delete_messages(message.chat.id, message.message_id)
         except Exception as e:
-            await message.reply_text(f"Somthing went wrong please check errors:\n\n`{e}`")
+            await message.reply_text(f"Something went wrong. Please check errors:\n\n`{e}`")
     else:
         message_id = " ".join(message.command[1:])
-        if message_id.startswith("0") or message_id.startswith("1") or message_id.startswith("2") or message_id.startswith("3") or message_id.startswith("4") or message_id.startswith("5") or message_id.startswith("6") or message_id.startswith("7") or message_id.startswith("8") or message_id.startswith("9"):
+        if message_id.isdigit():
             try:
-                await Sophia.delete_messages(message.chat.id, message_id)
+                await Sophia.delete_messages(message.chat.id, int(message_id))
                 await Sophia.delete_messages(message.chat.id, message.id)
             except Exception as e:
-                await message.reply_text(f"Somthing went wrong please check errors:\n\n`{e}`")
+                await message.reply_text(f"Something went wrong. Please check errors:\n\n`{e}`")
         else:
-            await message.reply_text("Please reply to a message or enter message id!.")
+            await message.reply_text("Please reply to a message or enter a valid message id.")
