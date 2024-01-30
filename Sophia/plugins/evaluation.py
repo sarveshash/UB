@@ -2,14 +2,19 @@ import io
 import sys
 import traceback
 from Sophia import HANDLER
+from config import SUDO_USERS_ID
 from Sophia.__main__ import Sophia
 from config import OWNER_ID
 from pyrogram import filters
 import asyncio
 import os
 
-@Sophia.on_message(filters.user(OWNER_ID) & filters.command(["eval", "e", "python"], prefixes=HANDLER))
+@Sophia.on_message(filters.command(["eval", "e", "python"], prefixes=HANDLER))
 async def eval(client, message):
+    if message.from_user.id == OWN or message.from_user.id in SUDO_USERS_ID:
+        print("")
+    else:
+        return
     if len(message.command) < 2:
         return await message.reply_text("Master, Please Enter code to run it!. ✨ 🥀")
     status_message = await message.reply_text("`Processing...`")
