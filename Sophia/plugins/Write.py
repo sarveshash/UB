@@ -1,5 +1,5 @@
 from pyrogram import filters
-
+from config import SUDO_USERS_ID
 from config import OWNER_ID
 from Sophia import HANDLER
 from Sophia.__main__ import Sophia
@@ -7,6 +7,10 @@ from Sophia.__main__ import Sophia
 
 @Sophia.on_message(filters.command("write", prefixes=HANDLER) & filters.user(OWNER_ID))
 async def write(_, message):
+    if message.from_user.id == OWN or message.from_user.id in SUDO_USERS_ID:
+        print("")
+    else:
+        return
     if len(message.command) < 2:
         return await message.reply_text("Mᴀsᴛᴇʀ, ᴘʟᴇᴀsᴇ ᴇɴᴛᴇʀ ᴛᴇxᴛ. ✨")
     m = await message.reply_text("Wʀɪᴛɪɴɢ...")
