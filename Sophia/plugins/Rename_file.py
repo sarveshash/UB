@@ -1,3 +1,6 @@
+# We Take This Codes From GitHub.com/Otazuki004/QuantumRobot.git
+# Please Use Our QuantumRobot
+
 from Sophia import HANDLER
 from Sophia.__main__ import Sophia as bot
 from config import OWNER_ID
@@ -14,7 +17,7 @@ other_formats = ['apk', 'bat', 'jar', 'iso', 'rar', '7z', 'tar.gz', 'tar.bz2', '
 
 formats = [video_formats, audio_formats, text_formats, coding_languages, Image_Formats, other_formats]
 
-@bot.on_message(filters.command("rename", 
+@bot.on_message(filters.command("rename", prefixes=HANDLER) & filters.user(OWNER_ID)) 
 def rename(_, message):
     if reply := message.reply_to_message:
         if len(message.text.split()) <2:
