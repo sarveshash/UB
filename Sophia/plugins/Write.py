@@ -5,9 +5,9 @@ from Sophia import HANDLER
 from Sophia.__main__ import Sophia
 
 
-@Sophia.on_message(filters.command("write", prefixes=HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command("write", prefixes=HANDLER))
 async def write(_, message):
-    if message.from_user.id == OWN or message.from_user.id in SUDO_USERS_ID:
+    if message.from_user.id == OWNER_ID or message.from_user.id in SUDO_USERS_ID:
         print("")
     else:
         return
