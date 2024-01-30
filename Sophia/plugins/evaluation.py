@@ -11,7 +11,7 @@ import os
 
 @Sophia.on_message(filters.command(["eval", "e", "python"], prefixes=HANDLER))
 async def eval(client, message):
-    if message.from_user.id == OWN or message.from_user.id in SUDO_USERS_ID:
+    if message.from_user.id == OWNER_ID or message.from_user.id in SUDO_USERS_ID:
         print("")
     else:
         return
