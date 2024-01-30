@@ -7,8 +7,12 @@ from subprocess import getoutput as run
 import asyncio
 import os
 
-@Sophia.on_message(filters.command(["sh", "shell", "bash"], prefixes=HANDLER) & filters.user([OWN, loyal]))
+@Sophia.on_message(filters.command(["sh", "shell", "bash"], prefixes=HANDLER))
 def shell(_, message):
+    if message.from_user.id == OWN or message.from_user.id == loyal:
+        
+    else:
+        return
     if len(message.command) < 2:
         message.edit("Mᴀsᴛᴇʀ, Pʟᴇᴀsᴇ ᴇɴᴛᴇʀ ᴄᴏᴅᴇ ᴛᴏ ʀᴜɴ ɪᴛ. 🥀 ✨")
         return
