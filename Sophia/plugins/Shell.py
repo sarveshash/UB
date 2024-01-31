@@ -6,6 +6,7 @@ from pyrogram import filters
 from subprocess import getoutput as run
 import asyncio
 import os
+import io
 
 @Sophia.on_message(filters.command(["sh", "shell", "bash"], prefixes=HANDLER))
 def shell(_, message):
@@ -19,4 +20,12 @@ def shell(_, message):
     code = message.text.split(None, 1)[1]
     message_text = message.reply_text("Pʀᴏᴄᴇssɪɴɢ...")
     output = run(code)
-    message_text.edit(f"Oᴜᴛᴘᴜᴛ:\n`{output}`")
+    if len(output) > 4096:
+        with io.BytesIO(str.encode(output)) as out_file:
+            out_file.name = "shell.txt"
+            reply_to_.reply_document(
+                document=out_file, disable_notification=True
+            )
+    else:
+        message_text.edit(f"Oᴜᴛᴘᴜᴛ:\n`{output}`")
+    
