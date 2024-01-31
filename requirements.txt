@@ -2,3 +2,9 @@ pyrogram
 TgCrypto
 aiofiles
 requests
+wget
+yt_dlp
+youtube_search_python
+youtube_dl
+youtube_search
+ffmpeg
