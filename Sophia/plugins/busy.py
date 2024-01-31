@@ -8,6 +8,9 @@ import os
 import re
 from time import time
 
+info = Sophia.get_users(OWN)
+username = f"{info.username}"
+
 Busy_stats = {}
 Does_Reason_Available = {}
 Busy_time = {}
@@ -53,11 +56,11 @@ async def set_into_busy(_, message):
             hours, remainder = divmod(elapsed_time_seconds, 3600)
             minutes, seconds = divmod(remainder, 60)
             formatted_elapsed_time = f"{hours}h {minutes}m {seconds}s"
-            if message.reply_to_message.from_user.id == OWN:
+            if message.reply_to_message.from_user.id == OWN or message.text.startswith(f"@{username}") or message.text.startswith(username):
                 if Does_Reason_Available == True:
                     await message.reply_text(f"**Sorry**, `My Master is Currently Offline ❌`\n\n**Reason**: `{Reason_Of_Busy}`\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
                 else:
-                    await message.reply_text(f"**Sorry**, `My Master is Currently In Offline Can you Come Later?`\n\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
+                    await message.reply_text(f"**Sorry**, `My Master is Currently In Offline Can you Come Later?`\n\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")  
         @Sophia.on_message(filters.user(OWN))
         async def remove_busy_mode(_, message):
             elapsed_time_seconds = round(time() - Busy_time['start'])
