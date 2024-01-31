@@ -63,11 +63,6 @@ async def set_into_busy(_, message):
                     await message.reply_text(f"**Sorry**, `My Master is Currently Offline ❌`\n\n**Reason**: `{Reason_Of_Busy}`\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
                 else:
                     await message.reply_text(f"**Sorry**, `My Master is Currently In Offline Can you Come Later?`\n\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
-            elif msg.startswith(username) or msg.startswith(f"@{username}"):
-                if Does_Reason_Available == True:
-                    await message.reply_text(f"**Sorry**, `My Master is Currently Offline ❌`\n\n**Reason**: `{Reason_Of_Busy}`\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
-                else:
-                    await message.reply_text(f"**Sorry**, `My Master is Currently In Offline Can you Come Later?`\n\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
         @Sophia.on_message(filters.user(OWN))
         async def remove_busy_mode(_, message):
             elapsed_time_seconds = round(time() - Busy_time['start'])
