@@ -11,5 +11,10 @@ logging.basicConfig(
 )
 
 if __name__ == "__main__":
-  Sophia.run()
-  
+    ACCESS = decode_key(ACCESS_CODE, ACCESS_PIN)
+    if ACCESS == "OTAZUKI004NANDHAISGEY":
+        Sophia.run()
+        print("[INFO] Correct Access Key Bot Started")
+    else:
+        print("[INFO] Invalid Access Key, Access Key is required to Use Sophia Beta Try Again")
+        exit()
