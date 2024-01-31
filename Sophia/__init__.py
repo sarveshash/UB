@@ -21,8 +21,8 @@ ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 def decode_key(encoded_key, pin):
     decoded_key = ''
     for char in encoded_key:
-        if char in ALPHABET:
-            index = (ALPHABET.index(char) - pin) % len(ALPHABET)
+        if char.lower() in ALPHABET:  # Convert char to lowercase
+            index = (ALPHABET.index(char.lower()) - pin) % len(ALPHABET)
             decoded_key += ALPHABET[index]
         else:
             decoded_key += char
