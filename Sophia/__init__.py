@@ -22,7 +22,7 @@ def decode_key(encoded_key, pin):
     decoded_key = ''
     for char in encoded_key:
         if char.lower() in ALPHABET:  # Convert char to lowercase
-            index = (ALPHABET.index(char.lower()) - pin) % len(ALPHABET)
+            index = (ALPHABET.index(char.lower()) - int(pin)) % len(ALPHABET)
             decoded_key += ALPHABET[index]
         else:
             decoded_key += char
