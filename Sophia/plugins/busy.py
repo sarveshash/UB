@@ -51,17 +51,23 @@ async def set_into_busy(_, message):
         async def Group_say_master_offline(_, message):
             info = await Sophia.get_users(OWN)
             username = info.username
+            msg = message.text
             if message.from_user.id in IGNORED_USERS_ID:
                 return
             elapsed_time_seconds = round(time() - Busy_time['start'])
             hours, remainder = divmod(elapsed_time_seconds, 3600)
             minutes, seconds = divmod(remainder, 60)
             formatted_elapsed_time = f"{hours}h {minutes}m {seconds}s"
-            if message.reply_to_message.from_user.id == OWN or message.text.startswith(f"@{username}") or message.text.startswith(username):
+            if message.reply_to_message.from_user.id == OWN:
                 if Does_Reason_Available == True:
                     await message.reply_text(f"**Sorry**, `My Master is Currently Offline ❌`\n\n**Reason**: `{Reason_Of_Busy}`\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
                 else:
-                    await message.reply_text(f"**Sorry**, `My Master is Currently In Offline Can you Come Later?`\n\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")  
+                    await message.reply_text(f"**Sorry**, `My Master is Currently In Offline Can you Come Later?`\n\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
+            elif msg.startswith(username) or msg.startswith(f"@{username}"):
+                if Does_Reason_Available == True:
+                    await message.reply_text(f"**Sorry**, `My Master is Currently Offline ❌`\n\n**Reason**: `{Reason_Of_Busy}`\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
+                else:
+                    await message.reply_text(f"**Sorry**, `My Master is Currently In Offline Can you Come Later?`\n\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
         @Sophia.on_message(filters.user(OWN))
         async def remove_busy_mode(_, message):
             elapsed_time_seconds = round(time() - Busy_time['start'])
