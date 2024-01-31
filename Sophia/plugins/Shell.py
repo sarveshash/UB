@@ -26,6 +26,7 @@ def shell(_, message):
             message.reply_document(
                 document=out_file, disable_notification=True
             )
+            message_text.delete()
     else:
         message_text.edit(f"Oᴜᴛᴘᴜᴛ:\n`{output}`")
     
