@@ -3,7 +3,7 @@ from config import OWNER_ID
 from Sophia import HANDLER
 from Sophia import Sophia
 
-left_chat_id = {}
+left_chat_id = ""
 
 @Sophia.on_message(filters.command("join", prefixes=HANDLER) & filters.user(OWNER_ID))
 def join_chat(_, m):
@@ -21,6 +21,7 @@ def join_chat(_, m):
             return
         else:
             message.reply("No chats we left in recently.")
+            return
     Sophia.join_chat(link)
     chat = Sophia.get_chat(link)
     name = chat.title
