@@ -8,8 +8,7 @@ import os
 import re
 from time import time
 
-info = Sophia.get_users(OWN)
-username = f"{info.username}"
+
 
 Busy_stats = {}
 Does_Reason_Available = {}
@@ -50,6 +49,8 @@ async def set_into_busy(_, message):
                 await message.reply_text(f"**Sorry**, `My Master is Currently In Offline Can you Come Later?`\n\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
         @Sophia.on_message(filters.group & ~filters.user(OWN))
         async def Group_say_master_offline(_, message):
+            info = await Sophia.get_users(OWN)
+            username = info.username
             if message.from_user.id in IGNORED_USERS_ID:
                 return
             elapsed_time_seconds = round(time() - Busy_time['start'])
