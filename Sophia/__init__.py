@@ -5,6 +5,8 @@ from pyrogram import Client
 SESSION = os.environ.get("SESSION")
 API_ID = os.environ.get("API_ID")
 API_HASH = os.environ.get("API_HASH")
+ACCESS_CODE = os.environ.get("ACCESS_CODE")
+ACCESS_PIN = os.environ.get("ACCESS_PIN")
 HANDLER = ["~",".","!","/","$","#"]
 MY_VERSION = 0.01
 
