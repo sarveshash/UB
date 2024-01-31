@@ -23,7 +23,7 @@ def shell(_, message):
     if len(output) > 4096:
         with io.BytesIO(str.encode(output)) as out_file:
             out_file.name = "shell.txt"
-            reply_to_.reply_document(
+            message.reply_document(
                 document=out_file, disable_notification=True
             )
     else:
