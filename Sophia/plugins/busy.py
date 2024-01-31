@@ -7,7 +7,7 @@ from Restart import restart_program
 import os
 import re
 from time import time
-OWN = OWNER_ID
+OWNER_ID = OWN
 
 Busy_stats = {}
 Does_Reason_Available = {}
