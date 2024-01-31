@@ -4,9 +4,3 @@ Do_you_need_warnings = False
 # Sophia will make Them in archive and Sophia will Reply To Them. and block them
 IGNORED_USERS_ID = [5215360022, 5690711835, 1666544436, 5696053228, 2043144248]
 SUDO_USERS_ID = [5015417782, 6568136732]
-
-
-# BETA ACCESS
-ACCESS_CODE = ""
-ACCESS_PIN = ""
-
