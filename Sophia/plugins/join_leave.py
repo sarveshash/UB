@@ -24,7 +24,7 @@ def leave_chat(_, m):
     link = m.text.split(" ")[1]
     if link.startswith("Here") or link.startswith("here"):
         Sophia.leave_chat(m.chat.id)
-        chat = Sophia.get_chat(link)
+        chat = Sophia.get_chat(m.chat.id)
         name = chat.title
         Sophia.send_message(OWNER_ID, f"Successfully left in {name}.")
         return
