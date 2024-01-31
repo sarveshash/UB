@@ -7,7 +7,6 @@ from Restart import restart_program
 import os
 import re
 from time import time
-OWNER_ID = OWN
 
 Busy_stats = {}
 Does_Reason_Available = {}
@@ -46,7 +45,7 @@ async def set_into_busy(_, message):
                 await message.reply_text(f"**Sorry**, `My Master is Currently Offline ❌`\n\n**Reason**: `{Reason_Of_Busy}`\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
             else:
                 await message.reply_text(f"**Sorry**, `My Master is Currently In Offline Can you Come Later?`\n\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
-        @Sophia.on_message(~filters.user(OWN))
+        @Sophia.on_message(filters.group & ~filters.user(OWN))
         async def Group_say_master_offline(_, message):
             if message.from_user.id in IGNORED_USERS_ID:
                 return
@@ -54,13 +53,11 @@ async def set_into_busy(_, message):
             hours, remainder = divmod(elapsed_time_seconds, 3600)
             minutes, seconds = divmod(remainder, 60)
             formatted_elapsed_time = f"{hours}h {minutes}m {seconds}s"
-            chat_type = f"{message.chat.id}"
-            if chat_type.startswith("-") or message.text.startswith("Otazuki"):
-                if message.reply_to_message.from_user.id == OWNER_ID:
-                    if Does_Reason_Available == True:
-                        await message.reply_text(f"**Sorry**, `My Master is Currently Offline ❌`\n\n**Reason**: `{Reason_Of_Busy}`\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
-                    else:
-                        await message.reply_text(f"**Sorry**, `My Master is Currently In Offline Can you Come Later?`\n\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
+            if message.reply_to_message.from_user.id == OWN:
+                if Does_Reason_Available == True:
+                    await message.reply_text(f"**Sorry**, `My Master is Currently Offline ❌`\n\n**Reason**: `{Reason_Of_Busy}`\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
+                else:
+                    await message.reply_text(f"**Sorry**, `My Master is Currently In Offline Can you Come Later?`\n\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
         @Sophia.on_message(filters.user(OWN))
         async def remove_busy_mode(_, message):
             elapsed_time_seconds = round(time() - Busy_time['start'])
