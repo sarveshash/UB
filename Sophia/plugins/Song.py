@@ -30,7 +30,7 @@ def song(_, message):
         message.reply("Master, Give a song name to search it")
         return
     query = " ".join(message.command[1:])
-    m = message.reply("`🔄 Searching....`")
+    m = message.reply("🔄 Searching....")
     ydl_ops = {"format": "bestaudio[ext=m4a]"}
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
@@ -48,7 +48,7 @@ def song(_, message):
         )
         print(str(e))
         return
-    m.edit("`📥 Downloading...`")
+    m.edit("📥 Downloading...")
     try:
         with yt_dlp.YoutubeDL(ydl_ops) as ydl:
             info_dict = ydl.extract_info(link, download=False)
@@ -58,7 +58,7 @@ def song(_, message):
         for i in range(len(dur_arr) - 1, -1, -1):
             dur += int(float(dur_arr[i])) * secmul
             secmul *= 60
-        m.edit("`📤 Uploading...`")
+        m.edit("📤 Uploading...")
 
         message.reply_audio(
             audio_file,
