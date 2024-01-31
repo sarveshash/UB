@@ -11,7 +11,7 @@ logging.basicConfig(
 
 if __name__ == "__main__":
     ACCESS = decode_key(ACCESS_CODE, ACCESS_PIN)
-    if ACCESS == "OTAZUKI004NANDHAISGEY":
+    if ACCESS == "oTaZUki004nandhaiSgeY":
         Sophia.run()
         print("[INFO] Correct Access Key Bot Started")
     else:
