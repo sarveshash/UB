@@ -15,5 +15,5 @@ if __name__ == "__main__":
         Sophia.run()
         print("[INFO] Correct Access Key Bot Started")
     else:
-        print("[INFO] Invalid Access Key, Access Key is required to Use Sophia Beta Try Again")
+        raise Expection("[INFO] Invalid Access Key, Access Key is required to Use Sophia Beta, Try Again")
         exit()
