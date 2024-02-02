@@ -7,7 +7,7 @@ import asyncio
 import os
 from Restart import restart_program as spam_killer
 
-what_is_text = {}
+what_is_text = ""
 is_spam_running = False
 spam_stop = False
 
@@ -38,7 +38,7 @@ async def spam_stoper(_, message):
     if is_spam_running == True:
         spam_stop = True
         is_spam_running = False
-        await asyncio.sleep(1)
+        await asyncio.sleep(1.2)
         spam_stop = False
         await message.reply_text("I stopped That spam successfully ✅")
     else:
