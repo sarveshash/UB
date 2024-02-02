@@ -26,7 +26,9 @@ async def spam(_, message):
             await asyncio.sleep(1) # For stop flood wait 
         except Exception as e:
             print(e)
-            spam_stop == False
+            spam_stop == True
+            is_spam_running = False
+            return
 
 @Sophia.on_message(filters.command(["stopspam", "sspam", "endspam"], prefixes=HANDLER) & filters.user(OWN))
 async def spam_stoper(_, message):
@@ -41,9 +43,8 @@ async def spam_stoper(_, message):
         await message.reply_text('No Spam Currently Running??')
     @Sophia.on_message(filters.command(["fsspam", "killspam"], prefixes=HANDLER) & filters.user(OWN))
     async def Kill_The_Spam(_, message):
-        await message.reply_text("Really Still Spam not stoped?, Ok let me stop it")
+        await message.reply_text("What, spam not stoped yet?, Spam stoping...")
         await asyncio.sleep(0.7)
         if Do_you_need_warnings == True:
             await message.reply_text("**Warning ⚠️**: Its Restart All UserBot Process")
-        else:
-            await spam_killer()
+        await spam_killer()
