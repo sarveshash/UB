@@ -8,7 +8,7 @@ import os
 from Restart import restart_program as spam_killer
 
 what_is_text = {}
-is_spam_running = {}
+is_spam_running = False
 spam_stop = False
 
 @Sophia.on_message(filters.command("spam", prefixes=HANDLER) & filters.user(OWN))
