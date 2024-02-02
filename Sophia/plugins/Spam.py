@@ -20,7 +20,7 @@ async def spam(_, message):
     what_is_text = text
     is_spam_running = True
     await message.reply("Spam Started ⚡")
-    while spam_stop == False:
+    while is_spam_running and not spam_stop:
         try:
             await Sophia.send_message(message.chat.id, text)
             await asyncio.sleep(1) # For stop flood wait 
