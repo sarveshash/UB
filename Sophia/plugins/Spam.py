@@ -28,6 +28,8 @@ async def spam(_, message):
             print(e)
             spam_stop == True
             is_spam_running = False
+            await asyncio.sleep(1)
+            spam_stop == False
             return
 
 @Sophia.on_message(filters.command(["stopspam", "sspam", "endspam"], prefixes=HANDLER) & filters.user(OWN))
