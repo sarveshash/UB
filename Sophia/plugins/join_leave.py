@@ -17,7 +17,7 @@ def join_chat(_, m):
             Sophia.join_chat(left_chat_id)
             chat = Sophia.get_chat(left_chat_id)
             name = chat.title
-            Sophia.send_message(m.chat.id, f"Successfully Joined in {name}.")
+            Sophia.send_message(left_chat_id, f"Successfully Joined in {name}.")
             left_chat_id = ""
             return
         else:
