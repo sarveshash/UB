@@ -9,7 +9,7 @@ left_chat_id = ""
 def join_chat(_, m):
     global left_chat_id
     if len(m.command) < 2:
-        m.reply_text("Master, Give a Group Username or ID to Join")
+        m.reply_text("Master, Give a Group Username or id to Join")
         return
     link = m.text.split(" ")[1]
     if link.startswith("Back") or link.startswith("back"):
@@ -44,7 +44,10 @@ def leave_chat(_, m):
         Sophia.leave_chat(m.chat.id)
         return
     left_chat_id = f"{m.chat.id}"
-    Sophia.leave_chat(link)
     chat = Sophia.get_chat(link)
     name = chat.title
     m.reply_text(f"Successfully left in {name}.")
+    try:
+        Sophia.leave_chat(link)
+    except Exception as e:
+        print(e)
