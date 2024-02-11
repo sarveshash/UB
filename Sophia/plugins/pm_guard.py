@@ -15,6 +15,7 @@ async def set_pm_guard(_, message):
     global is_pm_block_enabled
     if is_pm_block_enabled:
         is_pm_block_enabled = False
+        await message.reply("I disabled Pmblock")
     else:
         await message.reply('Feature coming soon')
         return
