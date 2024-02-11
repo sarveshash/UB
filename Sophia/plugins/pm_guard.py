@@ -21,7 +21,7 @@ async def set_pm_guard(_, message):
         await message.reply('done ✅')
         return
         
-@Sophia.on_message(filters.command(~filters.user(OWNER_ID))
+@Sophia.on_message(~filters.user(OWNER_ID))
 async def warn_users(_, message):
     if message.from_user.id in approved_users:
         return
