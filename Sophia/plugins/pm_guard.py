@@ -24,9 +24,12 @@ async def set_pm_guard(_, message):
 @Sophia.on_message(filters.command(['a', 'approve'], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def Approve_user(_, message):
     if is_pm_block_enabled:
-        if message.chat.id.startswith("-"):
-            await message.reply("Only Works On Private Chats.")
-            return
+        try:
+            if message.chat.id.startswith("-"):
+                await message.reply("Only Works On Private Chats.")
+                return
+        except Exception:
+            None
         await message.reply("coming soon")
 
 @Sophia.on_message(~filters.user(OWNER_ID))
