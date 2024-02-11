@@ -25,7 +25,7 @@ async def set_pm_guard(_, message):
 @Sophia.on_message(filters.command(['a', 'approve'], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def Approve_user(_, message):
     if is_pm_block_enabled:
-        if message.chat.type == enums:
+        if message.chat.type == enums.ChatType.SUPERGROUP:
             await message.reply("Only Works On Private Chats.")
             return
         await message.reply("coming soon")
@@ -34,7 +34,7 @@ async def Approve_user(_, message):
 async def warn_users(_, message):
     if message.from_user.id in approved_users or message.from_user.id in Always_Approved_Users_From_Pmblock:
         return
-    elif message.chat.id.startswith("-"):
+    elif message.chat.type == enums.ChatType.SUPERGROUP:
         return
     if is_pm_block_enabled:
         user_id = message.from_user.id
