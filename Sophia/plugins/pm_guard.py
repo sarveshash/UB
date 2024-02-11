@@ -4,7 +4,7 @@ from config import OWNER_ID, Always_Approved_Users_From_Pmblock
 from pyrogram import filters
 import asyncio
 import os
-from pyrogram.enums import *
+from pyrogram import enums *
 
 is_pm_block_enabled = False
 approved_users = {}
