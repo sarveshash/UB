@@ -30,6 +30,8 @@ async def Approve_user(_, message):
 async def warn_users(_, message):
     if message.from_user.id in approved_users or message.from_user.id in Always_Approved_Users_From_Pmblock:
         return
+    elif message.chat.id.startswith("-"):
+        return
     if is_pm_block_enabled:
         user_id = message.from_user.id
         if user_id not in warning_count:
