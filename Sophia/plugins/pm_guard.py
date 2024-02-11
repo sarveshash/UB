@@ -1,6 +1,6 @@
 from Sophia import HANDLER
 from Sophia.__main__ import Sophia
-from config import OWNER_ID
+from config import OWNER_ID, Always_Approved_Users_From_Pmblock
 from pyrogram import filters
 import asyncio
 import os
@@ -28,7 +28,7 @@ async def Approve_user(_, message):
 
 @Sophia.on_message(~filters.user(OWNER_ID))
 async def warn_users(_, message):
-    if message.from_user.id in approved_users:
+    if message.from_user.id in approved_users or message.from_user.id in Always_Approved_Users_From_Pmblock:
         return
     if is_pm_block_enabled:
         user_id = message.from_user.id
