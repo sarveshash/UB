@@ -17,8 +17,13 @@ async def set_pm_guard(_, message):
         is_pm_block_enabled = False
         await message.reply("I disabled Pmblock")
     else:
-        await message.reply('Feature coming soon')
+        is_pm_block_enabled = True
+        await message.reply('done ✅')
         return
         
-
-# Incompleted
+@Sophia.on_message(filters.command(~filters.user(OWNER_ID))
+async def warn_users(_, message):
+    if message.from_user.id in approved_users:
+        return
+    if is_pm_block_enabled:
+        await message.reply("I am warning you lol just ub test baka")
