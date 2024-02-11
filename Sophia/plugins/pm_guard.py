@@ -4,6 +4,7 @@ from config import OWNER_ID, Always_Approved_Users_From_Pmblock
 from pyrogram import filters
 import asyncio
 import os
+from pyrogram.enums import *
 
 is_pm_block_enabled = False
 approved_users = {}
@@ -24,12 +25,9 @@ async def set_pm_guard(_, message):
 @Sophia.on_message(filters.command(['a', 'approve'], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def Approve_user(_, message):
     if is_pm_block_enabled:
-        try:
-            if message.chat.id.startswith("-"):
-                await message.reply("Only Works On Private Chats.")
-                return
-        except Exception:
-            None
+        if message.chat.type == enums:
+            await message.reply("Only Works On Private Chats.")
+            return
         await message.reply("coming soon")
 
 @Sophia.on_message(~filters.user(OWNER_ID))
