@@ -32,7 +32,7 @@ async def Approve_user(_, message):
         user_id = message.chat.id
         try:
             approved_users.append(user_id)
-            await message.reply("Successfully Approved ✅!")
+            await message.reply("Successfully Approved ✅⚡")
         except Exception as e:
             await message.reply(f"Sorry, i got a error while approving this user\n\n{e}")
     else:
