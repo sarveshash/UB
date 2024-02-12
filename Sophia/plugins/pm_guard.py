@@ -42,6 +42,7 @@ async def Approve_user(_, message):
 
 @Sophia.on_message(~filters.user(OWNER_ID))
 async def warn_users(_, message):
+    global approved_users
     user_id = message.from_user.id
     if user_id in approved_users:
         return
