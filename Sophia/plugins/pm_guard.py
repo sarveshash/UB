@@ -46,11 +46,11 @@ async def warn_users(_, message):
     user_id = message.from_user.id
     if user_id in approved_users:
         return
-    if user_id in Always_Approved_Users_From_Pmblock:
+    elif user_id in Always_Approved_Users_From_Pmblock:
         return
-    if message.chat.type == enums.ChatType.SUPERGROUP:
+    elif message.chat.type == enums.ChatType.SUPERGROUP:
         return
-    if is_pm_block_enabled:
+    elif is_pm_block_enabled:
         user_id = message.from_user.id
         if user_id not in warning_count:
             warning_count[user_id] = 0
