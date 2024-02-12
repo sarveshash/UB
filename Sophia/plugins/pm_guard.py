@@ -39,6 +39,25 @@ async def Approve_user(_, message):
         if message.chat.type == enums.ChatType.SUPERGROUP:
             return
         await message.reply('**PmGuard Not Enabled ❌**')
+
+
+@Sophia.on_message(filters.command(['ua', 'unapprove'], prefixes=HANDLER) & filters.user(OWNER_ID))
+async def Approve_user(_, message):
+    global approved_users
+    if is_pm_block_enabled:
+        if message.chat.type == enums.ChatType.SUPERGROUP:
+            await message.reply("This Command Only Works On Private Chats.")
+            return
+        user_id = message.chat.id
+        try:
+            approved_users.remove(user_id)
+            await message.reply("Successfully Unapproved ✨🗿")
+        except Exception as e:
+            await message.reply(f"Sorry, i got a error while unapproving this user\n\n{e}")
+    else:
+        if message.chat.type == enums.ChatType.SUPERGROUP:
+            return
+        await message.reply('**PmGuard Not Enabled ❌**')
         
 
 @Sophia.on_message(~filters.user(OWNER_ID))
