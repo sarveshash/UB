@@ -42,7 +42,7 @@ async def Approve_user(_, message):
 
 
 @Sophia.on_message(filters.command(['ua', 'unapprove'], prefixes=HANDLER) & filters.user(OWNER_ID))
-async def Approve_user(_, message):
+async def Unapprove_user(_, message):
     global approved_users
     if is_pm_block_enabled:
         if message.chat.type == enums.ChatType.SUPERGROUP:
