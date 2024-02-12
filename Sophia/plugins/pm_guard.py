@@ -8,7 +8,7 @@ from pyrogram import enums
 
 is_pm_block_enabled = False
 approved_users = {}
-warning_count = {}
+warning_count = []
 
 @Sophia.on_message(filters.command(["pmblock", "pmguard"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def set_pm_guard(_, message):
@@ -35,7 +35,9 @@ async def Approve_user(_, message):
         except Exception as e:
             await message.reply(f"Sorry, i got a error while approving this user\n\n{e}")
     else:
-        await message.reply('PmGuard Not Enabled ❌')
+        if message.chat.type == enums.ChatType.SUPERGROUP:
+            return
+        await message.reply('`PmGuard Not Enabled ❌`')
         
 
 @Sophia.on_message(~filters.user(OWNER_ID))
