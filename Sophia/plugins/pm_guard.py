@@ -29,7 +29,7 @@ async def Approve_user(_, message):
         if message.chat.type == enums.ChatType.SUPERGROUP:
             await message.reply("This Command Only Works On Private Chats.")
             return
-        user_id = message.from_user.id
+        user_id = message.chat.id
         try:
             approved_users.append(user_id)
             await message.reply("Successfully Approved ✅!")
@@ -44,7 +44,7 @@ async def Approve_user(_, message):
 @Sophia.on_message(~filters.user(OWNER_ID))
 async def warn_users(_, message):
     global approved_users
-    user_id = message.from_user.id
+    user_id = message.chat.id
     if is_pm_block_enabled:
         if message.chat.type == enums.ChatType.SUPERGROUP:
             return
@@ -53,7 +53,7 @@ async def warn_users(_, message):
         elif user_id in approved_users:
             return
         else:
-            user_id = message.from_user.id
+            user_id = message.chat.id
             if user_id not in warning_count:
                 warning_count[user_id] = 0
             warning_count[user_id] += 1
