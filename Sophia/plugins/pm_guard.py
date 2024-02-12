@@ -10,15 +10,15 @@ is_pm_block_enabled = False
 approved_users = {}
 warning_count = {}
 
-@Sophia.on_message(filters.command("pmblock", prefixes=HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command(["pmblock", "pmguard"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def set_pm_guard(_, message):
     global is_pm_block_enabled
     if is_pm_block_enabled:
         is_pm_block_enabled = False
-        await message.reply("I Disabled Pmblock Successfully ✅")
+        await message.reply("I Disabled PmGuard Successfully ✅")
     else:
         is_pm_block_enabled = True
-        await message.reply('Pmblock Has been Enabled ✅')
+        await message.reply('PmGuard Has been Enabled ✅')
         return
 
 
@@ -26,9 +26,17 @@ async def set_pm_guard(_, message):
 async def Approve_user(_, message):
     if is_pm_block_enabled:
         if message.chat.type == enums.ChatType.SUPERGROUP:
-            await message.reply("Only Works On Private Chats.")
+            await message.reply("This Command Only Works On Private Chats.")
             return
-        await message.reply("coming soon")
+        user_id = message.from_user.id
+        try:
+            approved_users.append(user_id)
+            await message.reply("Successfully Approved ✅!")
+        except Exception as e:
+            await message.reply(f"Sorry, i got a error while approving this user\n\n{e}")
+    else:
+        await message.reply('PmGuard Not Enabled ❌')
+        
 
 @Sophia.on_message(~filters.user(OWNER_ID))
 async def warn_users(_, message):
