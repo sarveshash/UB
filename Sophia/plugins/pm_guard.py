@@ -31,6 +31,9 @@ async def Approve_user(_, message):
             return
         user_id = message.chat.id
         try:
+            if user_id in approved_users:
+                await message.reply('**This User is Already Approved ✨🥀**')
+                return
             approved_users.append(user_id)
             await message.reply("Successfully Approved ✅⚡")
         except Exception as e:
