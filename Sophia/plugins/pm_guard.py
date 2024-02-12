@@ -42,9 +42,12 @@ async def Approve_user(_, message):
 
 @Sophia.on_message(~filters.user(OWNER_ID))
 async def warn_users(_, message):
-    if message.from_user.id in approved_users or message.from_user.id in Always_Approved_Users_From_Pmblock:
+    user_id = message.from_user.id
+    if user_id in approved_users:
         return
-    elif message.chat.type == enums.ChatType.SUPERGROUP:
+    if user_id in Always_Approved_Users_From_Pmblock:
+        return
+    if message.chat.type == enums.ChatType.SUPERGROUP:
         return
     if is_pm_block_enabled:
         user_id = message.from_user.id
