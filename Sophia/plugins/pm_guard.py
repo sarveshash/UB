@@ -51,20 +51,24 @@ async def warn_users(_, message):
             return
         elif user_id in approved_users:
             return
-        user_id = message.from_user.id
-        if user_id not in warning_count:
-            warning_count[user_id] = 0
-            
-        warning_count[user_id] += 1
-        # Warn the user
-        if warning_count[user_id] == 1:
-            await message.reply("Sorry, My master enabled Private Block Feature You can't Send message Now.")
-        elif warning_count[user_id] == 2:
-            await message.reply("This is your second warning. If you send Another message you will be blocked")
-        elif warning_count[user_id] >= 3:
-            try:
-                await message.reply("You have breaked Your limits.")
-                await Sophia.block_user(user_id)
-            except Exception as e:
-                print(e)
-                await Sophia.send_message(OWN, e)
+        else:
+            user_id = message.from_user.id
+            if user_id not in warning_count:
+                warning_count[user_id] = 0
+            warning_count[user_id] += 1
+            # Warn the use
+            if warning_count[user_id] == 1:
+                await message.reply("Sorry, My master enabled Private Block Feature You can't Send message Now.")
+            elif warning_count[user_id] == 2:
+                await message.reply("This is your second warning. If you send Another message you will be blocked")
+            elif warning_count[user_id] >= 3:
+                try:
+                    await message.reply("You have breaked Your limits.")
+                    await Sophia.block_user(user_id)
+                except Exception as e:
+                    print(e)
+                    await Sophia.send_message(OWN, e)
+
+
+
+#END
