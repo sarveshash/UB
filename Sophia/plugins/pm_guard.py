@@ -95,6 +95,24 @@ async def warn_users(_, message):
                     print(e)
                     await Sophia.send_message(OWN, e)
 
-
+@Sophia.on_message(filters.command(['cw', 'clearwarns'], prefixes=HANDLER) & filters.user(OWNER_ID))
+async def Clear_User_Warns(_, message):
+    global warning_count
+    if is_pm_block_enabled:
+        if message.chat.type == enums.ChatType.SUPERGROUP:
+            await message.reply("This Command Only Works On Private Chats.")
+            return
+        user_id = message.chat.id
+        try:
+            user_id = message.chat.id
+            warning_count[user_id] = 0
+            await message.reply("Successfully Cleared Warnings 🗿🔥")
+        except Exception as e:
+            await message.reply(f"Sorry, i got a error while Clearing Warns for this user\n\n{e}")
+    else:
+        if message.chat.type == enums.ChatType.SUPERGROUP:
+            return
+        await message.reply('**PmGuard Not Enabled ❌**')
+                
 
 #END
