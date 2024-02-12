@@ -53,6 +53,9 @@ async def Unapprove_user(_, message):
             approved_users.remove(user_id)
             await message.reply("Successfully Unapproved ✨🗿")
         except Exception as e:
+            if str(e) == "list.remove(x): x not in list":
+                await message.reply("**This user is Not Approved yet ❌**")
+                return
             await message.reply(f"Sorry, i got a error while unapproving this user\n\n{e}")
     else:
         if message.chat.type == enums.ChatType.SUPERGROUP:
