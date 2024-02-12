@@ -80,7 +80,7 @@ async def warn_users(_, message):
             if warning_count[user_id] == 1:
                 if user_id in Always_Approved_Users_From_Pmblock or user_id in approved_users:
                     return
-                await message.reply("Sorry, My master enabled Private Block Feature You can't Send message Now.")
+                await message.reply("Sorry, My master enabled PmGuard Feature, You can't send message till My master Approves you or Disabling This Feature. if you send message again you will be blocked ❌")
             elif warning_count[user_id] == 2:
                 if user_id in Always_Approved_Users_From_Pmblock or user_id in approved_users:
                     return
@@ -89,7 +89,7 @@ async def warn_users(_, message):
                 if user_id in Always_Approved_Users_From_Pmblock or user_id in approved_users:
                     return
                 try:
-                    await message.reply("You have breaked Your limits.")
+                    await message.reply("You have breaked Your limits, So I Blocked You!!!")
                     await Sophia.block_user(user_id)
                 except Exception as e:
                     print(e)
