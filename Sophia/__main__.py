@@ -20,7 +20,7 @@ async def run_clients():
 if __name__ == "__main__":
     ACCESS = decode_key(ACCESS_CODE, ACCESS_PIN)
     if ACCESS == "oTaZUki004nandhaiSgeY":
-        run_clients()
+        await run_clients()
         Sophia = Sophia
         pm_guard_client = pm_guard_client
         print("[INFO] Correct Access Key Bot Started")
