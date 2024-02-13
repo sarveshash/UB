@@ -12,14 +12,15 @@ logging.basicConfig(
 
 # Thanks To KoraXD for Giving Multiple Clients Run code
 async def run_clients():
-      await Sophia.run()
-      await pm_guard_client.start()
+    await Sophia.start()
+    await pm_guard_client.start()
+    await pyrogram.idle()
 
 
 if __name__ == "__main__":
     ACCESS = decode_key(ACCESS_CODE, ACCESS_PIN)
     if ACCESS == "oTaZUki004nandhaiSgeY":
-        Sophia.loop.run_until_complete(run_clients())
+        run_clients()
         Sophia = Sophia
         pm_guard_client = pm_guard_client
         print("[INFO] Correct Access Key Bot Started")
