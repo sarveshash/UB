@@ -13,9 +13,8 @@ logging.basicConfig(
 # Thanks To KoraXD for Giving Multiple Clients Run code
 def run_clients():
     Sophia.start()
-    pyrogram.idle()
-    pm_guard_client.start()
-    pyrogram.idle()
+    pm_guard_client.run()
+    
 
 
 if __name__ == "__main__":
