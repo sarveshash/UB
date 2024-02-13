@@ -1,5 +1,5 @@
 from Sophia import HANDLER
-from Sophia.__main__ import Sophia
+from Sophia.__main__ import pm_guard_client as Sophia
 from config import OWNER_ID, Always_Approved_Users_From_Pmblock
 from pyrogram import filters
 import asyncio
