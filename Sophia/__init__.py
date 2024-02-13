@@ -12,8 +12,6 @@ MY_VERSION = 0.01
 
 # MAIN CLIENT OF SOPHIA
 Sophia = Client("Sophia", session_string=SESSION, api_id=API_ID, api_hash=API_HASH, plugins=dict(root="Sophia/plugins"))
-# PMGUARD CLIENT OF SOPHIA
-pm_guard_client = Client("PmGuard Client", session_string=SESSION, api_id=API_ID, api_hash=API_HASH, plugins=dict(root="Sophia/plugins"))
 
 # BETA ACCESS KEY SECTION
 
