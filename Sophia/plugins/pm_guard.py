@@ -65,9 +65,8 @@ async def Unapprove_user(_, message):
             return
         await message.reply('**PmGuard Not Enabled ❌**')
         
-@Sophia.on_message(~filters.user(OWNER_ID) & filters.private)
-async def warn_users(_, message):
-    global approved_users, Always_Approved_Users_From_Pmblock, is_pm_block_enabled
+async def handle_pm_guard(_, message):
+    global approved_users, Always_Approved_Users_From_Pmblock, is_pm_block_enabled, warning_count
     if is_pm_block_enabled:
         user_id = message.chat.id
         if user_id not in Always_Approved_Users_From_Pmblock and user_id not in approved_users:
@@ -85,8 +84,11 @@ async def warn_users(_, message):
                 except Exception as e:
                     print(e)
                     await Sophia.send_message(OWNER_ID, e)
-    else:
-        pass  # Other functions will execute normally when is_pm_block_enabled is False
+
+@Sophia.on_message(~filters.user(OWNER_ID) & filters.private)
+async def warn_users_wrapper(*args, **kwargs):
+    if is_pm_block_enabled:
+        await handle_pm_guard(*args, **kwargs)
         
 @Sophia.on_message(filters.command(['cw', 'clearwarns'], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def Clear_User_Warns(_, message):
