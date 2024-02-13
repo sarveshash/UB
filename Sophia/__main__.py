@@ -12,7 +12,7 @@ logging.basicConfig(
 
 # Thanks To KoraXD for Giving Multiple Clients Run code
 async def run_clients():
-      await Sophia.start()
+      await Sophia.run()
       await pm_guard_client.start()
       await pyrogram.idle()
 
