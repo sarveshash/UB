@@ -14,7 +14,6 @@ logging.basicConfig(
 async def run_clients():
       await Sophia.run()
       await pm_guard_client.start()
-      await pyrogram.idle()
 
 
 if __name__ == "__main__":
