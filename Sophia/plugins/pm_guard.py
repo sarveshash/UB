@@ -84,8 +84,8 @@ if is_pm_block_enabled:
                 warning_count[user_id] += 1
                 if warning_count[user_id] == 1:
                     if user_id in Always_Approved_Users_From_Pmblock or user_id in approved_users:
-                    return
-                await message.reply("Sorry, My master enabled PmGuard Feature, You can't send message till My master Approves you or Disabling This Feature. if you send message again you will be blocked ❌")
+                        return
+                    await message.reply("Sorry, My master enabled PmGuard Feature, You can't send message till My master Approves you or Disabling This Feature. if you send message again you will be blocked ❌")
                 elif warning_count[user_id] == 2:
                     if user_id in Always_Approved_Users_From_Pmblock or user_id in approved_users:
                         return
