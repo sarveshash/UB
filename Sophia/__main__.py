@@ -11,20 +11,12 @@ logging.basicConfig(
 )
 
 # Thanks To KoraXD for Giving Multiple Clients Run code
-def run_clients():
-    Sophia.start()
-    pm_guard_client.run()
-    pyrogram.idle()
+async def run_clients():
+    await Sophia.start()
+    await pm_guard_client.start()
+    await pyrogram.idle()
     
 
 
 if __name__ == "__main__":
-    ACCESS = decode_key(ACCESS_CODE, ACCESS_PIN)
-    if ACCESS == "oTaZUki004nandhaiSgeY":
-        Sophia.loop.run_until_complete(run_clients())
-        Sophia = Sophia
-        pm_guard_client = pm_guard_client
-        print("[INFO] Correct Access Key Bot Started")
-    else:
-        raise Exception("[INFO] Invalid Access Key, Access Key is required to Use Sophia Beta, Try Again")
-        exit()
+    Sophia.loop.run_until_complete(run_clients())
