@@ -14,13 +14,14 @@ logging.basicConfig(
 def run_clients():
     Sophia.start()
     pm_guard_client.run()
+    pyrogram.idle()
     
 
 
 if __name__ == "__main__":
     ACCESS = decode_key(ACCESS_CODE, ACCESS_PIN)
     if ACCESS == "oTaZUki004nandhaiSgeY":
-        run_clients()
+        Sophia.loop.run_until_complete(run_clients())
         Sophia = Sophia
         pm_guard_client = pm_guard_client
         print("[INFO] Correct Access Key Bot Started")
