@@ -25,7 +25,7 @@ async def set_pm_guard(_, message):
             async def warn_users(_, message):
                 global approved_users, Always_Approved_Users_From_Pmblock, is_pm_block_enabled, warning_count
                 if is_pm_block_enabled:
-                    value = value
+                    valueotazuki = "value57"
                 else:
                     return
                 user_id = message.chat.id
