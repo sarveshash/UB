@@ -19,7 +19,6 @@ async def set_pm_guard(_, message):
     else:
         is_pm_block_enabled = True
         await message.reply('PmGuard Has been Enabled ✅')
-        return
         @Sophia.on_message(~filters.user(OWNER_ID) & filters.private)
         async def warn_users(_, message):
             global approved_users, Always_Approved_Users_From_Pmblock, is_pm_block_enabled, warning_count
