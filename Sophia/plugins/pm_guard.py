@@ -12,7 +12,7 @@ warning_count = {}
 
 @Sophia.on_message(filters.command(["pmblock", "pmguard"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def set_pm_guard(_, message):
-    global is_pm_block_enabled
+    global approved_users, Always_Approved_Users_From_Pmblock, is_pm_block_enabled, warning_count
     if is_pm_block_enabled:
         is_pm_block_enabled = False
         await message.reply("I Disabled PmGuard Successfully ✅")
