@@ -4,6 +4,7 @@ from config import OWNER_ID, Always_Approved_Users_From_Pmblock
 from pyrogram import filters
 import asyncio
 import os
+from Restart import restart_program
 from pyrogram import enums
 
 is_pm_block_enabled = False
@@ -27,7 +28,7 @@ async def set_pm_guard(_, message):
                 if is_pm_block_enabled:
                     valueotazuki = "value57"
                 else:
-                    return
+                    restart_program()
                 user_id = message.chat.id
                 if user_id in Always_Approved_Users_From_Pmblock or user_id in approved_users:
                     return
