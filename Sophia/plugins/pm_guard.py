@@ -16,6 +16,7 @@ async def set_pm_guard(_, message):
     if is_pm_block_enabled:
         is_pm_block_enabled = False
         await message.reply("I Disabled PmGuard Successfully ✅")
+        return
     else:
         is_pm_block_enabled = True
         await message.reply('PmGuard Has been Enabled ✅')
