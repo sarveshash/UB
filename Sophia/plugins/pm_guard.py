@@ -20,26 +20,31 @@ async def set_pm_guard(_, message):
     else:
         is_pm_block_enabled = True
         await message.reply('PmGuard Has been Enabled ✅')
-        @Sophia.on_message(~filters.user(OWNER_ID) & filters.private)
-        async def warn_users(_, message):
-            global approved_users, Always_Approved_Users_From_Pmblock, is_pm_block_enabled, warning_count
-            user_id = message.chat.id
-            if user_id not in Always_Approved_Users_From_Pmblock or user_id not in approved_users:
-                return
-            if user_id not in warning_count:
-                warning_count[user_id] = 0
-            warning_count[user_id] += 1
-            if warning_count[user_id] == 1:
-                await message.reply("Sorry, my master has enabled the PmGuard feature. You can't send messages until my master approves you or disables this feature. If you send a message again, you will be blocked.")
-            elif warning_count[user_id] == 2:
-                await message.reply("This is your second warning. If you send another message, you will be blocked.")
-            elif warning_count[user_id] >= 3:
-                try:
-                    await message.reply("You have exceeded your limits, so I have blocked you!")
-                    await Sophia.block_user(user_id)
-                except Exception as e:
-                    print(e)
-                    await Sophia.send_message(OWNER_ID, e)
+        return
+
+
+@Sophia.on_message(filters.private)
+async def warn_users(_, message):
+    global approved_users, Always_Approved_Users_From_Pmblock, is_pm_block_enabled, warning_count
+    if message.from_user.id == OWNER_ID:
+        return
+    user_id = message.chat.id
+    if user_id not in Always_Approved_Users_From_Pmblock or user_id not in approved_users:
+        return
+    if user_id not in warning_count:
+        warning_count[user_id] = 0
+    warning_count[user_id] += 1
+    if warning_count[user_id] == 1:
+        await message.reply("Sorry, my master has enabled the PmGuard feature. You can't send messages until my master approves you or disables this feature. If you send a message again, you will be blocked.")
+    elif warning_count[user_id] == 2:
+        await message.reply("This is your second warning. If you send another message, you will be blocked.")
+    elif warning_count[user_id] >= 3:
+        try:
+            await message.reply("You have exceeded your limits, so I have blocked you!")
+            await Sophia.block_user(user_id)
+        except Exception as e:
+            print(e)
+            await Sophia.send_message(OWNER_ID, e)
                     
 
 
