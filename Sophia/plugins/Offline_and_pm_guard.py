@@ -69,6 +69,8 @@ async def Unapprove_user(_, message):
 @Sophia.on_message(~filters.user(OWNER_ID) & filters.private)
 async def warn_users(_, message):
     global approved_users, Always_Approved_Users_From_Pmblock, is_pm_block_enabled, warning_count
+    if not is_pm_block_enabled:
+        return
     user_id = message.chat.id
     if user_id in Always_Approved_Users_From_Pmblock or user_id in approved_users:
         return
