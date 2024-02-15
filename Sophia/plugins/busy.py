@@ -2,7 +2,7 @@ from pyrogram import filters
 from Sophia import HANDLER
 from Sophia.__main__ import Sophia
 from config import OWNER_ID as OWN
-from config import IGNORED_USERS_ID, BOTS_ALLOWED_TO_USE_BUSY_COMMANDS
+from config import IGNORED_USERS_ID, BOTS_ALLOWED_TO_WORK_IN_BUSY_COMMANDS
 from Restart import restart_program
 import os
 import re
@@ -41,7 +41,7 @@ async def set_into_busy(_, message):
             formatted_elapsed_time = f"{hours}h {minutes}m {seconds}s"
             if message.from_user.id in IGNORED_USERS_ID:
                 return
-            if BOTS_ALLOWED_TO_USE_BUSY_COMMANDS == False:
+            if BOTS_ALLOWED_TO_WORK_IN_BUSY_COMMANDS == False:
                 if message.from_user.is_bot:
                     return
             if Does_Reason_Available == True:
