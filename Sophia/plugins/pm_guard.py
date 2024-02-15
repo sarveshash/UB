@@ -11,7 +11,6 @@ is_pm_block_enabled = False
 approved_users = []
 warning_count = {}
 maximum_message_count = 0
-last_message_count = 0
 
 @Sophia.on_message(filters.command(["pmblock", "pmguard"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def set_pm_guard(_, message):
@@ -26,7 +25,6 @@ async def set_pm_guard(_, message):
         if intCount > 20:
             await message.reply("Maximum Applable warning count is 20")
             return
-        last_message_count = intCount-1
         maximum_message_count = intCount
         is_pm_block_enabled = True
         await message.reply('PmGuard Has been Enabled ✅')
@@ -48,10 +46,7 @@ async def set_pm_guard(_, message):
                     warning_count[user_id] = 0
                 warning_count[user_id] += 1
                 if warning_count[user_id] != maximum_message_count:
-                    if maximum_message_count == last_message_count:
-                        await message.reply("I wil block you in another message")
-                        return
-                    await message.reply("Sorry, my master has enabled the PmGuard feature. You can't send messages until my master approves you or disables this feature. If you send a message again, you will be blocked.")
+                    await message.reply(f"**⚠️ WARNING**\n\nSorry, my master has enabled the PmGuard feature. You can't send messages until my master approves you or disabling this feature. If you Spam Here or the warning exceeds the limits I will Block You.\n\n**➲ Warning Counts** `{warning_count[user_id]}/{maximum_message_count}`")
                 elif warning_count[user_id] == maximum_message_count:
                     try:
                         await message.reply("You have exceeded your limits, so I have blocked you!")
