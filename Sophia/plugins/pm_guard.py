@@ -17,22 +17,22 @@ async def set_pm_guard(_, message):
     global approved_users, Always_Approved_Users_From_Pmblock, is_pm_block_enabled, warning_count, maximum_message_count
     if is_pm_block_enabled:
         is_pm_block_enabled = False
-        await message.reply("**I have Disabled PmGuard Successfully ✅**")
+        await message.reply("**➲ I have Disabled PmGuard Successfully ✅**")
         return
     else:
         if len(message.command) < 2:
-            return await message.reply_text("Master, Please enter the maximum message limit.")
+            return await message.reply_text("➲ Master, Please enter the maximum warning limit.")
         count = " ".join(message.command[1:])
         intCount = int(count)
         if intCount <= 0:
-            await message.reply("Master, Count must be positive Integers.")
+            await message.reply("➲ Master, Count must be positive Integers.")
             return
         if intCount > 20:
-            await message.reply("Maximum Applable warning count is 20.")
+            await message.reply("➲ Maximum Applable warning count is 20.")
             return
         maximum_message_count = intCount
         is_pm_block_enabled = True
-        await message.reply('**I have enabled PmGuard successfully 🥀 ✨**')
+        await message.reply('**➲ I have enabled PmGuard successfully 🥀 ✨**')
         if is_pm_block_enabled:
             @Sophia.on_message(~filters.user(OWNER_ID) & filters.private)
             async def warn_users(_, message):
@@ -54,7 +54,7 @@ async def set_pm_guard(_, message):
                     await message.reply(f"**⚠️ WARNING**\n\nSorry, my master has enabled the PmGuard feature. You can't send messages until my master approves you or disabling this feature. If you Spam Here or the warning exceeds the limits I will Block You.\n\n**➲ Warning Counts** `{warning_count[user_id]}/{maximum_message_count}`")
                 elif warning_count[user_id] == maximum_message_count:
                     try:
-                        await message.reply("You have exceeded your limits, so I have blocked you!")
+                        await message.reply("➲ You have exceeded your limits, so I have blocked you!")
                         await Sophia.block_user(user_id)
                     except Exception as e:
                         print(e)
