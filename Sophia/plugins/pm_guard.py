@@ -21,9 +21,12 @@ async def set_pm_guard(_, message):
         return
     else:
         if len(message.command) < 2:
-            return await message.reply_text("➲ Master, Please enter the maximum warning limit.")
+            return await message.reply_text("➲ Master, Please enter the maximum message warning limit.")
         count = " ".join(message.command[1:])
         intCount = int(count)
+        if intCount == 1:
+            await message.reply("➲ Master, Count must be atleast 2.")
+            return
         if intCount <= 0:
             await message.reply("➲ Master, Count must be positive Integers.")
             return
