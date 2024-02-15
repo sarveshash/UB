@@ -1,6 +1,6 @@
 from Sophia import HANDLER
 from Sophia.__main__ import Sophia
-from config import OWNER_ID, Always_Approved_Users_From_Pmblock, BOTS_ALLOWED_TO_USE_BUSY_COMMANDS
+from config import OWNER_ID, Always_Approved_Users_From_Pmblock, BOTS_ALLOWED_TO_WORK_IN_BUSY_COMMANDS
 from pyrogram import filters
 import asyncio
 import os
@@ -32,7 +32,7 @@ async def set_pm_guard(_, message):
                 user_id = message.chat.id
                 if user_id in Always_Approved_Users_From_Pmblock or user_id in approved_users:
                     return
-                if BOTS_ALLOWED_TO_USE_BUSY_COMMANDS == False:
+                if BOTS_ALLOWED_TO_WORK_IN_BUSY_COMMANDS == False:
                     if message.chat.type == enums.ChatType.BOT:
                         return
                 if user_id not in warning_count:
