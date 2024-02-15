@@ -30,8 +30,7 @@ async def set_pm_guard(_, message):
                 else:
                     restart_program()
                 user_id = message.chat.id
-                user = await Sophia.get_chat(user_id)
-                if user_id in Always_Approved_Users_From_Pmblock or user_id in approved_users or user.chat.type.is_bot:
+                if user_id in Always_Approved_Users_From_Pmblock or user_id in approved_users or message.chat.type == enums.ChatType.BOT:
                     return
                 if user_id not in warning_count:
                     warning_count[user_id] = 0
