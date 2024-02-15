@@ -26,10 +26,10 @@ async def set_into_busy(_, message):
         Reason_Of_Busy = " ".join(message.command[1:])
     if Does_Reason_Available == False:
         Busy_time['start'] = time()
-        await message.reply_text("**Master**, I Set You In Offline Mode I will Reply to everyone who wants to talk you, bye 👋")
+        await message.reply_text("➲ Master, I successfully Set you AFK mode, I will reply to everyone if anyone chats you.")
     else:
         Busy_time['start'] = time()
-        await message.reply_text(f"**UwU**, I Have set you In offline mode successfully ✅\n**Reason:** `{Reason_Of_Busy}`")
+        await message.reply_text(f"➲ I have Set you in AFK mode successfully ✅\n**Reason:** `{Reason_Of_Busy}`")
     if Busy_stats == True:
         @Sophia.on_message(filters.private & ~filters.user(OWN))
         async def say_master_is_busy(_, message):
@@ -47,7 +47,7 @@ async def set_into_busy(_, message):
             if Does_Reason_Available == True:
                 await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she maybe in a highly stress or maybe he/she in a work or he/she in a problem anything but don't distrub him/her now please.\n\n**➲ Reason: `{Reason_Of_Busy}`\n➲ Offline Duration:** {formatted_elapsed_time}")
             else:
-                await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she maybe in a highly stress or maybe he/she in a work or he/she in a problem anything but don't distrub him/her now please.\n\n**➲ Reason: NOT AVAILABLE\n➲ Offline Duration:** {formatted_elapsed_time}")
+                await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she maybe in a highly stress or maybe he/she in a work or he/she in a problem anything but don't distrub him/her now please.\n\n**➲ Reason: NOT SET\n➲ Offline Duration:** {formatted_elapsed_time}")
         @Sophia.on_message(filters.group & ~filters.user(OWN))
         async def Group_say_master_offline(_, message):
             info = await Sophia.get_users(OWN)
@@ -61,9 +61,9 @@ async def set_into_busy(_, message):
             formatted_elapsed_time = f"{hours}h {minutes}m {seconds}s"
             if message.reply_to_message.from_user.id == OWN:
                 if Does_Reason_Available == True:
-                    await message.reply_text(f"**Sorry**, `My Master is Currently Offline ❌`\n\n**Reason**: `{Reason_Of_Busy}`\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
+                    await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she maybe in a highly stress or maybe he/she in a work or he/she in a problem anything but don't distrub him/her now please.\n\n**➲ Reason: `{Reason_Of_Busy}`\n➲ Offline Duration:** {formatted_elapsed_time}")
                 else:
-                    await message.reply_text(f"**Sorry**, `My Master is Currently In Offline Can you Come Later?`\n\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
+                    await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she maybe in a highly stress or maybe he/she in a work or he/she in a problem anything but don't distrub him/her now please.\n\n**➲ Reason: NOT SET\n➲ Offline Duration:** {formatted_elapsed_time}")
         @Sophia.on_message(filters.user(OWN))
         async def remove_busy_mode(_, message):
             elapsed_time_seconds = round(time() - Busy_time['start'])
@@ -78,5 +78,5 @@ async def set_into_busy(_, message):
             elif message.text.startswith("Master, I have Been Blocked A user From Ignored"):
                 print(" ")
             else:
-                await message.reply_text(f"**Hello**, Master Welcome Back! 🥀\n» I missed you for: `{formatted_elapsed_time}`🥺")
+                await message.reply_text(f"➲ **Hello**, Master Welcome Again ✨🥀.\n➲ **Your Offline Duration**: `{formatted_elapsed_time}`🥺")
                 await restart_program()
