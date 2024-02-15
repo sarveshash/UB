@@ -24,7 +24,7 @@ async def set_pm_guard(_, message):
             return await message.reply_text("Master, Please enter the maximum message limit.")
         count = " ".join(message.command[1:])
         intCount = int(count)
-        if intCount == <=0:
+        if intCount == <= 0:
             await message.reply("Master, Count must be positive Integers.")
             return
         if intCount > 20:
@@ -32,7 +32,7 @@ async def set_pm_guard(_, message):
             return
         maximum_message_count = intCount
         is_pm_block_enabled = True
-        await message.reply('**I have enabled PmGuard successfully 🥀✨**')
+        await message.reply('**I have enabled PmGuard successfully 🥀 ✨**')
         if is_pm_block_enabled:
             @Sophia.on_message(~filters.user(OWNER_ID) & filters.private)
             async def warn_users(_, message):
