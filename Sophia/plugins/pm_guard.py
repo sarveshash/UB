@@ -24,7 +24,7 @@ async def set_pm_guard(_, message):
             return await message.reply_text("Master, Please enter the maximum message limit.")
         count = " ".join(message.command[1:])
         intCount = int(count)
-        if intCount == =< 0:
+        if intCount =< 0:
             await message.reply("Master, Count must be positive Integers.")
             return
         if intCount > 20:
