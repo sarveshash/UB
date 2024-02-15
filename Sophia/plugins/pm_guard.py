@@ -17,17 +17,22 @@ async def set_pm_guard(_, message):
     global approved_users, Always_Approved_Users_From_Pmblock, is_pm_block_enabled, warning_count, maximum_message_count
     if is_pm_block_enabled:
         is_pm_block_enabled = False
-        await message.reply("I Disabled PmGuard Successfully ✅")
+        await message.reply("**I have Disabled PmGuard Successfully ✅**")
         return
     else:
+        if len(message.command) < 2:
+            return await message.reply_text("Master, Please enter the maximum message limit.")
         count = " ".join(message.command[1:])
         intCount = int(count)
+        if intCount == <=0:
+            await message.reply("Master, Count must be positive Integers.")
+            return
         if intCount > 20:
-            await message.reply("Maximum Applable warning count is 20")
+            await message.reply("Maximum Applable warning count is 20.")
             return
         maximum_message_count = intCount
         is_pm_block_enabled = True
-        await message.reply('PmGuard Has been Enabled ✅')
+        await message.reply('**I have enabled PmGuard successfully 🥀✨**')
         if is_pm_block_enabled:
             @Sophia.on_message(~filters.user(OWNER_ID) & filters.private)
             async def warn_users(_, message):
