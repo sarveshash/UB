@@ -30,7 +30,7 @@ async def set_pm_guard(_, message):
                 else:
                     restart_program()
                 user_id = message.chat.id
-                if user_id in Always_Approved_Users_From_Pmblock or user_id in approved_users:
+                if user_id in Always_Approved_Users_From_Pmblock or user_id in approved_users or message.from_user.is_bot:
                     return
                 if user_id not in warning_count:
                     warning_count[user_id] = 0
