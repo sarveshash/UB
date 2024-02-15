@@ -2,13 +2,11 @@ from pyrogram import filters
 from Sophia import HANDLER
 from Sophia.__main__ import Sophia
 from config import OWNER_ID as OWN
-from config import IGNORED_USERS_ID
+from config import IGNORED_USERS_ID, BOTS_ALLOWED_TO_USE_BUSY_COMMANDS
 from Restart import restart_program
 import os
 import re
 from time import time
-
-
 
 Busy_stats = {}
 Does_Reason_Available = {}
@@ -41,8 +39,11 @@ async def set_into_busy(_, message):
             minutes, seconds = divmod(remainder, 60)
             # Format the result
             formatted_elapsed_time = f"{hours}h {minutes}m {seconds}s"
-            if message.from_user.id in IGNORED_USERS_ID or message.from_user.is_bot:
+            if message.from_user.id in IGNORED_USERS_ID:
                 return
+            if BOTS_ALLOWED_TO_USE_BUSY_COMMANDS == False:
+                if message.from_user.is_bot:
+                    return
             if Does_Reason_Available == True:
                 await message.reply_text(f"**Sorry**, `My Master is Currently Offline ❌`\n\n**Reason**: `{Reason_Of_Busy}`\n**I haven't seen my Master since:** ||`{formatted_elapsed_time}`||")
             else:
