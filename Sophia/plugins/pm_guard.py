@@ -22,10 +22,10 @@ async def set_pm_guard(_, message):
         return
     else:
         count = " ".join(message.command[1:])
-        if count > 20:
+        intCount = int(count)
+        if intCount > 20:
             await message.reply("Maximum Applable warning count is 20")
             return
-        intCount = int(count)
         last_message_count = intCount-1
         maximum_message_count = intCount
         is_pm_block_enabled = True
