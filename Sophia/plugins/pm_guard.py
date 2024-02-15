@@ -10,15 +10,21 @@ from pyrogram import enums
 is_pm_block_enabled = False
 approved_users = []
 warning_count = {}
+maximum_message_count = 0
 
 @Sophia.on_message(filters.command(["pmblock", "pmguard"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def set_pm_guard(_, message):
-    global approved_users, Always_Approved_Users_From_Pmblock, is_pm_block_enabled, warning_count
+    global approved_users, Always_Approved_Users_From_Pmblock, is_pm_block_enabled, warning_count, maximum_message_count
     if is_pm_block_enabled:
         is_pm_block_enabled = False
         await message.reply("I Disabled PmGuard Successfully ✅")
         return
     else:
+        count = " ".join(message.command[1:])
+        if count > 15:
+            await message.reply("Maximum Applable warning count is 15")
+            return
+        maximum_message_count = int(maximum_message_count)
         is_pm_block_enabled = True
         await message.reply('PmGuard Has been Enabled ✅')
         if is_pm_block_enabled:
@@ -38,11 +44,9 @@ async def set_pm_guard(_, message):
                 if user_id not in warning_count:
                     warning_count[user_id] = 0
                 warning_count[user_id] += 1
-                if warning_count[user_id] == 1:
+                if warning_count[user_id] != maximum_message_count:
                     await message.reply("Sorry, my master has enabled the PmGuard feature. You can't send messages until my master approves you or disables this feature. If you send a message again, you will be blocked.")
-                elif warning_count[user_id] == 2:
-                    await message.reply("This is your second warning. If you send another message, you will be blocked.")
-                elif warning_count[user_id] >= 3:
+                elif warning_count[user_id] == maximum_message_count:
                     try:
                         await message.reply("You have exceeded your limits, so I have blocked you!")
                         await Sophia.block_user(user_id)
