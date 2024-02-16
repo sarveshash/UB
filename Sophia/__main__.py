@@ -14,7 +14,7 @@ logging.basicConfig(
 
 PWD = f"{os.getcwd()}/"
 
-FILE_AVAILABLE = None
+FILE_AVAILABLE = False
 
 async def run_clients():
     global FILE_AVAILABLE
@@ -25,15 +25,11 @@ async def run_clients():
         file_path = f"{PWD}Data.txt"
         try:
             await Database.download_media(message.document.file_id, file_name=file_path)
-            if os.path.isfile(file_path):
-                FILE_AVAILABLE = True
-            else:
-                FILE_AVAILABLE = False
         except Exception:
-            if os.path.isfile(file_path):
-                FILE_AVAILABLE = True
-            else:
-                FILE_AVAILABLE = False
+            await Sophia.start()
+            await pyrogram.idle()
+            return
+    FILE_AVAILABLE = True
     await Sophia.start()
     await pyrogram.idle()
 
