@@ -32,7 +32,6 @@ async def run_clients():
         except Exception:
             await app.send_document(DATABASE_GROUP_ID, "BQACAgUAAx0CbtjjywACeVFlz3aBLE2v1n5yNAk_3hXisF4azwACWRAAAsrIeFYIS0o5eQ56sh4E", caption="#CACHE_FILE")
             await restart_program()
-            return
         await Sophia.start()
         await pyrogram.idle()
 
