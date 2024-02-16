@@ -13,6 +13,7 @@ logging.basicConfig(
 
 PWD = f"{os.getcwd()}/"
 
+# RUNNING CLIENTS 
 async def run_clients():
     global FILE_AVAILABLE
     await Database.start()
@@ -28,6 +29,8 @@ async def run_clients():
             return
     await Sophia.start()
     await pyrogram.idle()
+
+# DATABASE BASE SECTION
 
 if __name__ == "__main__":
     ACCESS = decode_key(ACCESS_CODE, ACCESS_PIN)
