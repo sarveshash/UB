@@ -12,6 +12,8 @@ MY_VERSION = 0.01
 
 # MAIN CLIENT OF SOPHIA
 Sophia = Client("Sophia", session_string=SESSION, api_id=API_ID, api_hash=API_HASH, plugins=dict(root="Sophia/plugins"))
+# DATABASE CLIENT OF SOPHIA
+Database = Client("Database", session_string=SESSION, api_id=API_ID, api_hash=API_HASH, plugins=dict(root="Sophia/plugins"))
 
 # BETA ACCESS KEY SECTION
 
