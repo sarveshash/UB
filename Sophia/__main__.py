@@ -20,7 +20,7 @@ async def run_clients():
     app = Database
     await app.send_message(DATABASE_GROUP_ID, "Sophia started")
     async for message in app.search_messages(DATABASE_GROUP_ID, query="#CACHE_FILE", limit=1):
-        file_path = f"{PWD}Data.txt"
+        file_path = f"{PWD}Data.py"
         try:
             await Database.download_media(message.document.file_id, file_name=file_path)
         except Exception:
