@@ -24,30 +24,16 @@ async def run_clients():
         try:
             await Database.download_media(message.document.file_id, file_name=file_path)
         except Exception:
-            await Sophia.start()
-            await pyrogram.idle()
-            return
-    await Sophia.start()
-    await pyrogram.idle()
+            print("Sophia Started")
+        try:
+            with open(f'{file_path}', 'r') as file:
+                content = file.read()
+        except Exception:
+            with open(f'{file_path}', 'w') as file:
+                file.write(DATABASE_CACHE_CODE)
+        await Sophia.start()
+        await pyrogram.idle()
 
-# DATABASE BASE SECTION
-DATABASE_CACHE_CODE = """
-approved_users = []
-is_pm_block_enabled = False
-maximum_message_count = 0
-
-
-Reason_Of_Busy = {}
-Does_Reason_Available = {}
-approved_users = {}
-Busy_stats = {}
-"""
-try:
-    with open('file.txt', 'r') as file:
-        content = file.read()
-except Exception:
-    with open('new_file.txt', 'w') as file:
-        file.write(DATABASE_CACHE_CODE)
 
 if __name__ == "__main__":
     ACCESS = decode_key(ACCESS_CODE, ACCESS_PIN)
