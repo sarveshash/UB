@@ -32,8 +32,14 @@ async def run_clients():
 
 # DATABASE BASE SECTION
 DATABASE_CACHE_CODE = """
+
 is_pmguard_available_here = 
 is_offline_available_here = 
+
+approved_users = []
+is_pm_block_enabled = False
+maximum_message_count = 0
+
 """
 
 if __name__ == "__main__":
