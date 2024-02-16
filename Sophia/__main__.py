@@ -5,6 +5,8 @@ from config import DATABASE_GROUP_ID
 import logging
 import pyrogram
 
+FILENOTFOUND = None
+
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
@@ -16,7 +18,10 @@ async def run_clients():
     app = Database
     await app.send_message(-1001962303988, "Sophia started")
     async for message in app.search_messages(-1001962303988, query="#CACHE_FILE", limit=1):
-        await Database.download_media(message.document.file_id, file_name=f"{PWD}Data.txt")
+        try:
+            await Database.download_media(message.document.file_id, file_name=f"{PWD}Data.txt")
+        except AttributeError:
+            FILENOTFOUND = True
     await Sophia.start()
     await pyrogram.idle()
 
