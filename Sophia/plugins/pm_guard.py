@@ -53,7 +53,7 @@ async def set_pm_guard(_, message):
                 if user_id not in warning_count:
                     warning_count[user_id] = 0
                 warning_count[user_id] += 1
-                if warning_count[user_id] <= maximum_message_count:
+                if warning_count[user_id] < maximum_message_count:
                     await message.reply(f"**⚠️ WARNING**\n\nSorry, my master has enabled the PmGuard feature. You can't send messages until my master approves you or disabling this feature. If you Spam Here or the warning exceeds the limits I will Block You.\n\n**➲ Warning Counts** `{warning_count[user_id]}/{maximum_message_count}`")
                 elif warning_count[user_id] >= maximum_message_count:
                     try:
