@@ -32,15 +32,22 @@ async def run_clients():
 
 # DATABASE BASE SECTION
 DATABASE_CACHE_CODE = """
-
-is_pmguard_available_here = 
-is_offline_available_here = 
-
 approved_users = []
 is_pm_block_enabled = False
 maximum_message_count = 0
 
+
+Reason_Of_Busy = {}
+Does_Reason_Available = {}
+approved_users = {}
+Busy_stats = {}
 """
+try:
+    with open('file.txt', 'r') as file:
+        content = file.read()
+except Exception:
+    with open('new_file.txt', 'w') as file:
+        file.write(DATABASE_CACHE_CODE)
 
 if __name__ == "__main__":
     ACCESS = decode_key(ACCESS_CODE, ACCESS_PIN)
