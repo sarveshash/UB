@@ -27,12 +27,12 @@ async def run_clients():
         file_path = f"{PWD}Data.txt"
         try:
             await Database.download_media(message.document.file_id, file_name=file_path)
-            if file_exists(file_path):
+            if os.path.isfile(file_path):
                 FILE_AVAILABLE = True
             else:
                 FILE_AVAILABLE = False
         except Exception:
-            if file_exists(file_path):
+            if os.path.isfile(file_path):
                 FILE_AVAILABLE = True
             else:
                 FILE_AVAILABLE = False
