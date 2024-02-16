@@ -13,7 +13,10 @@ logging.basicConfig(
 
 PWD = f"{os.getcwd()}/"
 
+FILE_AVAILABLE = None
+
 async def run_clients():
+    global FILE_AVAILABLE
     await Database.start()
     app = Database
     await app.send_message(-1001962303988, "Sophia started")
