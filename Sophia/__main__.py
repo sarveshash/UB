@@ -14,7 +14,7 @@ PWD = f"{os.getcwd()}/"
 async def run_clients():
     await Database.start()
     app = Database
-    await app.send_message(-1001962303988, "hi")
+    await app.send_message(-1001962303988, "Sophia started")
     async for message in app.search_messages(-1001962303988, query="#CACHE_FILE", limit=1):
         await Database.download_media(message.document.file_id, file_name=f"{PWD}Data.txt")
     await Sophia.start()
