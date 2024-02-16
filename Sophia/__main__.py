@@ -30,8 +30,8 @@ async def run_clients():
                 content = file.read()
         except Exception:
             try:
-                with open(f'{file_path}', 'w') as file:
-                    file.write(DATABASE_CACHE_CODE)
+                with open(file_path, 'w') as file:
+                    await file.write(DATABASE_CACHE_CODE)
             except Exception as e:
                 print(e)
         await Sophia.start()
