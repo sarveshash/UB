@@ -32,8 +32,12 @@ async def run_clients():
             try:
                 with open(file_path, 'w') as file:
                     await file.write(DATABASE_CACHE_CODE)
+                await Sophia.start()
+                await pyrogram.idle()
+                return
             except Exception as e:
                 print(e)
+                return
         await Sophia.start()
         await pyrogram.idle()
 
