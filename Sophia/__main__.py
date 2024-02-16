@@ -29,9 +29,7 @@ async def run_clients():
             with open(f'{file_path}', 'r') as file:
                 content = file.read()
         except Exception:
-            try:
-                with open(file_path, 'w') as file:
-                    await file.write(DATABASE_CACHE_CODE)
+            await app.send_document(DATABASE_GROUP_ID, waiii
                 await Sophia.start()
                 await pyrogram.idle()
                 return
