@@ -12,7 +12,7 @@ logging.basicConfig(
 async def run_clients():
     await Database.start()
     app = Database
-    async for message in app.search_messages(LOGS, query="#CACHE_FILE", limit=1):
+    async for message in app.search_messages(, query="#CACHE_FILE", limit=1):
         await Database.download_media(message.document.file_id, file_name="Data.txt")
         await Sophia.start()
         await pyrogram.idle()
