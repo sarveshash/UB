@@ -1,4 +1,3 @@
-
 from Sophia import *
 from pyrogram import Client, filters
 import os
@@ -14,14 +13,12 @@ logging.basicConfig(
 
 PWD = f"{os.getcwd()}/"
 
-FILE_AVAILABLE = False
-
 async def run_clients():
     global FILE_AVAILABLE
     await Database.start()
     app = Database
-    await app.send_message(-1001962303988, "Sophia started")
-    async for message in app.search_messages(-1001962303988, query="#CACHE_FILE", limit=1):
+    await app.send_message(DATABASE_GROUP_ID, "Sophia started")
+    async for message in app.search_messages(DATABASE_GROUP_ID, query="#CACHE_FILE", limit=1):
         file_path = f"{PWD}Data.txt"
         try:
             await Database.download_media(message.document.file_id, file_name=file_path)
@@ -29,7 +26,6 @@ async def run_clients():
             await Sophia.start()
             await pyrogram.idle()
             return
-    FILE_AVAILABLE = True
     await Sophia.start()
     await pyrogram.idle()
 
