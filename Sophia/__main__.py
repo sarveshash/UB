@@ -5,24 +5,38 @@ from config import DATABASE_GROUP_ID
 import logging
 import pyrogram
 
-FILENOTFOUND = False
+FILE_AVAILABLE = False
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
     level=logging.INFO,
 )
+
 PWD = f"{os.getcwd()}/"
+
+def file_exists(file_path):
+    return os.path.isfile(file_path)
+
 async def run_clients():
-    global FILENOTFOUND
+    global FILE_AVAILABLE
     await Database.start()
     app = Database
     await app.send_message(-1001962303988, "Sophia started")
     async for message in app.search_messages(-1001962303988, query="#CACHE_FILE", limit=1):
+        file_path = f"{PWD}Data.txt"
         try:
-            await Database.download_media(message.document.file_id, file_name=f"{PWD}Data.txt")
+            await Database.download_media(message.document.file_id, file_name=file_path)
+            if file_exists(file_path):
+                FILE_AVAILABLE = True
+            else:
+                FILE_AVAILABLE = False
         except Exception:
-            FILENOTFOUND = True
+            if file_exists(file_path):
+                FILE_AVAILABLE = True
+            else:
+                FILE_AVAILABLE = False
+            # Alien level coding be like .
     await Sophia.start()
     await pyrogram.idle()
 
