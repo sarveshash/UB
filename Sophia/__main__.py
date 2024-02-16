@@ -5,7 +5,7 @@ from config import DATABASE_GROUP_ID
 import logging
 import pyrogram
 
-FILENOTFOUND = None
+FILENOTFOUND = False
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -14,6 +14,7 @@ logging.basicConfig(
 )
 PWD = f"{os.getcwd()}/"
 async def run_clients():
+    global FILENOTFOUND
     await Database.start()
     app = Database
     await app.send_message(-1001962303988, "Sophia started")
