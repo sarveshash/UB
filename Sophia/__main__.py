@@ -1,3 +1,4 @@
+
 from Sophia import *
 from pyrogram import Client, filters
 import os
@@ -43,4 +44,3 @@ if __name__ == "__main__":
     else:
         raise Exception("[INFO] Invalid Access Key, Access Key is required to Use Sophia Beta, Try Again")
         exit()
-    
