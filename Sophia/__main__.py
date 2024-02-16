@@ -5,8 +5,6 @@ from config import DATABASE_GROUP_ID
 import logging
 import pyrogram
 
-FILE_AVAILABLE = False
-
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
@@ -15,8 +13,7 @@ logging.basicConfig(
 
 PWD = f"{os.getcwd()}/"
 
-def file_exists(file_path):
-    return os.path.isfile(file_path)
+FILE_AVAILABLE = None
 
 async def run_clients():
     global FILE_AVAILABLE
@@ -36,7 +33,6 @@ async def run_clients():
                 FILE_AVAILABLE = True
             else:
                 FILE_AVAILABLE = False
-            # Alien level coding be like .
     await Sophia.start()
     await pyrogram.idle()
 
