@@ -31,6 +31,10 @@ async def run_clients():
     await pyrogram.idle()
 
 # DATABASE BASE SECTION
+DATABASE_CACHE_CODE = """
+is_pmguard_available_here = 
+is_offline_available_here = 
+"""
 
 if __name__ == "__main__":
     ACCESS = decode_key(ACCESS_CODE, ACCESS_PIN)
