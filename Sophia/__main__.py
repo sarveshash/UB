@@ -10,7 +10,7 @@ logging.basicConfig(
     handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
     level=logging.INFO,
 )
-PWD = f"os.getcwd()/"
+PWD = f"{os.getcwd()}/"
 async def run_clients():
     await Database.start()
     app = Database
