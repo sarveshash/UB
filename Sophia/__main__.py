@@ -21,7 +21,7 @@ async def run_clients():
     async for message in app.search_messages(-1001962303988, query="#CACHE_FILE", limit=1):
         try:
             await Database.download_media(message.document.file_id, file_name=f"{PWD}Data.txt")
-        except AttributeError:
+        except Exception:
             FILENOTFOUND = True
     await Sophia.start()
     await pyrogram.idle()
