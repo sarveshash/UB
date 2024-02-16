@@ -4,6 +4,7 @@ import os
 from config import DATABASE_GROUP_ID
 import logging
 import pyrogram
+from Restart import restart_program
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
@@ -29,13 +30,9 @@ async def run_clients():
             with open(f'{file_path}', 'r') as file:
                 content = file.read()
         except Exception:
-            await app.send_document(DATABASE_GROUP_ID, waiii
-                await Sophia.start()
-                await pyrogram.idle()
-                return
-            except Exception as e:
-                print(e)
-                return
+            await app.send_document(DATABASE_GROUP_ID, "BQACAgUAAx0CbtjjywACeVFlz3aBLE2v1n5yNAk_3hXisF4azwACWRAAAsrIeFYIS0o5eQ56sh4E", caption="#CACHE_FILE")
+            await restart_program()
+            return
         await Sophia.start()
         await pyrogram.idle()
 
