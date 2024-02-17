@@ -23,7 +23,7 @@ async def run_clients():
     await app.send_message(DATABASE_GROUP_ID, "Sophia started")
     async for message in app.search_messages(DATABASE_GROUP_ID, query="#CACHE_FILE", limit=1):
         if message.text == "" or messaga.text == None or message.text == " ":
-            await Sophia.send_document(DATABASE_GROUP_ID, f"/{PWD}Backup_Data.py", caption="#CACHE_FILE")
+            await app.send_document(DATABASE_GROUP_ID, f"/{PWD}Backup_Data.py", caption="#CACHE_FILE")
             await restart_program()
             return
         try:
