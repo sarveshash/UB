@@ -37,10 +37,10 @@ async def run_clients():
             await Database.download_media(message.document.file_id, file_name=file_path)
             try:
                 with open('Data.py', 'r') as file:
-                    Text = await file.read()
+                    Text = file.read()
             except Exception:
                 with open('Data.py', 'w') as file:
-                    await file.write(DATA_TEXT)
+                    file.write(DATA_TEXT)
                 await restart_program()
         except Exception as e:
             print(e)
