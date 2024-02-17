@@ -28,7 +28,7 @@ async def run_clients():
             print(None)
     if not os.path.isfile(file_path):
         await Sophia.start()
-        await Sophia.send_document(DATABASE_GROUP_ID, "BQACAgUAAx0CbtjjywACeVpl0Dmxf1kSUedSXYBO0JNP_ZEFuAACWRAAAsrIeFYIS0o5eQ56sh4E", caption="#CACHE_FILE")
+        await Sophia.send_document(DATABASE_GROUP_ID, f"{PWD}Backup_Data.py", caption="#CACHE_FILE")
         await restart_program()
     await Sophia.start()
     await pyrogram.idle()
