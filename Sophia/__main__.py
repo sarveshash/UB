@@ -13,6 +13,7 @@ logging.basicConfig(
 )
 
 PWD = f"{os.getcwd()}/"
+file_path = f"{PWD}Data.py"
 
 # RUNNING CLIENTS 
 async def run_clients():
@@ -20,16 +21,9 @@ async def run_clients():
     await Database.start()
     app = Database
     await app.send_message(DATABASE_GROUP_ID, "Sophia started")
-    file_path = f"{PWD}Data.py"
     async for message in app.search_messages(DATABASE_GROUP_ID, query="#CACHE_FILE", limit=1):
         try:
             await Database.download_media(message.document.file_id, file_name=file_path)
-            if os.path.isfile(file_path):
-                await Sophia.start()
-                await pyrogram.idle()
-            else:
-                await app.send_document(DATABASE_GROUP_ID, f"{PWD}Backup_Data.py", file_name="Data.py", caption="#CACHE_FILE")
-                await restart_program()
         except Exception as e:
             print(e)
 
@@ -38,6 +32,9 @@ if __name__ == "__main__":
     ACCESS = decode_key(ACCESS_CODE, ACCESS_PIN)
     if ACCESS == "oTaZUki004nandhaiSgeY":
         Sophia.loop.run_until_complete(run_clients())
+        if not os.path.isfile(file_path):
+            await Sophia.send_document(DATABASE_GROUP_ID, f"{PWD}Backup_Data.py", file_name="Data.py", caption="#CACHE_FILE")
+            await restart_program()
     else:
         raise Exception("[INFO] Invalid Access Key, Access Key is required to Use Sophia Beta, Try Again")
         exit()
