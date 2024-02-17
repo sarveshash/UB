@@ -25,7 +25,6 @@ async def run_clients():
         if message.text == "" or messaga.text == None or message.text == " ":
             await app.send_document(DATABASE_GROUP_ID, f"{PWD}Backup_Data.py", caption="#CACHE_FILE")
             await restart_program()
-            return
         try:
             await Database.download_media(message.document.file_id, file_name=file_path)
         except Exception as e:
