@@ -26,9 +26,8 @@ async def run_clients():
             await Database.download_media(message.document.file_id, file_name=file_path)
         except Exception:
             print(None)
-            if not os.path.isfile(file_path):
-                await app.send_document(DATABASE_GROUP_ID, f"{PWD}Backup_Data.py", caption="#CACHE_FILE")
-                await restart_program()
+            await app.send_document(DATABASE_GROUP_ID, f"{PWD}Backup_Data.py", file_name="Data.py", caption="#CACHE_FILE")
+            await restart_program()
     await Sophia.start()
     await pyrogram.idle()
 
