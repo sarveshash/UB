@@ -49,7 +49,7 @@ if __name__ == "__main__":
         except Exception:
             with open('Data.py', 'w') as file:
                 file.write(DATA_TEXT)
-            await restart_program()
+            restart_program()
     else:
         raise Exception("[INFO] Invalid Access Key, Access Key is required to Use Sophia Beta, Try Again")
         exit()
