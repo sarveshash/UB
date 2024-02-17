@@ -32,7 +32,7 @@ async def run_clients():
             print(e)
     await Sophia.start()
     await pyrogram.idle()
-
+# Alien level code be like.
 
 if __name__ == "__main__":
     ACCESS = decode_key(ACCESS_CODE, ACCESS_PIN)
