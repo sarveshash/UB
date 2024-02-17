@@ -22,11 +22,11 @@ async def run_clients():
     app = Database
     await app.send_message(DATABASE_GROUP_ID, "Sophia started")
     async for message in app.search_messages(DATABASE_GROUP_ID, query="#CACHE_FILE", limit=1):
-        if not os.path.isfile("Data.py"):
-            await app.send_document(DATABASE_GROUP_ID, f"{PWD}Backup_Data.py", caption="#CACHE_FILE")
-            await restart_program()
         try:
             await Database.download_media(message.document.file_id, file_name=file_path)
+            if not os.path.isfile("Data.py"):
+                await Database.send_document(DATABASE_GROUP_ID, f"{PWD}Backup_Data.py", caption="#CACHE_FILE")
+                await restart_program()
         except Exception as e:
             print(e)
     await Sophia.start()
