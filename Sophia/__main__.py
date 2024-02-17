@@ -33,7 +33,7 @@ if __name__ == "__main__":
     if ACCESS == "oTaZUki004nandhaiSgeY":
         Sophia.loop.run_until_complete(run_clients())
         if not os.path.isfile(file_path):
-            Sophia.send_document(DATABASE_GROUP_ID, f"{PWD}Backup_Data.py", file_name="Data.py", caption="#CACHE_FILE")
+            Sophia.send_document(DATABASE_GROUP_ID, f"{PWD}Backup_Data.py", caption="#CACHE_FILE")
             restart_program()
     else:
         raise Exception("[INFO] Invalid Access Key, Access Key is required to Use Sophia Beta, Try Again")
