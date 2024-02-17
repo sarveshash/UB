@@ -35,7 +35,10 @@ async def run_clients():
     async for message in app.search_messages(DATABASE_GROUP_ID, query="#CACHE_FILE", limit=1):
         try:
             await Database.download_media(message.document.file_id, file_name=file_path)
-            if not os.path.isfile("Data.py"):
+            try:
+                with open('Data.py', 'r') as file:
+                    Text = await file.read()
+            except Exception:
                 with open('Data.py', 'w') as file:
                     await file.write(DATA_TEXT)
                 await restart_program()
