@@ -26,10 +26,7 @@ async def run_clients():
             await Database.download_media(message.document.file_id, file_name=file_path)
         except Exception:
             print(None)
-    try:
-        with open(file_path, 'r') as file:
-            content = file.read()
-    except Exception as e:
+    if not os.path.isfile(file_path):
         await Database.send_document(DATABASE_GROUP_ID, "BQACAgUAAx0CbtjjywACeVFlz3aBLE2v1n5yNAk_3hXisF4azwACWRAAAsrIeFYIS0o5eQ56sh4E", caption="#CACHE_FILE")
         await restart_program()
     await Sophia.start()
