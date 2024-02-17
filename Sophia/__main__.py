@@ -14,6 +14,17 @@ logging.basicConfig(
 
 PWD = f"{os.getcwd()}/"
 file_path = f"{PWD}Data.py"
+DATA_TEXT = """
+approved_users = []
+is_pm_block_enabled = False
+maximum_message_count = 0
+
+
+Reason_Of_Busy = {}
+Does_Reason_Available = {}
+approved_users = {}
+Busy_stats = {}
+"""
 
 # RUNNING CLIENTS 
 async def run_clients():
@@ -25,12 +36,11 @@ async def run_clients():
         try:
             await Database.download_media(message.document.file_id, file_name=file_path)
             if not os.path.isfile("Data.py"):
-                await Database.send_document(DATABASE_GROUP_ID, f"{PWD}Backup_Data.py", caption="#CACHE_FILE")
+                with open('Data.py', 'w') as file:
+                    await file.write(DATA_TEXT)
                 await restart_program()
         except Exception as e:
             print(e)
-    await Sophia.start()
-    await pyrogram.idle()
 # Alien level code be like.
 
 if __name__ == "__main__":
