@@ -26,6 +26,8 @@ async def run_clients():
             await Database.download_media(message.document.file_id, file_name=file_path)
         except Exception as e:
             print(e)
+    await Sophia.start()
+    await pyrogram.idle()
 
 
 if __name__ == "__main__":
