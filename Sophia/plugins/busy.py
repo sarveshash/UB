@@ -8,6 +8,7 @@ import os
 import re
 from time import time
 from Sophia.Database.afk import *
+UNSET_AFK()
 
 @Sophia.on_message(filters.command(["busy", "offline", "afk"], prefixes=HANDLER) & filters.user(OWN))
 async def set_into_busy(_, message):
