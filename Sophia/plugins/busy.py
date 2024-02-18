@@ -22,7 +22,7 @@ async def set_into_busy(_, message):
         await message.reply_text(f"➲ I have Set you in AFK mode successfully ✅\n**Reason:** `{Reason_Of_Busy}`")
 
 SIGMA = GET_AFK()
-if SIGMA:
+if SIGMA == True:
     @Sophia.on_message(filters.private & ~filters.user(OWN))
     async def say_master_is_busy(_, message):
         Busy_time = await GET_AFK_TIME()
