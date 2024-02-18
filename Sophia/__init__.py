@@ -19,8 +19,8 @@ Sophia = Client("Sophia", session_string=SESSION, api_id=API_ID, api_hash=API_HA
 
 # DATABASE OF SOPHIA
 MONGO_DB = MongoClient(MONGO_DB_URI) # Special Thanks To KoraXD For Giving This Codes!!
-DB = MONGO_DB.SOPHIA
-DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["SOPHIA"]
+DB = MONGO_DB.SOPHIA_UB
+DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["SOPHIA_UB"]
 # BETA ACCESS KEY SECTION
 
 ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
