@@ -2,6 +2,9 @@ import os
 import sys
 from pyrogram import Client
 from config import MONGO_DB_URI
+from pyrogram import Client
+from pymongo import MongoClient
+import motor.motor_asyncio
 
 SESSION = os.environ.get("SESSION")
 API_ID = os.environ.get("API_ID")
