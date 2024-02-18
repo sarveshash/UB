@@ -11,7 +11,7 @@ from Sophia.Database.afk import *
 
 @Sophia.on_message(filters.command(["busy", "offline", "afk"], prefixes=HANDLER) & filters.user(OWN))
 async def set_into_busy(_, message):
-    Busy_time = 0
+    Busy_time = {}
     if len(message.command) < 2:
         Busy_time['start'] = time()
         await SET_AFK(Busy_time, None)
