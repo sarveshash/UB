@@ -28,7 +28,6 @@ Busy_stats = {}
 
 # RUNNING CLIENTS 
 async def run_clients():
-    global FILE_AVAILABLE
     await Database.start()
     app = Database
     await app.send_message(DATABASE_GROUP_ID, "Sophia started")
