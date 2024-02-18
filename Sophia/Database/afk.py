@@ -3,5 +3,5 @@ import asyncio
 
 db = DATABASE["Sophia"]["afk"]
 
-async def SET_AFK(Busy_stats, Reason_available, time, Reason_busy):
+async def SET_AFK(stats, reason_available, time, reason):
     
