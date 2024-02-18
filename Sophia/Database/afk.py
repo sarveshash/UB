@@ -1,7 +1,8 @@
 from Sophia import DATABASE
 import asyncio
 
-db = DATABASE["Sophia"]["afk"]
+db = DATABASE["afk"]
 
-async def SET_AFK(stats, reason_available, time, reason):
-    
+async def SET_AFK(time, reason):
+    doc = {"_id": 1, "stats": True, "time": time, "reason": reason}
+    await db.insert_one(doc)
