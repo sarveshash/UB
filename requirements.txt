@@ -3,8 +3,11 @@ TgCrypto
 aiofiles
 requests
 wget
+pymongo
+pymongo[srv]
 yt_dlp
 youtube_search_python
 youtube_dl
 youtube_search
 ffmpeg
+motor
