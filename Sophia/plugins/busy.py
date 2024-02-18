@@ -17,13 +17,14 @@ def calculate_time(start_time, end_time):
     END = f"{int(hours)}h {int(minutes)}m {int(seconds)}s"
     return END
 
-def only_afk(message, gf, bf):
+def only_afk(_, __, message):
     SIGMA = GET_AFK()
     if SIGMA == True:
-        return
+        return True  # Message passes the filter condition
+    else:
+        return False  # Message does not pass the filter condition
 
 Afk = filters.create(only_afk)
-
 @Sophia.on_message(filters.command(["busy", "offline", "afk"], prefixes=HANDLER) & filters.user(OWN))
 async def set_into_busy(_, message):
     Busy_time = datetime.now()
