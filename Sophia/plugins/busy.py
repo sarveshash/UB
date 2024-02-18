@@ -11,7 +11,7 @@ from Sophia.Database.afk import *
 
 def calculate_time(start_time, end_time):
     ping_time = (end_time - start_time).total_seconds() * 1000
-    uptime = (end_time - bot_start_time).total_seconds()
+    uptime = (end_time - start_time).total_seconds()
     hours, remainder = divmod(uptime, 3600)
     minutes, seconds = divmod(remainder, 60)
     END = f"{int(hours)}h {int(minutes)}m {int(seconds)}s"
@@ -39,7 +39,7 @@ async def set_into_busy(_, message):
 @Sophia.on_message(filters.private & ~filters.user(OWN) & Afk)
 async def say_master_is_busy(_, message):
     Busy_time = await GET_AFK_TIME()
-    formatted_elapsed_time = calculate_time(Busy_time, datetime.now())
+    formatted_elapsed_time = await calculate_time(Busy_time, datetime.now())
     if message.from_user.id in IGNORED_USERS_ID:
         return
     if not BOTS_ALLOWED_TO_WORK_IN_BUSY_COMMANDS and message.from_user.is_bot:
@@ -55,7 +55,7 @@ async def Group_say_master_offline(_, message):
     if message.from_user.id in IGNORED_USERS_ID:
         return
     Busy_time = await GET_AFK_TIME()
-    formatted_elapsed_time = calculate_time(Busy_time, datetime.now())
+    formatted_elapsed_time = await calculate_time(Busy_time, datetime.now())
     if message.reply_to_message.from_user.id == OWN:
         Reason_Of_Busy = await GET_AFK_REASON()
         if Reason_Of_Busy is not None:
@@ -66,7 +66,7 @@ async def Group_say_master_offline(_, message):
 @Sophia.on_message(filters.user(OWN) & Afk)
 async def remove_busy_mode(_, message):
     Busy_time = await GET_AFK_TIME()
-    formatted_elapsed_time = calculate_time(Busy_time, datetime.now())
+    formatted_elapsed_time = await calculate_time(Busy_time, datetime.now())
     await UNSET_AFK()
     await message.reply_text(f"➲ **Hello**, Master Welcome Again ✨🥀.\n➲ **Your Offline Duration**: `{formatted_elapsed_time}`🥺")
     await restart_program()
