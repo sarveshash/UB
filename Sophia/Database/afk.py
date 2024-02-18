@@ -5,7 +5,10 @@ db = DATABASE["afk"]
 
 async def SET_AFK(time, reason):
     doc = {"_id": 1, "stats": True, "time": time, "reason": reason}
-    await db.insert_one(doc)
+    try:
+        await db.insert_one(doc)
+    except Exception:
+        await db.update_one(doc)
 
 async def UNSET_AFK():
     await db.update_one({"_id": 1}, {"$set": {"stats": False, "time": None, "reason": None}})
