@@ -8,8 +8,8 @@ async def SET_AFK(time, reason):
     try:
         await db.insert_one(doc)
     except Exception:
-        await db.update_one({"_id": 1}, {"$set": "stats": True, "time": time, "reason": reason})
-
+        await db.update_one({"_id": 1}, {"$set": {"stats": True, "time": time, "reason": reason}})
+        
 async def UNSET_AFK():
     await db.update_one({"_id": 1}, {"$set": {"stats": False, "time": None, "reason": None}})
     
