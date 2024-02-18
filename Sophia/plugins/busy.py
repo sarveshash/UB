@@ -6,19 +6,25 @@ from config import IGNORED_USERS_ID, BOTS_ALLOWED_TO_WORK_IN_BUSY_COMMANDS
 from Restart import restart_program
 import os
 import re
-from time import time
+from datetime import datetime
 from Sophia.Database.afk import *
+
+def calculate_time(start_time, end_time):
+    ping_time = (end_time - start_time).total_seconds() * 1000
+    uptime = (end_time - bot_start_time).total_seconds()
+    hours, remainder = divmod(uptime, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    END = f"{int(hours)}h {int(minutes)}m {int(seconds)}s"
+    return END
 
 @Sophia.on_message(filters.command(["busy", "offline", "afk"], prefixes=HANDLER) & filters.user(OWN))
 async def set_into_busy(_, message):
-    Busy_time = {}
+    Busy_time = datetime.now()
     if len(message.command) < 2:
-        Busy_time['start'] = time()
         await SET_AFK(Busy_time, None)
         await message.reply_text("➲ Master, I successfully Set you AFK mode, I will reply to everyone if anyone chats you.")
     else:
         Reason_Of_Busy = " ".join(message.command[1:])
-        Busy_time['start'] = time()
         await SET_AFK(Busy_time, Reason_Of_Busy)
         await message.reply_text(f"➲ I have Set you in AFK mode successfully ✅\n**Reason:** `{Reason_Of_Busy}`")
 
@@ -27,10 +33,7 @@ if SIGMA == True:
     @Sophia.on_message(filters.private & ~filters.user(OWN))
     async def say_master_is_busy(_, message):
         Busy_time = await GET_AFK_TIME()
-        elapsed_time_seconds = round(time() - Busy_time['start'])
-        hours, remainder = divmod(elapsed_time_seconds, 3600)
-        minutes, seconds = divmod(remainder, 60)
-        formatted_elapsed_time = f"{hours}h {minutes}m {seconds}s"
+        formatted_elapsed_time = calculate_time(Busy_time, datetime.now())
         if message.from_user.id in IGNORED_USERS_ID:
             return
         if BOTS_ALLOWED_TO_WORK_IN_BUSY_COMMANDS == False:
@@ -46,10 +49,7 @@ if SIGMA == True:
         if message.from_user.id in IGNORED_USERS_ID:
             return
         Busy_time = await GET_AFK_TIME()
-        elapsed_time_seconds = round(time() - Busy_time['start'])
-        hours, remainder = divmod(elapsed_time_seconds, 3600)
-        minutes, seconds = divmod(remainder, 60)
-        formatted_elapsed_time = f"{hours}h {minutes}m {seconds}s"
+        formatted_elapsed_time = calculate_time(Busy_time, datetime.now())
         if message.reply_to_message.from_user.id == OWN:
             Reason_Of_Busy = await GET_AFK_REASON()
             if not Reason == None:
@@ -59,10 +59,7 @@ if SIGMA == True:
     @Sophia.on_message(filters.user(OWN))
     async def remove_busy_mode(_, message):
         Busy_time = await GET_AFK_TIME()
-        elapsed_time_seconds = round(time() - Busy_time['start']) 
-        hours, remainder = divmod(elapsed_time_seconds, 3600)
-        minutes, seconds = divmod(remainder, 60)
-        formatted_elapsed_time = f"{hours}h {minutes}m {seconds}s"
+        formatted_elapsed_time = calculate_time(Busy_time, datetime.now())
         await UNSET_AFK()
         await message.reply_text(f"➲ **Hello**, Master Welcome Again ✨🥀.\n➲ **Your Offline Duration**: `{formatted_elapsed_time}`🥺")
         await restart_program()
