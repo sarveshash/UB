@@ -17,3 +17,19 @@ async def GET_AFK():
     else:
         stats = Find["stats"]
         return stats
+
+async def GET_AFK_TIME():
+    Find = await db.find_one({"_id": 1})
+    if not Find:
+        return False
+    else:
+        value = Find["time"]
+        return value
+
+async def GET_AFK_REASON():
+    Find = await db.find_one({"_id": 1})
+    if not Find:
+        return False
+    else:
+        value = Find["reason"]
+        return value
