@@ -62,11 +62,5 @@ if SIGMA:
         hours, remainder = divmod(elapsed_time_seconds, 3600)
         minutes, seconds = divmod(remainder, 60)
         formatted_elapsed_time = f"{hours}h {minutes}m {seconds}s"
-        from Sophia.plugins.Spam import what_is_text as TXT_FROM_SPAM
-        if message.text == "Sᴏʀʀʏ, Yᴏᴜ ᴀʀᴇ ɪɢɴᴏʀᴇᴅ ʙʏ ᴍʏ ʟᴏᴠᴇʟʏ ❤️ Mᴀsᴛᴇʀ, ɪғ ʏᴏᴜ sᴇɴᴅ ᴀɴʏ ᴍᴇssᴀɢᴇ ᴀɢᴀɪɴ ʏᴏᴜ ᴡɪʟʟ ʙᴇ ɢᴇᴛ Bʟᴏᴄᴋᴇᴅ." or message.text == "This is your second warning. If you send another message, you will be blocked." or message.text == "Sorry, You Have Breaked Your Limits that's why I blocked You!" or message.text == TXT_FROM_SPAM:
-            print(" ")
-        elif message.text.startswith("Master, I have Been Blocked A user From Ignored"):
-            print(" ")
-        else:
-            await message.reply_text(f"➲ **Hello**, Master Welcome Again ✨🥀.\n➲ **Your Offline Duration**: `{formatted_elapsed_time}`🥺")
-            await restart_program()
+        await message.reply_text(f"➲ **Hello**, Master Welcome Again ✨🥀.\n➲ **Your Offline Duration**: `{formatted_elapsed_time}`🥺")
+        await restart_program()
