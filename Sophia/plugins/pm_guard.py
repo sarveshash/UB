@@ -12,6 +12,8 @@ approved_users = []
 warning_count = {}
 maximum_message_count = 0
 
+UNSET_AFK()
+
 @Sophia.on_message(filters.command(["pmblock", "pmguard"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def set_pm_guard(_, message):
     global approved_users, Always_Approved_Users_From_Pmblock, is_pm_block_enabled, warning_count, maximum_message_count
