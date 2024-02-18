@@ -1,5 +1,7 @@
-from Sophia import DB_ASYNC
+from Sophia import DATABASE
 import asyncio
 
+db = DATABASE["Sophia"]["afk"]
 
-# WAIT
+async def SET_AFK(Busy_stats, Reason_available, time, Reason_busy):
+    
