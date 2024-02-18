@@ -9,11 +9,6 @@ import re
 from time import time
 from Sophia.Database.afk import *
 
-Busy_stats = {}
-Does_Reason_Available = {}
-Busy_time = {}
-Reason_Of_Busy = {}
-
 @Sophia.on_message(filters.command(["busy", "offline", "afk"], prefixes=HANDLER) & filters.user(OWN))
 async def set_into_busy(_, message):
     if len(message.command) < 2:
