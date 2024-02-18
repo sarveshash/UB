@@ -12,7 +12,7 @@ API_HASH = os.environ.get("API_HASH")
 ACCESS_CODE = os.environ.get("ACCESS_CODE")
 ACCESS_PIN = os.environ.get("ACCESS_PIN")
 HANDLER = ["~",".","!","/","$","#"]
-MY_VERSION = 0.01
+MY_VERSION = 0.00219
 
 # MAIN CLIENT OF SOPHIA
 Sophia = Client("Sophia", session_string=SESSION, api_id=API_ID, api_hash=API_HASH, plugins=dict(root="Sophia/plugins"))
