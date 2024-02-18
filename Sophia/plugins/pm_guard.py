@@ -6,6 +6,7 @@ import asyncio
 import os
 from Restart import restart_program
 from pyrogram import enums
+from Sophia.Database.pmguard import *
 
 is_pm_block_enabled = False
 approved_users = []
