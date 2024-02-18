@@ -8,8 +8,8 @@ async def SET_AFK(time, reason):
     await db.insert_one(doc)
 
 async def UNSET_AFK():
-    await db.update_one({"_id": 1}, {$set: {stats: False, "time": None, "reason": None}})
-
+    await db.update_one({"_id": 1}, {"$set": {"stats": False, "time": None, "reason": None}})
+    
 async def GET_AFK():
     Find = await db.find_one({"_id": 1})
     if not Find:
