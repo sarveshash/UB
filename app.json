@@ -43,6 +43,11 @@
          "description": "Your Pyrogram V2 String Session.",
          "required": true,
          "value": ""
-     }
+     },
+     "MONGO_DB_URI": {
+        "description": "Your MongoDB URI, Database is Required for This Userbot.",
+        "required": true,
+        "value": ""
+     },
          }
       }
