@@ -17,7 +17,7 @@ def calculate_time(start_time, end_time):
     END = f"{int(hours)}h {int(minutes)}m {int(seconds)}s"
     return END
 
-def only_afk(message):
+def only_afk(message, gf, bf):
     SIGMA = GET_AFK()
     if SIGMA == True:
         return
