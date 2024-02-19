@@ -10,13 +10,14 @@ from Sophia.Database.pmguard import *
 
 warning_count = {}
 
-async def denied_users(filter, client: Sophia): # Remove 'message' from function signature
+async def denied_users(_, client):
     if not await GET_PM_GUARD():
         return False
     if message.chat.id in (await GET_APPROVED_USERS()):
         return False
     else:
         return True
+
 @Sophia.on_message(filters.command(["pmblock", "pmguard"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def set_pm_guard(_, message):
     is_pm_block_enabled = await GET_PM_GUARD()
@@ -79,7 +80,8 @@ async def warn_users(_, message):
 
 @Sophia.on_message(filters.command(['a', 'approve'], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def Approve_user(_, message):
-    global approved_users
+    is_pm_block_enabled = await GET_PM_GUARD()
+    approved_users = await GET_APPROVED_USERS()
     if is_pm_block_enabled:
         if message.chat.type == enums.ChatType.SUPERGROUP:
             await message.reply("➲ This Command Only Works On Private Chats ❌.")
@@ -89,7 +91,7 @@ async def Approve_user(_, message):
             if user_id in approved_users:
                 await message.reply('**➲ This User is Already Approved ✨ 🥀**')
                 return
-            approved_users.append(user_id)
+            await ADD_APPROVED_USER(user_id)
             await message.reply("➲ Successfully Approved 🥀⚡")
         except Exception as e:
             await message.reply(f"Sorry, i got a error while approving this user\n\n{e}")
