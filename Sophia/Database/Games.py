@@ -18,7 +18,7 @@ async def REMOVE_USER(user_id):
     await db.update_one({"_id": 1}, {"$pull": {"USERS": user_id}})
 
 async def ADD_COINS_TO_USER(user_id, coins):
-    available_users = await GET_AVAILABLE_USERS(user_id)
+    available_users = await GET_AVAILABLE_USERS()
     if user_id not in available_users:
         await ADD_NEW_USER(user_id)
     doc = {"_id": 5, f"{user_id}": coins}
