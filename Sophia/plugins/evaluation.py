@@ -9,7 +9,7 @@ from pyrogram import filters
 import asyncio
 import os
 from pyrogram import enums
-from Sophia.Database.Games import *
+from Sophia.Database.games import *
 
 @Sophia.on_message(filters.command(["eval", "e", "python"], prefixes=HANDLER))
 async def eval(client, message):
