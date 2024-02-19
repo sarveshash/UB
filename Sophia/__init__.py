@@ -21,6 +21,7 @@ Sophia = Client("Sophia", session_string=SESSION, api_id=API_ID, api_hash=API_HA
 MONGO_DB = MongoClient(MONGO_DB_URI) # Special Thanks To KoraXD For Giving This Codes!!
 DB = MONGO_DB.SOPHIA_UB
 DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["SOPHIA_UB"]
+GAME_DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["HYPER_GAMES"]
 # BETA ACCESS KEY SECTION
 
 ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
