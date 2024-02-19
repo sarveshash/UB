@@ -3,7 +3,7 @@ import asyncio
 
 db = GAME_DATABASE["Games"]
 
-async def GET_AVAILABLE_USERS(user_id):
+async def GET_AVAILABLE_USERS():
     Find = await db.find_one({"_id": 1})
     if not Find:
         return []  # Return an empty list if no approved users are found
