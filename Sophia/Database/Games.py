@@ -41,7 +41,7 @@ async def SEND_COINS(from_user, to_user, coins):
         try:
             coins_str = f"-{coins}"
             coins_int = int(coins_str)
-            await ADD_COINS_TO_USER(from_user, coins_str)
+            await ADD_COINS_TO_USER(from_user, coins_int)
             await ADD_COINS_TO_USER(to_user, coins)
             return True
         except Exception as e:
