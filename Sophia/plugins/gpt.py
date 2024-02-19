@@ -21,9 +21,9 @@ def fetch_data(api_url: str, query: str) -> tuple:
 @app.on_message(filters.command(["chat", "gpt"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def chatgpt4(_: Client, message: Message):
     if len(message.command) < 2:
-        return await message.reply_text("Please provide a query.")
+        return await message.reply_text("Master, Please provide a query.")
 
     query = " ".join(message.command[1:])
-    txt = await message.reply_text("Wait, Requesting to api...")
+    txt = await message.reply_text("`Processing...`")
     api_response, error_message = fetch_data(api_url_chat4, query)
     await txt.edit(api_response or error_message)
