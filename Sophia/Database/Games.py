@@ -1,7 +1,7 @@
 from Sophia import GAME_DATABASE
 import asyncio
 
-db = GAME_DATABASE["Games"]
+db = GAME_DATABASE["Games_500"]
 
 async def GET_AVAILABLE_USERS():
     Find = await db.find_one({"_id": 1})
