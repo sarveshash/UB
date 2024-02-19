@@ -33,7 +33,8 @@ async def set_pm_guard(_, message):
                 await SET_PM_GUARD(RESULT)
                 await message.reply('**➲ I have enabled PmGuard successfully with Default Warning limit 🥀 ✨**')
                 return
-            return await message.reply_text("➲ Master, Please enter the maximum message warning limit.")
+            else:
+                return await message.reply_text("➲ Master, Please enter the maximum message warning limit.")
         count = " ".join(message.command[1:])
         intCount = int(count)
         if intCount == 1:
