@@ -42,3 +42,18 @@ async def ADD_APPROVED_USER(user_id):
 
 async def REMOVE_APPROVED_USER(user_id):
     await db.update_one({"_id": 2}, {"$pull": {"approved_users": user_id}})
+
+async def SET_DEFAULT_MESSAGE_LIMIT(count):
+    doc = {"_id": 3, "MESSAGE_LIMIT": count}
+    try:
+        await db.insert_one(doc)
+    except Exception:
+        await db.update_one({"_id": 3}, {"$set": {"MESSAGE_LIMIT": count}})
+
+async def GET_DEFAULT_MESSAGE_LIMIT():
+    Find = await db.find_one({"_id": 3})
+    if not Find:
+        return None
+    else:
+        value = Find["MESSAGE_LIMIT"]
+        return value
