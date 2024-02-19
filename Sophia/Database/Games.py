@@ -31,7 +31,7 @@ async def GET_USER_COINS(user_id):
     if not Find:
         return None
     else:
-        value = Find[f"{user_id}"]
+        value = Find[user_id]
         return value
 
 async def SEND_COINS(from_user, to_user, coins):
