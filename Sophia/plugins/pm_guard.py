@@ -20,7 +20,7 @@ async def denied_users(filter, client: Client, message: Message): # Thanks To Ko
 async def set_pm_guard(_, message):
     is_pm_block_enabled = await GET_PM_GUARD()
     if is_pm_block_enabled:
-        is_pm_block_enabled = await UNSET_PM_GUARD()
+        await UNSET_PM_GUARD()
         await message.reply("**➲ I have Disabled PmGuard Successfully ✅**")
         return
     else:
