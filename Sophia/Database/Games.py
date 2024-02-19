@@ -35,12 +35,12 @@ async def GET_USER_COINS(user_id):
         return value
         
 async def SEND_COINS(from_user, to_user, coins):
-    from_user_coins = await GET_USER_COINS(f"{from_user}")
+    from_user_coins = await GET_USER_COINS(from_user)
     if from_user_coins is None:
         return "SENDER_NOT_FOUND"
     if from_user_coins < coins:
         return "LOW_COINS"
-    to_user_coins = await GET_USER_COINS(f"{to_user}")
+    to_user_coins = await GET_USER_COINS(to_user)
     if to_user_coins is None:
         return "RECIPIENT_NOT_FOUND"
     try:
