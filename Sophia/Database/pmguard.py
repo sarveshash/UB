@@ -32,10 +32,10 @@ async def UNSET_PM_GUARD():
 async def GET_APPROVED_USERS():
     Find = await db.find_one({"_id": 2})
     if not Find:
-        return None
+        return []  # Return an empty list if no approved users are found
     else:
         value = Find.get("approved_users", [])  # Ensure default value is an empty list
         return value
-
+        
 async def ADD_APPROVED_USER(user_id):
     await db.update_one({"_id": 2}, {"$addToSet": {"approved_users": user_id}}, upsert=True)
