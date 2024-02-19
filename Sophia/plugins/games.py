@@ -4,7 +4,7 @@ from config import OWNER_ID
 from pyrogram import filters
 import asyncio
 import os
-from Sophia.Database.Games import *
+from Sophia.Database.games import *
 
 NEW_PROFILE_TEXT = """
 **Welcome To Hyper Games™ Account Registration.**
