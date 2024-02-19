@@ -10,13 +10,13 @@ PROFILE_TEXT = """
 **🧑‍💻 Welcome To Hyper Games ©**
 
 **• ACCOUNT REGISTRATION 🧑‍💻**
-- You need Create a account to use Hyper Games bots.
+- You need account to use Hyper Games bots.
 - We Never Use Your Data's
-- We Never Ask Any Details In Account Creating Process.
+- We Never Ask Any Details In Account Creating.
 - Your Data stored in Mongodb so may Your Data will be Disappeared sometimes.
 - If you send /continue Your account will be created.
 
-**• By sending `/continue` You Accept Our Terms and Condiitions.**
+**• By sending `/continue` You Agree Our Terms and Condiitions.**
 """
 
 USER_ID = 0
