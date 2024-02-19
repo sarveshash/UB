@@ -36,3 +36,8 @@ async def get_profile(_, message):
                 await ADD_NEW_USER(USER_ID)
                 await message.reply("Thanks for creating account in Hyper Games, In this process you got 1000 coins as reward. Enjoy Have Fun")
                 return
+
+@Sophia.on_message(filters.command("profile", prefixes=HANDLER) & filters.private)
+async def not_work_in_pm(_, message):
+    await message.reply("This command only works on Group")
+    return
