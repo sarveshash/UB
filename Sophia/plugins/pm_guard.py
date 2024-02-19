@@ -8,16 +8,19 @@ from Restart import restart_program
 from pyrogram import enums
 from Sophia.Database.pmguard import *
 
-is_pm_block_enabled = False
-approved_users = []
-warning_count = {}
-maximum_message_count = 0
+async def denied_users(filter, client: Client, message: Message): # Thanks To KoraXD 
+    if not await pm_guard():
+        return False
+    if message.chat.id in (await get_approved_users()):
+        return False
+    else:
+        return True
 
 @Sophia.on_message(filters.command(["pmblock", "pmguard"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def set_pm_guard(_, message):
-    global approved_users, Always_Approved_Users_From_Pmblock, is_pm_block_enabled, warning_count, maximum_message_count
+    is_pm_block_enabled = await GET_PM_GUARD()
     if is_pm_block_enabled:
-        is_pm_block_enabled = False
+        is_pm_block_enabled = await UNSET_PM_GUARD()
         await message.reply("**➲ I have Disabled PmGuard Successfully ✅**")
         return
     else:
@@ -34,8 +37,7 @@ async def set_pm_guard(_, message):
         if intCount > 20:
             await message.reply("➲ Maximum Applable warning count is 20.")
             return
-        maximum_message_count = intCount
-        is_pm_block_enabled = True
+        await SET_PM_GUARD(intCount)
         await message.reply('**➲ I have enabled PmGuard successfully 🥀 ✨**')
         if is_pm_block_enabled:
             @Sophia.on_message(~filters.user(OWNER_ID) & filters.private)
