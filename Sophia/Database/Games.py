@@ -39,12 +39,11 @@ async def SEND_COINS(from_user, to_user, coins):
     USER_COINS = await GET_USER_COINS(from_user)
     if USER_COINS >= coins:
         try:
-            user_coins = await GET_USER_COINS(from_user)
-            coins_int = user_coins-coins
+            coins_int = USER_COINS-coins
             await ADD_COINS_TO_USER(from_user, coins_int)
             await ADD_COINS_TO_USER(to_user, coins)
             return True
         except Exception as e:
             return e
     else:
-        return "LOW_COINS"
+        return "LOW_COINS" # none
