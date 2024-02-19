@@ -8,8 +8,10 @@ from Restart import restart_program
 from pyrogram import enums
 from Sophia.Database.pmguard import *
 
+warning_count = {}
+
 async def denied_users(filter, client: Client, message: Message): # Thanks To KoraXD 
-    if not await pm_guard():
+    if not await GET_PM_GUARD():
         return False
     if message.chat.id in (await get_approved_users()):
         return False
@@ -40,33 +42,40 @@ async def set_pm_guard(_, message):
         await SET_PM_GUARD(intCount)
         await message.reply('**➲ I have enabled PmGuard successfully 🥀 ✨**')
         if is_pm_block_enabled:
-            @Sophia.on_message(~filters.user(OWNER_ID) & filters.private)
-            async def warn_users(_, message):
-                global approved_users, Always_Approved_Users_From_Pmblock, is_pm_block_enabled, warning_count
-                if is_pm_block_enabled:
-                    valueotazuki = "value57"
-                else:
-                    restart_program()
-                user_id = message.chat.id
-                if user_id in Always_Approved_Users_From_Pmblock or user_id in approved_users:
-                    return
-                if BOTS_ALLOWED_TO_WORK_IN_BUSY_COMMANDS == False:
-                    if message.chat.type == enums.ChatType.BOT:
-                        return
-                if user_id not in warning_count:
-                    warning_count[user_id] = 0
-                warning_count[user_id] += 1
-                if warning_count[user_id] < maximum_message_count:
-                    await message.reply(f"**⚠️ WARNING**\n\nSorry, my master has enabled the PmGuard feature. You can't send messages until my master approves you or disabling this feature. If you Spam Here or the warning exceeds the limits I will Block You.\n\n**➲ Warning Counts** `{warning_count[user_id]}/{maximum_message_count}`")
-                elif warning_count[user_id] >= maximum_message_count:
-                    try:
-                        await message.reply("➲ You have exceeded your limits, so I have blocked you!")
-                        await Sophia.block_user(user_id)
-                    except Exception as e:
-                        print(e)
-                        await Sophia.send_message(OWNER_ID, e)
-        else:
+    
+
+@Sophia.on_message(
+    filters.private
+    & filters.create(denied_users)
+    & filters.incoming
+    & ~filters.service
+    & ~filters.me
+    & ~filters.bot
+            )
+async def warn_users(_, message):
+    global warning_count
+    is_pm_block_enabled = await GET_PM_GUARD()
+    if is_pm_block_enabled:
+        valueotazuki = "value57"
+    else:
+        restart_program()
+    user_id = message.chat.id
+    maximum_message_count = await GET_WARNING_COUNT()
+    if BOTS_ALLOWED_TO_WORK_IN_BUSY_COMMANDS == False:
+        if message.chat.type == enums.ChatType.BOT:
             return
+    if user_id not in warning_count:
+        warning_count[user_id] = 0
+    warning_count[user_id] += 1
+    if warning_count[user_id] < maximum_message_count:
+        await message.reply(f"**⚠️ WARNING**\n\nSorry, my master has enabled the PmGuard feature. You can't send messages until my master approves you or disabling this feature. If you Spam Here or the warning exceeds the limits I will Block You.\n\n**➲ Warning Counts** `{warning_count[user_id]}/{maximum_message_count}`")
+    elif warning_count[user_id] >= maximum_message_count:
+        try:
+            await message.reply("➲ You have exceeded your limits, so I have blocked you!")
+            await Sophia.block_user(user_id)
+        except Exception as e:
+            print(e)
+            await Sophia.send_message(OWNER_ID, e)
             
                     
 
