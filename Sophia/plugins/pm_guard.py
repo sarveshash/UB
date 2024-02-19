@@ -78,7 +78,7 @@ async def warn_users(_, message):
             
                     
 
-@Sophia.on_message(filters.command(['a', 'approve'], prefixes=HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command(['a', 'approve', 'allow'], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def Approve_user(_, message):
     is_pm_block_enabled = await GET_PM_GUARD()
     approved_users = await GET_APPROVED_USERS()
@@ -101,7 +101,7 @@ async def Approve_user(_, message):
         await message.reply('**➲ PmGuard Not Enabled ❌.**')
 
 
-@Sophia.on_message(filters.command(['ua', 'unapprove'], prefixes=HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command(['ua', 'unapprove', 'deny', 'd'], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def Unapprove_user(_, message):
     is_pm_block_enabled = await GET_PM_GUARD()
     approved_users = await GET_APPROVED_USERS()
@@ -145,5 +145,13 @@ async def Clear_User_Warns(_, message):
             return
         await message.reply('**➲ PmGuard Not Enabled ❌.**')
                 
-
+@Sophia.on_message(filters.command(['setmsglimit', 'setpmlimit'], prefixes=HANDLER) & filters.user(OWNER_ID))
+async def Set_default_message_limit(_, message):
+    if len(message.command) < 2:
+        return await message.reply_text("➲ Master, Please enter the maximum message warning limit.")
+    count = " ".join(message.command[1:])
+    intCount = int(count)
+    await SET_DEFAULT_MESSAGE_LIMIT(intCount)
+    await message.reply("Success!!")
+        
 # END
