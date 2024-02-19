@@ -29,15 +29,18 @@ async def GET_WARNING_COUNT():
 async def UNSET_PM_GUARD():
     await db.update_one({"_id": 1}, {"$set": {"status": False, "warn_count": None}})
 
-async def WARNING_COUNT_GET(user_id):
-    Find = await db.find_one({"_id": 1})
+async def GET_APPROVED_USERS():
+    Find = await db.find_one({"_id": 2})
     if not Find:
         return None
     else:
-        value = Find[user_id]
+        value = Find["approved_users"]
         return value
-async def WARNING_COUNT_REMOVE(user_id):
-    await db.update_one({"_id": 1}, {"$set": {f"{user_id}": 0}})
-async def WARNING_COUNT_ADD(user_id, count):
-    doc = {"_id": 1, f"{user_id}": count}
-    await db.insert_one(doc)
+
+async def ADD_APPROVED_USER(user_id):
+    doc = {"_id": 2, "approved_users": [0]}
+    try:
+        await db.insert_one(doc)
+        await db.update_one({"_id": 2}, {"$push": {"approved_users": user_id}})
+    except Exception:
+        await db.update_one({"_id": 2}, {"$push": {"approved_users": user_id}})
