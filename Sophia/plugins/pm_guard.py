@@ -1,6 +1,6 @@
 from Sophia import HANDLER
 from Sophia.__main__ import Sophia
-from config import OWNER_ID, Always_Approved_Users_From_Pmblock, BOTS_ALLOWED_TO_WORK_IN_BUSY_COMMANDS
+from config import OWNER_ID, BOTS_ALLOWED_TO_WORK_IN_BUSY_COMMANDS
 from pyrogram import filters
 import asyncio
 import os
