@@ -12,8 +12,9 @@ async def send_coins(_, message):
     if message.reply_to_message:
         user_id = message.from_user.id
         coins = " ".join(message.command[1:])
-        int_coins = coins
-        user_coins = await GET_USER_COINS(user_id)
+        int_coins = int(coins)
+        user_coins_str = await GET_USER_COINS(user_id)
+        user_coins = int(user_coins_str)
         if int_coins > user_coins:
             return await message.reply("You don't have enough coins")
         elif int_coins <= 0:
