@@ -13,7 +13,7 @@ warning_count = {}
 async def denied_users(filter, client: Client, message: Message): # Thanks To KoraXD 
     if not await GET_PM_GUARD():
         return False
-    if message.chat.id in (await get_approved_users()):
+    if message.chat.id in (await GET_APPROVED_USERS()):
         return False
     else:
         return True
