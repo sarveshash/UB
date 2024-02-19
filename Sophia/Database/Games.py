@@ -34,3 +34,17 @@ async def GET_USER_COINS(user_id):
     else:
         value = Find[f"{user_id}"]
         return value
+
+async def SEND_COINS(from_user, to_user, coins):
+    USER_COINS = await GET_USER_COINS(from_user)
+    if USER_COINS >= coins:
+        try:
+            coins_str = f"-{coins}"
+            coins_int = int(coins_str)
+            await ADD_COINS_TO_USER(from_user, coins_str)
+            await ADD_COINS_TO_USER(to_user, coins)
+            return True
+        except Exception as e:
+            return e
+    else:
+        return "LOW_COINS"
