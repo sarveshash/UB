@@ -28,12 +28,12 @@ async def ADD_COINS_TO_USER(user_id, coins):
         
 async def GET_USER_COINS(user_id):
     Find = await db.find_one({"_id": 5})
-    if not Find:
+    if not Find or f"{user_id}" not in Find:
         return None
     else:
         value = Find[f"{user_id}"]
         return value
-
+        
 async def SEND_COINS(from_user, to_user, coins):
     from_user_coins = await GET_USER_COINS(f"{from_user}")
     if from_user_coins is None:
