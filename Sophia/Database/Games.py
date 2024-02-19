@@ -21,11 +21,10 @@ async def ADD_COINS_TO_USER(user_id, coins):
     available_users = await GET_AVAILABLE_USERS()
     if user_id not in available_users:
         await ADD_NEW_USER(user_id)
-    doc = {"_id": 5, f"{user_id}": coins}
     try:
-        await db.insert_one(doc)
+        await db.insert_one({"_id": 5, user_id: coins}, upsert=True)
     except Exception:
-        await db.update_one({"_id": 1}, {"$set": {f"{user_id}": coins}})
+        await db.update_one({"_id": 1}, {"$set": {user_id: coins}}, upsert=True)
         
 async def GET_USER_COINS(user_id):
     Find = await db.find_one({"_id": 5})
@@ -46,4 +45,21 @@ async def SEND_COINS(from_user, to_user, coins):
         except Exception as e:
             return e
     else:
-        return "LOW_COINS" # none
+        return "LOW_COINS" 
+
+async def SEND_COINS(from_user, to_user, coins):
+    from_user_coins = await GET_USER_COINS(from_user)
+    if from_user_coins is None:
+        return "SENDER_NOT_FOUND"
+    if from_user_coins < coins:
+        return "LOW_COINS"
+    to_user_coins = await GET_USER_COINS(to_user)
+    if to_user_coins is None:
+        return "RECIPIENT_NOT_FOUND"
+    try:
+        await ADD_COINS_TO_USER(from_user, from_user_coins - coins)
+        await ADD_COINS_TO_USER(to_user, to_user_coins + coins)
+        return True
+    except Exception as e:
+        print(f"Error sending coins from {from_user} to {to_user}: {e}")
+        return "SEND_COINS_FAILED"
