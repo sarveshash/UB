@@ -16,4 +16,9 @@ async def ADD_NEW_USER(user_id):
 
 async def REMOVE_USER(user_id):
     await db.update_one({"_id": 1}, {"$pull": {"USERS": user_id}})
+
+"""async def CHANGE_COINS(user_id, coins):
+
+async def SEND_COINS(from_user, to_user, coins):
+    """
   
