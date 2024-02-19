@@ -103,19 +103,20 @@ async def Approve_user(_, message):
 
 @Sophia.on_message(filters.command(['ua', 'unapprove'], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def Unapprove_user(_, message):
-    global approved_users
+    is_pm_block_enabled = await GET_PM_GUARD()
+    approved_users = await GET_APPROVED_USERS()
     if is_pm_block_enabled:
         if message.chat.type == enums.ChatType.SUPERGROUP:
             await message.reply("➲ This Command Only Works On Private Chats ❌.")
             return
         user_id = message.chat.id
+        if user_id not in approved_users:
+            await message.reply("**➲ This user is Not Approved yet ❌.**")
+            return
         try:
-            approved_users.remove(user_id)
+            await REMOVE_APPROVED_USER(user_id)
             await message.reply("➲ Successfully Unapproved ✨🗿.")
         except Exception as e:
-            if str(e) == "list.remove(x): x not in list":
-                await message.reply("**➲ This user is Not Approved yet ❌.**")
-                return
             await message.reply(f"Sorry, i got a error while unapproving this user\n\n{e}")
     else:
         if message.chat.type == enums.ChatType.SUPERGROUP:
@@ -127,6 +128,7 @@ async def Unapprove_user(_, message):
 @Sophia.on_message(filters.command(['cw', 'clearwarns'], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def Clear_User_Warns(_, message):
     global warning_count
+    is_pm_block_enabled = await GET_PM_GUARD()
     if is_pm_block_enabled:
         if message.chat.type == enums.ChatType.SUPERGROUP:
             await message.reply("➲ This Command Only Works On Private Chats ❌.")
