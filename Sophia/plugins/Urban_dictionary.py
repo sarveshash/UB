@@ -24,7 +24,7 @@ async def urban_dictionary(_, message):
 """
         except Exception as e:
               if str(e) == "list index out of range":
-                  await message.reply("I can't find it, Sorry")
+                  await message.reply("I can't find it in Urban dictionary.")
                   return
               return await bot.send_message(message.chat.id, f"Somthing wrong Happens:\n`{e}`")
         ud = await bot.send_message(message.chat.id, "Exploring....")
