@@ -28,8 +28,9 @@ async def set_pm_guard(_, message):
     else:
         if len(message.command) < 2:
             RESULT = await GET_DEFAULT_MESSAGE_LIMIT()
-            if RESULT.isdigit():
-                await SET_PM_GUARD(intCount)
+            RESULT2 = str(RESULT)
+            if RESULT2.isdigit():
+                await SET_PM_GUARD(RESULT)
                 await message.reply('**➲ I have enabled PmGuard successfully with Default Warning limit 🥀 ✨**')
                 return
             return await message.reply_text("➲ Master, Please enter the maximum message warning limit.")
@@ -166,6 +167,6 @@ async def Set_default_message_limit(_, message):
         await message.reply("➲ Maximum Applable warning count is 20.")
         return
     await SET_DEFAULT_MESSAGE_LIMIT(intCount)
-    await message.reply("Success!!")
+    await message.reply(f"**➲ Master, I have set Default Pmguard Warning Limit Your Default Limit is: {intCount} 🥀 ✨**")
         
 # END
