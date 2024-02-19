@@ -38,9 +38,8 @@ async def GET_APPROVED_USERS():
         return value
 
 async def ADD_APPROVED_USER(user_id):
-    doc = {"_id": 2, "approved_users": [0]}
+    doc = {"_id": 2, "approved_users": [user_id]}
     try:
         await db.insert_one(doc)
-        await db.update_one({"_id": 2}, {"$push": {"approved_users": user_id}})
     except Exception:
         await db.update_one({"_id": 2}, {"$push": {"approved_users": user_id}})
