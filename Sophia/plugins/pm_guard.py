@@ -41,7 +41,6 @@ async def set_pm_guard(_, message):
             return
         await SET_PM_GUARD(intCount)
         await message.reply('**➲ I have enabled PmGuard successfully 🥀 ✨**')
-        if is_pm_block_enabled:
     
 
 @Sophia.on_message(
