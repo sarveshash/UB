@@ -10,14 +10,13 @@ from Sophia.Database.pmguard import *
 
 warning_count = {}
 
-async def denied_users(filter, client: Sophia, message: message): # Thanks To KoraXD 
+async def denied_users(filter, client: Sophia): # Remove 'message' from function signature
     if not await GET_PM_GUARD():
         return False
     if message.chat.id in (await GET_APPROVED_USERS()):
         return False
     else:
         return True
-
 @Sophia.on_message(filters.command(["pmblock", "pmguard"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def set_pm_guard(_, message):
     is_pm_block_enabled = await GET_PM_GUARD()
