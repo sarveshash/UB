@@ -39,3 +39,6 @@ async def GET_APPROVED_USERS():
         
 async def ADD_APPROVED_USER(user_id):
     await db.update_one({"_id": 2}, {"$addToSet": {"approved_users": user_id}}, upsert=True)
+
+async def REMOVE_APPROVED_USER(user_id):
+    await db.update_one({"_id": 2}, {"$pull": {"approved_users": user_id}})
