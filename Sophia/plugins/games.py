@@ -20,6 +20,7 @@ REG_TEXT = """
 """
 
 
+
 @Sophia.on_message(filters.command("profile", prefixes=HANDLER) & filters.group)
 async def get_profile(_, message):
     LIST_USERS = await GET_AVAILABLE_USERS()
@@ -30,7 +31,9 @@ async def get_profile(_, message):
         if PFP == None:
             await message.reply(f"You have {USER_COINS} coins")
         else:
-            await message.reply_photo(PFP, caption=f"You have {USER_COINS} coins")
+            await message.reply_photo(PFP, caption="""
+
+""")
     else:
         await message.reply(REG_TEXT)
         @Sophia.on_message(filters.command("continue", prefixes=HANDLER) & filters.group)
