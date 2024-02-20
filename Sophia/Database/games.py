@@ -72,7 +72,7 @@ async def SET_PROFILE_PIC(user_id: int, image: str):
     COINS_USR = await GET_COINS_FROM_USER(user_id)
     if COINS_USR >= 1000:
         await ADD_COINS(user_id, -1000)
-        doc = {"_id": 888user_id, "IMAGE": image}
+        doc = {"_id": 888 + user_id, "IMAGE": image}
         try:
             await db.insert_one(doc)
         except Exception:
@@ -82,7 +82,7 @@ async def SET_PROFILE_PIC(user_id: int, image: str):
         return "NOT_ENOUGH_COINS"
 
 async def GET_PROFILE_PIC(user_id):
-    Find = await db.find_one({"_id": 888user_id})
+    Find = await db.find_one({"_id": 888 + user_id})
     if not Find:
         return None
     else:
