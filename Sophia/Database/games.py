@@ -112,7 +112,10 @@ async def BET_COINS(user_id: int, coins: int):
                 RANDOM_COINS = str(RANDOM_COINS)
                 return RANDOM_COINS
             elif GET_LUCK == 'NO':
-                return "BETTER_LUCK_NEXT_TIME"
+                mins_coins = f"-{coins}"
+                mins_coins = int(mins_coins)
+                await ADD_COINS(user_id, mins_coins)
+                return "LOSE"
         except Exception as e:
             string = f"ERROR, {e}"
             return string
