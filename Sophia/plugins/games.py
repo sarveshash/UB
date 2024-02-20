@@ -123,7 +123,7 @@ async def bet_coins(_, message):
     
 @Sophia.on_message(filters.command(["setpfp", "setprofile"], prefixes=HANDLER))
 async def set_pfp(_, message):
-    if not message.reply_to_message.photo:
+    if not message.reply_to_message:
         return await message.reply("Reply to a image to set pfp")
     elif message.reply_to_message.photo:
         PIC_ID = message.reply_to_message.photo.file_id
