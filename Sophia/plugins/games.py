@@ -67,3 +67,7 @@ async def send_coins(_, message):
         return await message.reply(f"Successfully sent `{int_coins}`.")
     elif SEND_STATUS.startswith("ERROR"):
         return await message.reply(SEND_STATUS)
+"""
+@Sophia.on_message(filters.command("bet", prefixes=HANDLER))
+async def bet_coins(_, message):
+    """
