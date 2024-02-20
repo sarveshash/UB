@@ -27,20 +27,20 @@ async def GET_COINS_FROM_USER(user_id: int):
         return 0  # Handle case where document is not found
         
 async def ADD_COINS(user_id: int, coins: int):
-    USER_ACC = await GET_AVAILABLE_USERS()
-    if user_id not in USER_ACC:
-        await ADD_NEW_USER(user_id)  # Add the user to available users if not already there
+    # Assuming user_id is unique
+    document_id = f"user_{user_id}"
     COINS_USR = await GET_COINS_FROM_USER(user_id)
     TOTAL_COINS = COINS_USR + coins
-    filter = {"_id": 2, f"{user_id}": True}  # Corrected syntax for the filter
-    update = {"$set": {"coins": TOTAL_COINS}}  # Corrected syntax for the update
+    filter = {"_id": document_id}
+    update = {"$set": {"coins": TOTAL_COINS}}
     try:
-        await db.insert_one({"_id": 2, f"{user_id}": True, "coins": TOTAL_COINS})  # Corrected syntax for insert_one
+        await db.insert_one({"_id": document_id, "user_id": user_id, "coins": TOTAL_COINS})
     except Exception:
         await db.update_one(filter, update)
 
 async def REMOVE_USER(user_id):
-    await db.delete_one({"_id": 2, f"{user_id}": True})
+    document_id = f"user_{user_id}"
+    await db.delete_one({"_id": document_id})
     await db.update_one({"_id": 1}, {"$pull": {"USERS": user_id}})
     
 async def SEND_COINS(from_user: int, to_user: int, coins: int):
