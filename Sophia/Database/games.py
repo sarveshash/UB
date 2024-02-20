@@ -18,7 +18,7 @@ async def GET_COINS_FROM_USER(user_id: int):
     USER_ACC = await GET_AVAILABLE_USERS()
     if user_id not in USER_ACC:
         return "USER_NOT_FOUND"
-    string = {"_id": 2, "user_id": user_id}  # Corrected syntax for the query
+    string = {"_id": 2, f"{user_id}": True}  # Corrected syntax for the query
     xx = await db.find_one(string)  # Await the result
     if xx:  # Check if a document was found
         mm = int(xx["coins"])
@@ -32,15 +32,15 @@ async def ADD_COINS(user_id: int, coins: int):
         await ADD_NEW_USER(user_id)  # Add the user to available users if not already there
     COINS_USR = await GET_COINS_FROM_USER(user_id)
     TOTAL_COINS = COINS_USR + coins
-    filter = {"_id": 2, "user_id": user_id}  # Corrected syntax for the filter
+    filter = {"_id": 2, f"{user_id}": True}  # Corrected syntax for the filter
     update = {"$set": {"coins": TOTAL_COINS}}  # Corrected syntax for the update
     try:
-        await db.insert_one({"_id": 2, "user_id": user_id, "coins": TOTAL_COINS})  # Corrected syntax for insert_one
+        await db.insert_one({"_id": 2, f"{user_id}": True, "coins": TOTAL_COINS})  # Corrected syntax for insert_one
     except Exception:
         await db.update_one(filter, update)
 
 async def REMOVE_USER(user_id):
-    await db.delete_one({"_id": 2, "user_id": user_id})
+    await db.delete_one({"_id": 2, f"{user_id}": True})
     await db.update_one({"_id": 1}, {"$pull": {"USERS": user_id}})
     
 async def SEND_COINS(from_user: int, to_user: int, coins: int):
