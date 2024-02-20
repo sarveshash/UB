@@ -116,7 +116,10 @@ async def bet_coins(_, message):
     elif BET_STATUS.startswith("ERROR"):
         return await message.reply(BET_STATUS)
     elif BET_STATUS == "BETTER_LUCK_NEXT_TIME":
-        return await message.reply("**Better luck next time bruh**")
+        min_coins = f"-{int_coins}"
+        min_coins = int(min_coins)
+        await ADD_COINS(USER_ID, min_coins)
+        return await message.reply(f"You lose {int_coins}.")
     else:
         return await message.reply(f"You won {BET_STATUS}coins")
     
@@ -140,6 +143,8 @@ async def set_pfp(_, message):
 @Sophia.on_message(filters.command("fight", prefixes=HANDLER))
 async def fight(_, message):
     if message.reply_to_message:
+        if message.reply_to_message.from_user.id == message.from_user.id:
+            return await message.reply("How you can fight to yourself?")
         LIST_USERS = await GET_AVAILABLE_USERS()
         REPLY_USER = message.reply_to_message.from_user.id
         USER_ID = message.from_user.id
