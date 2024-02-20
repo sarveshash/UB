@@ -13,6 +13,8 @@ async def GET_AVAILABLE_USERS():
         return value
 
 async def ADD_NEW_USER(user_id):
+    doc = {"_id": 4444 + user_id, "NAME": "New_user_HS"}
+    await db.insert_one(doc)
     await db.update_one({"_id": 1}, {"$addToSet": {"USERS": user_id}}, upsert=True)
 
 async def GET_COINS_FROM_USER(user_id: int):
@@ -44,7 +46,15 @@ async def REMOVE_USER(user_id):
     document_id = f"user_{user_id}"
     await db.delete_one({"_id": document_id})
     await db.update_one({"_id": 1}, {"$pull": {"USERS": user_id}})
-    await db.delete_one({"_id": 888 + user_id})
+    try:
+        await db.delete_one({"_id": 888 + user_id})
+    except Exception as e:
+        print("Its normal error i guess", e)
+    try:
+        await db.delete_one({"_id": 4444 + user_id})
+    except Exception as e:
+        print("Its normal error i guess", e)
+    
     
 async def SEND_COINS(from_user: int, to_user: int, coins: int):
     USERS_ACC = await GET_AVAILABLE_USERS()
@@ -89,6 +99,32 @@ async def GET_PROFILE_PIC(user_id):
     else:
         value = Find["IMAGE"]
         return value
+
+async def SET_USER_NAME(user_id: int, name: str):
+    USERS_ACC = await GET_AVAILABLE_USERS()
+    if user_id not in USERS_ACC:
+        return "USER_NOT_FOUND"
+    COINS_USR = await GET_COINS_FROM_USER(user_id)
+    if COINS_USR >= 1999:
+        await ADD_COINS(user_id, -1999)
+        doc = {"_id": 4444 + user_id, "NAME": name}
+        try:
+            await db.insert_one(doc)
+        except Exception:
+            await db.update_one({"_id": 4444 + user_id}, {"$set": {"NAME": name}})
+        return "SUCCESS"
+    else:
+        return "NOT_ENOUGH_COINS"
+
+
+async def GET_USER_NAME(user_id):
+    Find = await db.find_one({"_id": 4444 + user_id})
+    if not Find:
+        return None
+    else:
+        value = Find["NAME"]
+        return value
+        
 
 async def BET_COINS(user_id: int, coins: int):
     USERS_ACC = await GET_AVAILABLE_USERS()
