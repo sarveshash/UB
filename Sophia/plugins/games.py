@@ -5,6 +5,7 @@ from pyrogram import filters
 import asyncio
 import os
 from Sophia.Database.games import *
+from pyrogram import enums
 
 REG_TEXT = """
 **🧑‍💻 Welcome To Hyper Games ©**
