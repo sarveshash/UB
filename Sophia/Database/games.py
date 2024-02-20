@@ -83,6 +83,7 @@ async def BET_COINS(user_id: int, coins: int):
             GET_LUCK = random.choice(LUCK_LIST)
             if GET_LUCK == 'YES':
                 await ADD_COINS(user_id, RANDOM_COINS)
+                RANDOM_COINS = str(RANDOM_COINS)
                 return RANDOM_COINS
             elif GET_LUCK == 'NO':
                 return "BETTER_LUCK_NEXT_TIME"
