@@ -63,3 +63,10 @@ async def SEND_COINS(from_user: int, to_user: int, coins: int):
         except Exception as e:
             ERROR_RETURN_STR = f"ERROR, {e}"
             return ERROR_RETURN_STR
+"""
+async def BET_COINS(user_id: int, coins: int):
+    USERS_ACC = await GET_AVAILABLE_USERS()
+    if user_id not in USERS_ACC:
+        return "USER_NOT_FOUND"
+    COINS_USR = await GET_COINS_FROM_USER(from_user)
+elif coins > COINS_USR"""
