@@ -6,7 +6,7 @@ import asyncio
 import os
 from Sophia.Database.games import *
 
-PROFILE_TEXT = """
+REG_TEXT = """
 **🧑‍💻 Welcome To Hyper Games ©**
 
 **• ACCOUNT REGISTRATION 🧑‍💻**
@@ -29,7 +29,7 @@ async def get_profile(_, message):
         USER_COINS = await GET_COINS_FROM_USER(USER_ID)
         await message.reply(f"You have {USER_COINS} coins")
     else:
-        await message.reply(PROFILE_TEXT)
+        await message.reply(REG_TEXT)
         @Sophia.on_message(filters.command("continue", prefixes=HANDLER) & filters.group)
         async def create_profile(_, message):
             global USER_ID
@@ -44,10 +44,14 @@ async def not_work_in_pm(_, message):
     await message.reply("This command only works on Group")
     return
 
-@Sophia.on_message(filters.command("send", prefixes=HANDLER) & filters.reply)
+@Sophia.on_message(filters.command("send", prefixes=HANDLER))
 async def send_coins(_, message):
     if len(message.command) < 2:
-        return await message.reply_text("➲ Master, Please enter the coins to send.")
+        return await message.reply_text("Please enter the coins to send.")
+    if not message.reply_to_message:
+        return await message.reply("You need reply a user to send coins")
+    if message.reply_to_message.from_user.id == message.from_user.id:
+        return await message.reply("You can't send coins to yourself.")
     coins = " ".join(message.command[1:])
     int_coins = int(coins)
     REPLY_USR = message.reply_to_message.from_user.id
@@ -62,6 +66,6 @@ async def send_coins(_, message):
     elif SEND_STATUS == "NOT_POSTIVE_NUMBER":
         return await message.reply("You need enter postive integer.")
     elif SEND_STATUS == "SUCCESS":
-        return await message.reply(f"Successfully sent {int_coins}")
+        return await message.reply(f"Successfully sent `{int_coins}`.")
     elif SEND_STATUS.startswith("ERROR"):
         return await message.reply(SEND_STATUS)
