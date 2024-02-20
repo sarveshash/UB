@@ -29,10 +29,30 @@ async def get_profile(_, message):
         USER_COINS = await GET_COINS_FROM_USER(USER_ID)
         PFP = await GET_PROFILE_PIC(USER_ID)
         if PFP == None:
-            await message.reply(f"You have {USER_COINS} coins")
+            await message.reply(f"""
+**• GAMER INFO**
+
+**- Coins:** `{USER_COINS}`
+**- Level:** `None`
+**- Experience:** `None`
+**- Weapons:** `None`
+**- Relationship points:** `None`
+**- Characters:** `None`
+
+**•> Powered by @Hyper_Speed0™**
+"""
         else:
             await message.reply_photo(PFP, caption="""
+**• GAMER INFO**
 
+**- Coins:** `{USER_COINS}`
+**- Level:** `None`
+**- Experience:** `None`
+**- Weapons:** `None`
+**- Relationship points:** `None`
+**- Characters:** `None`
+
+**•> Powered by @Hyper_Speed0™**
 """)
     else:
         await message.reply(REG_TEXT)
