@@ -41,3 +41,23 @@ async def ADD_COINS(user_id: int, coins: int):
         await db.insert_one({"_id": 2, "user_id": user_id, "coins": TOTAL_COINS})  # Corrected syntax for insert_one
     except Exception:
         await db.update_one(filter, update)
+
+async def SEND_COINS(from_user: int, to_user: int, coins: int):
+    USERS_ACC = await GET_AVAILABLE_USERS()
+    if from_user not in USERS_ACC:
+        return "FROM_USER_NOT_FOUND"
+    elif to_user not in USERS_ACC:
+        return "TO_USER_NOT_FOUND"
+    COINS_FR_USR = await GET_COINS_FROM_USER(from_user)
+    if coins > COINS_FR_USR:
+        return "NOT_ENOUGH_COINS"
+    elif coins <= 0:
+        return "NOT_POSTIVE_NUMBER"
+    elif coins <= COINS_FR_USR:
+        try:
+            await ADD_COINS(from_user, -coins)
+            await ADD_COINS(to_user, coins)
+            return "SUCCESS"
+        except Exception as e:
+            ERROR_RETURN_STR = f"ERROR, {e}"
+            return ERROR_RETURN_STR
