@@ -42,7 +42,7 @@ async def get_profile(_, message):
 **•> Powered by @Hyper_Speed0™**
 """)
         else:
-            await message.reply_photo(PFP, caption="""
+            await message.reply_photo(PFP, caption=f"""
 **• GAMER INFO**
 
 **- Coins:** `{USER_COINS}`
