@@ -89,9 +89,10 @@ async def bet_coins(_, message):
     else:
         return await message.reply(f"You won {BET_STATUS}coins")
     
-"""@Sophia.on_message(filters.command(["setpfp", "setprofile"], prefixes=HANDLER))
+@Sophia.on_message(filters.command(["setpfp", "setprofile"], prefixes=HANDLER))
 async def set_pfp(_, message):
     if message.reply_to_message.photo:
-        SET_PROFILE_PIC
+        PIC_ID = message.reply_to_message.photo.file_id
+        STATUS = await SET_PROFILE_PIC(message.from_user.id, PIC_ID)
     else:
-        return await message.reply("Please reply to a image to set your pfp")"""
+        return await message.reply("Please reply to a image to set your pfp")
