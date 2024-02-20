@@ -69,4 +69,9 @@ async def BET_COINS(user_id: int, coins: int):
     if user_id not in USERS_ACC:
         return "USER_NOT_FOUND"
     COINS_USR = await GET_COINS_FROM_USER(from_user)
-elif coins > COINS_USR"""
+    if coins > COINS_USR:
+        return "NOT_ENOUGH_COINS"
+    elif coins <= 0:
+        return "NOT_POSTIVE_NUMBER"
+    elif coins <= COINS_USR:
+        """
