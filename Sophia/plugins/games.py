@@ -67,7 +67,25 @@ async def send_coins(_, message):
         return await message.reply(f"Successfully sent `{int_coins}`.")
     elif SEND_STATUS.startswith("ERROR"):
         return await message.reply(SEND_STATUS)
-"""
+
 @Sophia.on_message(filters.command("bet", prefixes=HANDLER))
 async def bet_coins(_, message):
-    """
+    if len(message.command) < 2:
+        return await message.reply_text("Please enter the coins to bet.")
+    coins = " ".join(message.command[1:])
+    int_coins = int(coins)
+    USER_ID = message.from_user.id
+    BET_STATUS = await BET_COINS(USER_ID, int_coins)
+    if BET_STATUS == "USER_NOT_FOUND":
+        return await message.reply("You need a account to use this command")
+    elif BET_STATUS == "NOT_ENOUGH_COINS":
+        return await message.reply("You don't have enough coins to bet.")
+    elif BET_STATUS == "NOT_POSTIVE_NUMBER":
+        return await message.reply("You need enter postive integer.")
+    elif BET_STATUS.startswith("ERROR"):
+        return await message.reply(BET_STATUS)
+    elif BET_STATUS == "BETTER_LUCK_NEXT_TIME":
+        return await message.reply("**Better luck next time bruh**")
+    else:
+        return await message.reply(f"You won {BET_STATUS}coins")
+    
