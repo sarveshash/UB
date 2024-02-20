@@ -6,6 +6,7 @@ import asyncio
 import os
 from Sophia.Database.games import *
 from pyrogram import enums
+import random
 
 REG_TEXT = """
 **🧑‍💻 Welcome To Hyper Games ©**
@@ -134,3 +135,43 @@ async def set_pfp(_, message):
             return await message.reply("Success!, I have updated your profile picture")
     else:
         return await message.reply("Please reply to a image to set your pfp")
+
+
+@Sophia.on_message(filters.command("fight", prefixes=HANDLER))
+async def fight(_, message):
+    if message.reply_to_message:
+        LIST_USERS = await GET_AVAILABLE_USERS()
+        REPLY_USER = message.reply_to_message.from_user.id
+        USER_ID = message.from_user.id
+        COINS_RPL_USR = await GET_COINS_FROM_USER(REPLY_USER)
+        COINS_FR_USR = await GET_COINS_FROM_USER(USER_ID)
+        if USER_ID not in LIST_USERS:
+            return await message.reply("You need a account to use this command")
+        elif REPLY_USER not in LIST_USERS:
+            return await message.reply("Replied user don't have account, account is required to use this command.")
+        elif COINS_RPL_USR < 500:
+            return await message.reply("Replied user need atleast 500 coins to fight")
+        elif COINS_FR_USR < 500:
+            return await message.reply("You Need atleast 500 coins to fight")
+        FIGHT = await message.reply("Fight started")
+        await asyncio.sleep(1)
+        await FIGHT.edit("•")
+        await asyncio.sleep(1)
+        await FIGHT.edit("••")
+        await asyncio.sleep(0.6)
+        await FIGHT.edit("•••")
+        await asyncio.sleep(0.6)
+        FR_FIRST_NAME = message.from_user.first_name
+        RP_FIRST_NAME = message.reply_to_message.from_user.first_name
+        RANDOM_LIST = ['FROM_USR', 'REPLY_USR']
+        RAN_CHOICE = random.choice(RANDOM_LIST)
+        if RAN_CHOICE == 'FROM_USR':
+            SEND = await SEND_COINS(REPLY_USER, USER_ID, 500)
+            if SEND == "SUCCESS":
+                return await FIGHT.edit(f"Fight was so interesting but winer is {FR_FIRST_NAME} got 500 coins from {RP_FIRST_NAME}")
+        else:
+            SEND = await SEND_COINS(USER_ID, REPLY_USER, 500)
+            if SEND == "SUCCESS":
+                return await FIGHT.edit(f"Fight was so interesting but winer is {RP_FIRST_NAME} got 500 coins from {FR_FIRST_NAME}")
+    else:
+        return await message.reply("Please reply a user to fight.")
