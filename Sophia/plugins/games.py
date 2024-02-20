@@ -43,3 +43,25 @@ async def get_profile(_, message):
 async def not_work_in_pm(_, message):
     await message.reply("This command only works on Group")
     return
+
+@Sophia.on_message(filters.command("send", prefixes=HANDLER) & filters.reply)
+async def send_coins(_, message):
+    if len(message.command) < 2:
+        return await message.reply_text("➲ Master, Please enter the coins to send.")
+    coins = " ".join(message.command[1:])
+    int_coins = int(coins)
+    REPLY_USR = message.reply_to_message.from_user.id
+    USER_ID = message.from_user.id
+    SEND_STATUS = await SEND_COINS(USER_ID, REPLY_USR, int_coins)
+    if SEND_STATUS == "FROM_USER_NOT_FOUND":
+        return await message.reply("You need a account to use this command")
+    elif SEND_STATUS == "TO_USER_NOT_FOUND":
+        return await message.reply("Replied user don't have a account, account is required for using this command")
+    elif SEND_STATUS == "NOT_ENOUGH_COINS":
+        return await message.reply("You don't have enough Coins to send.")
+    elif SEND_STATUS == "NOT_POSTIVE_NUMBER":
+        return await message.reply("You need enter postive integer.")
+    elif SEND_STATUS == "SUCCESS":
+        return await message.reply(f"Successfully sent {int_coins}")
+    elif SEND_STATUS.startswith("ERROR"):
+        return await message.reply(SEND_STATUS)
