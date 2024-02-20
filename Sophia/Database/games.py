@@ -79,10 +79,8 @@ async def BET_COINS(user_id: int, coins: int):
             LUCK_LIST = ['YES', 'NO']
             PER_50 = (coins / 100) * 50
             PER_50 = int(PER_50)
-            PER_50 = PER_50+10
             RANDOM_COINS = random.randint(PER_50, coins)
-            if RANDOM_COINS < coins:
-                RANDOM_COINS = coins
+            RANDOM_COINS = RANDOM_COINS+10
             GET_LUCK = random.choice(LUCK_LIST)
             if GET_LUCK == 'YES':
                 await ADD_COINS(user_id, RANDOM_COINS)
