@@ -19,10 +19,9 @@ REG_TEXT = """
 **• By sending `/continue` You Agree Our Terms and Condiitions.**
 """
 
-USER_ID = 0
+
 @Sophia.on_message(filters.command("profile", prefixes=HANDLER) & filters.group)
 async def get_profile(_, message):
-    global USER_ID
     LIST_USERS = await GET_AVAILABLE_USERS()
     USER_ID = message.from_user.id
     if USER_ID in LIST_USERS:
@@ -32,7 +31,6 @@ async def get_profile(_, message):
         await message.reply(REG_TEXT)
         @Sophia.on_message(filters.command("continue", prefixes=HANDLER) & filters.group)
         async def create_profile(_, message):
-            global USER_ID
             if message.from_user.id == USER_ID:
                 await ADD_NEW_USER(USER_ID)
                 await ADD_COINS(USER_ID, 1000)
