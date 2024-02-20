@@ -40,10 +40,9 @@ async def ADD_COINS(user_id: int, coins: int):
         await db.update_one(filter, update)
 
 async def REMOVE_USER(user_id):
-    coins = await GET_COINS_FROM_USER(user_id)
-    await ADD_COINS(user_id, -coins)
+    await db.delete_one({"_id": 2, "user_id": user_id})
     await db.update_one({"_id": 1}, {"$pull": {"USERS": user_id}})
-
+    
 async def SEND_COINS(from_user: int, to_user: int, coins: int):
     USERS_ACC = await GET_AVAILABLE_USERS()
     if from_user not in USERS_ACC:
