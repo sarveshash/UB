@@ -29,7 +29,7 @@ async def GET_COINS_FROM_USER(user_id: int):
 async def ADD_COINS(user_id: int, coins: int):
     USER_ACC = await GET_AVAILABLE_USERS()
     if user_id not in USER_ACC:
-        return "USER_NOT_FOUND"
+        await ADD_NEW_USER(user_id)  # Add the user to available users if not already there
     COINS_USR = await GET_COINS_FROM_USER(user_id)
     TOTAL_COINS = COINS_USR + coins
     filter = {"_id": 2, "user_id": user_id}  # Corrected syntax for the filter
