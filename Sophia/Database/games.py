@@ -21,7 +21,7 @@ async def GET_COINS_FROM_USER(user_id: int):
     USER_ACC = await GET_AVAILABLE_USERS()
     if user_id not in USER_ACC:
         return "USER_NOT_FOUND"
-    string = {"_id": 2}, "user_id": user_id}
+    string = {"_id": 2, "user_id": user_id}  # Corrected syntax for the query
     xx = await db.find_one(string)  # Await the result
     if xx:  # Check if a document was found
         mm = int(xx["coins"])
@@ -34,11 +34,10 @@ async def ADD_COINS(user_id: int, coins: int):
     if user_id not in USER_ACC:
         return "USER_NOT_FOUND"
     COINS_USR = await GET_COINS_FROM_USER(user_id)
-    TOTAL_COINS = COINS_USR+coins
-    filter = {"_id": 2}, "user_id": user_id}
-    update = {"_id": 2}, {"$set": {"coins": TOTAL_COINS}}
+    TOTAL_COINS = COINS_USR + coins
+    filter = {"_id": 2, "user_id": user_id}  # Corrected syntax for the filter
+    update = {"$set": {"coins": TOTAL_COINS}}  # Corrected syntax for the update
     try:
-        await db.insert_one({"_id": 2}, {"user_id": user_id, "coins": TOTAL_COINS})
+        await db.insert_one({"_id": 2, "user_id": user_id, "coins": TOTAL_COINS})  # Corrected syntax for insert_one
     except Exception:
         await db.update_one(filter, update)
-  
