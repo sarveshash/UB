@@ -40,7 +40,7 @@ async def get_profile(_, message):
 **- Characters:** `None`
 
 **•> Powered by @Hyper_Speed0™**
-"""
+""")
         else:
             await message.reply_photo(PFP, caption="""
 **• GAMER INFO**
