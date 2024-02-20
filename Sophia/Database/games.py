@@ -44,7 +44,7 @@ async def REMOVE_USER(user_id):
     document_id = f"user_{user_id}"
     await db.delete_one({"_id": document_id})
     await db.update_one({"_id": 1}, {"$pull": {"USERS": user_id}})
-    await db.delete_one({"_id": 888 + user_id)
+    await db.delete_one({"_id": 888 + user_id})
     
 async def SEND_COINS(from_user: int, to_user: int, coins: int):
     USERS_ACC = await GET_AVAILABLE_USERS()
