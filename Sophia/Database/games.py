@@ -14,9 +14,6 @@ async def GET_AVAILABLE_USERS():
 async def ADD_NEW_USER(user_id):
     await db.update_one({"_id": 1}, {"$addToSet": {"USERS": user_id}}, upsert=True)
 
-async def REMOVE_USER(user_id):
-    await db.update_one({"_id": 1}, {"$pull": {"USERS": user_id}})
-
 async def GET_COINS_FROM_USER(user_id: int):
     USER_ACC = await GET_AVAILABLE_USERS()
     if user_id not in USER_ACC:
@@ -41,6 +38,11 @@ async def ADD_COINS(user_id: int, coins: int):
         await db.insert_one({"_id": 2, "user_id": user_id, "coins": TOTAL_COINS})  # Corrected syntax for insert_one
     except Exception:
         await db.update_one(filter, update)
+
+async def REMOVE_USER(user_id):
+    coins = await GET_COINS_FROM_USER(user_id)
+    await ADD_COINS(user_id, -coins)
+    await db.update_one({"_id": 1}, {"$pull": {"USERS": user_id}})
 
 async def SEND_COINS(from_user: int, to_user: int, coins: int):
     USERS_ACC = await GET_AVAILABLE_USERS()
