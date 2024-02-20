@@ -76,7 +76,7 @@ async def SET_PROFILE_PIC(user_id: int, image: str):
         try:
             await db.insert_one(doc)
         except Exception:
-            await db.update_one({"_id": 888user_id}, {"$set": {"IMAGE": image}})
+            await db.update_one({"_id": 888 + user_id}, {"$set": {"IMAGE": image}})
         return "SUCCESS"
     else:
         return "NOT_ENOUGH_COINS"
