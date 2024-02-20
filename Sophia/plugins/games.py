@@ -115,10 +115,7 @@ async def bet_coins(_, message):
         return await message.reply("You need enter postive integer.")
     elif BET_STATUS.startswith("ERROR"):
         return await message.reply(BET_STATUS)
-    elif BET_STATUS == "BETTER_LUCK_NEXT_TIME":
-        min_coins = f"-{int_coins}"
-        min_coins = int(min_coins)
-        await ADD_COINS(USER_ID, min_coins)
+    elif BET_STATUS == "LOSE":
         return await message.reply(f"You lose {int_coins}.")
     else:
         return await message.reply(f"You won {BET_STATUS}coins")
