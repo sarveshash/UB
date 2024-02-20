@@ -22,10 +22,13 @@ async def GET_COINS_FROM_USER(user_id: int):
     if user_id not in USER_ACC:
         return "USER_NOT_FOUND"
     string = {"user_id": user_id}
-    xx = db.find_one(string)
-    mm = int(xx["coins"])
-    return mm
-
+    xx = await db.find_one(string)  # Await the result
+    if xx:  # Check if a document was found
+        mm = int(xx["coins"])
+        return mm
+    else:
+        return 0  # Handle case where document is not found
+        
 async def ADD_COINS(user_id: int, coins: int):
     USER_ACC = await GET_AVAILABLE_USERS()
     if user_id not in USER_ACC:
