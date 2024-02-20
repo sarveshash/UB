@@ -69,7 +69,7 @@ async def BET_COINS(user_id: int, coins: int):
     USERS_ACC = await GET_AVAILABLE_USERS()
     if user_id not in USERS_ACC:
         return "USER_NOT_FOUND"
-    COINS_USR = await GET_COINS_FROM_USER(from_user)
+    COINS_USR = await GET_COINS_FROM_USER(user_id)
     if coins > COINS_USR:
         return "NOT_ENOUGH_COINS"
     elif coins <= 0:
