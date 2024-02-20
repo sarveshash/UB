@@ -17,8 +17,22 @@ async def ADD_NEW_USER(user_id):
 async def REMOVE_USER(user_id):
     await db.update_one({"_id": 1}, {"$pull": {"USERS": user_id}})
 
-"""async def CHANGE_COINS(user_id, coins):
+async def GET_COINS_FROM_USER(user_id: int):
+    USER_ACC = await GET_AVAILABLE_USERS()
+    if user_id not in USER_ACC:
+        return "USER_NOT_FOUND"
+    string = {"user_id": user_id}
+    xx = db.find_one(string)
+    mm = int(xx["coins"])
+    return mm
 
-async def SEND_COINS(from_user, to_user, coins):
-    """
+async def ADD_COINS(user_id: int, coins: int):
+    USER_ACC = await GET_AVAILABLE_USERS()
+    if user_id not in USER_ACC:
+        return "USER_NOT_FOUND"
+    COINS_USR = await GET_COINS_FROM_USER(user_id)
+    TOTAL_COINS = COINS_USR+coins
+    filter = {"user_id": user_id}
+    update = {"$set": {"coins": TOTAL_COINS}}
+    await db.update_one(filter, update)
   
