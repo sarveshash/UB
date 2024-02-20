@@ -65,6 +65,30 @@ async def SEND_COINS(from_user: int, to_user: int, coins: int):
             ERROR_RETURN_STR = f"ERROR, {e}"
             return ERROR_RETURN_STR
 
+async def SET_PROFILE_PIC(user_id: int, image: str):
+    USERS_ACC = await GET_AVAILABLE_USERS()
+    if user_id not in USERS_ACC:
+        return "USER_NOT_FOUND"
+    COINS_USR = await GET_COINS_FROM_USER(user_id)
+    if COINS_USR >= 1000:
+        await ADD_COINS(user_id, -1000)
+        doc = {"_id": 888user_id, "IMAGE": image}
+        try:
+            await db.insert_one(doc)
+        except Exception:
+            await db.update_one({"_id": 888user_id}, {"$set": {"IMAGE": image}})
+        return "SUCCESS"
+    else:
+        return "NOT_ENOUGH_COINS"
+
+async def GET_PROFILE_PIC(user_id):
+    Find = await db.find_one({"_id": 888user_id})
+    if not Find:
+        return None
+    else:
+        value = Find["IMAGE"]
+        return value
+
 async def BET_COINS(user_id: int, coins: int):
     USERS_ACC = await GET_AVAILABLE_USERS()
     if user_id not in USERS_ACC:
