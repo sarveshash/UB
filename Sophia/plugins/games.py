@@ -29,7 +29,7 @@ async def get_profile(_, message):
         USER_COINS = await GET_COINS_FROM_USER(USER_ID)
         PFP = await GET_PROFILE_PIC(USER_ID)
         if PFP == None:
-            await message.reply(f"""
+            await message.reply_photo("https://telegra.ph/file/a359e56250bd60eb192ff.jpg", caption=f"""
 **• GAMER INFO**
 
 **- Coins:** `{USER_COINS}`
