@@ -21,7 +21,7 @@ REG_TEXT = """
 
 
 
-@Sophia.on_message(filters.command("profile", prefixes=HANDLER) & filters.group)
+@Sophia.on_message(filters.command("profile", prefixes=HANDLER))
 async def get_profile(_, message):
     LIST_USERS = await GET_AVAILABLE_USERS()
     USER_ID = message.from_user.id
@@ -60,6 +60,8 @@ async def get_profile(_, message):
 **•> Powered by @Hyper_Speed0™**
 """)
     else:
+        if message.chat.type == enums.ChatType.PRIVATE:
+            return await message.reply("Creating account only works on group.")
         await message.reply(REG_TEXT)
         @Sophia.on_message(filters.command("continue", prefixes=HANDLER) & filters.group)
         async def create_profile(_, message):
@@ -68,11 +70,6 @@ async def get_profile(_, message):
                 await ADD_COINS(USER_ID, 1000)
                 await message.reply("Thanks for creating account in Hyper Games, In this process you got 1000 coins as reward. Enjoy Have Fun")
                 return
-
-@Sophia.on_message(filters.command("profile", prefixes=HANDLER) & filters.private)
-async def not_work_in_pm(_, message):
-    await message.reply("This command only works on Group")
-    return
 
 @Sophia.on_message(filters.command("send", prefixes=HANDLER))
 async def send_coins(_, message):
