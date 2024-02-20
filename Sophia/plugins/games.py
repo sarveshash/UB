@@ -25,6 +25,11 @@ REG_TEXT = """
 async def get_profile(_, message):
     LIST_USERS = await GET_AVAILABLE_USERS()
     USER_ID = message.from_user.id
+    if message.reply_to_message:
+        if message.reply_to_message.from_user.id in LIST_USERS:
+            USER_ID = message.reply_to_message.from_user.id
+        else:
+            return await message.reply("The replied user don't have a account, Hyper games account is required for using this command.")
     if USER_ID in LIST_USERS:
         USER_COINS = await GET_COINS_FROM_USER(USER_ID)
         PFP = await GET_PROFILE_PIC(USER_ID)
