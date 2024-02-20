@@ -1,5 +1,6 @@
 from Sophia import GAME_DATABASE
 import asyncio
+import random
 
 db = GAME_DATABASE["Games_R"]
 
@@ -63,7 +64,7 @@ async def SEND_COINS(from_user: int, to_user: int, coins: int):
         except Exception as e:
             ERROR_RETURN_STR = f"ERROR, {e}"
             return ERROR_RETURN_STR
-"""
+
 async def BET_COINS(user_id: int, coins: int):
     USERS_ACC = await GET_AVAILABLE_USERS()
     if user_id not in USERS_ACC:
@@ -74,4 +75,17 @@ async def BET_COINS(user_id: int, coins: int):
     elif coins <= 0:
         return "NOT_POSTIVE_NUMBER"
     elif coins <= COINS_USR:
-        """
+        try:
+            LUCK_LIST = ['YES', 'NO']
+            PER_50 = (coins / 100) * 50
+            PER_50 = int(PER_50)
+            RANDOM_COINS = random.randint(PER_50, coins)
+            GET_LUCK = random.choice(LUCK_LIST)
+            if GET_LUCK == 'YES':
+                await ADD_COINS(user_id, RANDOM_COINS)
+                return RANDOM_COINS
+            elif GET_LUCK == 'NO':
+                return "BETTER_LUCK_NEXT_TIME"
+        except Exception as e:
+            string = f"ERROR, {e}"
+            return string
