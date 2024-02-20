@@ -41,7 +41,7 @@ async def get_profile(_, message):
 **• GAMER INFO**
 
 **- Name:** {NAME}
-**- ID:** {USER_ID}
+**- ID:** `{USER_ID}`
 **- Coins:** `{USER_COINS}`
 **- Level:** `None`
 **- Experience:** `None`
@@ -140,6 +140,20 @@ async def set_pfp(_, message):
             return await message.reply("Success!, I have updated your profile picture")
     else:
         return await message.reply("Please reply to a image to set your pfp")
+
+@Sophia.on_message(filters.command(["setname", "setnewname"], prefixes=HANDLER))
+async def set_name(_, message):
+    if len(message.command) < 2:
+        return await message.reply_text("Please enter your new name to set.")
+    NAME_NEW = " ".join(message.command[1:])
+    STATUS = await SET_USER_NAME(message.from_user.id, NAME_NEW)
+    if STATUS == "USER_NOT_FOUND":
+        return await message.reply("You need a account to use this command")
+    elif STATUS == "NOT_ENOUGH_COINS":
+        return await message.reply("You don't have enough coins to use this command, you need atleast 1999 coins to use this")
+    elif STATUS == "SUCCESS":
+        return await message.reply("Success!, I have updated your profile name")
+        
 
 
 @Sophia.on_message(filters.command("fight", prefixes=HANDLER))
