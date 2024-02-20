@@ -26,7 +26,11 @@ async def get_profile(_, message):
     USER_ID = message.from_user.id
     if USER_ID in LIST_USERS:
         USER_COINS = await GET_COINS_FROM_USER(USER_ID)
-        await message.reply(f"You have {USER_COINS} coins")
+        PFP = await GET_PROFILE_PIC(USER_ID)
+        if PFP == None:
+            await message.reply(f"You have {USER_COINS} coins")
+        else:
+            await message.reply_photo(PFP, caption=f"You have {USER_COINS} coins")
     else:
         await message.reply(REG_TEXT)
         @Sophia.on_message(filters.command("continue", prefixes=HANDLER) & filters.group)
@@ -94,5 +98,11 @@ async def set_pfp(_, message):
     if message.reply_to_message.photo:
         PIC_ID = message.reply_to_message.photo.file_id
         STATUS = await SET_PROFILE_PIC(message.from_user.id, PIC_ID)
+        if STATUS == "USER_NOT_FOUND":
+            return await message.reply("You need a account to use this command")
+        elif STATUS == "NOT_ENOUGH_COINS":
+            return await message.reply("You don't have enough coins to use this command, you need atleast 1000 coins to use this")
+        elif STATUS == "SUCCESS":
+            return await message.reply("Success!, I have updated your profile picture")
     else:
         return await message.reply("Please reply to a image to set your pfp")
