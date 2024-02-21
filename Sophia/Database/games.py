@@ -153,6 +153,7 @@ async def GET_EXP(user_id: int):
     
 async def BET_COINS(user_id: int, coins: int):
     USERS_ACC = await GET_AVAILABLE_USERS()
+    LEVEL = 101
     if user_id not in USERS_ACC:
         return "USER_NOT_FOUND"
     COINS_USR = await GET_COINS_FROM_USER(user_id)
@@ -162,7 +163,22 @@ async def BET_COINS(user_id: int, coins: int):
         return "NOT_POSTIVE_NUMBER"
     elif coins <= COINS_USR:
         try:
-            LUCK_LIST = ['YES', 'NO', 'NO']
+            if LEVEL == 1:
+                LUCK_LIST = ['YES', 'NO']
+            elif LEVEL < 3:
+                LUCK_LIST = ['YES', 'NO', 'NO']
+            elif LEVEL < 7:
+                LUCK_LIST = ['YES', 'NO', 'NO', 'NO', 'PRO']
+            elif LEVEL < 15:
+                LUCK_LIST = ['YES', 'NO', 'NO', 'NO', 'PRO', 'PRO']
+            elif LEVEL < 30:
+                LUCK_LIST = ['YES', 'NO', 'NO', 'NO', 'NO', 'PRO', 'PRO']
+            elif LEVEL < 60:
+                LUCK_LIST = ['YES', 'NO', 'YES', 'NO', 'NO', 'NO', 'NO', 'PRO', 'PRO']
+            elif LEVEL < 100:
+                LUCK_LIST = ['YES', 'NO', 'YES', 'NO', 'NO', 'NO', 'NO', 'NO', 'NO', 'PRO', 'PRO']
+            elif LEVEL > 100:
+                LUCK_LIST = ['YES', 'NO', 'YES', 'NO', 'NO', 'NO', 'NO', 'NO', 'NO', 'PRO', 'PRO', 'PRO']
             PER_50 = (coins / 100) * 50
             PER_50 = int(PER_50)
             RANDOM_COINS = random.randint(PER_50, coins)
@@ -177,6 +193,10 @@ async def BET_COINS(user_id: int, coins: int):
                 mins_coins = int(mins_coins)
                 await ADD_COINS(user_id, mins_coins)
                 return "LOSE"
+            elif GET_LUCK == 'PRO':
+                coins_2x = coins*2
+                await ADD_COINS(user_id, coins_2x)
+                return "PRO"
         except Exception as e:
             string = f"ERROR, {e}"
             return string
