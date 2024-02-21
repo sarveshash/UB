@@ -215,7 +215,7 @@ async def BET_COINS(user_id: int, coins: int):
             PER_50 = int(PER_50)
             RANDOM_COINS = random.randint(PER_50, coins)
             GET_LUCK = random.choice(LUCK_LIST)
-            if RANDOM_COINS == 0:
+            if RANDOM_COINS <= 0:
                 RANDOM_COINS = 1
             if GET_LUCK == 'YES':
                 await ADD_COINS(user_id, RANDOM_COINS)
