@@ -234,10 +234,12 @@ async def fight(_, message):
         rp_user_lvl = await GET_LEVEL(reply_user)
         random_choice = await choice_generator(user_id, fr_user_lvl, reply_user, rp_user_lvl)
         if random_choice == user_id:
+            await UPDATE_EXP(user_id, 2)
             send_coins_status = await SEND_COINS(reply_user, user_id, 500)
             if send_coins_status == "SUCCESS":
                 return await fight_message.edit(f"The fight was intense, but the winner is {fr_first_name}! They received 500 coins from {rp_first_name}.")
         else:
+            await UPDATE_EXP(reply_user, 2)
             send_coins_status = await SEND_COINS(user_id, reply_user, 500)
             if send_coins_status == "SUCCESS":
                 return await fight_message.edit(f"The fight was intense, but the winner is {rp_first_name}! They received 500 coins from {fr_first_name}.")
