@@ -81,7 +81,7 @@ async def get_profile(_, message):
                 await restart_program()
                 return
 
-@Sophia.on_message(filters.command("send", prefixes=HANDLER))
+@Sophia.on_message(filters.command(["send", "sent", "transfer"], prefixes=HANDLER))
 async def send_coins(_, message):
     if len(message.command) < 2:
         return await message.reply_text("Please enter the coins to send.")
