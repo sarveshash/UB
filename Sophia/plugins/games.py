@@ -132,10 +132,10 @@ async def set_pfp(_, message):
     if len(message.command) < 2:
         return await message.reply_text("Please enter your image link to set.")
     IMAGE_LINK = " ".join(message.command[1:])
-    if IMAGE_LINK.startswith("https://")
+    if IMAGE_LINK.startswith("https://"):
         STATUS = await SET_PROFILE_PIC(message.from_user.id, IMAGE_LINK)
         if STATUS == "USER_NOT_FOUND":
-            return await message.reply("You need a account to use this command")
+            return await message.reply("You need a account to use this command.")
         elif STATUS == "NOT_ENOUGH_COINS":
             return await message.reply("You don't have enough coins to use this command, you need atleast 1000 coins to use this")
         elif STATUS == "SUCCESS":
