@@ -193,7 +193,7 @@ async def BET_COINS(user_id: int, coins: int):
         return "NOT_POSTIVE_NUMBER"
     elif coins <= COINS_USR:
         try:
-            if LEVEL == 1:
+            if LEVEL < 1:
                 LUCK_LIST = ['YES', 'NO']
             elif LEVEL < 3:
                 LUCK_LIST = ['YES', 'NO', 'NO']
