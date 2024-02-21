@@ -129,11 +129,11 @@ async def bet_coins(_, message):
     
 @Sophia.on_message(filters.command(["setpfp", "setprofile"], prefixes=HANDLER))
 async def set_pfp(_, message):
-    if not message.reply_to_message:
-        return await message.reply("Reply to a image to set pfp")
-    elif message.reply_to_message.photo:
-        PIC_ID = message.reply_to_message.photo.file_id
-        STATUS = await SET_PROFILE_PIC(message.from_user.id, PIC_ID)
+    if len(message.command) < 2:
+        return await message.reply_text("Please enter your image link to set.")
+    IMAGE_LINK = " ".join(message.command[1:])
+    if IMAGE_LINK.startswith("https://")
+        STATUS = await SET_PROFILE_PIC(message.from_user.id, IMAGE_LINK)
         if STATUS == "USER_NOT_FOUND":
             return await message.reply("You need a account to use this command")
         elif STATUS == "NOT_ENOUGH_COINS":
@@ -141,7 +141,7 @@ async def set_pfp(_, message):
         elif STATUS == "SUCCESS":
             return await message.reply("Success!, I have updated your profile picture")
     else:
-        return await message.reply("Please reply to a image to set your pfp")
+        return await message.reply("Please enter a valid image link to set.")
 
 @Sophia.on_message(filters.command(["setname", "setnewname"], prefixes=HANDLER))
 async def set_name(_, message):
