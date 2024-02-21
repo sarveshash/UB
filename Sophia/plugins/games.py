@@ -38,6 +38,7 @@ async def get_profile(_, message):
         PFP = await GET_PROFILE_PIC(USER_ID)
         EXP = await GET_EXP(USER_ID)
         NAME = await GET_USER_NAME(USER_ID)
+        LEVEL = await GET_LEVEL(USER_ID)
         if PFP == None:
             await message.reply_photo("https://telegra.ph/file/a359e56250bd60eb192ff.jpg", caption=f"""
 **• GAMER INFO**
@@ -45,8 +46,8 @@ async def get_profile(_, message):
 **- Name:** {NAME}
 **- ID:** `{USER_ID}`
 **- Coins:** `{USER_COINS}`
-**- Level:** `None`
-**- Experience:** {EXP}
+**- Level:** `{LEVEL}`
+**- Experience:** `{EXP}`
 **- Weapons:** `None`
 **- Relationship points:** `None`
 **- Characters:** `None`
@@ -60,8 +61,8 @@ async def get_profile(_, message):
 **- Name:** {NAME}
 **- ID:** {USER_ID}
 **- Coins:** `{USER_COINS}`
-**- Level:** `None`
-**- Experience:** {EXP}
+**- Level:** `{LEVEL}`
+**- Experience:** `{EXP}`
 **- Weapons:** `None`
 **- Relationship points:** `None`
 **- Characters:** `None`
