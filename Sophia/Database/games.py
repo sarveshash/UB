@@ -235,5 +235,12 @@ async def BET_COINS(user_id: int, coins: int):
             string = f"ERROR, {e}"
             return string
 
-
-        
+"""async def TRANSFER_ACCOUNT(old_account_id: int, to_user_id: int):
+    USERS_LIST = await GET_AVAILABLE_USERS()
+    if old_account_id not in USERS_LIST:
+        return "USER_NOT_FOUND"
+    elif to_user_id in USERS_LIST:
+        return "NEW_ID_ALREADY_EXITS"
+    document_id = f"user_{old_account_id}"
+    """ # i will complete soon
+    
