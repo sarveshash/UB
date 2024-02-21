@@ -32,7 +32,8 @@ async def CHOICE_GEN(user_one: int, user_one_lvl: int, user_two: int, user_two_l
         RAN_CHOICE = random.random()
         return user_two if RAN_CHOICE < chance else user_one
     else:
-        user_one_lvl, user_two_lvl = user_two_lvl, user_one_lvl
+        user_one_lvl = user_two_lvl 
+        user_two_lvl = user_one_lvl
         if user_one_lvl < 3:
             chance = 0.5
         elif user_one_lvl < 7:
@@ -52,7 +53,7 @@ async def CHOICE_GEN(user_one: int, user_one_lvl: int, user_two: int, user_two_l
         else:
             chance = 0.65
         RAN_CHOICE = random.random()
-        return user_one if RAN_CHOICE < chance else user_two        
+        return user_one if RAN_CHOICE < chance else user_two
 
 REG_TEXT = """
 **🧑‍💻 Welcome To Hyper Games ©**
