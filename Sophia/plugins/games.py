@@ -33,9 +33,9 @@ async def CHOICE_GEN(user_one: int, user_one_lvl: int, user_two: int, user_two_l
             RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE, TWO, TWO, TWO, ONE, ONE, ONE, ONE, ONE, TWO]
         RAN_CHOICE = random.choice(RANDOM_LUCK)
         if RAN_CHOICE == ONE:
-            return user_one
-        else:
             return user_two
+        else:
+            return user_one
     else:
         ONE = "TWO"
         TWO = "ONE"
