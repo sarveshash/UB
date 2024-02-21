@@ -130,7 +130,7 @@ async def ADD_LEVEL(user_id: int, level: int):
     try:
         await db.update_one(
             {"_id": document_id},
-            {"$inc": {"LVL": level}},
+            {"$set": {"LVL": level}},
             upsert=True
         )
     except Exception as e:
