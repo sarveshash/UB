@@ -168,7 +168,7 @@ async def GET_LEVEL(user_id: int):
         if user_data:
             EXP = await GET_EXP(user_id)
             LEVEL = user_data.get("LVL", 0)
-            LEVEL_CH = EXP // 1000
+            LEVEL_CH = EXP // 250
             if LEVEL_CH == LEVEL:
                 return user_data.get("LVL", 0)
             else:
