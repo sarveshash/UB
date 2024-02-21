@@ -9,6 +9,36 @@ from pyrogram import enums
 import random
 from Restart import restart_program
 
+async def CHOICE_GEN(user_one: int, user_one_lvl: int, user_two: int, user_two_lvl: int):
+    ONE = 'ONE'
+    TWO = 'TWO'
+    if user_one_lvl > user_two_lvl:
+        if user_one_lvl < 3:
+            RANDOM_LUCK = [ONE, TWO]
+        elif user_one_lvl < 7:
+            RANDOM_LUCK = [ONE, TWO, ONE]
+        elif user_one_lvl < 16:
+            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE]
+        elif user_one_lvl < 25:
+            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE, ONE]
+        elif user_one_lvl < 38:
+            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE, TWO]
+        elif user_one_lvl < 50:
+            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE, TWO, ONE, ONE]
+        elif user_one_lvl < 75:
+            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE, TWO, TWO, TWO, ONE]
+        elif user_one_lvl < 100:
+            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE, TWO, TWO, TWO, ONE, ONE, ONE]
+        elif user_one_lvl >= 100:
+            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE, TWO, TWO, TWO, ONE, ONE, ONE, ONE, ONE, TWO]
+        RAN_CHOICE = random.choice(RANDOM_LUCK)
+        if RAN_CHOICE == ONE:
+            return user_one
+        else:
+            return user_two
+    else:
+        
+
 REG_TEXT = """
 **🧑‍💻 Welcome To Hyper Games ©**
 
