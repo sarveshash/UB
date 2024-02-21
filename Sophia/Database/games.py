@@ -125,6 +125,17 @@ async def GET_USER_NAME(user_id: int):
         value = Find["NAME"]
         return value
 
+async def ADD_LEVEL(user_id: int, level: int):
+    document_id = f"user_{user_id}"
+    try:
+        await db.update_one(
+            {"_id": document_id},
+            {"$inc": {"LVL": level}},
+            upsert=True
+        )
+    except Exception as e:
+        print(f"Error adding level for user {user_id}: {e}")
+                
 
 async def UPDATE_EXP(user_id: int, exp: int):
     document_id = f"user_{user_id}"
@@ -150,10 +161,29 @@ async def GET_EXP(user_id: int):
         return 0
         
 
+async def GET_LEVEL(user_id: int):
+    document_id = f"user_{user_id}"
+    try:
+        user_data = await db.find_one({"_id": document_id})
+        if user_data:
+            EXP = await GET_EXP(user_id)
+            LEVEL = user_data.get("LVL", 0)
+            LEVEL_CH = EXP // 1000
+            if LEVEL_CH == LEVEL:
+                return user_data.get("LVL", 0)
+            else:
+                await ADD_LEVEL(user_id, LEVEL_CH)
+                return user_data.get("LVL", 0)
+        else:
+            return 0 
+    except Exception as e:
+        print(f"Error getting level for user {user_id}: {e}")
+        return 0
+        
     
 async def BET_COINS(user_id: int, coins: int):
     USERS_ACC = await GET_AVAILABLE_USERS()
-    LEVEL = 101
+    LEVEL = await GET_LEVEL(user_id)
     if user_id not in USERS_ACC:
         return "USER_NOT_FOUND"
     COINS_USR = await GET_COINS_FROM_USER(user_id)
