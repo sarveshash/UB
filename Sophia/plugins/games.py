@@ -247,9 +247,10 @@ async def fight(_, message):
         await asyncio.sleep(0.6)
         FR_FIRST_NAME = message.from_user.first_name
         RP_FIRST_NAME = message.reply_to_message.from_user.first_name
-        RANDOM_LIST = ['FROM_USR', 'REPLY_USR']
-        RAN_CHOICE = random.choice(RANDOM_LIST)
-        if RAN_CHOICE == 'FROM_USR':
+        FR_USR_LVL = await GET_LEVEL(USER_ID)
+        RPL_USR_LVL = await GET_LEVEL(REPLY_USER)
+        RAN_CHOICE = await CHOICE_GEN(USER_ID, FR_USR_LVL, REPLY_USER, RPL_USR_LVL)
+        if RAN_CHOICE == USER_ID:
             SEND = await SEND_COINS(REPLY_USER, USER_ID, 500)
             if SEND == "SUCCESS":
                 return await FIGHT.edit(f"Fight was so interesting but winer is {FR_FIRST_NAME} got 500 coins from {RP_FIRST_NAME}")
