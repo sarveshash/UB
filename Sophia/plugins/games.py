@@ -125,8 +125,10 @@ async def bet_coins(_, message):
         return await message.reply(BET_STATUS)
     elif BET_STATUS == "LOSE":
         return await message.reply(f"You lose {int_coins}.")
+    elif BET_STATUS == "PRO":
+        return await message.reply(f"Pro bet, you won {int_coins*2}")
     else:
-        return await message.reply(f"You won {BET_STATUS}coins")
+        return await message.reply(f"You won {BET_STATUS} coins")
     
 @Sophia.on_message(filters.command(["setpfp", "setprofile"], prefixes=HANDLER))
 async def set_pfp(_, message):
