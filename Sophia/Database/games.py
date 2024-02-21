@@ -92,7 +92,7 @@ async def SET_PROFILE_PIC(user_id: int, image: str):
     else:
         return "NOT_ENOUGH_COINS"
 
-async def GET_PROFILE_PIC(user_id):
+async def GET_PROFILE_PIC(user_id: int):
     Find = await db.find_one({"_id": 888 + user_id})
     if not Find:
         return None
@@ -117,15 +117,40 @@ async def SET_USER_NAME(user_id: int, name: str):
         return "NOT_ENOUGH_COINS"
 
 
-async def GET_USER_NAME(user_id):
+async def GET_USER_NAME(user_id: int):
     Find = await db.find_one({"_id": 4444 + user_id})
     if not Find:
         return None
     else:
         value = Find["NAME"]
         return value
+
+
+async def UPDATE_EXP(user_id: int, exp: int):
+    document_id = f"user_{user_id}"
+    try:
+        await db.update_one(
+            {"_id": document_id},
+            {"$inc": {"EXP": exp}},
+            upsert=True
+        )
+    except Exception as e:
+        print(f"Error updating exp for user {user_id}: {e}")
+        
+async def GET_EXP(user_id: int):
+    document_id = f"user_{user_id}"
+    try:
+        user_data = await db.find_one({"_id": document_id})
+        if user_data:
+            return user_data.get("EXP", 0)
+        else:
+            return 0 
+    except Exception as e:
+        print(f"Error getting exp for user {user_id}: {e}")
+        return 0
         
 
+    
 async def BET_COINS(user_id: int, coins: int):
     USERS_ACC = await GET_AVAILABLE_USERS()
     if user_id not in USERS_ACC:
@@ -146,6 +171,7 @@ async def BET_COINS(user_id: int, coins: int):
             if GET_LUCK == 'YES':
                 await ADD_COINS(user_id, RANDOM_COINS)
                 RANDOM_COINS = str(RANDOM_COINS)
+                await UPDATE_EXP(user_id, 1)
                 return RANDOM_COINS
             elif GET_LUCK == 'NO':
                 mins_coins = f"-{coins}"
@@ -155,3 +181,6 @@ async def BET_COINS(user_id: int, coins: int):
         except Exception as e:
             string = f"ERROR, {e}"
             return string
+
+
+        
