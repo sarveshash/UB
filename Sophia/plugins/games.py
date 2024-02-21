@@ -10,61 +10,49 @@ import random
 from Restart import restart_program
 
 async def CHOICE_GEN(user_one: int, user_one_lvl: int, user_two: int, user_two_lvl: int):
-    ONE = 'ONE'
-    TWO = 'TWO'
     if user_one_lvl > user_two_lvl:
         if user_one_lvl < 3:
-            RANDOM_LUCK = [ONE, TWO]
+            chance = 0.5
         elif user_one_lvl < 7:
-            RANDOM_LUCK = [ONE, TWO, ONE]
+            chance = 0.33
         elif user_one_lvl < 16:
-            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE]
+            chance = 0.4
         elif user_one_lvl < 25:
-            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE, ONE]
+            chance = 0.43
         elif user_one_lvl < 38:
-            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE, TWO]
+            chance = 0.47
         elif user_one_lvl < 50:
-            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE, TWO, ONE, ONE]
+            chance = 0.45
         elif user_one_lvl < 75:
-            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE, TWO, TWO, TWO, ONE]
+            chance = 0.53
         elif user_one_lvl < 100:
-            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE, TWO, TWO, TWO, ONE, ONE, ONE]
-        elif user_one_lvl >= 100:
-            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE, TWO, TWO, TWO, ONE, ONE, ONE, ONE, ONE, TWO]
-        RAN_CHOICE = random.choice(RANDOM_LUCK)
-        if RAN_CHOICE == ONE:
-            return user_two
+            chance = 0.5
         else:
-            return user_one
+            chance = 0.65
+        RAN_CHOICE = random.random()
+        return user_two if RAN_CHOICE < chance else user_one
     else:
-        ONE = "TWO"
-        TWO = "ONE"
-        user_one_lvl = user_two_lvl
-        user_two_lvl = user_one_lvl
+        user_one_lvl, user_two_lvl = user_two_lvl, user_one_lvl
         if user_one_lvl < 3:
-            RANDOM_LUCK = [ONE, TWO]
+            chance = 0.5
         elif user_one_lvl < 7:
-            RANDOM_LUCK = [ONE, TWO, ONE]
+            chance = 0.33
         elif user_one_lvl < 16:
-            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE]
+            chance = 0.4
         elif user_one_lvl < 25:
-            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE, ONE]
+            chance = 0.43
         elif user_one_lvl < 38:
-            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE, TWO]
+            chance = 0.47
         elif user_one_lvl < 50:
-            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE, TWO, ONE, ONE]
+            chance = 0.45
         elif user_one_lvl < 75:
-            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE, TWO, TWO, TWO, ONE]
+            chance = 0.53
         elif user_one_lvl < 100:
-            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE, TWO, TWO, TWO, ONE, ONE, ONE]
-        elif user_one_lvl >= 100:
-            RANDOM_LUCK = [ONE, TWO, ONE, TWO, ONE, ONE, TWO, TWO, TWO, ONE, ONE, ONE, ONE, ONE, TWO, ONE, ONE]
-        RAN_CHOICE = random.choice(RANDOM_LUCK)
-        if RAN_CHOICE == ONE:
-            return user_one
+            chance = 0.5
         else:
-            return user_two
-        
+            chance = 0.65
+        RAN_CHOICE = random.random()
+        return user_one if RAN_CHOICE < chance else user_two        
 
 REG_TEXT = """
 **🧑‍💻 Welcome To Hyper Games ©**
