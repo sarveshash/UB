@@ -51,7 +51,7 @@ async def CHOICE_GEN(user_one: int, user_one_lvl: int, user_two: int, user_two_l
         elif user_one_lvl < 100:
             chance = 0.5
         else:
-            chance = 0.65
+            chance = 0.90
         RAN_CHOICE = random.random()
         return user_one if RAN_CHOICE < chance else user_two
 
