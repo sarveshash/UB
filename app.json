@@ -1,53 +1,53 @@
 {
-      "name": "Sophia",
-      "description": "No words, Just Use Me",
-      "logo": "https://telegra.ph/file/af2a44b84e649a0a60679.jpg",
-      "keywords": [
-         "telegram",
-         "anime",
-         "Female",
-         "userbot",
-         "Sophia"
-      ],   
-   "repository": "https://github.com/Otazuki004/SophiaUB",
-   "addons": [
+   "name":"Sophia",
+   "description":"No words, Just Use Me",
+   "logo":"https://telegra.ph/file/af2a44b84e649a0a60679.jpg",
+   "keywords":[
+      "telegram",
+      "anime",
+      "Female",
+      "userbot",
+      "Sophia"
+   ],
+   "repository":"https://github.com/Otazuki004/SophiaUB",
+   "addons":[
       {
-         "options": {
-            "version": "12"
+         "options":{
+            "version":"12"
          },
-         "plan": "heroku-postgresql"
+         "plan":"heroku-postgresql"
       }
    ],
-   "env": {
-      "API_ID": {
-         "description": "Get API_ID from my.telegram.org, used for telethon based modules.",
-         "required": true,
-         "value": ""
+   "env":{
+      "API_ID":{
+         "description":"Get API_ID from my.telegram.org, used for telethon based modules.",
+         "required":true,
+         "value":""
       },
-      "API_HASH": {
-         "description": "Get API_HASH from my.telegram.org, used for telethon based modules.",
-         "required": true,
-         "value": ""
+      "API_HASH":{
+         "description":"Get API_HASH from my.telegram.org, used for telethon based modules.",
+         "required":true,
+         "value":""
       },
-      "ACCESS_CODE": {
-         "description": "Access Code Is required for Beta Access",
-         "required": true,
-         "value": ""
+      "ACCESS_CODE":{
+         "description":"Access Code Is required for Beta Access",
+         "required":true,
+         "value":""
       },
-      "ACCESS_PIN": {
-         "description": "Access Pin is required for beta access",
-         "required": true,
-         "value": ""
+      "ACCESS_PIN":{
+         "description":"Access Pin is required for beta access",
+         "required":true,
+         "value":""
       },
-      "SESSION": {
-         "description": "Your Pyrogram V2 String Session.",
-         "required": true,
-         "value": ""
-     },
-     "MONGO_DB_URI": {
-        "description": "Your MongoDB URI, Database is Required for This Userbot.",
-        "required": true,
-        "value": ""
-     },
-         }
+      "SESSION":{
+         "description":"Your Pyrogram V2 String Session.",
+         "required":true,
+         "value":""
+      },
+      "MONGO_DB_URI":{
+         "description":"Your MongoDB URI, Database is Required for This Userbot.",
+         "required":true,
+         "value":""
       }
+   }
+}
