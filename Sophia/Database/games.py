@@ -228,6 +228,7 @@ async def BET_COINS(user_id: int, coins: int):
                 await ADD_COINS(user_id, mins_coins)
                 return "LOSE"
             elif GET_LUCK == 'PRO':
+                await UPDATE_EXP(user_id, 3)
                 coins_2x = coins*2
                 await ADD_COINS(user_id, coins_2x)
                 return "PRO"
