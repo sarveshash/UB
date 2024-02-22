@@ -15,8 +15,8 @@ async def message_del(_, message):
         message_id = " ".join(message.command[1:])
         if message_id.isdigit():
             try:
-                await Sophia.delete_messages(message.chat.id, int(message_id))
-                await Sophia.delete_messages(message.chat.id, message.id)
+                await Sophia.delete_messages(message.chat.id, int(message_id), revoke=True)
+                await Sophia.delete_messages(message.chat.id, message.id, revoke=True)
             except Exception as e:
                 await message.reply_text(f"Something went wrong. Please check errors:\n\n`{e}`")
         else:
