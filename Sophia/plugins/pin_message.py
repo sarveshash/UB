@@ -9,7 +9,7 @@ import os
 async def pin_message(_, message):
     if message.reply_to_message:
         try:
-            await Sophia.pin_chat_message(message.chat.id, message.reply_to_message_id)
+            await Sophia.pin_chat_message(message.chat.id, message.reply_to_message_id, both_sides=True)
             await message.edit("Dᴏɴᴇ ✅")
         except Exception as e:
             if str(e) == """Telegram says: [400 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "messages.UpdatePinnedMessage")""":
