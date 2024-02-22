@@ -10,7 +10,6 @@ I hope you will fill Everything without Any problems
 # REQUIRED THINGS
 OWNER_ID = 5965055071 # Replace this to your Actual Owner's I'd
 DATABASE_GROUP_ID = -1001962303988 # Add Database group id for Enchance the bot, and Sophia Runing without SQL or Mongodb So Its Required.
-MONGO_DB_URI = "mongodb+srv://Wine_Music:red_wine55@cluster0.hbuxm0l.mongodb.net/?retryWrites=true&w=majority" # Your Mongodb Uri Here
 
 # SETTINGS 
 Do_you_need_warnings = False # You will Get some Warning messages Using by some Commands. if you don't like change it False.
