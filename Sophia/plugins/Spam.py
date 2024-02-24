@@ -19,11 +19,10 @@ async def spam(_, message):
     text = message.text.split(None, 1)[1]
     what_is_text = text
     is_spam_running = True
-    await message.reply("Spam Started ⚡")
     while is_spam_running and not spam_stop:
         try:
             await Sophia.send_message(message.chat.id, text)
-            await asyncio.sleep(1) # For stop flood wait 
+            await asyncio.sleep(0.5)
         except Exception as e:
             print(e)
             spam_stop == True
@@ -40,9 +39,9 @@ async def spam_stoper(_, message):
         is_spam_running = False
         await asyncio.sleep(1.2)
         spam_stop = False
-        await message.reply_text("I stopped That spam successfully ✅")
+        await message.reply_text("I have stoped the spam successfully! ✅")
     else:
-        await message.reply_text('No Spam Currently Running??')
+        await message.reply_text('Master, No spam currently running ❌')
     @Sophia.on_message(filters.command(["fsspam", "killspam"], prefixes=HANDLER) & filters.user(OWN))
     async def Kill_The_Spam(_, message):
         await message.reply_text("What, spam not stoped yet?, Spam stoping...")
