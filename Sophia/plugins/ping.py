@@ -42,7 +42,10 @@ def ping_pong(client, message):
     CHATS = GET_ALL_CHATS()
     if not message.chat.id == OWNER_ID:
         if message.chat.id not in CHATS:
-            if message.chat.type == enums.ChatType.bot
+            if not message.chat.type == enums.ChatType.BOT:
+                if message.chat.type == enums.ChatType.SUPERGROUP:
+                    hi
+                elif
                 
     # Calculate the bot's response time
     start_time = bot_start_time
