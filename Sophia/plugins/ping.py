@@ -12,6 +12,8 @@ import os
 import requests
 from datetime import datetime
 import time
+from Sophia.Database.Broadcast import *
+from pyrogram import enums
 
 def ping_website(url):
     try:
@@ -35,21 +37,18 @@ bot_start_time = datetime.now()
 
 @bot.on_message(filters.command("ping", prefixes=HANDLER))
 def ping_pong(client, message):
-    if message.from_user.id == OWNER_ID or message.from_user.id in SUDO_USERS_ID:
-        print("")
-    else:
+    if not message.from_user.id == OWNER_ID or message.from_user.id in SUDO_USERS_ID:
         return
+    CHATS = GET_ALL_CHATS()
+    if not message.chat.id == OWNER_ID:
+        if message.chat.id not in CHATS:
+            if message.chat.type == enums.ChatType.bot
+                
     # Calculate the bot's response time
     start_time = bot_start_time
     end_time = datetime.now()
-
-    # Calculate the round-trip time
     ping_time = (end_time - start_time).total_seconds() * 1000
-
-    # Calculate the bot's uptime
     uptime = (end_time - bot_start_time).total_seconds()
     hours, remainder = divmod(uptime, 3600)
     minutes, seconds = divmod(remainder, 60)
-
-    # Send the ping-pong message with uptime
     message.reply_text(f"» Pᴏɴɢ! Rᴇsᴘᴏɴsᴇ ᴛɪᴍᴇ: {ping_website(telegram_url)}\n» Uᴘᴛɪᴍᴇ: {int(hours)}h {int(minutes)}m {int(seconds)}s")
