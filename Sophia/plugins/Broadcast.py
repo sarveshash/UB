@@ -12,7 +12,9 @@ async def broadcast_all(_, message):
     FAILED = 0
     if message.reply_to_message:
         async for dialog in Sophia.get_dialogs():
-            if not dialog.chat.type == enums.ChatType.CHANNEL or not dialog.chat.type == enums.ChatType.BOT:
+            if dialog.chat.type == enums.ChatType.CHANNEL or dialog.chat.type == enums.ChatType.BOT:
+                return
+            else:
                 try:
                     await Sophia.forward_messages(dialog.chat.id, message.chat.id, message.reply_to_message_id)
                     SUCCESS += 1
@@ -24,7 +26,9 @@ async def broadcast_all(_, message):
             return await message.reply_text("➲ Master, Please enter a text to broadcast or reply a message to broadcast.")
         text = message.text.split(None, 1)[1]
         async for dialog in Sophia.get_dialogs():
-            if not dialog.chat.type == enums.ChatType.CHANNEL or not dialog.chat.type == enums.ChatType.BOT:
+            if dialog.chat.type == enums.ChatType.CHANNEL or dialog.chat.type == enums.ChatType.BOT:
+                return
+            else:
                 try:
                     await Sophia.send_message(dialog.chat.id, text)
                     SUCCESS += 1
