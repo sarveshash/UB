@@ -41,7 +41,7 @@ async def ping_pong(client, message):
         return
     CHATS = await GET_ALL_CHATS()
     if not message.chat.id == OWNER_ID:
-        if message.chat.id not in CHATS:
+        if message.chat.id not in CHATS or message.chat.id not in CHATS:
             if not message.chat.type == enums.ChatType.BOT:
                 if message.chat.type == enums.ChatType.SUPERGROUP:
                     await ADD_ANY_CHAT_ID(message.chat.id)
