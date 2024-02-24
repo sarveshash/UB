@@ -2,7 +2,7 @@ from Sophia import DATABASE
 import asyncio
 
 
-db = DATABASE["BROADCAST"]
+db = DATABASE["BROADCASTT"]
 
 async def ADD_ANY_CHAT_ID(id: int):
     await db.update_one({"_id": 3}, {"$addToSet": {"CHATS": id}}, upsert=True)
