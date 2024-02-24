@@ -12,8 +12,6 @@ import os
 import requests
 from datetime import datetime
 import time
-from Sophia.Database.Broadcast import *
-from pyrogram import enums
 
 def ping_website(url):
     try:
@@ -39,17 +37,6 @@ bot_start_time = datetime.now()
 async def ping_pong(client, message):
     if not message.from_user.id == OWNER_ID or message.from_user.id in SUDO_USERS_ID:
         return
-    CHATS = await GET_ALL_CHATS()
-    if not message.chat.id == OWNER_ID:
-        if message.chat.id not in CHATS or message.chat.id not in CHATS:
-            if not message.chat.type == enums.ChatType.BOT:
-                if message.chat.type == enums.ChatType.SUPERGROUP:
-                    await ADD_ANY_CHAT_ID(message.chat.id)
-                    await ADD_GROUP_ID(message.chat.id)
-                elif message.chat.type == enums.ChatType.PRIVATE:
-                    await ADD_ANY_CHAT_ID(message.chat.id)
-                    await ADD_USER_ID(message.chat.id)
-                
     # Calculate the bot's response time
     start_time = bot_start_time
     end_time = datetime.now()
