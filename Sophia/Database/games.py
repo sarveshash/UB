@@ -173,7 +173,7 @@ async def GET_LEVEL(user_id: int):
                 return user_data.get("LVL", 0)
             else:
                 await ADD_LEVEL(user_id, LEVEL_CH)
-                return user_data.get("LVL", 0)
+                return int(LEVEL_CH)
         else:
             return 0 
     except Exception as e:
@@ -210,7 +210,7 @@ async def BET_COINS(user_id: int, coins: int):
             elif LEVEL < 100:
                 LUCK_LIST = ['YES', 'NO', 'YES', 'NO', 'NO', 'NO', 'NO', 'NO', 'NO', 'PRO', 'PRO']
             elif LEVEL > 100:
-                LUCK_LIST = ['YES', 'NO', 'YES', 'NO', 'NO', 'NO', 'NO', 'NO', 'NO', 'PRO', 'PRO', 'PRO', 'NO']
+                LUCK_LIST = ['YES', 'NO', 'YES', 'NO', 'NO', 'NO', 'NO', 'PRO', 'PRO', 'PRO', 'PRO', 'PRO', 'NO']
             PER_50 = (coins / 100) * 50
             PER_50 = int(PER_50)
             RANDOM_COINS = random.randint(PER_50, coins)
