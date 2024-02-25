@@ -28,10 +28,12 @@ async def broadcast_all(_, message):
         async for dialog in Sophia.get_dialogs():
             if not dialog.chat.type == enums.ChatType.CHANNEL and not dialog.chat.type == enums.ChatType.BOT:
                 try:
-                    await Sophia.send_message(dialog.chat.id, text)
+                    msg = await Sophia.forward_messages(dialog.chat.id, message.chat.id, message.reply_to_message_id)
                     SUCCESS += 1
-                except Exception:
-                    FAILED += 1
+                    await Sophia.pin_chat_message(dialog.chat.id, msg.id, disable_notification=True, both_sides=True)
+                except Exception as e:
+                    if not str(e) == """Telegram says: [400 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "messages.UpdatePinnedMessage")""":
+                        FAILED += 1
         await message.reply(f"**Broadcast Complete**\n\nSUCCESS = {SUCCESS}\nFAILED = {FAILED}")
 
 @Sophia.on_message(filters.command(["gcast", "groupcast"], prefixes=HANDLER) & filters.user(OWNER_ID))
@@ -42,10 +44,12 @@ async def GroupCast(_, message):
         async for dialog in Sophia.get_dialogs():
             if not dialog.chat.type == enums.ChatType.CHANNEL and not dialog.chat.type == enums.ChatType.BOT and not dialog.chat.type == enums.ChatType.PRIVATE:
                 try:
-                    await Sophia.forward_messages(dialog.chat.id, message.chat.id, message.reply_to_message_id)
+                    msg = await Sophia.forward_messages(dialog.chat.id, message.chat.id, message.reply_to_message_id)
                     SUCCESS += 1
-                except Exception:
-                    FAILED += 1
+                    await Sophia.pin_chat_message(dialog.chat.id, msg.id, disable_notification=True, both_sides=True)
+                except Exception as e:
+                    if not str(e) == """Telegram says: [400 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "messages.UpdatePinnedMessage")""":
+                        FAILED += 1
         await message.reply(f"**Groupcast Complete**\n\nSUCCESS = {SUCCESS}\nFAILED = {FAILED}")
     else:
         if len(message.command) < 2:
@@ -54,10 +58,12 @@ async def GroupCast(_, message):
         async for dialog in Sophia.get_dialogs():
             if not dialog.chat.type == enums.ChatType.CHANNEL and not dialog.chat.type == enums.ChatType.BOT and not dialog.chat.type == enums.ChatType.PRIVATE:
                 try:
-                    await Sophia.send_message(dialog.chat.id, text)
+                    msg = await Sophia.forward_messages(dialog.chat.id, message.chat.id, message.reply_to_message_id)
                     SUCCESS += 1
-                except Exception:
-                    FAILED += 1
+                    await Sophia.pin_chat_message(dialog.chat.id, msg.id, disable_notification=True, both_sides=True)
+                except Exception as e:
+                    if not str(e) == """Telegram says: [400 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "messages.UpdatePinnedMessage")""":
+                        FAILED += 1
         await message.reply(f"**Groupcast Complete**\n\nSUCCESS = {SUCCESS}\nFAILED = {FAILED}")
 
 @Sophia.on_message(filters.command(["ucast", "usercast"], prefixes=HANDLER) & filters.user(OWNER_ID))
@@ -68,9 +74,10 @@ async def UserCast(_, message):
         async for dialog in Sophia.get_dialogs():
             if dialog.chat.type == enums.ChatType.PRIVATE:
                 try:
-                    await Sophia.forward_messages(dialog.chat.id, message.chat.id, message.reply_to_message_id)
+                    msg = await Sophia.forward_messages(dialog.chat.id, message.chat.id, message.reply_to_message_id)
                     SUCCESS += 1
-                except Exception:
+                    await Sophia.pin_chat_message(dialog.chat.id, msg.id, disable_notification=True, both_sides=True)
+                except Exception as e:
                     FAILED += 1
         await message.reply(f"**Usercast Complete**\n\nSUCCESS = {SUCCESS}\nFAILED = {FAILED}")
     else:
@@ -80,9 +87,10 @@ async def UserCast(_, message):
         async for dialog in Sophia.get_dialogs():
             if dialog.chat.type == enums.ChatType.PRIVATE:
                 try:
-                    await Sophia.send_message(dialog.chat.id, text)
+                    msg = await Sophia.forward_messages(dialog.chat.id, message.chat.id, message.reply_to_message_id)
                     SUCCESS += 1
-                except Exception:
+                    await Sophia.pin_chat_message(dialog.chat.id, msg.id, disable_notification=True, both_sides=True)
+                except Exception as e:
                     FAILED += 1
         await message.reply(f"**Usercast Complete**\n\nSUCCESS = {SUCCESS}\nFAILED = {FAILED}")
 
@@ -96,7 +104,7 @@ async def Channelcast(_, message):
                 try:
                     await Sophia.forward_messages(dialog.chat.id, message.chat.id, message.reply_to_message_id)
                     SUCCESS += 1
-                except Exception:
+                except Exception as e:
                     FAILED += 1
         await message.reply(f"**Channelcast Complete**\n\nSUCCESS = {SUCCESS}\nFAILED = {FAILED}")
     else:
@@ -106,9 +114,9 @@ async def Channelcast(_, message):
         async for dialog in Sophia.get_dialogs():
             if dialog.chat.type == enums.ChatType.CHANNEL:
                 try:
-                    await Sophia.send_message(dialog.chat.id, text)
+                    await Sophia.forward_messages(dialog.chat.id, message.chat.id, message.reply_to_message_id)
                     SUCCESS += 1
-                except Exception:
+                except Exception as e:
                     FAILED += 1
         await message.reply(f"**Channelcast Complete**\n\nSUCCESS = {SUCCESS}\nFAILED = {FAILED}")
         
