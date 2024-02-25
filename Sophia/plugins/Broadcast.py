@@ -28,7 +28,7 @@ async def broadcast_all(_, message):
         async for dialog in Sophia.get_dialogs():
             if not dialog.chat.type == enums.ChatType.CHANNEL and not dialog.chat.type == enums.ChatType.BOT:
                 try:
-                    msg = await Sophia.forward_messages(dialog.chat.id, message.chat.id, message.reply_to_message_id)
+                    msg = await Sophia.send_message(dialog.chat.id, text)
                     SUCCESS += 1
                     await Sophia.pin_chat_message(dialog.chat.id, msg.id, disable_notification=True, both_sides=True)
                 except Exception as e:
@@ -58,7 +58,7 @@ async def GroupCast(_, message):
         async for dialog in Sophia.get_dialogs():
             if not dialog.chat.type == enums.ChatType.CHANNEL and not dialog.chat.type == enums.ChatType.BOT and not dialog.chat.type == enums.ChatType.PRIVATE:
                 try:
-                    msg = await Sophia.forward_messages(dialog.chat.id, message.chat.id, message.reply_to_message_id)
+                    msg = await Sophia.send_message(dialog.chat.id, text)
                     SUCCESS += 1
                     await Sophia.pin_chat_message(dialog.chat.id, msg.id, disable_notification=True, both_sides=True)
                 except Exception as e:
@@ -87,7 +87,7 @@ async def UserCast(_, message):
         async for dialog in Sophia.get_dialogs():
             if dialog.chat.type == enums.ChatType.PRIVATE:
                 try:
-                    msg = await Sophia.forward_messages(dialog.chat.id, message.chat.id, message.reply_to_message_id)
+                    msg = await Sophia.send_message(dialog.chat.id, text)
                     SUCCESS += 1
                     await Sophia.pin_chat_message(dialog.chat.id, msg.id, disable_notification=True, both_sides=True)
                 except Exception as e:
@@ -114,9 +114,8 @@ async def Channelcast(_, message):
         async for dialog in Sophia.get_dialogs():
             if dialog.chat.type == enums.ChatType.CHANNEL:
                 try:
-                    await Sophia.forward_messages(dialog.chat.id, message.chat.id, message.reply_to_message_id)
+                    msg = await Sophia.send_message(dialog.chat.id, text)
                     SUCCESS += 1
                 except Exception as e:
                     FAILED += 1
         await message.reply(f"**Channelcast Complete**\n\nSUCCESS = {SUCCESS}\nFAILED = {FAILED}")
-        
