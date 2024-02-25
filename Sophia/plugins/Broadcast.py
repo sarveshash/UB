@@ -14,8 +14,9 @@ async def broadcast_all(_, message):
         async for dialog in Sophia.get_dialogs():
             if not dialog.chat.type == enums.ChatType.CHANNEL and not dialog.chat.type == enums.ChatType.BOT:
                 try:
-                    await Sophia.forward_messages(dialog.chat.id, message.chat.id, message.reply_to_message_id)
+                    msg = await Sophia.forward_messages(dialog.chat.id, message.chat.id, message.reply_to_message_id)
                     SUCCESS += 1
+                    await Sophia.pin_chat_message(dialog.chat.id, msg.id)
                 except Exception:
                     FAILED += 1
         await message.reply(f"**Broadcast Complete**\n\nSUCCESS = {SUCCESS}\nFAILED = {FAILED}")
