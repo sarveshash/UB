@@ -27,7 +27,7 @@ async def pin_message(_, message):
 
 
 @Sophia.on_message(filters.command("unpin", prefixes=HANDLER) & filters.user(OWN))
-async def pin_message(_, message):
+async def unpin_message(_, message):
     if message.reply_to_message:
         try:
             await Sophia.unpin_chat_message(message.chat.id, message.reply_to_message_id)
