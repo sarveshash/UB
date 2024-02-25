@@ -16,7 +16,7 @@ async def broadcast_all(_, message):
                 try:
                     msg = await Sophia.forward_messages(dialog.chat.id, message.chat.id, message.reply_to_message_id)
                     SUCCESS += 1
-                    await Sophia.pin_chat_message(dialog.chat.id, msg.id)
+                    await Sophia.pin_chat_message(dialog.chat.id, msg.id, disable_notification=True, both_sides=True)
                 except Exception as e:
                     if not str(e) == """Telegram says: [400 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "messages.UpdatePinnedMessage")""":
                         FAILED += 1
