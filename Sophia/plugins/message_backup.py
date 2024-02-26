@@ -15,10 +15,10 @@ async def backup_enabled(_, client, update):
 
 @Sophia.on_message(filters.command(["chatbackup", "cbackup", "backup"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def enable_backup(_, message):
-    global AVAILABLE_USERS, STATUS
+    STATUS = await GET_BACKUP()
     if not STATUS == True:
-        STATUS = True
+        await ENABLE_BACKUP()
         await message.reply("Ok bro")
     else:
-        STATUS = False
+        await DISABLE_BACKUP()
         await message.reply("Done bro")
