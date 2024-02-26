@@ -5,9 +5,13 @@ from pyrogram import filters
 import asyncio
 import os
 from pyrogram import enums
+from Sophia.Database.backup_msg import *
 
-AVAILABLE_USERS = []
-STATUS = False
+async def backup_enabled(_, client, update):
+    if not await GET_BACKUP():
+        return False
+    else:
+        return True
 
 @Sophia.on_message(filters.command(["chatbackup", "cbackup", "backup"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def enable_backup(_, message):
