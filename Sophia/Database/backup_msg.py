@@ -26,3 +26,11 @@ async def ADD_BACKUP_CHAT(chat_id: int):
 
 async def REMOVE_BACKUP_CHAT(chat_id: int):
     await db.update_one({"_id": 1}, {"$pull": {"CHATS": chat_id}})
+
+async def GET_BACKUP_CHATS():
+    Find = await db.find_one({"_id": 1})
+    if not Find:
+        return []
+    else:
+        value = Find.get("CHATS", [])
+        return value
