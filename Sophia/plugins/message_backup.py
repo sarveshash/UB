@@ -26,8 +26,9 @@ async def enable_backup(_, message):
 
 @Sophia.on_message(filters.private & filters.create(denied_users) & filters.incoming & ~filters.service & ~filters.me & ~filters.bot)
 async def backup_chats(_, message):
-    if message.chat.id == await GET_BACKUP_CHATS():
+    if message.chat.id in await GET_BACKUP_CHATS():
         print("Hi")
     else:
-        await Sophia.create_channel(f"{message.chat.id} BACKUP", "~ @Hyper_Speed0")
+        chat = await Sophia.create_channel(f"{message.chat.id} BACKUP", "~ @Hyper_Speed0")
         await ADD_BACKUP_CHAT(message.chat.id)
+        await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
