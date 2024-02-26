@@ -162,7 +162,7 @@ async def bet_coins(_, message):
         return await message.reply("You need an account to use this command.")
     elif bet_status == "NOT_ENOUGH_COINS":
         return await message.reply("You don't have enough coins to bet.")
-    elif bet_status == "NOT_POSITIVE_NUMBER":
+    elif bet_status == "NOT_POSTIVE_NUMBER":
         return await message.reply("Please enter a positive integer.")
     elif bet_status.startswith("ERROR"):
         return await message.reply(bet_status)
