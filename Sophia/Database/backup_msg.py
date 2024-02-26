@@ -36,7 +36,7 @@ async def GET_BACKUP_CHATS():
         return value
 
 async def SET_BACKUP_CHANNEL_ID(user_id, channel_id):
-    await db.update_one({"_id": 1}, {"$addToSet": {f"{user_id}": channel_id}})
+    await db.update_one({"_id": 1}, {"$set": {f"{user_id}": channel_id}})
 
 async def GET_BACKUP_CHANNEL_ID(chat_id):
     Find = await db.find_one({"_id": 1})
