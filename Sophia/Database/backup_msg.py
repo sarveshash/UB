@@ -20,3 +20,9 @@ async def GET_BACKUP():
     else:
         stats = Find["stats"]
         return stats
+
+async def ADD_BACKUP_CHAT(chat_id: int):
+    await db.update_one({"_id": 1}, {"$addToSet": {"CHATS": chat_id}}, upsert=True)
+
+async def REMOVE_BACKUP_CHAT(chat_id: int):
+    await db.update_one({"_id": 1}, {"$pull": {"CHATS": chat_id}})
