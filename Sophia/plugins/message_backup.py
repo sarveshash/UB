@@ -34,3 +34,4 @@ async def backup_chats(_, message):
         await ADD_BACKUP_CHAT(message.chat.id)
         await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
         await Sophia.forward_messages(chat.id, message.chat.id, message.id)
+        await Sophia.archive_chats(chat.id)
