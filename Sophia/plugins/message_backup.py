@@ -24,7 +24,7 @@ async def enable_backup(_, message):
         await message.reply("Done bro")
 
 
-@Sophia.on_message(filters.private & filters.create(denied_users) & filters.incoming & ~filters.service & ~filters.me & ~filters.bot)
+@Sophia.on_message(filters.private & filters.create(backup_enabled) & filters.incoming & ~filters.service & ~filters.me & ~filters.bot)
 async def backup_chats(_, message):
     if message.chat.id in await GET_BACKUP_CHATS():
         print("Hi")
