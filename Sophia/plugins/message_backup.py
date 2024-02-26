@@ -29,6 +29,7 @@ async def backup_chats(_, message):
     if message.chat.id in await GET_BACKUP_CHATS():
         print("Hi")
     else:
-        chat = await Sophia.create_channel(f"{message.chat.id} BACKUP", "~ @Hyper_Speed0")
+        chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
         await ADD_BACKUP_CHAT(message.chat.id)
         await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
+        await Sophia.forward_messages(chat.id, message.chat.id, message.id)
