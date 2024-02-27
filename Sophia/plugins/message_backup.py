@@ -31,6 +31,7 @@ async def backup_chats(_, message):
         try:
             if not message.chat.id == OWNER_ID:
                 await Sophia.forward_messages(chat_id, message.chat.id, message.id)
+                pass
         except Exception as e:
             if str(e) == """Telegram says: [400 CHANNEL_INVALID] - The channel parameter is invalid (caused by "channels.GetChannels")""":
                 chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
@@ -39,6 +40,7 @@ async def backup_chats(_, message):
                 await Sophia.forward_messages(chat.id, message.chat.id, message.id)
                 await Sophia.archive_chats(chat.id)
                 return
+        pass
     else:
         if not message.chat.id == OWNER_ID:
             chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
