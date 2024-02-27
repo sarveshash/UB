@@ -30,6 +30,12 @@ async def set_pm_guard(_, message):
             RESULT = await GET_DEFAULT_MESSAGE_LIMIT()
             RESULT2 = str(RESULT)
             if RESULT2.isdigit():
+                BACKUP_MSG = await GET_BACKUP()
+                if BACKUP_MSG == True:
+                    await DISABLE_BACKUP()
+                    await SET_PM_GUARD(RESULT)
+                    await message.reply('**➲ I have enabled Pmguard with Default warning limit and Backup disabled both never work same time**')
+                    return
                 await SET_PM_GUARD(RESULT)
                 await message.reply('**➲ I have enabled PmGuard successfully with Default Warning limit 🥀 ✨**')
                 return
@@ -45,6 +51,12 @@ async def set_pm_guard(_, message):
             return
         if intCount > 20:
             await message.reply("➲ Maximum Applable warning count is 20.")
+            return
+        BACKUP_MSG = await GET_BACKUP()
+        if BACKUP_MSG == True:
+            await DISABLE_BACKUP()
+            await SET_PM_GUARD(intCount)
+            await message.reply('**➲ I have enabled Pmguard successfully and Backup disabled both never work same time**')
             return
         await SET_PM_GUARD(intCount)
         await message.reply('**➲ I have enabled PmGuard successfully 🥀 ✨**')
