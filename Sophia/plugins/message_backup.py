@@ -9,7 +9,7 @@ from Sophia.Database.backup_msg import *
 
 async def backup_enabled(_, client, update):
     for x in HANDLER:
-        if len(update.text) < 2:
+        if not len(update.text) < 2:
             if update.text.startswith(x) and update.from_user.id == OWNER_ID and await GET_BACKUP() and not update.chat.type == enums.ChatType.BOT:
                 return False
     if not await GET_BACKUP():
