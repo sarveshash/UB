@@ -54,3 +54,19 @@ async def backup_chats(_, message):
             await Sophia.archive_chats(chat.id)
         else:
             pass
+
+@Sophia.on_message(filters.command(["resetbackup", "rbackup", "delbackup"], prefixes=HANDLER) & filters.user(OWNER_ID))
+async def delete_backup(_, message):
+    if not message.chat.type == enums.ChatType.PRIVATE:
+        return await message.reply("This command only works on Private chats")
+    USERS = await GET_BACKUP_CHATS()
+    if message.chat.id in USERS:
+        CH = await GET_BACKUP_CHANNEL_ID(message.chat.id)
+        try:
+            await Sophia.delete_channel(CH)
+            await SET_BACKUP_CHANNEL_ID(message.chat.id, 000000)
+        except Exception as e:
+            await message.reply(f"Error, {e}}")
+    else:
+        await message.reply("This chat has no backup!")
+        
