@@ -9,8 +9,9 @@ from Sophia.Database.backup_msg import *
 
 async def backup_enabled(_, client, update):
     for x in HANDLER:
-        if update.text.startswith(x) and update.from_user.id == OWNER_ID and await GET_BACKUP() and not update.chat.type == enums.ChatType.BOT:
-            return False
+        if len(update.text) < 2:
+            if update.text.startswith(x) and update.from_user.id == OWNER_ID and await GET_BACKUP() and not update.chat.type == enums.ChatType.BOT:
+                return False
     if not await GET_BACKUP():
         return False
     else:
@@ -32,7 +33,7 @@ async def backup_chats(_, message):
     if not message.chat.id == OWNER_ID and message.chat.id in await GET_BACKUP_CHATS():
         chat_id = await GET_BACKUP_CHANNEL_ID(message.chat.id)
         try:
-            if not message.chat.id == OWNER_ID:
+            if not message.chat.id == OWNER_ID and not message.chat.type == enums.ChatType.BOT:
                 await Sophia.forward_messages(chat_id, message.chat.id, message.id)
                 pass
         except Exception as e:
@@ -45,7 +46,7 @@ async def backup_chats(_, message):
                 return
         pass
     else:
-        if not message.chat.id == OWNER_ID:
+        if not message.chat.id == OWNER_ID and not message.chat.type == enums.ChatType.BOT:
             chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
             await ADD_BACKUP_CHAT(message.chat.id)
             await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
