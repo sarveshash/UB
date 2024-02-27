@@ -1,7 +1,7 @@
 from Sophia import DATABASE
 import asyncio
 
-db = DATABASE["BACKUP_MESSAGE_jI"]
+db = DATABASE["BACKUP_MESSAGE_TM"]
 
 async def ENABLE_BACKUP():
     doc = {"_id": 1, "stats": True}
