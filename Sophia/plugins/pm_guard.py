@@ -35,7 +35,7 @@ async def set_pm_guard(_, message):
                 if BACKUP_MSG == True:
                     await DISABLE_BACKUP()
                     await SET_PM_GUARD(RESULT)
-                    await message.reply('**➲ I have enabled Pmguard with Default warning limit and Backup disabled both never work same time**')
+                    await message.reply('**➲ I have enabled Pmguard with Default warning limit and Backup chats disabled both never work same time**')
                     return
                 await SET_PM_GUARD(RESULT)
                 await message.reply('**➲ I have enabled PmGuard successfully with Default Warning limit 🥀 ✨**')
@@ -57,7 +57,7 @@ async def set_pm_guard(_, message):
         if BACKUP_MSG == True:
             await DISABLE_BACKUP()
             await SET_PM_GUARD(intCount)
-            await message.reply('**➲ I have enabled Pmguard successfully and Backup disabled both never work same time**')
+            await message.reply('**➲ I have enabled Pmguard successfully and Backup Chats disabled both never work same time**')
             return
         await SET_PM_GUARD(intCount)
         await message.reply('**➲ I have enabled PmGuard successfully 🥀 ✨**')
