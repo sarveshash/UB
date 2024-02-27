@@ -6,6 +6,7 @@ import asyncio
 import os
 from Restart import restart_program
 from pyrogram import enums
+from Sophia.Database.backup_msg import *
 from Sophia.Database.pmguard import *
 
 warning_count = {}
