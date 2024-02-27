@@ -66,7 +66,7 @@ async def delete_backup(_, message):
             await Sophia.delete_channel(CH)
             await SET_BACKUP_CHANNEL_ID(message.chat.id, 000000)
         except Exception as e:
-            await message.reply(f"Error, {e}}")
+            await message.reply(f"Error, {e}")
     else:
         await message.reply("This chat has no backup!")
         
