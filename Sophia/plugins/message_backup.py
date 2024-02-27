@@ -28,7 +28,10 @@ async def enable_backup(_, message):
 async def backup_chats(_, message):
     if message.chat.id in await GET_BACKUP_CHATS():
         chat_id = await GET_BACKUP_CHANNEL_ID(message.chat.id)
-        await Sophia.forward_messages(chat_id, message.chat.id, message.id)
+        try:
+            await Sophia.forward_messages(chat_id, message.chat.id, message.id)
+        except Exception as e:
+            await Sophia.send_message("me", e)
     else:
         if not message.chat.id == OWNER_ID:
             chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
