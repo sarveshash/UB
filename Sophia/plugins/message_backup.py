@@ -77,4 +77,19 @@ async def delete_backup(_, message):
         
 @Sophia.on_message(filters.command("stopbackup", prefixes=HANDLER) & filters.user(OWNER_ID))
 async def stop_backup(_, message):
-    print("hi")
+    if not message.chat.type == enums.ChatType.PRIVATE:
+        return await message.reply("This command Only works on Private chat")
+    elif message.chat.id in await GET_STOP_BACKUP_CHATS():
+        return await message.reply("This chat already stoped in backup")
+    await ADD_STOP_BACKUP_CHAT(message.chat.id)
+    await message.reply("I have stopped this chat from backup")
+
+@Sophia.on_message(filters.command("unstopbackup", prefixes=HANDLER) & filters.user(OWNER_ID))
+async def unstop_backup(_, message):
+    if not message.chat.type == enums.ChatType.PRIVATE:
+        return await message.reply("This command Only works on Private chat")
+    elif message.chat.id not in await GET_STOP_BACKUP_CHATS():
+        return await message.reply("This chat is not stoped in backup")
+    await REMOVE_STOP_BACKUP_CHAT(message.chat.id)
+    await message.reply("I have unstopped this chat from backup")
+    
