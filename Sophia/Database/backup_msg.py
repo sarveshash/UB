@@ -35,6 +35,20 @@ async def GET_BACKUP_CHATS():
         value = Find.get("CHATS", [])
         return value
 
+async def ADD_STOP_BACKUP_CHAT(chat_id: int):
+    await db.update_one({"_id": 1}, {"$addToSet": {"STOPED_CHATS": chat_id}}, upsert=True)
+    
+async def REMOVE_STOP_BACKUP_CHAT(chat_id: int):
+    await db.update_one({"_id": 1}, {"$pull": {"STOPED_CHATS": chat_id}})
+
+async def GET_STOP_BACKUP_CHATS():
+    Find = await db.find_one({"_id": 1})
+    if not Find:
+        return []
+    else:
+        value = Find.get("STOPED_CHATS", [])
+        return value
+
 async def SET_BACKUP_CHANNEL_ID(user_id, channel_id):
     await db.update_one({"_id": 1}, {"$set": {f"{user_id}": channel_id}})
 
