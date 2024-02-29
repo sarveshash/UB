@@ -6,6 +6,7 @@ import logging
 import pyrogram
 from Restart import restart_program
 
+
 logging.basicConfig(
     format="[Sophia] %(name)s - %(levelname)s - %(message)s",
     handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
