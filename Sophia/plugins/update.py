@@ -1,12 +1,12 @@
 from pyrogram import filters
 from Sophia.__main__ import Sophia
-from Sophia import REPO_URL, repo_name
+from Sophia import REPO_URL, repo_name, HANDLER
 from config import OWNER_ID
 import subprocess
 
 OWN = OWNER_ID
 
-@Sophia.on_message(filters.command("update") & filters.user(OWN))
+@Sophia.on_message(filters.command("update", prefixes=HANDLER) & filters.user(OWN))
 async def update_repo(_, message):
     await message.reply_text("`Updating...`")
     try:
