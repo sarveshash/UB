@@ -79,7 +79,7 @@ async def delete_backup(_, message):
     else:
         await message.reply("This chat has no backup!")
         
-@Sophia.on_message(filters.command("stopbackup", prefixes=HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command(["stopbackup", "sbackup"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def stop_backup(_, message):
     if not message.chat.type == enums.ChatType.PRIVATE:
         return await message.reply("This command Only works on Private chat")
@@ -88,7 +88,7 @@ async def stop_backup(_, message):
     await ADD_STOP_BACKUP_CHAT(message.chat.id)
     await message.reply("I have stopped this chat from backup")
 
-@Sophia.on_message(filters.command("unstopbackup", prefixes=HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command(["unstopbackup", "usbackup"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def unstop_backup(_, message):
     if not message.chat.type == enums.ChatType.PRIVATE:
         return await message.reply("This command Only works on Private chat")
