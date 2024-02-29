@@ -75,3 +75,6 @@ async def delete_backup(_, message):
     else:
         await message.reply("This chat has no backup!")
         
+"""@Sophia.on_message(filters.command(["resetbackup", "rbackup", "delbackup"], prefixes=HANDLER) & filters.user(OWNER_ID))
+async def stop_backup(_, message):
+    """
