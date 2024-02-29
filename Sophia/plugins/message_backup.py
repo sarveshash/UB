@@ -8,15 +8,19 @@ from pyrogram import enums
 from Sophia.Database.backup_msg import *
 
 async def backup_enabled(_, client, update):
+    message = update
     if update.from_user.id == OWNER_ID:
         for x in HANDLER:
             if not len(update.text) < 2:
                 if update.text.startswith(x) and update.from_user.id == OWNER_ID and await GET_BACKUP() and not update.chat.type == enums.ChatType.BOT:
                     return False
-    if not await GET_BACKUP() and update.chat.id in await GET_STOP_BACKUP_CHATS():
+    if not await GET_BACKUP():
         return False
     else:
-        return True
+        if update.chat.id in await GET_STOP_BACKUP_CHATS():
+            return False
+        else:
+            return True
 
 @Sophia.on_message(filters.command(["chatbackup", "cbackup", "backup"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def enable_backup(_, message):
