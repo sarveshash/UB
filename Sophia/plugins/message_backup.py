@@ -13,7 +13,7 @@ async def backup_enabled(_, client, update):
             if not len(update.text) < 2:
                 if update.text.startswith(x) and update.from_user.id == OWNER_ID and await GET_BACKUP() and not update.chat.type == enums.ChatType.BOT:
                     return False
-    if not await GET_BACKUP() and message.chat.id in await GET_STOP_BACKUP_CHATS():
+    if not await GET_BACKUP() and update.chat.id in await GET_STOP_BACKUP_CHATS():
         return False
     else:
         return True
