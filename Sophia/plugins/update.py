@@ -1,6 +1,7 @@
 from pyrogram import *
 from Sophia.__main__ import *
-from Sophia import OWNER_ID, REPO_URL, repo_name
+from Sophia import REPO_URL, repo_name
+from config import OWNER_ID
 import subprocess
 
 OWN = OWNER_ID
