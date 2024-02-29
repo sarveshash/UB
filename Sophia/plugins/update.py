@@ -1,5 +1,5 @@
-from pyrogram import *
-from Sophia.__main__ import *
+from pyrogram import filters
+from Sophia.__main__ import Sophia
 from Sophia import REPO_URL, repo_name
 from config import OWNER_ID
 import subprocess
