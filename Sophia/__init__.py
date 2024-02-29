@@ -3,6 +3,7 @@ import sys
 from pyrogram import Client
 from pyrogram import Client
 from pymongo import MongoClient
+from urllib.parse import urlparse
 from motor.motor_asyncio import AsyncIOMotorClient
 
 SESSION = os.environ.get("SESSION")
@@ -12,7 +13,13 @@ ACCESS_CODE = os.environ.get("ACCESS_CODE")
 ACCESS_PIN = os.environ.get("ACCESS_PIN")
 HANDLER = ["~",".","!","/","$","#"]
 MONGO_DB_URI = os.environ.get("MONGO_DB_URI")
+REPO_URL = os.environ.get("YOUR_REPO_LINK")
 MY_VERSION = 0.00219
+
+# GETTING REPO NAME USED FOR UPDATE MODULE
+parsed_url = urlparse(REPO_URL)
+path_parts = parsed_url.path.split('/')
+repo_name = path_parts[2] if len(path_parts) > 2 else None
 
 # MAIN CLIENT OF SOPHIA
 Sophia = Client("Sophia", session_string=SESSION, api_id=API_ID, api_hash=API_HASH, plugins=dict(root="Sophia/plugins"))
