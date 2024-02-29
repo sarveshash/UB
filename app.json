@@ -48,6 +48,11 @@
          "description":"Your MongoDB URI, Database is Required for This Userbot.",
          "required":true,
          "value":""
+      },
+      "YOUR_REPO_LINK":{
+         "description":"If You Forked The repo paste your repo link here.",
+         "required":true,
+         "value":""
       }
    }
 }
