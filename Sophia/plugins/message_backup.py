@@ -67,6 +67,7 @@ async def delete_backup(_, message):
         CH = await GET_BACKUP_CHANNEL_ID(message.chat.id)
         try:
             await Sophia.delete_channel(CH)
+            await REMOVE_BACKUP_CHANNEL_ID(message.chat.id)
             await message.reply("I have deleted this chat backup!")
             return
         except Exception as e:
