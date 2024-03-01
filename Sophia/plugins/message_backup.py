@@ -1,11 +1,70 @@
-from Sophia import HANDLER
-from Sophia.__main__ import Sophia
+from Sophia import DATABASE, HANDLER, Sophia
 from config import OWNER_ID
 from pyrogram import filters
-import asyncio
-import os
 from pyrogram import enums
-from Sophia.Database.backup_msg import *
+
+db = DATABASE["BACKUP_MESSAGE_TM"]
+
+async def ENABLE_BACKUP():
+    doc = {"_id": 1, "stats": True}
+    try:
+        await db.insert_one(doc)
+    except Exception:
+        await db.update_one({"_id": 1}, {"$set": {"stats": True}})
+        
+async def DISABLE_BACKUP():
+    await db.update_one({"_id": 1}, {"$set": {"stats": False}})
+
+async def GET_BACKUP():
+    Find = await db.find_one({"_id": 1})
+    if not Find:
+        return False
+    else:
+        stats = Find["stats"]
+        return stats
+
+async def ADD_BACKUP_CHAT(chat_id: int):
+    await db.update_one({"_id": 1}, {"$addToSet": {"CHATS": chat_id}}, upsert=True)
+
+async def REMOVE_BACKUP_CHAT(chat_id: int):
+    await db.update_one({"_id": 1}, {"$pull": {"CHATS": chat_id}})
+
+async def GET_BACKUP_CHATS():
+    Find = await db.find_one({"_id": 1})
+    if not Find:
+        return []
+    else:
+        value = Find.get("CHATS", [])
+        return value
+
+async def ADD_STOP_BACKUP_CHAT(chat_id: int):
+    await db.update_one({"_id": 1}, {"$addToSet": {"STOPED_CHATS": chat_id}}, upsert=True)
+    
+async def REMOVE_STOP_BACKUP_CHAT(chat_id: int):
+    await db.update_one({"_id": 1}, {"$pull": {"STOPED_CHATS": chat_id}})
+
+async def GET_STOP_BACKUP_CHATS():
+    Find = await db.find_one({"_id": 1})
+    if not Find:
+        return []
+    else:
+        value = Find.get("STOPED_CHATS", [])
+        return value
+
+async def SET_BACKUP_CHANNEL_ID(user_id, channel_id):
+    await db.update_one({"_id": 1}, {"$set": {f"{user_id}": channel_id}})
+
+async def GET_BACKUP_CHANNEL_ID(chat_id):
+    Find = await db.find_one({"_id": 1})
+    if not Find or str(chat_id) not in Find:
+        return None
+    else:
+        channel = Find[str(chat_id)]
+        return channel
+    
+async def REMOVE_BACKUP_CHANNEL_ID(user_id):
+    await db.update_one({"_id": 1}, {"$unset": {f"{user_id}": ""}})
+    await db.update_one({"_id": 1}, {"$pull": {"CHATS": user_id}})
 
 async def backup_enabled(_, client, update):
     message = update
@@ -22,30 +81,19 @@ async def backup_enabled(_, client, update):
         else:
             return True
 
-@Sophia.on_message(filters.command(["chatbackup", "cbackup", "backup"], prefixes=HANDLER) & filters.user(OWNER_ID))
-async def enable_backup(_, message):
-    STATUS = await GET_BACKUP()
-    if not STATUS == True:
-        await ENABLE_BACKUP()
-        await message.reply("Ok bro")
-    else:
-        await DISABLE_BACKUP()
-        await message.reply("Done bro")
-
-
 @Sophia.on_message(filters.private & filters.create(backup_enabled) & ~filters.bot)
 async def backup_chats(_, message):
-    if not message.chat.id == OWNER_ID and message.chat.id in await GET_BACKUP_CHATS():
-        chat_id = await GET_BACKUP_CHANNEL_ID(message.chat.id)
+    chat_id = await GET_BACKUP_CHANNEL_ID(message.chat.id)
+    if chat_id is not None and chat_id == OWNER_ID and message.chat.id != OWNER_ID:
         try:
             if not message.chat.id == OWNER_ID and not message.chat.type == enums.ChatType.BOT:
-                await Sophia.forward_messages(chat_id, message.chat.id, message.id)
+                await Sophia.forward_messages(chat_id, message.chat.id, message.message_id)
         except Exception as e:
             if str(e) == """Telegram says: [400 CHANNEL_INVALID] - The channel parameter is invalid (caused by "channels.GetChannels")""":
                 chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
                 await ADD_BACKUP_CHAT(message.chat.id)
                 await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
-                await Sophia.forward_messages(chat.id, message.chat.id, message.id)
+                await Sophia.forward_messages(chat.id, message.chat.id, message.message_id)
                 await Sophia.archive_chats(chat.id)
                 return
             else:
@@ -55,7 +103,7 @@ async def backup_chats(_, message):
             chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
             await ADD_BACKUP_CHAT(message.chat.id)
             await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
-            await Sophia.forward_messages(chat.id, message.chat.id, message.id)
+            await Sophia.forward_messages(chat.id, message.chat.id, message.message_id)
             await Sophia.archive_chats(chat.id)
 
 @Sophia.on_message(filters.command(["resetbackup", "rbackup", "delbackup"], prefixes=HANDLER) & filters.user(OWNER_ID))
@@ -94,4 +142,3 @@ async def unstop_backup(_, message):
         return await message.reply("This chat is not stoped in backup")
     await REMOVE_STOP_BACKUP_CHAT(message.chat.id)
     await message.reply("I have unstopped this chat from backup")
-    
