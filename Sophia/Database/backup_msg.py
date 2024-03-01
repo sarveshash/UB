@@ -63,4 +63,4 @@ async def GET_BACKUP_CHANNEL_ID(chat_id):
 async def REMOVE_BACKUP_CHANNEL_ID(user_id):
     value = await GET_BACKUP_CHANNEL_ID(user_id)
     await db.update_one({"_id": 1}, {"$unset": {f"{user_id}": value}})
-    await db.update_one({"_id": 1}, {"$pull": {"CHATS": sser_id}})
+    await db.update_one({"_id": 1}, {"$pull": {"CHATS": user_id}})
