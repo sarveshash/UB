@@ -58,6 +58,7 @@ async def GET_BACKUP_CHANNEL_ID(chat_id):
         return None
     else:
         channel = Find[str(chat_id)]
+        channel = int(channel)
         return channel
     
 async def REMOVE_BACKUP_CHANNEL_ID(user_id):
