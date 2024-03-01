@@ -60,3 +60,6 @@ async def GET_BACKUP_CHANNEL_ID(chat_id):
         channel = Find[f"{chat_id}"]
         return channel
         
+async def REMOVE_BACKUP_CHANNEL_ID(user_id):
+    value = await GET_BACKUP_CHANNEL_ID(user_id)
+    await db.update_one({"_id": 1}, {"$pull": {f"{user_id}": value}})
