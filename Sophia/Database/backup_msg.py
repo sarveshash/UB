@@ -54,14 +54,8 @@ async def SET_BACKUP_CHANNEL_ID(user_id, channel_id):
 
 async def GET_BACKUP_CHANNEL_ID(chat_id):
     Find = await db.find_one({"_id": 1})
-    if not Find or str(chat_id) not in Find:
-        return None
+    if not Find:
+        return False
     else:
-        channel = Find[str(chat_id)]
-        channel = int(channel)
+        channel = Find[f"{chat_id}"]
         return channel
-    
-async def REMOVE_BACKUP_CHANNEL_ID(user_id):
-    value = await GET_BACKUP_CHANNEL_ID(user_id)
-    await db.update_one({"_id": 1}, {"$unset": {f"{user_id}": value}})
-    await db.update_one({"_id": 1}, {"$pull": {"CHATS": user_id}})
