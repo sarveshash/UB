@@ -12,8 +12,8 @@ async def Copy_msg(_, message):
         return await message.reply("Reply to a message to copy it.")
     else:
         try:
-            COPIED_MSG = message.reply_to_message.message_id
-            COPIED_MSG_CHAT = message.reply_to_message.chat.id
+            COPIED_MSG = message.reply_to_message_id
+            COPIED_MSG_CHAT = message.chat.id
             STORE = await SAVE_MSG(COPIED_MSG, COPIED_MSG_CHAT)
             if STORE == "SUCCESS":
                 await message.reply("Successfully copied!")
