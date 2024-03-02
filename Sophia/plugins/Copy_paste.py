@@ -30,3 +30,11 @@ async def paste_msg(_, message):
         return await message.reply("Clipboard is empty.")
     else:
         await Sophia.copy_message(message.chat.id, COPIED_MSG_CHAT, COPIED_MSG)
+
+@Sophia.on_message(filters.command("ncpaste", prefixes=HANDLER) & filters.user(OWNER_ID))
+async def no_caption_paste_msg(_, message):
+    global COPIED_MSG, COPIED_MSG_CHAT, COPIED
+    if not COPIED == True:
+        return await message.reply("Clipboard is empty.")
+    else:
+        await Sophia.copy_message(message.chat.id, COPIED_MSG_CHAT, COPIED_MSG, caption="")
