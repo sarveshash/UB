@@ -39,6 +39,8 @@ async def paste_msg(_, message):
         try:
             await Sophia.copy_message(message.chat.id, await CHAT_ID(), await MSG_ID())
         except Exception as e:
+            if str(e).startswith("Telegram says: [400 CHAT_FORWARDS_RESTRICTED]"):
+                return await message.reply("Master, Copying forwarding not allowed in that chat so we cannot paste it.")
             await message.reply(f"Error: {e}")
 
 @Sophia.on_message(filters.command("ncpaste", prefixes=HANDLER) & filters.user(OWNER_ID))
@@ -50,4 +52,6 @@ async def no_caption_paste_msg(_, message):
         try:
             await Sophia.copy_message(message.chat.id, await CHAT_ID(), await MSG_ID(), caption="")
         except Exception as e:
+            if str(e).startswith("Telegram says: [400 CHAT_FORWARDS_RESTRICTED]"):
+                return await message.reply("Master, Copying forwarding not allowed in that chat so we cannot paste it.")
             await message.reply(f"Error: {e}")
