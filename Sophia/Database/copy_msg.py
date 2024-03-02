@@ -16,19 +16,19 @@ async def COPIED():
     if not Find:
         return False
     else:
-        value = Find["COPIED"]
+        value = Find.get("COPIED", False)
         return value
-
+        
 async def UNSAVE_MSG():
     COPIED_MSG = await COPIED()
-    if not COPIED_MSG == True:
+    if not COPIED_MSG:
         return "ALREADY_EMPTY"
     try:
-        await db.update_one({"_id": 1}, {"$addToSet": {"COPIED": False, "CHAT": 0, "ID": 0}})
+        await db.update_one({"_id": 1}, {"$set": {"COPIED": False, "CHAT": 0, "ID": 0}})
         return "SUCCESS"
     except Exception as e:
         return str(e)
-
+        
 async def CHAT_ID():
     Find = await db.find_one({"_id": 1})
     if not Find:
