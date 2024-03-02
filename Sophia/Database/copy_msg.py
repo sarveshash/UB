@@ -20,8 +20,8 @@ async def COPIED():
         return value
 
 async def UNSAVE_MSG():
-    COPIED = await COPIED()
-    if not COPIED == True:
+    COPIED_MSG = await COPIED()
+    if not COPIED_MSG == True:
         return "ALREADY_EMPTY"
     try:
         await db.update_one({"_id": 1}, {"$addToSet": {"COPIED": False, "CHAT": 0, "ID": 0}})
