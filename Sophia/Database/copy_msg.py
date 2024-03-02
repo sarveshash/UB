@@ -12,12 +12,15 @@ async def SAVE_MSG(msg_id: int, msg_chat: int):
         return str(e)
 
 async def COPIED():
-    Find = await db.find_one({"_id": 1})
-    if not Find:
+    try:
+        Find = await db.find_one({"_id": 1})
+        if Find:
+            return Find.get("COPIED", False)
+        else:
+            return False
+    except Exception as e:
+        print(f"Error in COPIED: {e}")
         return False
-    else:
-        value = Find.get("COPIED", False)
-        return value
         
 async def UNSAVE_MSG():
     COPIED_MSG = await COPIED()
