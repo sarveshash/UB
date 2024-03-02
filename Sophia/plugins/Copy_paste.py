@@ -2,6 +2,7 @@ from Sophia import HANDLER
 from Sophia.__main__ import Sophia
 from config import OWNER_ID
 from pyrogram import filters
+from Sophia.Database.copy_msg import *
 import asyncio
 import os
 
