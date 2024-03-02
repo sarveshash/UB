@@ -24,16 +24,16 @@ async def Copy_msg(_, message):
 
 @Sophia.on_message(filters.command("paste", prefixes=HANDLER) & filters.user(OWNER_ID))
 async def paste_msg(_, message):
-    COPIED = await COPIED()
-    if not COPIED == True:
+    COPIED_MSG = await COPIED()
+    if not COPIED_MSG == True:
         return await message.reply("Clipboard is empty.")
     else:
         await Sophia.copy_message(message.chat.id, await CHAT_ID(), await MSG_ID())
 
 @Sophia.on_message(filters.command("ncpaste", prefixes=HANDLER) & filters.user(OWNER_ID))
 async def no_caption_paste_msg(_, message):
-    COPIED = await COPIED()
-    if not COPIED == True:
+    COPIED_MSG = await COPIED()
+    if not COPIED_MSG == True:
         return await message.reply("Clipboard is empty.")
     else:
         await Sophia.copy_message(message.chat.id, await CHAT_ID(), await MSG_ID(), caption="")
