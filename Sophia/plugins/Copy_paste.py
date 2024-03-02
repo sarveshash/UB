@@ -22,6 +22,14 @@ async def Copy_msg(_, message):
         except Exception as e:
             return await message.reply(f"Error: {e}")
 
+@Sophia.on_message(filters.command(["dcopy", "rcopy", "delcopy"], prefixes=HANDLER) & filters.user(OWNER_ID))
+async def del_msg_copy(_, message):
+    STATUS = await UNSAVE_MSG()
+    if STATUS == "SUCCESS":
+        await message.reply("Copy deleted!")
+    else:
+        await message.reply(f"Error: {STATUS}")
+    
 @Sophia.on_message(filters.command("paste", prefixes=HANDLER) & filters.user(OWNER_ID))
 async def paste_msg(_, message):
     COPIED_MSG = await COPIED()
