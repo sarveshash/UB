@@ -84,8 +84,6 @@ async def UserCast(_, message):
                 try:
                     msg = await Sophia.forward_messages(dialog.chat.id, message.chat.id, message.reply_to_message_id)
                     SUCCESS += 1
-                    await asyncio.sleep(0.5)
-                    await Sophia.pin_chat_message(dialog.chat.id, msg.id, disable_notification=True, both_sides=True)
                     await asyncio.sleep(2)
                 except Exception as e:
                     FAILED += 1
@@ -99,8 +97,6 @@ async def UserCast(_, message):
                 try:
                     msg = await Sophia.send_message(dialog.chat.id, text)
                     SUCCESS += 1
-                    await asyncio.sleep(0.5)
-                    await Sophia.pin_chat_message(dialog.chat.id, msg.id, disable_notification=True, both_sides=True)
                     await asyncio.sleep(2)
                 except Exception as e:
                     FAILED += 1
