@@ -15,7 +15,9 @@ app = Sophia
 
 @Sophia.on_message(filters.command(["eval", "e", "python"], prefixes=HANDLER))
 async def eval(client, message):
-    if not message.from_user.id == OWNER_ID or message.from_user.id not in SUDO_USERS_ID:
+    if message.from_user.id == OWNER_ID or message.from_user.id in SUDO_USERS_ID:
+        None
+    else:
         return
     if len(message.command) < 2:
         return await message.reply_text("Master, Please Enter code to run it!. ✨ 🥀")
