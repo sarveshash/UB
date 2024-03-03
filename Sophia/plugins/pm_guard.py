@@ -182,5 +182,19 @@ async def Set_default_message_limit(_, message):
         return
     await SET_DEFAULT_MESSAGE_LIMIT(intCount)
     await message.reply(f"**➲ Master, I have set Default Pmguard Warning Limit Your Default Limit is: {intCount} 🥀 ✨**")
-        
+
+@Sophia.on_message(filters.command("ausers", prefixes=HANDLER) & filters.user(OWNER_ID))
+async def get_approved_users(_, message):
+    MSG = await message.reply("`Processing...`")
+    NAMES = []
+    FORMATTED_NAMES = ""
+    async for dialog in Sophia.get_dialogs():
+        if dialog.chat.type == enums.ChatType.PRIVATE:
+            if dialog.chat.id in await GET_APPROVED_USERS():
+                GET_CHAT = await Sophia.get_chat(dialog.chat.id)
+                First_name = GET_CHAT.first_name
+                NAMES.append(First_name)
+    for name in NAMES:
+        FORMATTED_NAMES += f"-» `{name}`\n"
+    await MSG.edit(f"**Results:**\n\n{FORMATTED_NAMES}")
 # END
