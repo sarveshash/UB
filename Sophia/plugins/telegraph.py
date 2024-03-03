@@ -1,7 +1,7 @@
 import os
 from pyrogram import filters
 from telegraph import upload_file
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from Sophia.config import OWNER_ID
 from Sophia.__main__ import Sophia
 from Sophia import HANDLER
 
