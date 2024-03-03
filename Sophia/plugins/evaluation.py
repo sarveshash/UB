@@ -12,8 +12,6 @@ from pyrogram import enums
 from Sophia.Database.games import *
 
 app = Sophia
-Client = Sophia
-bot = Sophia
 
 @Sophia.on_message(filters.command(["eval", "e", "python"], prefixes=HANDLER))
 async def eval(client, message):
@@ -60,7 +58,7 @@ async def eval(client, message):
     final_output += f"{evaluation.strip()} \n"
     output_code = f"""```python\n{evaluation.strip()}```"""
 
-    if len(output_code) >= 3500:
+    if len(output_code) > 3500:
         with io.BytesIO(str.encode(final_output)) as out_file:
             out_file.name = "eval.txt"
             await reply_to_.reply_document(
