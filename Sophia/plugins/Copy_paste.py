@@ -37,6 +37,8 @@ async def paste_msg(_, message):
         return await message.reply("Clipboard is empty.")
     else:
         try:
+            if message.reply_to_message:
+                return await Sophia.copy_message(message.chat.id, await CHAT_ID(), await MSG_ID(), reply_to_message_id=message.reply_to_message_id)
             await Sophia.copy_message(message.chat.id, await CHAT_ID(), await MSG_ID())
         except Exception as e:
             if str(e).startswith("Telegram says: [400 CHAT_FORWARDS_RESTRICTED]"):
