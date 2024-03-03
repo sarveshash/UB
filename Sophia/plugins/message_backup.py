@@ -112,6 +112,7 @@ async def unstop_backup(_, message):
     
 @Sophia.on_message(filters.command("schats", prefixes=HANDLER) & filters.user(OWNER_ID))
 async def get_stoped_backup_chats(_, message):
+    MSG = await message.reply("`Processing...`")
     NAMES = []
     FORMATTED_NAMES = ""
     async for dialog in Sophia.get_dialogs():
@@ -121,5 +122,5 @@ async def get_stoped_backup_chats(_, message):
                 First_name = GET_CHAT.first_name
                 NAMES.append(First_name)
     for name in NAMES:
-        FORMATTED_NAMES += f"{name}\n"
-    await message.reply(FORMATTED_NAMES)
+        FORMATTED_NAMES += f"-» `{name}`\n"
+    await MSG.edit(f"**Results:**\n\n{FORMATTED_NAMES}")
