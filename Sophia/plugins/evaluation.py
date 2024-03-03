@@ -1,7 +1,7 @@
 import io
 import sys
 import traceback
-from Sophia import HANDLER
+from Sophia import *
 from config import SUDO_USERS_ID
 from Sophia.__main__ import Sophia
 from config import OWNER_ID
@@ -11,11 +11,13 @@ import os
 from pyrogram import enums
 from Sophia.Database.games import *
 
+app = Sophia
+Client = Sophia
+bot = Sophia
+
 @Sophia.on_message(filters.command(["eval", "e", "python"], prefixes=HANDLER))
 async def eval(client, message):
-    if message.from_user.id == OWNER_ID or message.from_user.id in SUDO_USERS_ID:
-        print("")
-    else:
+    if not message.from_user.id == OWNER_ID or message.from_user.id not in SUDO_USERS_ID:
         return
     if len(message.command) < 2:
         return await message.reply_text("Master, Please Enter code to run it!. ✨ 🥀")
