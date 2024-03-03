@@ -5,6 +5,7 @@ from pyrogram import filters
 import asyncio
 import os
 from pyrogram import enums
+from pyrogram import enums
 from Restart import restart_program as restart
 from Sophia.Database.backup_msg import *
 
@@ -109,3 +110,16 @@ async def unstop_backup(_, message):
         n = 0
     await message.reply("I have unstopped this chat from backup")
     
+@Sophia.on_message(filters.command("schats", prefixes=HANDLER) & filters.user(OWNER_ID))
+async def get_stoped_backup_chats(_, message):
+    NAMES = []
+    FORMATTED_NAMES = ""
+    async for dialog in Sophia.get_dialogs():
+        if dialog.chat.type == enums.ChatType.PRIVATE:
+            if dialog.chat.id in await GET_STOP_BACKUP_CHATS():
+                GET_CHAT = await Sophia.get_chat(dialog.chat.id)
+                First_name = GET_CHAT.first_name
+                NAMES.append(First_name)
+    for name in NAMES:
+        FORMATTED_NAMES += f"{name}\n"
+    await message.reply(FORMATTED_NAMES)
