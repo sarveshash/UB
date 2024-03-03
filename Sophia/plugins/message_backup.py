@@ -123,4 +123,4 @@ async def get_stoped_backup_chats(_, message):
                 NAMES.append(First_name)
     for name in NAMES:
         FORMATTED_NAMES += f"-» `{name}`\n"
-    await MSG.edit(f"**Results:**\n\n{FORMATTED_NAMES}")
+    await MSG.edit(f"**Results:**\n{FORMATTED_NAMES}")
