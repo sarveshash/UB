@@ -12,3 +12,4 @@ youtube_dl
 youtube_search
 ffmpeg
 motor
+telegraph
