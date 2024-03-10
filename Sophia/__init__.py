@@ -12,6 +12,7 @@ API_HASH = os.environ.get("API_HASH")
 ACCESS_CODE = os.environ.get("ACCESS_CODE")
 ACCESS_PIN = os.environ.get("ACCESS_PIN")
 HANDLER = ["~",".","!","/","$","#"]
+LOG_CHANNEL = -1002010994783
 MONGO_DB_URI = os.environ.get("MONGO_DB_URI")
 REPO_URL = os.environ.get("YOUR_REPO_LINK")
 MY_VERSION = 0.00219
