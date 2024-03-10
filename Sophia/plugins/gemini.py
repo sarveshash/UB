@@ -42,7 +42,7 @@ async def gemink(_, message):
             medias[-1] = InputMediaPhoto(media=photo_url, caption=text)
             
             try:
-                await naruto.send_media_group(chat_id=chat_id, media=medias, reply_to_message_id=message_id)
+                await Sophia.send_media_group(chat_id=chat_id, media=medias, reply_to_message_id=message_id)
                 return await txt.delete()
             except Exception as e:
                 return await txt.edit(str(e))
@@ -52,7 +52,7 @@ async def gemink(_, message):
                 await message.reply_photo(photo=image_url, caption=text)
                 return await txt.delete()
             except Exception as e:
-                return await txt.edit(text)
+                return await Sophia.send_message(LOG_CHANNEL, text)
         else:
             return await txt.edit('Something went wrong')
     else:
