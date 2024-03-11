@@ -13,6 +13,9 @@ async def search(_, message):
     MSG = await message.reply("`Loading...`")
     query = " ".join(message.command[1:])
     links = ""
-    for j in search(query, stop=10, pause=2):
-        links += f"{j}\n"
-    await MSG.edit(f"**Results:**:\n\n{links}", disable_web_page_preview=True)
+    try:
+        for j in search(query, stop=10, pause=2):
+            links += f"{j}\n"
+            await MSG.edit(f"**Results:**:\n\n{links}", disable_web_page_preview=True)
+    except Exception as e:
+        await message.edit(f"Error: {e}")
