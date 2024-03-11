@@ -3,6 +3,7 @@ TgCrypto
 aiofiles
 requests
 wget
+wikipedia
 pymongo
 google
 pymongo[srv]
