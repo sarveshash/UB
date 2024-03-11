@@ -21,12 +21,13 @@ async def search_wikipedia(_, message):
         # Get summary for the first result
         summary = wikipedia.summary(results[0])
         if len(summary) > 3700:
-            summary = f"**Results from Wikipedia for '{query}':\n\n{summary}"
+            summary = f"Results from Wikipedia for {query}:\n\n{summary}"
             with io.BytesIO(str.encode(summary)) as output:
                 output.name = "wikipedia.txt"
                 await message.reply_document(
                     document=output
                 )
+                await MSG.delete()
         else:
             await MSG.edit(f"**Results from Wikipedia for '{query}':**\n\n{summary}")
     except wikipedia.exceptions.DisambiguationError as e:
