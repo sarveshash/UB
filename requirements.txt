@@ -6,6 +6,7 @@ wget
 wikipedia
 pymongo
 google
+lyricsgenius
 pymongo[srv]
 yt_dlp
 asyncio
