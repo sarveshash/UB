@@ -14,7 +14,7 @@ async def search(_, message):
     query = " ".join(message.command[1:])
     links = ""
     try:
-        for j in search(query, stop=10, pause=2):
+        for j in search(query):
             links += f"{j}\n"
             await MSG.edit(f"**Results:**:\n\n{links}", disable_web_page_preview=True)
     except Exception as e:
