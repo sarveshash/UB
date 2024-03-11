@@ -13,9 +13,11 @@ async def search(_, message):
     MSG = await message.reply("`Loading...`")
     query = " ".join(message.command[1:])
     links = ""
+    numb = 0
     try:
         for j in g_search(query, num=10, stop=10, pause=2):
-            links += f"{j}\n"
+            numb += 1
+            links += f"{numb}. {j}\n"
             await MSG.edit(f"**Results:**\n\n{links}", disable_web_page_preview=True)
     except Exception as e:
         await MSG.edit(f"Error: {e}")
