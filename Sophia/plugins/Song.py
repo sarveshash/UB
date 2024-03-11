@@ -25,12 +25,12 @@ ydl_opts = {
 
 
 @bot.on_message(filters.command("song", prefixes=HANDLER) & filters.user(OWN))
-def song(_, message):
+async def song(_, message):
     if len(message.text.split()) <2:
-        message.reply("Master, Give a song name to search it")
+        await message.reply("Master, Give a song name to search it")
         return
     query = " ".join(message.command[1:])
-    m = message.reply("🔄 Searching....")
+    m = await message.reply("🔄 Searching....")
     ydl_ops = {"format": "bestaudio[ext=m4a]"}
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
@@ -43,12 +43,12 @@ def song(_, message):
         duration = results[0]["duration"]
 
     except Exception as e:
-        m.edit(
+        await m.edit(
             "⚠️ No results were found. Make sure you typed the information correctly"
         )
         print(str(e))
         return
-    m.edit("📥 Downloading...")
+    await m.edit("📥 Downloading...")
     try:
         with yt_dlp.YoutubeDL(ydl_ops) as ydl:
             info_dict = ydl.extract_info(link, download=False)
@@ -58,18 +58,18 @@ def song(_, message):
         for i in range(len(dur_arr) - 1, -1, -1):
             dur += int(float(dur_arr[i])) * secmul
             secmul *= 60
-        m.edit("📤 Uploading...")
+        await m.edit("📤 Uploading...")
 
-        message.reply_audio(
+        await message.reply_audio(
             audio_file,
             thumb=thumb_name,
             title=title,
             caption=f"{title}",
             duration=dur,
         )
-        m.delete()
+        await m.delete()
     except Exception as e:
-        m.edit(f"**Error:**{e} ")
+        await m.edit(f"**Error:**{e} ")
         print(e)
     try:
         os.remove(audio_file)
