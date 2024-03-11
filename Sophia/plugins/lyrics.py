@@ -4,6 +4,7 @@ from config import OWNER_ID
 from pyrogram import filters
 import asyncio
 import os
+import io
 import lyricsgenius
 
 # Initialize the Genius API client with your access token
@@ -19,7 +20,21 @@ async def search_lyrics(_, message):
         # Search for the song lyrics
         song = genius.search_song(song_name)
         if song is None:
-            return await MSG.edit("Song not found.")
-        await MSG.edit(f"Lyrics for '{song.title}' by {song.artist}:\n\n{song.lyrics}")
+            return await MSG.edit("Song is not found.")
+        song_txt = f"Lyrics for '{song.title}' by {song.artist}:\n\n{song.lyrics}"
+        if len(song_txt) > 3900:
+            with io.BytesIO(str.encode(song_txt)) as output:
+                output.name = f"{song.title} lyrics.txt"
+                await message.reply_document(
+                    document=output
+                )
+                await MSG.delete()
+        else:
+            await MSG.edit(f"Lyrics for '{song.title}' by {song.artist}:\n\n{song.lyrics}")
     except Exception as e:
         await MSG.edit(f"An error occurred: {e}")
+
+
+# API RIGHTS RESERVED TO https://genius.com/
+# IF YOU WANT CREATE API GO TO https://genius.com/api-clients AND CREATE
+# THANKS FOR READING
