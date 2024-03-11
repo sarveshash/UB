@@ -4,6 +4,7 @@ aiofiles
 requests
 wget
 pymongo
+google
 pymongo[srv]
 yt_dlp
 asyncio
