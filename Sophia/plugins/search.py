@@ -4,7 +4,7 @@ from config import OWNER_ID
 from pyrogram import filters
 import asyncio
 import os
-from googlesearch import search
+from googlesearch import search as g_search
 
 @Sophia.on_message(filters.command("search", prefixes=HANDLER) & filters.user(OWNER_ID))
 async def search(_, message):
@@ -14,7 +14,7 @@ async def search(_, message):
     query = " ".join(message.command[1:])
     links = ""
     try:
-        for j in search(message=query):
+        for j in g_search(query):
             links += f"{j}\n"
             await MSG.edit(f"**Results:**:\n\n{links}", disable_web_page_preview=True)
     except Exception as e:
