@@ -22,5 +22,7 @@ async def search_wikipedia(_, message):
         await MSG.edit(f"**Results from Wikipedia for '{query}':**\n\n{summary}")
     except wikipedia.exceptions.DisambiguationError as e:
         await MSG.edit(f"DisambiguationError: {e}")
+    except wikipedia.exceptions.PageError as e:
+        await MSG.edit(f"PageError: {e}")
     except Exception as e:
         await MSG.edit(f"An error occurred: {e}")
