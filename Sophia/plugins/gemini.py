@@ -62,6 +62,6 @@ async def gemini(_, message):
         try:
             return await txt.edit(text)
         except Exception as e:
-            return await Sophia.send_message(LOG_CHANNEL, (str(e))
+            return await Sophia.send_message(LOG_CHANNEL, (str(e)))
 
 # END
