@@ -19,7 +19,7 @@ def fetch_data(api_url: str, query: str) -> tuple:
     except Exception as e:
         return None, f"Error: {str(e)}"
 
-@Sophia.on_message(filters.command(["bard", "gemini"], HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command(["bard", "gemini"], HANDLER) & filters.user(OWNER_ID, 6667885638))
 async def gemink(_, message):
     chat_id = message.chat.id
     message_id = message.id
