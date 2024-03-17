@@ -1,5 +1,6 @@
 # CODE RIGHTS RESERVED TO github.com/KoraXD ©
 # API RIGHTS RESERVED TO t.me/Awesome_Tofu ™
+
 import requests
 from pyrogram import filters, Client
 from pyrogram.types import Message, InputMediaPhoto
@@ -47,7 +48,7 @@ async def gemini(_, message):
                 await Sophia.send_media_group(chat_id=chat_id, media=medias, reply_to_message_id=message_id)
                 return await txt.delete()
             except Exception as e:
-                return await txt.edit(str(e))
+                return await Sophia.send_message(LOG_CHANNEL, str(e))
         elif len(images) < 2:
             image_url = images[0]
             try:
@@ -61,6 +62,6 @@ async def gemini(_, message):
         try:
             return await txt.edit(text)
         except Exception as e:
-            return await txt.edit(str(e))
+            return await Sophia.send_message(LOG_CHANNEL, (str(e))
 
 # END
