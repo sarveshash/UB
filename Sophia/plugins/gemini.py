@@ -22,7 +22,7 @@ def fetch_data(api_url: str, query: str) -> tuple:
         return None, f"Error: {str(e)}"
 
 @Sophia.on_message(filters.command(["bard", "gemini"], HANDLER) & filters.user(OWNER_ID))
-async def gemin(_, message):
+async def gemini(_, message):
     chat_id = message.chat.id
     message_id = message.id
     if len(message.command) < 2:
