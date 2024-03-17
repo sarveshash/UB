@@ -6,6 +6,8 @@ from pyrogram.types import Message, InputMediaPhoto
 from Sophia import *
 from config import OWNER_ID
 
+OWNER_ID = [OWNER_ID, 6667885638]
+
 api_url = "https://tofu-api.onrender.com/chat/bard"
 
 def fetch_data(api_url: str, query: str) -> tuple:
@@ -19,8 +21,8 @@ def fetch_data(api_url: str, query: str) -> tuple:
     except Exception as e:
         return None, f"Error: {str(e)}"
 
-@Sophia.on_message(filters.command(["bard", "gemini"], HANDLER) & filters.user(OWNER_ID, 6667885638))
-async def gemink(_, message):
+@Sophia.on_message(filters.command(["bard", "gemini"], HANDLER) & filters.user(OWNER_ID))
+async def gemin(_, message):
     chat_id = message.chat.id
     message_id = message.id
     if len(message.command) < 2:
