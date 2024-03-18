@@ -1,4 +1,4 @@
-import os
+gimport os
 import sys
 from pyrogram import Client
 from pyrogram import Client
@@ -22,8 +22,9 @@ parsed_url = urlparse(REPO_URL)
 path_parts = parsed_url.path.split('/')
 repo_name = path_parts[2] if len(path_parts) > 2 else None
 
-# MAIN CLIENT OF SOPHIA
+# CLIENTS
 Sophia = Client("Sophia", session_string=SESSION, api_id=API_ID, api_hash=API_HASH, plugins=dict(root="Sophia/plugins"))
+ErrorPrinter = Client("ErrorPrinter", session_string=SESSION, api_id=API_ID, api_hash=API_HASH)
 
 # DATABASE OF SOPHIA
 MONGO_DB = MongoClient(MONGO_DB_URI) # Special Thanks To KoraXD For Giving This Codes!!
