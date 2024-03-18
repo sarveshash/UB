@@ -23,9 +23,12 @@ if __name__ == "__main__":
     ACCESS = decode_key(ACCESS_CODE, ACCESS_PIN)
     if ACCESS == "oTaZUki004nandhaiSgeY":
         try:
-            otazukig
+            otazukigcgv
+            :;&(.
+            hj
         except Exception as e:
-            if True == True:
+            ErrorPrinter.run()
+            with ErrorPrinter:
                 run_logs = run("cat error.txt")
                 if len(run_logs) >= 3000:
                     with io.BytesIO(str.encode(run_logs)) as logs:
@@ -38,7 +41,7 @@ if __name__ == "__main__":
                 else:
                     ErrorPrinter.send_message("me", f"ERROR STARTING SOPHIA:\n\n```shell\n{run_logs}```")
                 raise Exception(run_logs)
-                ErrorPrinter.start()
+                ErrorPrinter.stop()
                     
     else:
         raise Exception("[INFO] Invalid Access Key, Access Key is required to Use Sophia Beta, Try Again")
