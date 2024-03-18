@@ -1,8 +1,6 @@
 from Sophia import *
 from pyrogram import Client, filters
 import os
-from subprocess import getoutput as run
-from config import DATABASE_GROUP_ID
 import logging
 import pyrogram
 from Restart import restart_program
