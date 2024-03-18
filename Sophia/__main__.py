@@ -19,9 +19,9 @@ if __name__ == "__main__":
     ACCESS = decode_key(ACCESS_CODE, ACCESS_PIN)
     if ACCESS == "oTaZUki004nandhaiSgeY":
         try:
-            Sgophia.rugn()
+            pund
         except Exception as e:
-            ErrorPrinter.run()
+            ErrorPrinter.start()
             with ErrorPrinter:
                 ErrorPrinter.send_message("me", f"Error starting Sophia:\n\n{e}")
                 raise Exception(e)
