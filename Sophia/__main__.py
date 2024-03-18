@@ -12,6 +12,8 @@ logging.basicConfig(
     level=logging.INFO,
 )
 
+logging.basicConfig(filename='error.txt', level=logging.ERROR)
+
 PWD = f"{os.getcwd()}/"
 
 
