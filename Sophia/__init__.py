@@ -1,4 +1,4 @@
-gimport os
+import os
 import sys
 from pyrogram import Client
 from pyrogram import Client
