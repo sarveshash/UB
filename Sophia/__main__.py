@@ -23,9 +23,7 @@ if __name__ == "__main__":
     ACCESS = decode_key(ACCESS_CODE, ACCESS_PIN)
     if ACCESS == "oTaZUki004nandhaiSgeY":
         try:
-            otazukigcgv
-            :;&(.
-            hj
+            otazukigcgv()
         except Exception as e:
             ErrorPrinter.run()
             with ErrorPrinter:
