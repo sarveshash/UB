@@ -23,8 +23,7 @@ if __name__ == "__main__":
         try:
             otazukig
         except Exception as e:
-            ErrorPrinter.run()
-            with ErrorPrinter:
+            if True == True:
                 run_logs = run("cat log.txt")
                 if len(run_logs) >= 3000:
                     with io.BytesIO(str.encode(run_logs)) as logs:
@@ -34,11 +33,10 @@ if __name__ == "__main__":
                             document=logs,
                             caption="ERROR STARTING SOPHIA",
                         )
-                    raise Exception(run_logs)
                 else:
                     ErrorPrinter.send_message("me", f"ERROR STARTING SOPHIA:\n\n```shell\n{run_logs}```")
-                    raise Exception(run_logs)
-                ErrorPrinter.stop()
+                raise Exception(run_logs)
+                ErrorPrinter.start()
                     
     else:
         raise Exception("[INFO] Invalid Access Key, Access Key is required to Use Sophia Beta, Try Again")
