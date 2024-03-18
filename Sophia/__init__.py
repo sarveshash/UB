@@ -1,11 +1,20 @@
 import os
 import sys
+import logging
 from pyrogram import Client
 from pyrogram import Client
 from pymongo import MongoClient
 from urllib.parse import urlparse
 from motor.motor_asyncio import AsyncIOMotorClient
 
+# LOGGING
+logging.basicConfig(
+    format="[Sophia-UB] %(name)s - %(levelname)s - %(message)s",
+    handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
+    level=logging.INFO,
+)
+
+# VARIABLES
 SESSION = os.environ.get("SESSION")
 API_ID = os.environ.get("API_ID")
 API_HASH = os.environ.get("API_HASH")
@@ -31,8 +40,8 @@ MONGO_DB = MongoClient(MONGO_DB_URI) # Special Thanks To KoraXD For Giving This 
 DB = MONGO_DB.SOPHIA_UB
 DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["SOPHIA_UB"]
 GAME_DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["HYPER_GAMES"]
-# BETA ACCESS KEY SECTION
 
+# BETA ACCESS KEY SECTION
 ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 
 def decode_key(encoded_key, pin):
