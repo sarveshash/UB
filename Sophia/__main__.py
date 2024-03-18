@@ -21,7 +21,7 @@ if __name__ == "__main__":
     ACCESS = decode_key(ACCESS_CODE, ACCESS_PIN)
     if ACCESS == "oTaZUki004nandhaiSgeY":
         try:
-            otazuki
+            otazukig
         except Exception as e:
             ErrorPrinter.run()
             with ErrorPrinter:
@@ -36,7 +36,7 @@ if __name__ == "__main__":
                         )
                     raise Exception(run_logs)
                 else:
-                    ErrorPrinter.send_message("me", f"ERROR STARTING SOPHIA:\n\n{run_logs}")
+                    ErrorPrinter.send_message("me", f"ERROR STARTING SOPHIA:\n\n```shell\n{run_logs}```")
                     raise Exception(run_logs)
                 ErrorPrinter.stop()
                     
