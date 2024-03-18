@@ -14,6 +14,8 @@ logging.basicConfig(
     level=logging.INFO,
 )
 
+logging.basicConfig(filename='error.txt', level=logging.ERROR)
+
 PWD = f"{os.getcwd()}/"
 
 
@@ -24,7 +26,7 @@ if __name__ == "__main__":
             otazukig
         except Exception as e:
             if True == True:
-                run_logs = run("cat log.txt")
+                run_logs = run("cat error.txt")
                 if len(run_logs) >= 3000:
                     with io.BytesIO(str.encode(run_logs)) as logs:
                         logs.name = "ERROR.txt"
