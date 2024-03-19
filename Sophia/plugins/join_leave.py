@@ -24,7 +24,16 @@ def join_chat(_, m):
         else:
             m.reply("No chats we left in recently.")
             return
-    Sophia.join_chat(link)
+    elif re.match("http", link, flags=re.IGNORECASE):
+        link = link.split("/")[3]
+    elif re.match("www", link, flags=re.IGNORECASE):
+        link = link.split("/")[1]
+        print("Link", link)
+    try:
+        Sophia.join_chat(link)
+    except Exception as e:
+        m.reply(f"Error, {e}")
+        return
     chat = Sophia.get_chat(link)
     name = chat.title
     m.reply_text(f"Successfully joined in {name}.")
@@ -56,4 +65,5 @@ def leave_chat(_, m):
     try:
         Sophia.leave_chat(link)
     except Exception as e:
+        m.reply(f"Error, {e}")
         print(e)
