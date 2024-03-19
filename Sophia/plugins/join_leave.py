@@ -1,6 +1,7 @@
 from pyrogram import filters
 from config import OWNER_ID
 from Sophia import HANDLER
+import re
 from Sophia import Sophia
 
 left_chat_id = ""
@@ -43,6 +44,11 @@ def leave_chat(_, m):
         Sophia.send_message(m.chat.id, f"Successfully left in {name}.")
         Sophia.leave_chat(m.chat.id)
         return
+    elif re.match("http", link, flags=re.IGNORECASE):
+        link = link.split("/")[3]
+    elif re.match("www", link, flags=re.IGNORECASE):
+        link = link.split("/")[1]
+        print("Link", link)
     left_chat_id = f"{m.chat.id}"
     chat = Sophia.get_chat(link)
     name = chat.title
