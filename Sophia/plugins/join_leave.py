@@ -32,6 +32,8 @@ def join_chat(_, m):
     try:
         Sophia.join_chat(link)
     except Exception as e:
+        if str(e).startswith("Telegram says: [400 USERNAME_NOT_OCCUPIED]":
+            return m.reply("Username not found!")
         m.reply(f"Error, {e}")
         return
     chat = Sophia.get_chat(link)
@@ -65,5 +67,7 @@ def leave_chat(_, m):
         Sophia.leave_chat(link)
         m.reply_text(f"Successfully left in {name}.")
     except Exception as e:
+        if str(e).startswith("Telegram says: [400 USER_NOT_PARTICIPANT]"):
+            return m.reply("You must need joined to left!")
         m.reply(f"Error, {e}")
         print(e)
