@@ -61,9 +61,9 @@ def leave_chat(_, m):
     left_chat_id = f"{m.chat.id}"
     chat = Sophia.get_chat(link)
     name = chat.title
-    m.reply_text(f"Successfully left in {name}.")
     try:
         Sophia.leave_chat(link)
+        m.reply_text(f"Successfully left in {name}.")
     except Exception as e:
         m.reply(f"Error, {e}")
         print(e)
