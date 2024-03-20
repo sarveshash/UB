@@ -9,6 +9,8 @@ async def ignore_users(_, client, update):
     if update.chat.id not in await ignore_usr.GET():
         return False
     else:
+        if message.from_user.id == OWNER_ID:
+            return False
         return True
 
 warning_count = {}
