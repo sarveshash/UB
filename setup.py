@@ -12,7 +12,7 @@ ACCESS_CODE = input("Enter ACCESS_CODE: ")
 ACCESS_PIN = input("Enter ACCESS_PIN: ")
 MONGO_DB_URI = input("Enter MONGO_DB_URI: ")
 YOUR_REPO_LINK = input("Enter your forked repo link: ")
-input("Enter to proceed!")
+input("Enter to proceed: ")
 
 print("[INFO] Processing values...")
 
@@ -25,8 +25,10 @@ try:
   os.environ['MONGO_DB_URI'] = MONGO_DB_URI
   os.environ['YOUR_REPO_LINK'] = YOUR_REPO_LINK
 except Exception as e:
+  print(' ')
   raise e
   exit()
 
-print("[INFO] Success, Starting Sophia..")
+print("[INFO] Trying to Start Sophia..")
+print("[INFO] Use next time 'python3 -m Sophia' Don't use setup.py!")
 r("python3 -m Sophia")
