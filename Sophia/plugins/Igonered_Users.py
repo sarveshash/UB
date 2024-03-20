@@ -1,4 +1,4 @@
-from Sophia import HANDLER
+from Sophia import *
 from Sophia.__main__ import Sophia
 from config import OWNER_ID, IGNORED_USERS_ID
 from pyrogram import filters
@@ -28,10 +28,10 @@ async def ignored_private_chat(_, message):
         try:
             await message.reply("Sorry, You have breaked your limits so i blocked you")
             await Sophia.block_user(user_id)
-            await Sophia.send_message('me', f"Master, i have blocked {message.from_user.first_name}\n\nHe/she spamed in your chat so i blocked if you want unblock you can find them in archived chats! use .unignore to unignore them!")
+            await Sophia.send_message(LOG_CHANNEL, f"Master, i have blocked {message.from_user.first_name}\n\nHe/she spamed in your chat so i blocked if you want unblock you can find them in archived chats! use .unignore to unignore them!")
         except Exception as e:
             print(e)
-            await Sophia.send_message('me', f"Sorry Master, I got an error when blocking Ignored User. Check Errors Below 💔\n {e}")
+            await Sophia.send_message(LOG_CHANNEL, f"Sorry Master, I got an error when blocking Ignored User. Check Errors Below 💔\n {e}")
 
 @Sophia.on_message(filters.command("ignore", prefixes=HANDLER) & filters.private & filters.me)
 async def add_ignored_person(_, message):
