@@ -1,6 +1,6 @@
 from Sophia import *
 from Sophia.__main__ import Sophia
-from config import OWNER_ID, IGNORED_USERS_ID
+from config import OWNER_ID
 from pyrogram import filters
 from Sophia.Database.ignore_users import *
 
