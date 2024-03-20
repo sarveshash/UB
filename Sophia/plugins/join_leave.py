@@ -32,7 +32,7 @@ def join_chat(_, m):
     try:
         Sophia.join_chat(link)
     except Exception as e:
-        if str(e).startswith("Telegram says: [400 USERNAME_NOT_OCCUPIED]"):
+        if str(e).startswith("Telegram says: [400 USERNAME_NOT_OCCUPIED]") or str(e).startswith("Telegram says: [400 USERNAME_INVALID]"):
             return m.reply("Username not found!")
         m.reply(f"Error, {e}")
         return
