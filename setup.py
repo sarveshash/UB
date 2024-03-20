@@ -24,7 +24,7 @@ try:
   os.environ['ACCESS_PIN'] = ACCESS_PIN
   os.environ['MONGO_DB_URI'] = MONGO_DB_URI
 except Exception as e:
-  print("[Sophia System] Enter the values correctly!")
+  raise e
   r("python3 -m setup.py")
   exit()
 
