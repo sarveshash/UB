@@ -2,10 +2,18 @@ from Sophia import HANDLER
 from Sophia.__main__ import Sophia
 from config import OWNER_ID, IGNORED_USERS_ID
 from pyrogram import filters
+from Sophia.Database.ignore_users import *
+
+async def ignore_users(_, client, update):
+    ignore_usr = await IGNORED_USERS()
+    if update.chat.id not in await ignore_usr.GET():
+        return False
+    else:
+        return True
 
 warning_count = {}
 
-@Sophia.on_message(filters.private & filters.user(IGNORED_USERS_ID))
+@Sophia.on_message(filters.private & filters.create(ignore_users))
 async def ignored_private_chat(_, message):
     user_id = message.from_user.id
     if user_id not in warning_count:
@@ -24,3 +32,19 @@ async def ignored_private_chat(_, message):
         except Exception as e:
             print(e)
             await Sophia.send_message('me', f"Sorry Master, I got an error when blocking Ignored User. Check Errors Below 💔\n {e}")
+
+@Sophia.on_message(filters.command("ignore", prefixes=HANDLER) & filters.private & filters.me)
+async def add_ignored_person(_, message):
+    USRS = await IGNORED_USERS()
+    if message.chat.id in await USRS.GET():
+        return await message.reply("This person already in ignored list!")
+    else:
+        try:
+            H = await USRS.ADD(message.chat.id)
+            if H == "SUCCESS":
+                await message.reply("I have started ignoring this person!")
+            else:
+                await message.reply(H)
+        except Exception as e:
+            await message.reply(e)
+        
