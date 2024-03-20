@@ -7,7 +7,7 @@ if len(SESSION) < 50:
     print("[Sophia System] Enter session correctly!")
     exit()
 API_ID = input("Enter Api ID: ")
-API_HASH = input"Enter Api hash: ")
+API_HASH = input("Enter Api hash: ")
 ACCESS_CODE = input("Enter ACCESS_CODE: ")
 ACCESS_PIN = input("Enter ACCESS_PIN: ")
 MONGO_DB_URI = input("Enter MONGO_DB_URI: ")
