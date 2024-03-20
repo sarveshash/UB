@@ -5,7 +5,7 @@ from pyrogram import filters
 from Sophia.Database.ignore_users import *
 
 async def ignore_users(_, client, update):
-    ignore_usr = await IGNORED_USERS()
+    ignore_usr = IGNORED_USERS()
     if update.chat.id not in await ignore_usr.GET():
         return False
     else:
@@ -35,7 +35,7 @@ async def ignored_private_chat(_, message):
 
 @Sophia.on_message(filters.command("ignore", prefixes=HANDLER) & filters.private & filters.me)
 async def add_ignored_person(_, message):
-    USRS = await IGNORED_USERS()
+    USRS = IGNORED_USERS()
     if message.chat.id in await USRS.GET():
         return await message.reply("This person already in ignored list!")
     else:
