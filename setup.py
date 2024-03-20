@@ -2,16 +2,16 @@ import os
 from subprocess import getoutput as r
 
 
-SESSION = str(input("Enter you Pyrogram V-2 Session: "))
+SESSION = input("Enter you Pyrogram V-2 Session: ")
 if len(SESSION) < 50:
     print("[Sophia System] Enter session correctly!")
     exit()
-API_ID = int(input("Enter Api ID: "))
-API_HASH = str(input("Enter Api hash: "))
-ACCESS_CODE = str(input("Enter ACCESS_CODE: "))
-ACCESS_PIN = int(input("Enter ACCESS_PIN: "))
-MONGO_DB_URI = str(input("Enter MONGO_DB_URI: "))
-YOUR_REPO_LINK = str(input("Enter your forked repo link: "))
+API_ID = input("Enter Api ID: ")
+API_HASH = input"Enter Api hash: ")
+ACCESS_CODE = input("Enter ACCESS_CODE: ")
+ACCESS_PIN = input("Enter ACCESS_PIN: ")
+MONGO_DB_URI = input("Enter MONGO_DB_URI: ")
+YOUR_REPO_LINK = input("Enter your forked repo link: ")
 
 print("[INFO] Processing values...")
 
