@@ -5,14 +5,13 @@ from Sophia.__main__ import Sophia as app
 from config import OWNER_ID
 from Sophia import HANDLER
 
-api_url_chat4 = "https://pervert-api.onrender.com/chatgpt4"
 
-def fetch_data(api_url: str, query: str) -> tuple:
+def fetch_data(query: str, message: str) -> tuple:
     try:
-        response = requests.get(f"{api_url}?query={query}")
+        response = requests.get(f"https://stark.animecloud.tech/chat?brain_id={message.chat.id}&prompt={query}&bot_name=Sophia&user_name={message.from_user.first_name}&gender=FEMALE")
         response.raise_for_status()
         data = response.json()
-        return data.get("data", "No response from the API."), None
+        return data.get("message", "No response from the API."), None
     except requests.exceptions.RequestException as e:
         return None, f"Request error: {e}"
     except Exception as e:
@@ -25,5 +24,5 @@ async def chatgpt4(_: Client, message: Message):
 
     query = " ".join(message.command[1:])
     txt = await message.reply_text("`Processing...`")
-    api_response, error_message = fetch_data(api_url_chat4, query)
+    api_response, error_message = fetch_data(query, message)
     await txt.edit(api_response or error_message)
