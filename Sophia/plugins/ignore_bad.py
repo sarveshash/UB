@@ -1,4 +1,3 @@
-
 from Sophia import HANDLER
 from Sophia.main import Sophia
 from config import OWNER_ID
