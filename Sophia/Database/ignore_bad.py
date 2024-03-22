@@ -19,7 +19,7 @@ class IGNORE_BAD:
         else:
             value = Find.get("IGNORE_BAD", False)
             return value
-    async def REMOVE(self):
+    async def DISABLE(self):
         try:
             await db.update_one({"_id": 1}, {"$set": {"IGNORE_BAD": False}})
             return "SUCCESS"
