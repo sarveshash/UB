@@ -1,4 +1,3 @@
-
 from Sophia import DATABASE
 import asyncio
 import random
