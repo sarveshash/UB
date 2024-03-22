@@ -8,7 +8,7 @@ from Sophia import HANDLER
 
 def fetch_data(query: str, message: str) -> tuple:
     try:
-        response = requests.get(f"https://stark.animecloud.tech/chat?brain_id={message.chat.id}&prompt={query}&bot_name=Sophia&user_name={message.from_user.first_name}&gender=FEMALE")
+        response = requests.get(f"https://stark.animecloud.tech/chat?brain_id={message.from_user.id}&prompt={query}&bot_name=Sophia&user_name={message.from_user.first_name}&gender=FEMALE")
         response.raise_for_status()
         data = response.json()
         return data.get("message", "No response from the API."), None
