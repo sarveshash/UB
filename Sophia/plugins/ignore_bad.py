@@ -1,5 +1,5 @@
 from Sophia import HANDLER
-from Sophia.main import Sophia
+from Sophia.__main__ import Sophia
 from config import OWNER_ID
 from Sophia.Database.ignore_bad import *
 from pyrogram import filters
