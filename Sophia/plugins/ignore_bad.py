@@ -9,13 +9,20 @@ import re
 async def bad_word_remover_stats(_, client, update):
     ignore_bad = IGNORE_BAD()
     is_enabled = await ignore_bad.GET()
-    if is_enabled and update.chat.id != OWNER_ID:
+    if is_enabled:
         return True
     else:
         return False
 
 bad_words = [
-    'punda', 'fuck', 'ommala'
+    'punda', 'fuck', 'ommala',
+    'kena', 'mairu', 'savu',
+    'otha', 'oththa', 'rape',
+    'pussy', 'dick', 'kunji',
+    'kunju', 'thevidiya', 'peins',
+    'bitch', 'motherfucker', 'fucker',
+    'omala', 'pota', 'kenapunda',
+    'mairupunda', 'sex', 'sexchat'
 ]
 
 pattern = r"\b(?:{})\b".format('|'.join(['{}(?:{})?'.format(re.escape(word), '[a-zA-Z]*' * (len(word)-1)) for word in bad_words]))
@@ -37,6 +44,20 @@ async def set_ignore_bad(_, message):
         log = await ignore_bad.ENABLE()
         if log == "SUCCESS":
             await message.reply("Let's ignore bad things!")
+        else:
+            await message.reply(f"Error: {log}")
+            print(log)
+    except Exception as e:
+        await message.reply(f"Error: {e}")
+        print(e)
+        
+@Sophia.on_message(filters.command(["unignorebad", "unstopbad"], prefixes=HANDLER) & filters.me)
+async def unset_ignore_bad(_, message):
+    try:
+        ignore_bad = IGNORE_BAD()
+        log = await ignore_bad.DISABLE()
+        if log == "SUCCESS":
+            await message.reply("Okay, I stoped ignoring bad things!")
         else:
             await message.reply(f"Error: {log}")
             print(log)
