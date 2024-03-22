@@ -16,7 +16,7 @@ class IGNORE_BAD:
             else:
                 # Update if it already exists
                 await db.update_one({"_id": 1}, {"$addToSet": {"IGNORE_BAD": True}})
-            return SUCCESS
+            return "SUCCESS"
         except Exception as e:
             print("Error while enabling IGNORE_BAD", e)
             return e
