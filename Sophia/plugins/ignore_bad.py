@@ -8,7 +8,7 @@ import re
 
 async def bad_word_remover_stats(_, client, update):
     ignore_bad = IGNORE_BAD()
-    if await ignore_bad.GET == True and not update.chat.id == OWNER_ID:
+    if await ignore_bad.GET() == True and not update.chat.id == OWNER_ID:
         return True
     else:
         return False
