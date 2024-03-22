@@ -38,7 +38,7 @@ async def set_ignore_bad(_, message):
         if log == "SUCCESS":
             await message.reply("Let's ignore bad things!")
         else:
-            await message.reply(f"Error: {e}")
+            await message.reply(f"Error: {log}")
             print(e)
     except Exception as e:
         await message.reply(f"Error: {e}")
