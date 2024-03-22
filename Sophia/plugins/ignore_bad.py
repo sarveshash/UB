@@ -1,5 +1,6 @@
+
 from Sophia import HANDLER
-from Sophia.__main__ import Sophia
+from Sophia.main import Sophia
 from config import OWNER_ID
 from Sophia.Database.ignore_bad import *
 from pyrogram import filters
@@ -8,12 +9,12 @@ import re
 
 async def bad_word_remover_stats(_, client, update):
     ignore_bad = IGNORE_BAD()
-    if ignore_bad.GET() == True and not update.chat.id == OWNER_ID:
+    is_enabled = await ignore_bad.GET()
+    if is_enabled and update.chat.id != OWNER_ID:
         return True
     else:
         return False
 
-# List of words to filter
 bad_words = [
     'punda', 'fuck', 'ommala'
 ]
