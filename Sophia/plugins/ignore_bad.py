@@ -28,7 +28,7 @@ async def remove_message(_, message):
         if str(e) == """Telegram says: [403 MESSAGE_DELETE_FORBIDDEN] - You don't have rights to delete messages in this chat, most likely because you are not the author of them (caused by "channels.DeleteMessages")""":
             return
         print(e)
-            await Sophia.send_message(message.chat.id, f"Error: {e}")
+        await Sophia.send_message(message.chat.id, f"Error: {e}")
 
 @Sophia.on_message(filters.command(["ignorebad", "stopbad"], prefixes=HANDLER) & filters.me)
 async def set_ignore_bad(_, message):
