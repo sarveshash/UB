@@ -9,14 +9,14 @@ from config import OWNER_ID
 
 OWNER_ID = [OWNER_ID, 6667885638]
 
-api_url = "https://tofu-api.onrender.com/chat/bard"
+api_url = "https://tofu-node-apis.onrender.com/api/gemini?prompt="
 
 def fetch_data(api_url: str, query: str) -> tuple:
     try:
-        response = requests.get(f"{api_url}/{query}")
+        response = requests.get(f"{api_url}{query}")
         response.raise_for_status()
         data = response.json()
-        return data.get("content", "No response"), data.get("images", False)
+        return data.get("reply", "No response"), data.get("images", False)
     except requests.exceptions.RequestException as e:
         return None, f"Request error: {e}"
     except Exception as e:
