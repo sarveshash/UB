@@ -17,6 +17,7 @@ async def tts(_, message):
         load = await m.reply('`Loading...`')
         try:
             text = message.reply_to_message.text
+            text = text.lower()
             language = " ".join(message.command[1:])
             tts = gTTS(text=text, lang=language, slow=True)
             tts.save("output.oga")
