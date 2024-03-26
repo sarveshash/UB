@@ -14,6 +14,7 @@ async def tts(_, message):
     elif len(message.command) < 2:
         return await m.reply(f"Please enter the language [code](https://graph.org/Language-codes-03-26)!", disable_webpage_preview=True)
     else:
+        load = await m.reply('`Loading...`')
         try:
             text = message.reply_to_message.text
             language = " ".join(message.command[1:])
@@ -25,3 +26,4 @@ async def tts(_, message):
         except Exception as e:
             await m.reply(f"Error: {e}")
             raise Exception(e)
+        await load.delete()
