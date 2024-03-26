@@ -12,7 +12,7 @@ async def tts(_, message):
     if not message.reply_to_message:
         return await m.reply("Please reply to a message!")
     elif len(message.command) < 2:
-        return await m.reply(f"Please enter the language [code](https://graph.org/Language-codes-03-26)!", disable_webpage_preview=True)
+        return await m.reply(f"Please enter the language [code](https://graph.org/Language-codes-03-26)!", disable_web_page_preview=True)
     else:
         load = await m.reply('`Loading...`')
         try:
@@ -22,8 +22,8 @@ async def tts(_, message):
             tts.save("output.oga")
             await m.reply_voice("output.oga")
         except ValueError:
-            return await m.reply(f"Please enter a correct language [code](https://graph.org/Language-codes-03-26)!")
+            await m.reply(f"Please enter a correct language [code](https://graph.org/Language-codes-03-26)!", disable_web_page_preview=True)
         except Exception as e:
             await m.reply(f"Error: {e}")
-            raise Exception(e)
+            raise Exception(f"Error in TTS: {e}")
         await load.delete()
