@@ -16,3 +16,4 @@ youtube_search
 ffmpeg
 motor
 telegraph
+gtts
