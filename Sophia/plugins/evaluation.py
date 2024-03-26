@@ -7,14 +7,19 @@ from Sophia.__main__ import Sophia
 from config import OWNER_ID
 from pyrogram import filters
 import asyncio
+from datetime import datetime
 import os
 from pyrogram import enums
 from Sophia.Database.games import *
 
 app = Sophia
 
+def p(text):
+    print(text)
+
 @Sophia.on_message(filters.command(["eval", "e", "python"], prefixes=HANDLER))
 async def eval(client, message):
+    m = message
     if message.from_user.id == OWNER_ID or message.from_user.id in SUDO_USERS_ID:
         None
     else:
