@@ -20,7 +20,7 @@ logging.basicConfig(
 HM = os.environ.get("SESSION")
 if HM == None:
     OLD_DATAS_DB = input("Enter your mongodb uri: ") # For getting user values
-    DATABASE = AsyncIOMotorClient(OLD_DATAS_DB)["SOPHIA_UB"]
+    DATABASE = MongoClient(OLD_DATAS_DB)["SOPHIA_UB"]
     db = DATABASE["USER_DATAS"]
     Find = db.find_one({"_id": 404})
     if not Find:
