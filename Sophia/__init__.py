@@ -22,13 +22,11 @@ if HM == None:
     OLD_DATAS_DB = input("Enter your mongodb uri: ") # For getting user values
     DATABASE = AsyncIOMotorClient(OLD_DATAS_DB)["SOPHIA_UB"]
     db = DATABASE["USER_DATAS"]
-    def GET_VALUES():
-        Find = db.find_one({"_id": 404})
-        if not Find:
-            return None
-        else:
-            return Find
-    VALUES = GET_VALUES()
+    Find = db.find_one({"_id": 404})
+    if not Find:
+        VALUES = None
+    else:
+        VALUES = Find
     count = 0
     def inc_count():
         global count
@@ -66,14 +64,11 @@ if HM == None:
             
             DATABASE = AsyncIOMotorClient(OLD_DATAS_DB)["SOPHIA_UB"]
             db = DATABASE["USER_DATAS"]
-            
-            def SET_VALUES(session, a_id, a_hash, repo):
-                doc = {"_id": 404, "session": session, "a_id": a_id, "a_hash": a_hash, "repo": repo, "everything": True}
-                try:
-                    db.insert_one(doc)
-                except Exception:
-                    db.update_one({"_id": 404}, {"$set": {"session": session, "a_id": a_id, "a_hash": a_hash, "repo": repo, "everything": True}})
-            SET_VALUES(SESSION, API_ID, API_HASH, YOUR_REPO_LINK)
+            doc = {"_id": 404, "SESSION": SESSION, "API_ID": API_ID, "API_HASH": API_HASH, "YOUR_REPO_LINK": YOUR_REPO_LINK, "everything": True}
+            try:
+                db.insert_one(doc)
+            except Exception:
+                db.update_one({"_id": 404}, {"$set": {"SESSION": SESSION, "API_ID": API_ID, "API_HASH": API_HASH, "YOUR_REPO_LINK": YOUR_REPO_LINK, "everything": True}})
             break
         except Exception as e:
             print(e)
