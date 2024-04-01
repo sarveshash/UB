@@ -22,7 +22,7 @@ API_ID = 10187126
 API_HASH = "ff197c0d23d7fe54c89b44ed092c1752"
 HANDLER = ["~",".","!","/","$","#"]
 LOG_CHANNEL = -1002010994783
-MONGO_DB_URI = "&mongodb+srv://Wine_Music:red_wine55@cluster0.hbuxm0l.mongodb.net/?retryWrites=true&w=majority"
+MONGO_DB_URI = "mongodb+srv://Wine_Music:red_wine55@cluster0.hbuxm0l.mongodb.net/?retryWrites=true&w=majority"
 REPO_URL = "https://github.com/Otazuki004/SophiaUB/"
 MY_VERSION = 0.00219
 
