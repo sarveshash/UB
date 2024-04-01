@@ -22,8 +22,8 @@ if HM == None:
     OLD_DATAS_DB = input("Enter your mongodb uri: ") # For getting user values
     DATABASE = AsyncIOMotorClient(OLD_DATAS_DB)["SOPHIA_UB"]
     db = DATABASE["USER_DATAS"]
-    async def GET_VALUES():
-        Find = await db.find_one({"_id": 404})
+    def GET_VALUES():
+        Find = db.find_one({"_id": 404})
         if not Find:
             return False
         else:
@@ -67,12 +67,12 @@ if HM == None:
             DATABASE = AsyncIOMotorClient(OLD_DATAS_DB)["SOPHIA_UB"]
             db = DATABASE["USER_DATAS"]
             
-            async def SET_VALUES(session, a_id, a_hash, repo):
+            def SET_VALUES(session, a_id, a_hash, repo):
                 doc = {"_id": 404, "session": session, "a_id": a_id, "a_hash": a_hash, "repo": repo, "everything": True}
                 try:
-                    await db.insert_one(doc)
+                    db.insert_one(doc)
                 except Exception:
-                    await db.update_one({"_id": 404}, {"$set": {"session": session, "a_id": a_id, "a_hash": a_hash, "repo": repo, "everything": True}})
+                    db.update_one({"_id": 404}, {"$set": {"session": session, "a_id": a_id, "a_hash": a_hash, "repo": repo, "everything": True}})
             SET_VALUES(SESSION, API_ID, API_HASH, YOUR_REPO_LINK)
             break
         except Exception as e:
