@@ -29,23 +29,25 @@ if HM == None:
             return Find
     VALUES = GET_VALUES()
     count = 0
-    for ai_rule_world in VALUES:
+    def inc_count():
         global count
+        count += 1
+    for ai_rule_world in VALUES:
         if count == 0:
             r(f"export SESSION={ai_rule_world}")
-            count += 1
+            inc_count()
         elif count == 1:
             r(f"export API_ID={ai_rule_world}")
-            count += 1
+            inc_count()
         elif count == 2:
             r(f"export API_HASH={ai_rule_world}")
-            count += 1
+            inc_count()
         elif count == 3:
             r(f"export MONGO_DB_URI={OLD_DATAS_DB}")
-            count += 1
+            inc_count()
         elif count == 4:
             r(f"export YOUR_REPO_LINK={ai_rule_world}")
-            count += 1
+            inc_count()
     while VALUES is not None:
         try:
             SESSION = input("Enter you Pyrogram V-2 Session: ")
