@@ -39,16 +39,3 @@ MONGO_DB = MongoClient(MONGO_DB_URI) # Special Thanks To KoraXD For Giving This 
 DB = MONGO_DB.SOPHIA_UB
 DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["SOPHIA_UB"]
 GAME_DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["HYPER_GAMES"]
-
-# BETA ACCESS KEY SECTION
-ALPHABET = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-
-def decode_key(encoded_key, pin):
-    decoded_key = ''
-    for char in encoded_key:
-        if char.lower() in ALPHABET:  # Convert char to lowercase
-            index = (ALPHABET.index(char.lower()) - int(pin)) % len(ALPHABET)
-            decoded_key += ALPHABET[index]
-        else:
-            decoded_key += char
-    return decoded_key
