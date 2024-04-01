@@ -25,7 +25,7 @@ if HM == None:
     def GET_VALUES():
         Find = db.find_one({"_id": 404})
         if not Find:
-            return False
+            return None
         else:
             return Find
     VALUES = GET_VALUES()
