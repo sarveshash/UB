@@ -7,6 +7,7 @@ from pymongo import MongoClient
 from urllib.parse import urlparse
 from motor.motor_asyncio import AsyncIOMotorClient
 from subprocess import getoutput as r
+from Restart import restart_program as rs_pg
 
 # LOGGING
 logging.basicConfig(
@@ -48,12 +49,15 @@ if HM == None:
         elif count == 4:
             r(f"export YOUR_REPO_LINK={ai_rule_world}")
             inc_count()
+            rs_pg()
     while VALUES is not None:
         try:
-            SESSION = input("Enter you Pyrogram V-2 Session: ")
-            if len(SESSION) < 50:
-                print("[Sophia System] Enter session correctly!")
-                return
+            while True:
+                SESSION = input("Enter you Pyrogram V-2 Session: ")
+                if len(SESSION) < 50:
+                    print("[Sophia System] Enter session correctly!")
+                else:
+                    break
             API_ID = input("Enter Api ID: ")
             API_HASH = input("Enter Api hash: ")
             MONGO_DB_URI = input("Enter MONGO_DB_URI: ")
