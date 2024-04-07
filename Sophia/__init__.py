@@ -75,14 +75,15 @@ if HM == None:
             print(e)
 
 # VARIABLES
-SESSION = "BQCbcXYAgPaTnqIB-FAL2f82IDDVQbp9cr21B3vT70Mol6zGzx1CkmJUYhoGRYOc-UxeAU2IR9mDAdDDuaeL798asb9KmCUQDZG7rZNNuErDhnzDOePGpdvjj27t-acB1j7lEx3adRAYmln76xmy94uGkFoAcMQ-9zdrCXbmZZ-R00_Me4i5ZgVUvKFhQIPzWogeziLp-gzqo7DCBwI9YeaF8JbwMShmdhKHHwRjotEJS6C_VrSJBOx8ZkyglngEn3k27xRo6efc9SEIOYApi_dULv_2RETFmMrmJBw56VR-VhIDvAO0hoajTdhnq5YKXG2XLGBasKlp0mQ7pMpYf52YcpXYtAAAAAFji4RfAA"
-API_ID = 10187126
-API_HASH = "ff197c0d23d7fe54c89b44ed092c1752"
+
+SESSION = os.environ.get("SESSION")
+API_ID = os.environ.get("API_ID")
+API_HASH = os.environ.get("API_HASH")
 HANDLER = ["~",".","!","/","$","#"]
 LOG_CHANNEL = -1002010994783
-MONGO_DB_URI = "mongodb+srv://Wine_Music:red_wine55@cluster0.hbuxm0l.mongodb.net/?retryWrites=true&w=majority"
-REPO_URL = "https://github.com/Otazuki004/SophiaUB/"
-MY_VERSION = 0.00219
+MONGO_DB_URI = os.environ.get("MONGO_DB_URI")
+REPO_URL = os.environ.get("YOUR_REPO_LINK")
+MY_VERSION = 0.5
 
 # GETTING REPO NAME USED FOR UPDATE MODULE
 parsed_url = urlparse(REPO_URL)
