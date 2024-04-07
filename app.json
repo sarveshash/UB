@@ -29,16 +29,6 @@
          "required":true,
          "value":""
       },
-      "ACCESS_CODE":{
-         "description":"Access Code Is required for Beta Access",
-         "required":true,
-         "value":""
-      },
-      "ACCESS_PIN":{
-         "description":"Access Pin is required for beta access",
-         "required":true,
-         "value":""
-      },
       "SESSION":{
          "description":"Your Pyrogram V2 String Session.",
          "required":true,
