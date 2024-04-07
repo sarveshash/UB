@@ -87,7 +87,7 @@ MY_VERSION = 0.5
 
 # GETTING REPO NAME USED FOR UPDATE MODULE
 parsed_url = urlparse(REPO_URL)
-path_parts = parsed_url.path.encode().split('/')
+path_parts = parsed_url.path.split('/')
 repo_name = path_parts[2] if len(path_parts) > 2 else None
 
 # CLIENTS
