@@ -22,7 +22,7 @@ async def gban(_, message):
                     if not str(e) == """Telegram says: [400 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "messages.UpdatePinnedMessage")""" and not str(e).startswith("Telegram says: [420 FLOOD_WAIT_X] - A wait"):
                         print(e)
         await loading_msg.delete()
-        await message.reply(f"Gban completed in {success_chats}chats\nTaken time: {time.time() - time_start}")
+        await message.reply(f"Gban completed in {success_chats} chats\nTaken time: {int(time.time() - time_start)}")
     else:
         if len(message.command) < 2:
             return await message.reply_text("Reply a user or enter the user id to gban")
@@ -38,4 +38,4 @@ async def gban(_, message):
                     if not str(e) == """Telegram says: [400 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "messages.UpdatePinnedMessage")""" and not str(e).startswith("Telegram says: [420 FLOOD_WAIT_X] - A wait"):
                         print(e)
         await loading_msg.delete()
-        await message.reply(f"Gban completed in {success_chats}chats\nTaken time: {time.time() - time_start}")
+        await message.reply(f"Gban completed in {success_chats} chats\nTaken time: {int(time.time() - time_start)}")
