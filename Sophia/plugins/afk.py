@@ -8,6 +8,7 @@ import os
 import re
 from datetime import datetime
 from Sophia.Database.afk import *
+from Sophia.Database.ignore_users import *
 
 def calculate_time(start_time, end_time):
     ping_time = (end_time - start_time).total_seconds() * 1000
@@ -21,6 +22,10 @@ async def denied_users(_, client, update):
     if not await GET_AFK():
         return False
     else:
+        ignore_class = IGNORED_USERS()
+        IGNORED_USERS_ID = await ignore_class.GET()
+        if update.chat.id in IGNORED_USERS_ID:
+            return False
         return True
 
 @Sophia.on_message(filters.command(["busy", "offline", "afk"], prefixes=HANDLER) & filters.user(OWN))
@@ -39,8 +44,6 @@ async def say_master_is_busy(_, message):
     try:
         Busy_time = await GET_AFK_TIME()
         formatted_elapsed_time = calculate_time(Busy_time, datetime.now())
-        if message.from_user.id in IGNORED_USERS_ID:
-            return
         Reason_Of_Busy = await GET_AFK_REASON()
         if Reason_Of_Busy == None:
             await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she maybe in a highly stress or maybe he/she in a work or he/she in a problem anything but don't distrub him/her now please.\n\n**➲ Reason: NOT SET\n➲ Offline Duration:** {formatted_elapsed_time}")
