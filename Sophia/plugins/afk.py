@@ -36,19 +36,19 @@ async def set_into_busy(_, message):
     
 @Sophia.on_message(filters.private & filters.create(denied_users) & filters.incoming & ~filters.service & ~filters.me & ~filters.bot)
 async def say_master_is_busy(_, message):
-    Busy_time = await GET_AFK_TIME()
-    formatted_elapsed_time = calculate_time(Busy_time, datetime.now())
-    if message.from_user.id in IGNORED_USERS_ID:
-        return
-    if BOTS_ALLOWED_TO_WORK_IN_BUSY_COMMANDS:
-        if message.from_user.is_bot:
+    try:
+        Busy_time = await GET_AFK_TIME()
+        formatted_elapsed_time = calculate_time(Busy_time, datetime.now())
+        if message.from_user.id in IGNORED_USERS_ID:
             return
-    Reason_Of_Busy = await GET_AFK_REASON()
-    if Reason_Of_Busy == None:
-        await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she maybe in a highly stress or maybe he/she in a work or he/she in a problem anything but don't distrub him/her now please.\n\n**➲ Reason: NOT SET\n➲ Offline Duration:** {formatted_elapsed_time}")
-    else:
-        await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she maybe in a highly stress or maybe he/she in a work or he/she in a problem anything but don't distrub him/her now please.\n\n**➲ Reason: `{Reason_Of_Busy}`\n➲ Offline Duration:** {formatted_elapsed_time}")
-    await Sophia.mark_chat_unread(message.chat.id)
+        Reason_Of_Busy = await GET_AFK_REASON()
+        if Reason_Of_Busy == None:
+            await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she maybe in a highly stress or maybe he/she in a work or he/she in a problem anything but don't distrub him/her now please.\n\n**➲ Reason: NOT SET\n➲ Offline Duration:** {formatted_elapsed_time}")
+        else:
+            await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she maybe in a highly stress or maybe he/she in a work or he/she in a problem anything but don't distrub him/her now please.\n\n**➲ Reason: `{Reason_Of_Busy}`\n➲ Offline Duration:** {formatted_elapsed_time}")
+        await Sophia.mark_chat_unread(message.chat.id)
+    except Exception as e:
+        raise Exception(e)
     
 @Sophia.on_message(filters.group & ~filters.user(OWN) & filters.create(denied_users))
 async def Group_say_master_offline(_, message):
