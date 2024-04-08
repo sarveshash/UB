@@ -13,6 +13,8 @@ from pyrogram import enums
 from Sophia.Database.games import *
 
 app = Sophia
+Client = Sophia
+bot = Sophia
 
 def p(text):
     print(text)
@@ -20,6 +22,9 @@ def p(text):
 @Sophia.on_message(filters.command(["eval", "e", "python"], prefixes=HANDLER))
 async def eval(client, message):
     m = message
+    chat_id = m.chat.id
+    msg_reply = m.reply_to_message
+    me = OWNER_ID
     if message.from_user.id == OWNER_ID or message.from_user.id in SUDO_USERS_ID:
         None
     else:
