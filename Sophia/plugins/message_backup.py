@@ -53,7 +53,7 @@ async def backup_chats(_, message):
                 await Sophia.forward_messages(chat.id, message.chat.id, message.id)
                 await Sophia.archive_chats(chat.id)
                 if NEED_FOLDERS:
-                    await Sophia.update_folder(100004, "BACKUP CHATS", included_chats=chat.id)
+                    await Sophia.update_folder(14, "BACKUP CHATS", included_chats=chat.id)
                 return
             else:
                 print("Somthing went wrong in backup msg", e)
@@ -66,7 +66,7 @@ async def backup_chats(_, message):
             await Sophia.forward_messages(chat.id, message.chat.id, message.id)
             await Sophia.archive_chats(chat.id)
             if NEED_FOLDERS:
-                await Sophia.update_folder(100004, "BACKUP CHATS", included_chats=chat.id)
+                await Sophia.update_folder(14, "BACKUP CHATS", included_chats=chat.id)
         else:
             pass
 
