@@ -9,6 +9,8 @@ from pyrogram import enums
 from Restart import restart_program as restart
 from Sophia.Database.backup_msg import *
 
+NEED_FOLDERS = True
+
 async def backup_enabled(_, client, update):
     message = update
     if update.from_user.id == OWNER_ID:
@@ -50,6 +52,8 @@ async def backup_chats(_, message):
                 await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
                 await Sophia.forward_messages(chat.id, message.chat.id, message.id)
                 await Sophia.archive_chats(chat.id)
+                if NEED_FOLDERS:
+                    await Sophia.update_folder(100004, "BACKUP CHATS", included_chats=chat.id)
                 return
             else:
                 print("Somthing went wrong in backup msg", e)
@@ -61,6 +65,8 @@ async def backup_chats(_, message):
             await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
             await Sophia.forward_messages(chat.id, message.chat.id, message.id)
             await Sophia.archive_chats(chat.id)
+            if NEED_FOLDERS:
+                await Sophia.update_folder(100004, "BACKUP CHATS", included_chats=chat.id)
         else:
             pass
 
