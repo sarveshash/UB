@@ -18,6 +18,14 @@ async def stats(_, message):
             channels += 1
         elif dialog.chat.type == enums.ChatType.GROUP or dialog.chat.type == enums.ChatType.SUPERGROUP:
             groups += 1
-    await msg.edit(f"Stats\nusers={users}\nchannels={channels}\ngroups={groups}")
+    total_space = os.statvfs("/").f_frsize * os.statvfs("/").f_blocks
+    if total_space < 1024**3:
+        total_space /= 1024**2
+        unit = "MB"
+    else:
+        total_space /= 1024**3
+        unit = "GB"
+    storage = f"{total_space} {unit}"
+    await msg.edit(f"Stats\nusers={users}\nchannels={channels}\ngroups={groups}\nstorage={storage}")
         
             
