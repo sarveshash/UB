@@ -10,8 +10,3 @@ PWD = f"{os.getcwd()}/"
 
 if __name__ == "__main__":
     Sophia.run()
-    with Sophia:
-        me = Sophia.get_me()
-        id = me.id
-
-id = id
