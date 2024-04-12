@@ -1,4 +1,4 @@
-from Sophia.__main__ import id
+
 
 # VARIABLES
 OWNER_ID = 5965055071
