@@ -1,7 +1,7 @@
 from Sophia.__main__ import id
 
 # VARIABLES
-OWNER_ID = id
+OWNER_ID = 5965055071
 
 # SETTINGS 
 Do_you_need_warnings = False # You will Get some Warning messages Using by some Commands. if you don't like change it False.
