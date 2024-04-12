@@ -98,3 +98,6 @@ MONGO_DB = MongoClient(MONGO_DB_URI) # Special Thanks To KoraXD For Giving This 
 DB = MONGO_DB.SOPHIA_UB
 DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["SOPHIA_UB"]
 GAME_DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["HYPER_GAMES"]
+
+# STARTING CLIENT
+Sophia.run()
