@@ -9,3 +9,6 @@ from Restart import restart_program
 PWD = f"{os.getcwd()}/"
 me = Sophia.get_me()
 id = me.id
+
+if __name__ == "__main__":
+    Sophia.run()
