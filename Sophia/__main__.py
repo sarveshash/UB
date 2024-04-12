@@ -6,14 +6,6 @@ import pyrogram
 from subprocess import getoutput as run
 from Restart import restart_program
 
-
 PWD = f"{os.getcwd()}/"
-
-id = None
-
-if __name__ == "__main__":
-    Sophia.run()
-    with Sophia:
-        global id
-        me = Sophia.get_me()
-        id = me.id
+me = Sophia.get_me()
+id = me.id
