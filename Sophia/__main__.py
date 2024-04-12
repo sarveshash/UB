@@ -9,9 +9,9 @@ from Restart import restart_program
 
 PWD = f"{os.getcwd()}/"
 
-# OWNER ID
-me = Sophia.get_me()
-id = me.id
-
 if __name__ == "__main__":
     Sophia.run()
+    with Sophia:
+        # OWNER ID
+        me = Sophia.get_me()
+        id = me.id
