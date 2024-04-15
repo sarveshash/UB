@@ -13,14 +13,21 @@ async def Copy_msg(_, message):
     else:
         try:
             if message.reply_to_message.media_group_id:
-                
-            COPIED_MSG = message.reply_to_message_id
-            COPIED_MSG_CHAT = message.chat.id
-            STORE = await SAVE_MSG(COPIED_MSG, COPIED_MSG_CHAT)
-            if STORE == "SUCCESS":
-                await message.reply("Successfully copied!")
+                COPIED_MSG = message.reply_to_message_id
+                COPIED_MSG_CHAT = message.chat.id
+                STORE = await SAVE_MSG(COPIED_MSG, COPIED_MSG_CHAT, album=True)
+                if STORE == "SUCCESS":
+                    await message.reply("Successfully copied!")
+                else:
+                    await message.reply(f"Error: {STORE}")
             else:
-                await message.reply(f"Error: {STORE}")
+                COPIED_MSG = message.reply_to_message_id
+                COPIED_MSG_CHAT = message.chat.id
+                STORE = await SAVE_MSG(COPIED_MSG, COPIED_MSG_CHAT)
+                if STORE == "SUCCESS":
+                    await message.reply("Successfully copied!")
+                else:
+                    await message.reply(f"Error: {STORE}")
         except Exception as e:
             return await message.reply(f"Error: {e}")
 
