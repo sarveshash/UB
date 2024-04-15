@@ -4,7 +4,17 @@ import random
 
 db = DATABASE["Copy_message"]
 
-async def SAVE_MSG(msg_id: int, msg_chat: int):
+async def SAVE_MSG(msg_id: int, msg_chat: int, album=False):
+    if album == True:
+        try:
+            document = await db.find_one({"_id": 1})
+            if document:
+                await db.update_one({"_id": 1}, {"$set": {"COPIED": True, "CHAT": msg_chat, "ALBUM": True, "ID": msg_id}})
+            else:
+                await db.insert_one({"_id": 1, "COPIED": True, "CHAT": msg_chat, "ALBUM": True, "ID": msg_id})
+            return "SUCCESS"
+        except Exception as e:
+            return str(e)
     try:
         document = await db.find_one({"_id": 1})
         if document:
@@ -31,7 +41,7 @@ async def UNSAVE_MSG():
     if not COPIED_MSG:
         return "ALREADY_EMPTY"
     try:
-        await db.update_one({"_id": 1}, {"$set": {"COPIED": False, "CHAT": 0, "ID": 0}})
+        await db.update_one({"_id": 1}, {"$set": {"COPIED": False, "CHAT": 0, "ALBUM": None, "ID": 0}})
         return "SUCCESS"
     except Exception as e:
         return str(e)
@@ -51,3 +61,24 @@ async def MSG_ID():
     else:
         value = Find["ID"]
         return value
+
+async def IS_ALBUM():
+    Find = await db.find_one({"_id": 1})
+    if not Find:
+        return False
+    else:
+        value = Find["ALBUM"]
+        if not value == False or not value == None:
+            return True
+        else:
+            return False
+
+async def GET_ALBUM():
+    Find = await db.find_one({"_id": 1})
+    if not Find:
+        return False
+    else:
+        value = Find["ALBUM"]
+        value = Find["ID"]
+        return value
+        
