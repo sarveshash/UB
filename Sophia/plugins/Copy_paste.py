@@ -23,7 +23,7 @@ async def Copy_msg(_, message):
             else:
                 COPIED_MSG = message.reply_to_message_id
                 COPIED_MSG_CHAT = message.chat.id
-                STORE = await SAVE_MSG(COPIED_MSG, COPIED_MSG_CHAT)
+                STORE = await SAVE_MSG(COPIED_MSG, COPIED_MSG_CHAT, album=False)
                 if STORE == "SUCCESS":
                     await message.reply("Successfully copied!")
                 else:
@@ -49,10 +49,12 @@ async def paste_msg(_, message):
             if message.reply_to_message:
                 if await IS_ALBUM() == True:
                     return await Sophia.copy_media_group(message.chat.id, await CHAT_ID(), await MSG_ID(), reply_to_message_id=message.reply_to_message_id)
-                return await Sophia.copy_message(message.chat.id, await CHAT_ID(), await MSG_ID(), reply_to_message_id=message.reply_to_message_id)
+                else:
+                    return await Sophia.copy_message(message.chat.id, await CHAT_ID(), await MSG_ID(), reply_to_message_id=message.reply_to_message_id)
             if await IS_ALBUM() == True:
                 return await Sophia.copy_media_group(message.chat.id, await CHAT_ID(), await MSG_ID())
-            return await Sophia.copy_message(message.chat.id, await CHAT_ID(), await MSG_ID())
+            else:
+                return await Sophia.copy_message(message.chat.id, await CHAT_ID(), await MSG_ID())
         except Exception as e:
             if str(e).startswith("Telegram says: [400 CHAT_FORWARDS_RESTRICTED]"):
                 return await message.reply("Master, Copying forwarding not allowed in that chat so we cannot paste it.")
