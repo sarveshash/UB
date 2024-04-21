@@ -16,6 +16,8 @@ async def mass_add(_, message):
     loading_msg = await message.reply("Adding members...")
     async for member in Sophia.get_chat_members(message.chat.id):
         try:
+            if member.user.is_bot == True:
+                return
             output = await Sophia.add_chat_members(chat_username, member.user.id)
             if output == True:
                 success += 1
