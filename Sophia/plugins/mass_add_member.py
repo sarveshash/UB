@@ -16,12 +16,11 @@ async def mass_add(_, message):
     loading_msg = await message.reply("Adding members...")
     async for member in Sophia.get_chat_members(message.chat.id):
         try:
-            if member.user.is_bot == True:
-                return
-            output = await Sophia.add_chat_members(chat_username, member.user.id)
-            if output == True:
-                success += 1
-            await asyncio.sleep(2)
+            if not member.user.is_bot == True:
+                output = await Sophia.add_chat_members(chat_username, member.user.id)
+                if output == True:
+                    success += 1
+                await asyncio.sleep(2)
         except Exception as e:
             if not str(e) == """Telegram says: [400 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "messages.UpdatePinnedMessage")""" and not str(e).startswith("Telegram says: [420 FLOOD_WAIT_X] - A wait"):
                 print(e)
