@@ -8,7 +8,7 @@ import asyncio
 import os
 import io
 
-@Sophia.on_message(filters.command(["sh", "shell", "bash"], prefixes=HANDLER))
+@Sophia.on_message(filters.command(["sh", "shell", "bash"], prefixes=HANDLER) & ~filters.bot)
 def shell(_, message):
     if message.from_user.id == OWN or message.from_user.id in loyal:
         print("")
