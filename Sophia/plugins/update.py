@@ -10,7 +10,7 @@ OWN = OWNER_ID
 async def update_repo(_, message):
     await message.reply_text("`Updating...`")
     try:
-        command = f"cd && rm -rf {repo_name} && git clone {REPO_URL} && cd {repo_name} && ls && python3 -m Sophia"
+        command = f"cd && rm -rf backup && mv {repo_name} backup && git clone {REPO_URL} && cd {repo_name} && ls && python3 -m Sophia"
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
         exit()
     except Exception as e:
