@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "requirements.txt", 
+      "use": "@vercel/python", 
+      "config": {
+        "runtime": "python3.x",  // Replace 'x' with your desired Python version (e.g., 3.10)
+        "installCommand": "pip3 install --upgrade pip setuptools && pip3 install -U -r requirements.txt"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)", 
+      "dest": "/root/Sophia/Sophia.py"  // Adjust if your main script is named differently
+    }
+  ]
+}
