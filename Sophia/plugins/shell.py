@@ -19,7 +19,7 @@ async def shell(_, message):
         return
     code = message.text.split(None, 1)[1]
     message_text = await message.reply_text("Pʀᴏᴄᴇssɪɴɢ...")
-    output = await run(code)
+    output = run(code)
     if len(output) > 4096:
         with io.BytesIO(str.encode(output)) as out_file:
             out_file.name = "shell.txt"
