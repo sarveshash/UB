@@ -7,6 +7,7 @@ from pymongo import MongoClient
 from urllib.parse import urlparse
 from motor.motor_asyncio import AsyncIOMotorClient
 from subprocess import getoutput as r
+from variables import *
 from Restart import restart_program as rs_pg
 
 # LOGGING
@@ -18,13 +19,13 @@ logging.basicConfig(
 
 # VARIABLES
 
-SESSION = os.environ.get("SESSION")
-API_ID = os.environ.get("API_ID")
-API_HASH = os.environ.get("API_HASH")
+SESSION = os.environ.get("SESSION") or VAR_SESSION
+API_ID = os.environ.get("API_ID") or VAR_API_ID
+API_HASH = os.environ.get("API_HASH") or VAR_API_HASH
 HANDLER = ["~",".","!","/","$","#"]
 LOG_CHANNEL = -1002010994783
-MONGO_DB_URI = os.environ.get("MONGO_DB_URI")
-REPO_URL = os.environ.get("YOUR_REPO_LINK")
+MONGO_DB_URI = os.environ.get("MONGO_DB_URI") or VAR_MONGO_DB_URI
+REPO_URL = os.environ.get("YOUR_REPO_LINK") or VAR_REPO_URL
 MY_VERSION = 0.5
 
 # GETTING REPO NAME USED FOR UPDATE MODULE
