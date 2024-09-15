@@ -2,18 +2,14 @@
   "version": 2,
   "builds": [
     {
-      "src": "requirements.txt", 
-      "use": "@vercel/python", 
-      "config": {
-        "runtime": "python3.10",  // Or your preferred Python version
-        "installCommand": "pip3 install --upgrade pip setuptools && pip3 install -U -r requirements.txt"
-      }
+      "src": "Sophia/**",
+      "use": "@vercel/python"
     }
   ],
   "routes": [
     {
-      "src": "/(.*)", 
-      "dest": "/api/app.py" 
+      "src": "/(.*)",
+      "dest": "Sophia/__main__.py"
     }
   ]
 }
