@@ -9,4 +9,4 @@ import os
 @Sophia.on_message(filters.command("restart", prefixes=HANDLER) & filters.user(OWN))
 async def Call_Restart_Func(_, message):
     Restart_Msg = await message.edit("`Restarting Sophia...`")
-    await restart_program()
+    restart_program()
