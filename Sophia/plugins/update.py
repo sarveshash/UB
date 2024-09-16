@@ -13,5 +13,5 @@ async def update_repo(_, message):
         command = f"cd && rm -rf restarter && rm -rf {REPO_NAME} && git clone {REPO_URL}  && cp -r {repo_name} restarter && cd {repo_name} && ls && python3 -m Sophia"
         result = subprocess.run(command, shell=True, capture_output=True, text=True)
     except Exception as e:
-        await message.reply_text("Update Failed ", e, result)
+        await message.reply_text(f"Update Failed: {e} {result}")
         print("Error on Updating", e)
