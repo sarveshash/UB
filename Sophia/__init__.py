@@ -26,7 +26,27 @@ HANDLER = ["~",".","!","/","$","#"]
 LOG_CHANNEL = -1002010994783
 MONGO_DB_URI = os.environ.get("MONGO_DB_URI") or VAR_MONGO_DB_URI
 REPO_URL = os.environ.get("YOUR_REPO_LINK") or VAR_REPO_URL
-MY_VERSION = 0.503
+
+# VERSION MANAGEMENT
+def get_current_version():
+    """
+    Fetches the current version from Git tags or commits.
+    """
+    try:
+        # Try to get the latest tag
+        tag = r("git describe --tags --abbrev=0").strip()
+        if tag:
+            return tag
+
+        # If no tags, count commits since the initial commit
+        commits = int(r("git rev-list --count HEAD").strip())
+        return f"0.{commits:03d}"  # Format as 0.xxx
+
+    except Exception as e:
+        logging.error(f"Error getting version: {e}")
+        return "0.000"  # Default in case of errors
+
+MY_VERSION = get_current_version()
 
 # GETTING REPO NAME USED FOR UPDATE MODULE
 parsed_url = urlparse(REPO_URL)
@@ -37,8 +57,8 @@ repo_name = path_parts[2] if len(path_parts) > 2 else None
 Sophia = Client("Sophia", session_string=SESSION, api_id=API_ID, api_hash=API_HASH, plugins=dict(root="Sophia/plugins"))
 
 # DATABASE OF SOPHIA
-# MONGO_DB = MongoClient(MONGO_DB_URI) # Special Thanks To KoraXD For Giving This Codes!!
-# DB = MONGO_DB.SOPHIA_UB
+MONGO_DB = MongoClient(MONGO_DB_URI) # Special Thanks To KoraXD For Giving This Codes!!
+DB = MONGO_DB.SOPHIA_UB
 DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["SOPHIA_UB"]
 GAME_DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["HYPER_GAMES"]
 
