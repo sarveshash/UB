@@ -10,7 +10,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from subprocess import getoutput as r
 from variables import *
 from Restart import restart_program as rs_pg
-
+# tst
 # LOGGING
 logging.basicConfig(
     format="[Sophia-UB] %(name)s - %(levelname)s - %(message)s",
