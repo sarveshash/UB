@@ -2,7 +2,7 @@ from pyrogram import filters
 from Sophia.__main__ import Sophia
 from Sophia import REPO_URL, repo_name, HANDLER
 from config import OWNER_ID
-import subprocess
+from subprocess import getoutput as run
 
 OWN = OWNER_ID
 
@@ -10,8 +10,7 @@ OWN = OWNER_ID
 async def update_repo(_, message):
     await message.reply_text("`Updating...`")
     try:
-        command = f"cd && rm -rf restarter && rm -rf {REPO_NAME} && git clone {REPO_URL}  && cp -r {repo_name} restarter && cd {repo_name} && ls && python3 -m Sophia"
-        result = subprocess.run(command, shell=True, capture_output=True, text=True)
+        result = await run(f"cd && rm -rf restarter && rm -rf {REPO_NAME} && git clone {REPO_URL}  && cp -r {repo_name} restarter && cd {repo_name} && ls && python3 -m Sophia")
     except Exception as e:
         await message.reply_text(f"Update Failed: {e} {result}")
         print("Error on Updating", e)
