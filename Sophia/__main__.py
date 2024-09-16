@@ -16,8 +16,8 @@ if __name__ == "__main__":
         update_chk = UPDATE()
         update_chk = update_chk.GET()
         if update_chk is not False:
-            Sophia.send_message(update_chk, "Successfully Updated")
+            Start_message.send_message(update_chk, "Successfully Updated")
             update_chk = UPDATE()
             update_chk.ADD(False, 0)
-        Sophia.send_messags("me", "System Started")
+        Start_message.send_messags("me", "System Started")
     Sophia.run()
