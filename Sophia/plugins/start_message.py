@@ -6,7 +6,7 @@ from Sophia.Database.update import UPDATE
 import pyrogram
 from subprocess import getoutput as run
 
-async def start_message():
+def start_message():
     update_chk = UPDATE()
     update_chk = update_chk.GET()
     if update_chk is not False:
