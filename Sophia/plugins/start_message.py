@@ -15,4 +15,7 @@ def start_message():
         update_chk.ADD(False, 0)
     Sophia.send_messags("me", "System Started")
 
-start_message()
+try:
+    start_message()
+except Exception as e:
+    print("Error when sending start msg:", e)
