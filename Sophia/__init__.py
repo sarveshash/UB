@@ -10,7 +10,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from subprocess import getoutput as r
 from variables import *
 from Restart import restart_program as rs_pg
-# tst
+
 # LOGGING
 logging.basicConfig(
     format="[Sophia-UB] %(name)s - %(levelname)s - %(message)s",
@@ -27,25 +27,7 @@ HANDLER = ["~",".","!","/","$","#"]
 LOG_CHANNEL = -1002010994783
 MONGO_DB_URI = os.environ.get("MONGO_DB_URI") or VAR_MONGO_DB_URI
 REPO_URL = os.environ.get("YOUR_REPO_LINK") or VAR_REPO_URL
-
-
-# GET COMMIT COUNT FROM GITHUB
-api_url = f"https://api.github.com/repos/Otazuki004/SophiaUB/commits"
-def get_commit_count():
-    headers = {}
-    if 0 == 1:
-        headers["Authorization"] = f"token {GITHUB_TOKEN}"
-    response = requests.get(api_url, headers=headers)
-    if response.status_code == 200:
-        commits = response.json()
-        return len(commits)  # Assuming the response contains a list of commits
-    else:
-        logging.error(f"Failed to fetch commit count: {response.status_code} {response.text}")
-        return 0
-commit_count = get_commit_count()
-major_version = commit_count // 1000
-minor_version = commit_count % 1000
-MY_VERSION = f"{major_version}.{minor_version:03}"
+MY_VERSION = 508
 
 # GETTING REPO NAME USED FOR UPDATE MODULE
 parsed_url = urlparse(REPO_URL)
