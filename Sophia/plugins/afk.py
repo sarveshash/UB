@@ -71,4 +71,3 @@ async def remove_busy_mode(_, message):
     formatted_elapsed_time = calculate_time(Busy_time, datetime.now())
     await UNSET_AFK()
     await message.reply_text(f"➲ **Hello**, Master Welcome Again ✨🥀.\n➲ **Your Offline Duration**: `{formatted_elapsed_time}`🥺")
-    await restart_program()
