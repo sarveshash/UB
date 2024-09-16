@@ -11,8 +11,8 @@ PWD = f"{os.getcwd()}/"
 
 if __name__ == "__main__":
     try:
-        Sophia.send_message("me", "hi da good")
         Sophia.start()
+        Sophia.send_message("me", "hi da good")
     except Exception as e:
         print(e)
     Sophia.run()
