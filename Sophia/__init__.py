@@ -27,26 +27,24 @@ LOG_CHANNEL = -1002010994783
 MONGO_DB_URI = os.environ.get("MONGO_DB_URI") or VAR_MONGO_DB_URI
 REPO_URL = os.environ.get("YOUR_REPO_LINK") or VAR_REPO_URL
 
-# VERSION MANAGEMENT
-def get_current_version():
-    """
-    Fetches the current version from Git tags or commits.
-    """
-    try:
-        # Try to get the latest tag
-        tag = r("git describe --tags --abbrev=0").strip()
-        if tag:
-            return tag
 
-        # If no tags, count commits since the initial commit
-        commits = int(r("git rev-list --count HEAD").strip())
-        return f"0.{commits:03d}"  # Format as 0.xxx
-
-    except Exception as e:
-        logging.error(f"Error getting version: {e}")
-        return "0.000"  # Default in case of errors
-
-MY_VERSION = get_current_version()
+# GET COMMIT COUNT FROM GITHUB
+api_url = f"https://api.github.com/repos/Otazuki004/SophiaUB/commits"
+def get_commit_count():
+    headers = {}
+    if 0 == 1:
+        headers["Authorization"] = f"token {GITHUB_TOKEN}"
+    response = requests.get(api_url, headers=headers)
+    if response.status_code == 200:
+        commits = response.json()
+        return len(commits)  # Assuming the response contains a list of commits
+    else:
+        logging.error(f"Failed to fetch commit count: {response.status_code} {response.text}")
+        return 0
+commit_count = get_commit_count()
+major_version = commit_count // 1000
+minor_version = commit_count % 1000
+MY_VERSION = f"{major_version}.{minor_version:03}"
 
 # GETTING REPO NAME USED FOR UPDATE MODULE
 parsed_url = urlparse(REPO_URL)
