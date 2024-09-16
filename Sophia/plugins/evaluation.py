@@ -10,11 +10,13 @@ import asyncio
 from datetime import datetime
 import os
 from pyrogram import enums
+from subprocess import getoutput as run
 from Sophia.Database.games import *
 
 app = Sophia
 Client = Sophia
 bot = Sophia
+r = run
 
 def p(text):
     print(text)
