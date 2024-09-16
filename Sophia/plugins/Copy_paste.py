@@ -25,7 +25,7 @@ async def Copy_msg(_, message):
                 COPIED_MSG_CHAT = message.chat.id
                 STORE = await SAVE_MSG(COPIED_MSG, COPIED_MSG_CHAT, album=False)
                 if STORE == "SUCCESS":
-                    await message.reply("Successfully copied!")
+                    await message.reply("Successfully copied! by")
                 else:
                     await message.reply(f"Error: {STORE}")
         except Exception as e:
