@@ -5,25 +5,15 @@ import random
 db = DATABASE["Copy_message"]
 
 async def SAVE_MSG(msg_id: int, msg_chat: int, album=False):
-    if album == True:
         try:
             document = await db.find_one({"_id": 1})
             if document:
-                await db.update_one({"_id": 1}, {"$set": {"COPIED": True, "CHAT": msg_chat, "ALBUM": True, "ID": msg_id}})
+                await db.update_one({"_id": 1}, {"$set": {"COPIED": True, "CHAT": msg_chat, "ALBUM": album, "ID": msg_id}})
             else:
-                await db.insert_one({"_id": 1, "COPIED": True, "CHAT": msg_chat, "ALBUM": True, "ID": msg_id})
+                await db.insert_one({"_id": 1, "COPIED": True, "CHAT": msg_chat, "ALBUM": album, "ID": msg_id})
             return "SUCCESS"
         except Exception as e:
             return str(e)
-    try:
-        document = await db.find_one({"_id": 1})
-        if document:
-            await db.update_one({"_id": 1}, {"$set": {"COPIED": True, "CHAT": msg_chat, "ID": msg_id}})
-        else:
-            await db.insert_one({"_id": 1, "COPIED": True, "CHAT": msg_chat, "ID": msg_id})
-        return "SUCCESS"
-    except Exception as e:
-        return str(e)
         
 async def COPIED():
     try:
