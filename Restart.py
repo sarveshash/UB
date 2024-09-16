@@ -1,8 +1,12 @@
 import sys
 import os
+from subprocess import getoutput as r
 
 def restart_program():
-    python = sys.executable
-    script = os.path.abspath(sys.argv[0])
-    os.execl(python, python, script, *sys.argv[1:])
+    try:
+        r("cd && cd restarter && python3 -m Sophia")
+    except:
+        python = sys.executable
+        script = os.path.abspath(sys.argv[0])
+        os.execl(python, python, script, *sys.argv[1:])
   
