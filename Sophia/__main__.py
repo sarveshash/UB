@@ -10,7 +10,7 @@ from Restart import restart_program
 PWD = f"{os.getcwd()}/"
 
 if __name__ == "__main__":
-    Sophia.start()
+    Start_message.start()
     try:
         # START MESSAGE
         update_chk = UPDATE()
@@ -20,4 +20,4 @@ if __name__ == "__main__":
             update_chk = UPDATE()
             update_chk.ADD(False, 0)
         Sophia.send_messags("me", "System Started")
-    Sophia.idle()
+    Sophia.run()
