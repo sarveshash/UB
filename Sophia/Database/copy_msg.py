@@ -58,14 +58,5 @@ async def IS_ALBUM():
         return False
     else:
         value = Find["ALBUM"]
-        return value
-
-async def GET_ALBUM():
-    Find = await db.find_one({"_id": 1})
-    if not Find:
-        return False
-    else:
-        value = Find["ALBUM"]
-        value = Find["ID"]
         return bool(value)
         
