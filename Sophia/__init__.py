@@ -41,3 +41,6 @@ Sophia = Client("Sophia", session_string=SESSION, api_id=API_ID, api_hash=API_HA
 # DB = MONGO_DB.SOPHIA_UB
 DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["SOPHIA_UB"]
 GAME_DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["HYPER_GAMES"]
+
+# PRINT STUFFS
+print(f"Loaded version: {MY_VERSION}")
