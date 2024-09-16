@@ -1,4 +1,4 @@
-from Sophia import *
+"""from Sophia import *
 from pyrogram import Client, filters
 import os
 import io
@@ -18,4 +18,4 @@ def start_message():
 try:
     start_message()
 except Exception as e:
-    print("Error when sending start msg:", e)
+    print("Error when sending start msg:", e)"""
