@@ -8,7 +8,7 @@ import io
 import lyricsgenius
 
 # Initialize the Genius API client with your access token
-genius = lyricsgenius.Genius("brH0xANtrYUmCwyL3EjntdalrZ6vJFjINJkYBTALI0pBD4BXQD54DvsQmajMauNJ")
+genius = lyricsgenius.Genius("DBV5DbCIoj-xIaAmK42HLyXF0S_XDGNrfUdmNfg_lfefRDQXCRnvZFBNbeeNI6Gh")
 
 @Sophia.on_message(filters.command("lyrics", prefixes=HANDLER) & filters.user(OWNER_ID))
 async def search_lyrics(_, message):
