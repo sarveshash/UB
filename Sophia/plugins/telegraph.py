@@ -46,8 +46,11 @@ async def telegraph_upload(client, message):
             return
 
         try:
-            with open(location1, 'rb') as f:
-                response = telegraph.upload_file(f)
+            try:
+                with open(location1, 'rb') as f:
+                    response = telegraph.upload_file(f)
+            except Exception as e:
+                return await message.reply(f"Error on uploading file: {e}")
 
             # Check if response is a string (URL) or a dictionary
             if isinstance(response, str):
@@ -69,7 +72,6 @@ async def telegraph_upload(client, message):
 
         except Exception as e:
             await message.reply(f"Error during upload: {str(e)}")
-            logging.error(f"Error during Telegraph upload: {e}")
 
     finally:
         if location1 and os.path.exists(location1):
