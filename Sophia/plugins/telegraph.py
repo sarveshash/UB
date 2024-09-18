@@ -42,8 +42,8 @@ async def telegraph(client, message):
         return
 
     try:
-        # Upload the file to Telegraph
-        response = upload_file(location1)
+        # Upload the file to Telegraph (pass file path inside a list)
+        response = upload_file([location1])
     except Exception as e:
         await message.reply(f"Error during upload: {str(e)}")
         return
