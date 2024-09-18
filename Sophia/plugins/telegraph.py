@@ -1,10 +1,12 @@
 import os
+import logging
 from pyrogram import filters
 from telegraph import Telegraph
 from config import OWNER_ID
 from Sophia.__main__ import Sophia
 from Sophia import HANDLER
 
+# Initialize Telegraph only once
 telegraph = Telegraph()
 telegraph.create_account(short_name='my_bot')
 
@@ -43,15 +45,13 @@ async def telegraph_upload(client, message):
             await message.reply("Error: File could not be downloaded.")
             return
 
-        # Upload the file to Telegraph (handle potential errors)
         try:
             with open(location1, 'rb') as f:
                 response = telegraph.upload_file(f)
 
-            # Check if 'response' is a list (as per Telegraph's documentation)
-            if isinstance(response, list) and len(response) > 0:
-                # Access the 'src' from the first element in the list
-                src = response[0]
+            # Check if 'response' is a dictionary with 'src' key
+            if isinstance(response, dict) and 'src' in response:
+                src = response['src']
                 await message.reply(
                     f"**Your link has been generated**: 👉 `https://telegra.ph/{src}`",
                     disable_web_page_preview=True
@@ -61,7 +61,7 @@ async def telegraph_upload(client, message):
 
         except Exception as e:
             await message.reply(f"Error during upload: {str(e)}")
-            logging.error(f"Error during Telegraph upload: {e}")  # Log the error
+            logging.error(f"Error during Telegraph upload: {e}")
 
     finally:
         if location1 and os.path.exists(location1):
