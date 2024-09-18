@@ -1,12 +1,15 @@
 import os
 from pyrogram import filters
-from telegraph import upload_file
+from telegraph import Telegraph
 from config import OWNER_ID
 from Sophia.__main__ import Sophia
 from Sophia import HANDLER
 
+telegraph = Telegraph()
+telegraph.create_account(short_name='my_bot')
+
 @Sophia.on_message(filters.command(["tgm", "tm"], prefixes=HANDLER) & filters.user(OWNER_ID))
-async def telegraph(client, message):
+async def telegraph_upload(client, message):
     replied = message.reply_to_message
     if not replied:
         await message.reply("Reply to a video or image.")
@@ -42,15 +45,16 @@ async def telegraph(client, message):
         return
 
     try:
-        # Upload the file to Telegraph (pass file path inside a list)
-        response = upload_file([location1])
+        # Upload the file to Telegraph
+        with open(location1, 'rb') as f:
+            response = telegraph.upload_file(f)
     except Exception as e:
         await message.reply(f"Error during upload: {str(e)}")
         return
     else:
         # Reply with the generated link
         await message.reply(
-            f"**Your link has been generated**: 👉 `https://telegra.ph{response[0]}`",
+            f"**Your link has been generated**: 👉 `https://telegra.ph{response['src']}`",
             disable_web_page_preview=True
         )
     finally:
