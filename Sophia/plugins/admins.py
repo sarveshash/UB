@@ -18,7 +18,7 @@ async def ban(_, message):
         if len(message.command) < 2:
             return await message.reply_text("Reply a user or enter the user id to ban!")
         id = str(message.text.split(None, 1)[1])
-        if id.startswith(['@',1,2,3,4,5,6,7,8,9]):
+        if not id.isdigit() or not id.startswith('@'):
             return await message.reply("Please enter a valid id.")
         if id == me:
             return await message.reply("You can't ban yourself!")
