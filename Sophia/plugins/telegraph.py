@@ -47,7 +47,7 @@ async def telegraph_upload(client, message):
 
         try:
             try:
-                pathhh = f"SophiaClient/downloads/{replied.document.file_name}"
+                pathhh = f"SophiaClient/downloads/{message.reply_to_message.document.file_name}"
                 with open(pathhh, 'rb') as f:
                     response = telegraph.upload_file(f)
             except Exception as e:
