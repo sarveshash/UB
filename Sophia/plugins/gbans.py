@@ -32,7 +32,6 @@ async def gban(_, message):
         id = message.text.split(None, 1)[1]
         if not id.startswith(('@', '1', '2', '3', '4', '5', '6', '7', '8', '9')):
             return await message.reply("Please enter a valid id.")
-        id = int(id)
         if id == me:
             return await message.reply("You can't gban yourself!")
         loading_msg = await message.reply("Starting gban! ⚡")
@@ -76,7 +75,6 @@ async def ungban(_, message):
         id = message.text.split(None, 1)[1]
         if not id.startswith(('@', '1', '2', '3', '4', '5', '6', '7', '8', '9')):
             return await message.reply("Please enter a valid id.")
-        id = int(id)
         if id == me:
             return await message.reply("You can't ungban yourself!")
         loading_msg = await message.reply("Ungbaning....")
