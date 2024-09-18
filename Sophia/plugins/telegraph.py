@@ -33,30 +33,36 @@ async def telegraph_upload(client, message):
         await message.reply("Oops! File not supported or too large (max 5MB).")
         return
 
-    # Download the media to a local file
-    location1 = await client.download_media(
-        message=message.reply_to_message,
-        file_name="Sophia/downloads/"
-    )
-
-    # Check if the file was downloaded successfully
-    if not location1 or not os.path.exists(location1):
-        await message.reply("Error: File could not be downloaded.")
-        return
-
     try:
-        # Upload the file to Telegraph
-        with open(location1, 'rb') as f:
-            response = telegraph.upload_file(f)
-    except Exception as e:
-        await message.reply(f"Error during upload: {str(e)}")
-        return
-    else:
-        # Reply with the generated link
-        await message.reply(
-            f"**Your link has been generated**: 👉 `https://telegra.ph{response['src']}`",
-            disable_web_page_preview=True
+        location1 = await client.download_media(
+            message=message.reply_to_message,
+            file_name="Sophia/downloads/"
         )
+
+        if not location1 or not os.path.exists(location1):
+            await message.reply("Error: File could not be downloaded.")
+            return
+
+        # Upload the file to Telegraph (handle potential errors)
+        try:
+            with open(location1, 'rb') as f:
+                response = telegraph.upload_file(f)
+
+            # Check if 'response' is a list (as per Telegraph's documentation)
+            if isinstance(response, list) and len(response) > 0:
+                # Access the 'src' from the first element in the list
+                src = response[0]
+                await message.reply(
+                    f"**Your link has been generated**: 👉 `https://telegra.ph/{src}`",
+                    disable_web_page_preview=True
+                )
+            else:
+                await message.reply("Error: Unexpected response from Telegraph upload.")
+
+        except Exception as e:
+            await message.reply(f"Error during upload: {str(e)}")
+            logging.error(f"Error during Telegraph upload: {e}")  # Log the error
+
     finally:
-        # Clean up by removing the downloaded file
-        os.remove(location1)
+        if location1 and os.path.exists(location1):
+            os.remove(location1)
