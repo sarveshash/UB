@@ -30,13 +30,13 @@ async def telegraph(client, message):
         await message.reply("Oops! File Not Supported bruh")
         return
     location1 = await client.download_media(
-        message5=message.reply_to_message,
+        message=message.reply_to_message,
         file_name="Sophia/downloads/",
     )
     try:
         response = upload_file(location1)
     except Exception as document:
-        await message.reply(f"{message5} {document}")
+        await message.reply(text=document)
     else:
         await message.reply(
             f"**Your link Generated** 👉 `https://telegra.ph{response[0]}` ",
