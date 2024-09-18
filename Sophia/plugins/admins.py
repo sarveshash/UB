@@ -36,6 +36,8 @@ async def ban(_, message):
                         await message.reply("Successfuly baned that nigga!")
                     except Exception as o:
                         return await message.reply(f"Error: {o}")
+                elif e.startswith("Telegram says: [400 CHAT_ADMIN_REQUIRED]"):
+                    return await message.reply("You need admin access to do this!")
                 await message.reply(f"Error: {e}")
 
 
@@ -74,5 +76,7 @@ async def unban(_, message):
                         await message.reply("Successfuly unbaned that nigga!")
                     except Exception as o:
                         return await message.reply(f"Error: {o}")
+                elif e.startswith("Telegram says: [400 CHAT_ADMIN_REQUIRED]"):
+                    return await message.reply("You need admin access to do this!")
                 await message.reply(f"Error: {e}")
                 
