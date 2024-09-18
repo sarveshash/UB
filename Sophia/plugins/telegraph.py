@@ -49,8 +49,16 @@ async def telegraph_upload(client, message):
             with open(location1, 'rb') as f:
                 response = telegraph.upload_file(f)
 
-            # Check if 'response' is a dictionary with 'src' key
-            if isinstance(response, dict) and 'src' in response:
+            # Check if response is a string (URL) or a dictionary
+            if isinstance(response, str):
+                # If it's a string, assume it's the URL
+                src = response
+                await message.reply(
+                    f"**Your link has been generated**: 👉 `https://telegra.ph/{src}`",
+                    disable_web_page_preview=True
+                )
+            elif isinstance(response, dict) and 'src' in response:
+                # If it's a dictionary, extract the URL from 'src'
                 src = response['src']
                 await message.reply(
                     f"**Your link has been generated**: 👉 `https://telegra.ph/{src}`",
