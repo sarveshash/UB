@@ -5,7 +5,6 @@ import asyncio
 import time
 from pyrogram import enums, errors
 
-# Helper function to handle gban and ungban logic
 async def ban_unban_user(message, action, user_id=None):
     me = (await Sophia.get_me()).id
     if user_id == me:
