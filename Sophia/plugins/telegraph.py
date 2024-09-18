@@ -36,9 +36,9 @@ async def telegraph_upload(client, message):
         return
 
     try:
-        location1 = await client.download_media(
+        location1 = await Sophia.download_media(
             message=message.reply_to_message,
-            file_name="Sophia/downloads/"
+            file_name="SophiaClient/downloads/"
         )
 
         if not location1 or not os.path.exists(location1):
@@ -47,7 +47,8 @@ async def telegraph_upload(client, message):
 
         try:
             try:
-                with open(location1, 'rb') as f:
+                pathhh = f"SophiaClient/downloads/{replied.document.file_name}"
+                with open(pathhh, 'rb') as f:
                     response = telegraph.upload_file(f)
             except Exception as e:
                 return await message.reply(f"Error on uploading file: {e}")
