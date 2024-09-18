@@ -17,15 +17,8 @@ async def ban(_, message):
     else:
         if len(message.command) < 2:
             return await message.reply_text("Reply a user or enter the user id to ban!")
-        try:
-            id = int(message.text.split(None, 1)[1])
-            try:
-                chk = str(id)
-                if chk.startswith("-"):
-                    return await message.reply("Please enter a user id")
-            except Exception as e:
-                raise e
-        except:
+        id = str(message.text.split(None, 1)[1])
+        if id.startswith(['@',1,2,3,4,5,6,7,8,9]):
             return await message.reply("Please enter a valid id.")
         if id == me:
             return await message.reply("You can't ban yourself!")
@@ -34,4 +27,13 @@ async def ban(_, message):
                 await Sophia.ban_chat_member(message.chat.id, id)
                 await message.reply("Successfuly baned that nigga!")
             except Exception as e:
+                e = str(e)
+                if e.startswith("Telegram says: [400 PEER_ID_INVALID]"):
+                    try:
+                        m = await Sophia.send_message(id, ".")
+                        await Sophia.ban_chat_member(message.chat.id, id)
+                        m = m.delete()
+                        await message.reply("Successfuly baned that nigga!")
+                    except Exception as o:
+                        return await message.reply(f"Error: {o}")
                 await message.reply(f"Error: {e}")
