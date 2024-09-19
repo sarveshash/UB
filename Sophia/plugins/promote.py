@@ -32,6 +32,9 @@ try:
             can_promote_members=True,
             can_delete_messages=True,
             can_restrict_members=True,
+            can_delete_stories=True,
+            can_edit_stories=True,
+            can_post_stories=True,
             is_anonymous=False
         )
     
@@ -81,6 +84,9 @@ try:
             can_manage_video_chats=True,
             can_manage_topics=False,
             can_delete_messages=False,
+            can_post_stories=True,
+            can_delete_stories=True,
+            can_edit_stories=True,
             is_anonymous=False
         )
         try:
@@ -127,6 +133,7 @@ try:
             can_pin_messages=False,
             can_manage_chat=False,
             can_manage_video_chats=True,
+            can_post_stories=True,
             can_manage_topics=False,
             can_delete_messages=False,
             is_anonymous=False
@@ -174,6 +181,9 @@ try:
             can_manage_video_chats=False,
             can_manage_topics=False,
             can_delete_messages=False,
+            can_delete_stories=False,
+            can_edit_stories=False,
+            can_post_stories=False
             is_anonymous=False
         )
         try:
