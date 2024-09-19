@@ -34,6 +34,7 @@ try:
             if len(message.command) < 2:
                 return await message.reply("Reply to a user or enter the user ID to promote.")
             user_id = str(message.text.split(None, 1)[1])
+        user_id = str(user_id)
         if not user_id.startswith(('@', '1', '2', '3', '4', '5', '6', '7', '8', '9')):
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
@@ -83,6 +84,7 @@ try:
             if len(message.command) < 2:
                 return await message.reply("Reply to a user or enter the user ID to promote.")
             user_id = str(message.text.split(None, 1)[1])
+        user_id = str(user_id)
         if not user_id.startswith(('@', '1', '2', '3', '4', '5', '6', '7', '8', '9')):
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
@@ -130,6 +132,7 @@ try:
             if len(message.command) < 2:
                 return await message.reply("Reply to a user or enter the user ID to promote.")
             user_id = str(message.text.split(None, 1)[1])
+        user_id = str(user_id)
         if not user_id.startswith(('@', '1', '2', '3', '4', '5', '6', '7', '8', '9')):
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
