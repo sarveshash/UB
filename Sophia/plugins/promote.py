@@ -40,22 +40,21 @@ try:
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't promote yourself!")
-    
-        privileges = {
-            "can_change_info": True,
-            "can_invite_users": True,
-            "can_pin_messages": True,
-            "can_manage_chat": True,
-            "can_manage_video_chats": True,
-            "can_manage_voice_chats": True,
-            "can_manage_media": True,
-            "can_manage_story": True,
-            "can_delete_messages": True,
-            "is_anonymous": False
-        }
-    
         try:
-            await Sophia.promote_chat_member(message.chat.id, user_id, privileges)
+            await Sophia.promote_chat_member(
+                message.chat.id,
+                user_id,
+                can_change_info=True,
+                can_invite_users=True,
+                can_pin_messages=True,
+                can_manage_chat=True,
+                can_manage_video_chats=True,
+                can_manage_voice_chats=True,
+                can_manage_media=True,
+                can_manage_story=True,
+                can_delete_messages=True,
+                is_anonymous=False
+            )
             await message.reply("Successfuly promoted!")
         except Exception as e:
             e = str(e)
@@ -91,20 +90,20 @@ try:
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't promote yourself!")
-    
-        privileges = {
-            "can_change_info": False,
-            "can_invite_users": True,
-            "can_pin_messages": True,
-            "can_manage_chat": True,
-            "can_manage_video_chats": False,
-            "can_manage_voice_chats": True,
-            "can_manage_media": False,
-            "can_manage_story": False,
-            "is_anonymous": False
-        }
         try:
-            await Sophia.promote_chat_member(message.chat.id, user_id, privileges)
+            await Sophia.promote_chat_member(
+                message.chat.id,
+                user_id,
+                can_change_info=False,
+                can_invite_users=True,
+                can_pin_messages=True,
+                can_manage_chat=True,
+                can_manage_video_chats=True,
+                can_manage_voice_chats=False,
+                can_manage_media=False,
+                can_manage_story=False,
+                is_anonymous=False
+            )
             await message.reply("Successfuly promoted!")
         except Exception as e:
             e = str(e)
@@ -140,20 +139,20 @@ try:
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't promote yourself!")
-    
-        privileges = {
-            "can_change_info": False,
-            "can_invite_users": True,
-            "can_pin_messages": True,
-            "can_manage_chat": False,
-            "can_manage_video_chats": False,
-            "can_manage_voice_chats": False,
-            "can_manage_media": False,
-            "can_manage_story": False,
-            "is_anonymous": False
-        }
         try:
-            await Sophia.promote_chat_member(message.chat.id, user_id, privileges)
+            await Sophia.promote_chat_member(
+                message.chat.id,
+                user_id,
+                can_change_info=False,
+                can_invite_users=True,
+                can_pin_messages=False,
+                can_manage_chat=False,
+                can_manage_video_chats=False,
+                can_manage_voice_chats=True,
+                can_manage_media=False,
+                can_manage_story=False,
+                is_anonymous=False
+            )
             await message.reply("Successfuly promoted!")
         except Exception as e:
             e = str(e)
