@@ -51,6 +51,7 @@ try:
 
                 # Upload the file to Telegraph
                 response = telegraph.upload_file(pathhh)
+                await message.reply(f"By tgm: {response}")
 
                 # Check the response: telegraph.upload_file returns a list of dictionaries
                 if isinstance(response, list) and len(response) > 0 and 'src' in response[0]:
