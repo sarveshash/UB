@@ -22,6 +22,9 @@ try:
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't promote yourself!")
+        user_is_admin = await Sophia.get_chat_member(message.chat.id, user_id)
+        if user_is_admin:
+            return await message.reply("The user is already admin, demote them and try!")
     
         privileges = ChatPrivileges(
             can_change_info=True,
@@ -75,6 +78,9 @@ try:
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't promote yourself!")
+        user_is_admin = await Sophia.get_chat_member(message.chat.id, user_id)
+        if user_is_admin:
+            return await message.reply("The user is already admin, demote them and try!")
     
         privileges = ChatPrivileges(
             can_change_info=False,
@@ -111,7 +117,7 @@ try:
             raise e
 
     @Sophia.on_message(filters.command("lpromote", prefixes=HANDLER) & filters.user("me"))
-    async def limited_promote(_, message):
+    async def low_promote(_, message):
         me = await Sophia.get_me()
         me_id = me.id
     
@@ -126,6 +132,9 @@ try:
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't promote yourself!")
+        user_is_admin = await Sophia.get_chat_member(message.chat.id, user_id)
+        if user_is_admin:
+            return await message.reply("The user is already admin, demote them and try!")
     
         privileges = ChatPrivileges(
             can_change_info=False,
@@ -170,9 +179,13 @@ try:
             if len(message.command) < 2:
                 return await message.reply("Reply to a user or enter the user ID to demote.")
             user_id = str(message.text.split(None, 1)[1])
-    
+        if not user_id.startswith(('@', '1', '2', '3', '4', '5', '6', '7', '8', '9')):
+            return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't demote yourself!")
+        user_is_admin = await Sophia.get_chat_member(message.chat.id, user_id)
+        if user_is_admin == None:
+            return await message.reply("This user is not a admin not demote!")
         privileges = ChatPrivileges(
             can_change_info=False,
             can_invite_users=False,
