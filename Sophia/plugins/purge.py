@@ -13,7 +13,7 @@ try:
         for msg_id in range(start_msg_id, end_msg_id + 1):
             try:
                 await Sophia.delete_messages(message.chat.id, msg_id)
-                success +1
+                success += 1
             except Exception as e:
                 print(f"Error deleting message {msg_id}: {str(e)}")
         await message.reply(f"Successfuly Purged {success} messages!")
