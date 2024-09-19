@@ -50,6 +50,7 @@ try:
             "can_manage_media": True,
             "can_manage_story": True,
             "can_delete_messages": True,
+            "is_anonymous": False
         }
     
         try:
@@ -96,9 +97,10 @@ try:
             "can_pin_messages": True,
             "can_manage_chat": True,
             "can_manage_video_chats": False,
-            "can_manage_voice_chats": False,
+            "can_manage_voice_chats": True,
             "can_manage_media": False,
-            "can_manage_story": False
+            "can_manage_story": False,
+            "is_anonymous": False
         }
         try:
             await Sophia.promote_chat_member(message.chat.id, user_id, privileges)
@@ -141,12 +143,13 @@ try:
         privileges = {
             "can_change_info": False,
             "can_invite_users": True,
-            "can_pin_messages": False,
+            "can_pin_messages": True,
             "can_manage_chat": False,
             "can_manage_video_chats": False,
             "can_manage_voice_chats": False,
             "can_manage_media": False,
-            "can_manage_story": True
+            "can_manage_story": False,
+            "is_anonymous": False
         }
         try:
             await Sophia.promote_chat_member(message.chat.id, user_id, privileges)
