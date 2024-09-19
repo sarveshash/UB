@@ -1,7 +1,6 @@
 from pyrogram import filters
 from Sophia.__main__ import Sophia
 from Sophia import REPO_URL, repo_name, HANDLER
-from Sophia.Database.update import UPDATE
 from config import OWNER_ID
 import subprocess
 
@@ -9,11 +8,6 @@ OWN = OWNER_ID
 
 @Sophia.on_message(filters.command("update", prefixes=HANDLER) & filters.user(OWN))
 async def update_repo(_, message):
-    try:
-        hm = UPDATE()
-        hm.ADD(True, message.chat.id)
-    except:
-        None
     await message.reply_text("`Updating...`")
     try:
         command = f"cd && rm -rf {repo_name} && git clone {REPO_URL} && cd {repo_name} && ls && python3 -m Sophia"
