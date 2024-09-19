@@ -14,8 +14,17 @@ telegraph.create_account(short_name='my_bot')
 async def telegraph_upload(client, message):
     replied = message.reply_to_message
     if not replied:
-        await message.reply("Reply to a video or image.")
-        return
+        return await message.reply("Reply to a video or image.")
+    if message.reply_to_message.document:
+        file_name_ = f"{message.reply_to_message.document.file_name}"
+    elif message.reply_to_message.photo:
+        file_name_ = f"{message.reply_to_message.photo.file_name}"
+    elif message.reply_to_message.video:
+        file_name_ = f"{message.reply_to_message.video.file_name}"
+    elif message.reply_to_message.animation:
+        file_name_ = f"{message.reply_to_message.animation.file_name}"
+    else:
+        return await message.reply("Reply to a video or image.")
 
     # Check if the replied media is supported
     if not (
@@ -47,7 +56,7 @@ async def telegraph_upload(client, message):
 
         try:
             try:
-                pathhh = f"SophiaClient/downloads/{message.reply_to_message.document.file_name}"
+                pathhh = f"SophiaClient/downloads/{file_name_}"
                 with open(pathhh, 'rb') as f:
                     response = telegraph.upload_file(f)
             except Exception as e:
