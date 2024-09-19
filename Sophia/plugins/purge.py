@@ -2,6 +2,7 @@ try:
     from pyrogram import filters
     from Sophia.__main__ import Sophia
     from Sophia import HANDLER
+    import asyncio
 
     @Sophia.on_message(filters.command("purge", prefixes=HANDLER) & filters.user("me"))
     async def purge_messages(_, message):
@@ -14,9 +15,10 @@ try:
             try:
                 await Sophia.delete_messages(message.chat.id, msg_id)
                 success += 1
+                await asyncio.sleep(0.3)
             except Exception as e:
                 print(f"Error deleting message {msg_id}: {str(e)}")
-        await message.reply(f"Successfuly Purged {success} messages!")
+        await message.reply(f"Successfuly purged {success} messages!")
 except Exception as e:
     e = f"Error on purge.py: {e}"
     raise e
