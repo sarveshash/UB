@@ -7,7 +7,7 @@ try:
     async def purge_messages(_, message):
         if not message.reply_to_message:
             return await message.reply("Reply to the first message you want to delete.")
-        start_msg_id = message.reply_to_message.message.id
+        start_msg_id = message.reply_to_message.id
         end_msg_id = message.id
         success = 0
         for msg_id in range(start_msg_id, end_msg_id + 1):
