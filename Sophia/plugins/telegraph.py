@@ -5,6 +5,7 @@ from telegraph import Telegraph
 from config import OWNER_ID
 from Sophia.__main__ import Sophia
 from Sophia import HANDLER
+from sobprocess import getoutput as r
 
 # Initialize Telegraph only once
 telegraph = Telegraph()
@@ -14,16 +15,6 @@ telegraph.create_account(short_name='my_bot')
 async def telegraph_upload(client, message):
     replied = message.reply_to_message
     if not replied:
-        return await message.reply("Reply to a video or image.")
-    if message.reply_to_message.document:
-        file_name_ = f"{message.reply_to_message.document.file_name}"
-    elif message.reply_to_message.photo:
-        file_name_ = f"{message.reply_to_message.photo.file_name}"
-    elif message.reply_to_message.video:
-        file_name_ = f"{message.reply_to_message.video.file_name}"
-    elif message.reply_to_message.animation:
-        file_name_ = f"{message.reply_to_message.animation.file_name}"
-    else:
         return await message.reply("Reply to a video or image.")
 
     # Check if the replied media is supported
@@ -56,6 +47,7 @@ async def telegraph_upload(client, message):
 
         try:
             try:
+                file_name_ = await r("ls SophiaClient/downloads/")
                 pathhh = f"SophiaClient/downloads/{file_name_}"
                 with open(pathhh, 'rb') as f:
                     response = telegraph.upload_file(f)
