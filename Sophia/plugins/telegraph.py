@@ -5,7 +5,7 @@ from telegraph import Telegraph
 from config import OWNER_ID
 from Sophia.__main__ import Sophia
 from Sophia import HANDLER
-from sobprocess import getoutput as r
+from subprocess import getoutput as r
 
 # Initialize Telegraph only once
 telegraph = Telegraph()
