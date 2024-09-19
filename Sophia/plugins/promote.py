@@ -183,7 +183,7 @@ try:
             can_delete_messages=False,
             can_delete_stories=False,
             can_edit_stories=False,
-            can_post_stories=False
+            can_post_stories=False,
             is_anonymous=False
         )
         try:
