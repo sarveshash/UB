@@ -1,5 +1,4 @@
 import os
-import logging
 from pyrogram import filters
 from telegraph import Telegraph
 from config import OWNER_ID
@@ -46,26 +45,17 @@ async def telegraph_upload(client, message):
             return
 
         try:
-            try:
-                file_name_ = r("ls SophiaClient/downloads/")
-                pathhh = f"SophiaClient/downloads/{file_name_}"
-                response = telegraph.upload_file(pathhh)
-            except Exception as e:
-                return await message.reply(f"Error on uploading file: {e}")
+            file_name_ = r("ls SophiaClient/downloads/").strip()  # Ensure no extra spaces
+            pathhh = f"SophiaClient/downloads/{file_name_}"
 
-            # Check if response is a string (URL) or a dictionary
-            if isinstance(response, str):
-                # If it's a string, assume it's the URL
-                src = response
+            # Upload the file to Telegraph
+            response = telegraph.upload_file(pathhh)
+
+            # Check the response: telegraph.upload_file returns a list of dictionaries
+            if isinstance(response, list) and len(response) > 0 and 'src' in response[0]:
+                src = response[0]['src']
                 await message.reply(
-                    f"**Your link has been generated**: 👉 `https://telegra.ph/{src}`",
-                    disable_web_page_preview=True
-                )
-            elif isinstance(response, dict) and 'src' in response:
-                # If it's a dictionary, extract the URL from 'src'
-                src = response['src']
-                await message.reply(
-                    f"**Your link has been generated**: 👉 `https://telegra.ph/{src}`",
+                    f"**Your link has been generated**: 👉 `https://telegra.ph{src}`",
                     disable_web_page_preview=True
                 )
             else:
@@ -75,5 +65,6 @@ async def telegraph_upload(client, message):
             await message.reply(f"Error during upload: {str(e)}")
 
     finally:
+        # Cleanup the downloaded file
         if location1 and os.path.exists(location1):
             os.remove(location1)
