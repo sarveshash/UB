@@ -203,4 +203,4 @@ try:
             raise e
 except Exception as e:
     e = f"Error on promote.py: {e}"
-    raise e
+    print(e)
