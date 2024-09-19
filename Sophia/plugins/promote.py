@@ -31,6 +31,7 @@ try:
             can_manage_video_chats=True,
             can_promote_members=True,
             can_delete_messages=True,
+            can_restrict_members=True
             is_anonymous=False
         )
     
