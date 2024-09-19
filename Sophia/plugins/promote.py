@@ -1,5 +1,5 @@
 try:
-    from pyrogram import *
+    from pyrogram import Client, filters, ChatPrivileges
     from Sophia.__main__ import Sophia
     from Sophia import HANDLER
     import asyncio
