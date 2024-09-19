@@ -17,3 +17,6 @@ try:
             except Exception as e:
                 print(f"Error deleting message {msg_id}: {str(e)}")
         await message.reply(f"Successfuly Purged {success} messages!")
+except Exception as e:
+    e = f"Error on purge.py: {e}"
+    raise e
