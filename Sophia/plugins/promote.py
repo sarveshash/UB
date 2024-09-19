@@ -1,5 +1,6 @@
 try:
     from pyrogram.types import ChatPrivileges
+    from pyrogram import *
     from Sophia import Sophia
     from Sophia import HANDLER
     import asyncio
@@ -196,5 +197,5 @@ try:
             e = f"I can't demote {user_id}: {e}"
             raise e
 except Exception as e:
-    e = f"Error on promote.py: {e}"
+    e = f"[ERROR]\nError on promote.py: {e}"
     logging.error(e)
