@@ -27,7 +27,7 @@ HANDLER = ["~",".","!","/","$","#"]
 LOG_CHANNEL = -1002010994783
 MONGO_DB_URI = os.environ.get("MONGO_DB_URI") or VAR_MONGO_DB_URI
 REPO_URL = os.environ.get("YOUR_REPO_LINK") or VAR_REPO_URL
-MY_VERSION = 509
+MY_VERSION = 511
 
 # GETTING REPO NAME USED FOR UPDATE MODULE
 parsed_url = urlparse(REPO_URL)
