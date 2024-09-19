@@ -29,7 +29,6 @@ try:
             can_pin_messages=True,
             can_manage_chat=True,
             can_manage_video_chats=True,
-            can_manage_topics=True,
             can_promote_members=True,
             can_delete_messages=True,
             is_anonymous=False
@@ -50,8 +49,8 @@ try:
                     k = f"Already peer id invalid so tried send message to user now error: {o}"
                     raise k
                     return await message.reply(f"Error on promoting user: {o}")
-            elif e.startswith("Telegram says: [400 CHAT_ADMIN_REQUIRED]"):
-                return await message.reply("You need admin access to do this!")
+            elif e.startswith("Telegram says: [403 CHAT_ADMIN_REQUIRED]") or e.startswith("Telegram says: [403 RIGHT_FORBIDDEN]"):
+                return await message.reply("You need enough admin rights to do this!")
             await message.reply(f"Failed to promote: {e}")
             e = f"I can't promote {user_id}: {e}"
             raise e
@@ -98,7 +97,7 @@ try:
                     k = f"Already peer id invalid so tried send message to user now error: {o}"
                     raise k
                     return await message.reply(f"Error on promoting user: {o}")
-            elif e.startswith("Telegram says: [400 CHAT_ADMIN_REQUIRED]"):
+            elif e.startswith("Telegram says: [403 CHAT_ADMIN_REQUIRED]") or e.startswith("Telegram says: [403 RIGHT_FORBIDDEN]"):
                 return await message.reply("You need admin access to do this!")
             await message.reply(f"Failed to promote: {e}")
             e = f"I can't promote {user_id}: {e}"
@@ -146,7 +145,7 @@ try:
                     k = f"Already peer id invalid so tried send message to user now error: {o}"
                     raise k
                     return await message.reply(f"Error on promoting user: {o}")
-            elif e.startswith("Telegram says: [400 CHAT_ADMIN_REQUIRED]"):
+            elif e.startswith("Telegram says: [403 CHAT_ADMIN_REQUIRED]") or e.startswith("Telegram says: [403 RIGHT_FORBIDDEN]"):
                 return await message.reply("You need admin access to do this!")
             await message.reply(f"Failed to promote: {e}")
             e = f"I can't promote {user_id}: {e}"
@@ -191,7 +190,7 @@ try:
                     k = f"Already peer id invalid so tried send message to user now error: {o}"
                     raise k
                     return await message.reply(f"Error on demoting user: {o}")
-            elif e.startswith("Telegram says: [400 CHAT_ADMIN_REQUIRED]"):
+            elif e.startswith("Telegram says: [403 CHAT_ADMIN_REQUIRED]") or e.startswith("Telegram says: [403 RIGHT_FORBIDDEN]"):
                 return await message.reply("You need admin access to do this!")
             await message.reply(f"Failed to demote: {e}")
             e = f"I can't demote {user_id}: {e}"
