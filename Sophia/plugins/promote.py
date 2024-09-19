@@ -1,8 +1,9 @@
 try:
     from pyrogram.types import ChatPrivileges
-    from Sophia.__main__ import Sophia
+    from Sophia import Sophia
     from Sophia import HANDLER
     import asyncio
+    import logging 
 
     @Sophia.on_message(filters.command("fpromote", prefixes=HANDLER) & filters.user("me"))
     async def full_promote(_, message):
@@ -27,9 +28,8 @@ try:
             can_pin_messages=True,
             can_manage_chat=True,
             can_manage_video_chats=True,
-            can_manage_voice_chats=True,
-            can_manage_media=True,
-            can_manage_story=True,
+            can_manage_topics=True,
+            can_promote_members=True,
             can_delete_messages=True,
             is_anonymous=False
         )
@@ -78,9 +78,7 @@ try:
             can_pin_messages=True,
             can_manage_chat=True,
             can_manage_video_chats=True,
-            can_manage_voice_chats=True,
-            can_manage_media=False,
-            can_manage_story=False,
+            can_manage_topics=False,
             can_delete_messages=False,
             is_anonymous=False
         )
@@ -128,9 +126,7 @@ try:
             can_pin_messages=False,
             can_manage_chat=False,
             can_manage_video_chats=True,
-            can_manage_voice_chats=True,
-            can_manage_media=False,
-            can_manage_story=False,
+            can_manage_topics=False,
             can_delete_messages=False,
             is_anonymous=False
         )
@@ -175,9 +171,7 @@ try:
             can_pin_messages=False,
             can_manage_chat=False,
             can_manage_video_chats=False,
-            can_manage_voice_chats=False,
-            can_manage_media=False,
-            can_manage_story=False,
+            can_manage_topics=False,
             can_delete_messages=False,
             is_anonymous=False
         )
@@ -203,4 +197,4 @@ try:
             raise e
 except Exception as e:
     e = f"Error on promote.py: {e}"
-    print(e)
+    logging.error(e)
