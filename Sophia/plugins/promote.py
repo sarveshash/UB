@@ -16,7 +16,8 @@ try:
                 can_manage_voice_chats=False,
                 can_manage_media=False,
                 can_manage_story=False,
-                can_delete_messages=False
+                can_delete_messages=False,
+                is_anonymous=False,
             )
             return True
         except Exception as e:
