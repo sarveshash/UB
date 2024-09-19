@@ -1,28 +1,8 @@
 try:
-    from pyrogram import Client, filters
+    from pyrogram import *
     from Sophia.__main__ import Sophia
     from Sophia import HANDLER
     import asyncio
-
-    async def demote_user(chat_id, user_id):
-        try:
-            await Sophia.promote_chat_member(
-                chat_id, user_id,
-                can_change_info=False,
-                can_invite_users=False,
-                can_pin_messages=False,
-                can_manage_chat=False,
-                can_manage_video_chats=False,
-                can_manage_voice_chats=False,
-                can_manage_media=False,
-                can_manage_story=False,
-                can_delete_messages=False,
-                is_anonymous=False,
-            )
-            return True
-        except Exception as e:
-            print(f"Error demoting user {user_id}: {str(e)}")
-            return False
 
     @Sophia.on_message(filters.command("fpromote", prefixes=HANDLER) & filters.user("me"))
     async def full_promote(_, message):
@@ -40,21 +20,22 @@ try:
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't promote yourself!")
+    
+        privileges = ChatPrivileges(
+            can_change_info=True,
+            can_invite_users=True,
+            can_pin_messages=True,
+            can_manage_chat=True,
+            can_manage_video_chats=True,
+            can_manage_voice_chats=True,
+            can_manage_media=True,
+            can_manage_story=True,
+            can_delete_messages=True,
+            is_anonymous=False
+        )
+    
         try:
-            await Sophia.promote_chat_member(
-                message.chat.id,
-                user_id,
-                can_change_info=True,
-                can_invite_users=True,
-                can_pin_messages=True,
-                can_manage_chat=True,
-                can_manage_video_chats=True,
-                can_manage_voice_chats=True,
-                can_manage_media=True,
-                can_manage_story=True,
-                can_delete_messages=True,
-                is_anonymous=False
-            )
+            await Sophia.promote_chat_member(message.chat.id, user_id, privileges)
             await message.reply("Successfuly promoted!")
         except Exception as e:
             e = str(e)
@@ -90,20 +71,21 @@ try:
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't promote yourself!")
+    
+        privileges = ChatPrivileges(
+            can_change_info=False,
+            can_invite_users=True,
+            can_pin_messages=True,
+            can_manage_chat=True,
+            can_manage_video_chats=True,
+            can_manage_voice_chats=True,
+            can_manage_media=False,
+            can_manage_story=False,
+            can_delete_messages=False,
+            is_anonymous=False
+        )
         try:
-            await Sophia.promote_chat_member(
-                message.chat.id,
-                user_id,
-                can_change_info=False,
-                can_invite_users=True,
-                can_pin_messages=True,
-                can_manage_chat=True,
-                can_manage_video_chats=True,
-                can_manage_voice_chats=False,
-                can_manage_media=False,
-                can_manage_story=False,
-                is_anonymous=False
-            )
+            await Sophia.promote_chat_member(message.chat.id, user_id, privileges)
             await message.reply("Successfuly promoted!")
         except Exception as e:
             e = str(e)
@@ -139,20 +121,21 @@ try:
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't promote yourself!")
+    
+        privileges = ChatPrivileges(
+            can_change_info=False,
+            can_invite_users=True,
+            can_pin_messages=False,
+            can_manage_chat=False,
+            can_manage_video_chats=True,
+            can_manage_voice_chats=True,
+            can_manage_media=False,
+            can_manage_story=False,
+            can_delete_messages=False,
+            is_anonymous=False
+        )
         try:
-            await Sophia.promote_chat_member(
-                message.chat.id,
-                user_id,
-                can_change_info=False,
-                can_invite_users=True,
-                can_pin_messages=False,
-                can_manage_chat=False,
-                can_manage_video_chats=False,
-                can_manage_voice_chats=True,
-                can_manage_media=False,
-                can_manage_story=False,
-                is_anonymous=False
-            )
+            await Sophia.promote_chat_member(message.chat.id, user_id, privileges)
             await message.reply("Successfuly promoted!")
         except Exception as e:
             e = str(e)
@@ -186,12 +169,38 @@ try:
     
         if user_id == str(me_id):
             return await message.reply("You can't demote yourself!")
-    
-        success = await demote_user(message.chat.id, user_id)
-        if success:
-            await message.reply(f"User with ID {user_id} has been demoted.")
-        else:
-            await message.reply(f"Failed to demote user with ID {user_id}.")
+        privileges = ChatPrivileges(
+            can_change_info=False,
+            can_invite_users=False,
+            can_pin_messages=False,
+            can_manage_chat=False,
+            can_manage_video_chats=False,
+            can_manage_voice_chats=False,
+            can_manage_media=False,
+            can_manage_story=False,
+            can_delete_messages=False,
+            is_anonymous=False
+        )
+        try:
+            await Sophia.promote_chat_member(message.chat.id, user_id, privileges)
+            await message.reply("Successfuly demoted!")
+        except Exception as e:
+            e = str(e)
+            if e.startswith("Telegram says: [400 PEER_ID_INVALID]"):
+                try:
+                    m = await Sophia.send_message(id, ".")
+                    await Sophia.promote_chat_member(message.chat.id, user_id, privileges)
+                    m = m.delete()
+                    await message.reply("Successfuly demoted!")
+                except Exception as o:
+                    k = f"Already peer id invalid so tried send message to user now error: {o}"
+                    raise k
+                    return await message.reply(f"Error on demoting user: {o}")
+            elif e.startswith("Telegram says: [400 CHAT_ADMIN_REQUIRED]"):
+                return await message.reply("You need admin access to do this!")
+            await message.reply(f"Failed to demote: {e}")
+            e = f"I can't demote {user_id}: {e}"
+            raise e
 except Exception as e:
     e = f"Error on promote.py: {e}"
     raise e
