@@ -4,14 +4,6 @@ try:
     from Sophia import HANDLER
     import asyncio
 
-    async def promote_user(chat_id, user_id, privileges):
-        try:
-            await Sophia.promote_chat_member(chat_id, user_id, **privileges)
-            return True
-        except Exception as e:
-            print(f"Error promoting user {user_id}: {str(e)}")
-            return False
-
     async def demote_user(chat_id, user_id):
         try:
             await Sophia.promote_chat_member(
@@ -42,7 +34,8 @@ try:
             if len(message.command) < 2:
                 return await message.reply("Reply to a user or enter the user ID to promote.")
             user_id = str(message.text.split(None, 1)[1])
-    
+        if not user_id.startswith(('@', '1', '2', '3', '4', '5', '6', '7', '8', '9')):
+            return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't promote yourself!")
     
@@ -58,11 +51,26 @@ try:
             "can_delete_messages": True,
         }
     
-        success = await promote_user(message.chat.id, user_id, privileges)
-        if success:
-            await message.reply(f"User with ID {user_id} has been promoted to full admin.")
-        else:
-            await message.reply(f"Failed to promote user with ID {user_id}.")
+        try:
+            await Sophia.promote_chat_member(message.chat.id, user_id, privileges)
+            await message.reply("Successfuly promoted!")
+        except Exception as e:
+            e = str(e)
+            if e.startswith("Telegram says: [400 PEER_ID_INVALID]"):
+                try:
+                    m = await Sophia.send_message(id, ".")
+                    await Sophia.promote_chat_member(message.chat.id, user_id, privileges)
+                    m = m.delete()
+                    await message.reply("Successfuly promoted!")
+                except Exception as o:
+                    k = f"Already peer id invalid so tried send message to user now error: {o}"
+                    raise k
+                    return await message.reply(f"Error on promoting user: {o}")
+            elif e.startswith("Telegram says: [400 CHAT_ADMIN_REQUIRED]"):
+                return await message.reply("You need admin access to do this!")
+            await message.reply(f"Failed to promote: {e}")
+            e = f"I can't promote {user_id}: {e}"
+            raise e
 
     @Sophia.on_message(filters.command("promote", prefixes=HANDLER) & filters.user("me"))
     async def normal_promote(_, message):
@@ -75,7 +83,8 @@ try:
             if len(message.command) < 2:
                 return await message.reply("Reply to a user or enter the user ID to promote.")
             user_id = str(message.text.split(None, 1)[1])
-    
+        if not user_id.startswith(('@', '1', '2', '3', '4', '5', '6', '7', '8', '9')):
+            return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't promote yourself!")
     
@@ -89,12 +98,26 @@ try:
             "can_manage_media": False,
             "can_manage_story": False
         }
-    
-        success = await promote_user(message.chat.id, user_id, privileges)
-        if success:
-            await message.reply(f"User with ID {user_id} has been promoted to normal admin.")
-        else:
-            await message.reply(f"Failed to promote user with ID {user_id}.")
+        try:
+            await Sophia.promote_chat_member(message.chat.id, user_id, privileges)
+            await message.reply("Successfuly promoted!")
+        except Exception as e:
+            e = str(e)
+            if e.startswith("Telegram says: [400 PEER_ID_INVALID]"):
+                try:
+                    m = await Sophia.send_message(id, ".")
+                    await Sophia.promote_chat_member(message.chat.id, user_id, privileges)
+                    m = m.delete()
+                    await message.reply("Successfuly promoted!")
+                except Exception as o:
+                    k = f"Already peer id invalid so tried send message to user now error: {o}"
+                    raise k
+                    return await message.reply(f"Error on promoting user: {o}")
+            elif e.startswith("Telegram says: [400 CHAT_ADMIN_REQUIRED]"):
+                return await message.reply("You need admin access to do this!")
+            await message.reply(f"Failed to promote: {e}")
+            e = f"I can't promote {user_id}: {e}"
+            raise e
 
     @Sophia.on_message(filters.command("lpromote", prefixes=HANDLER) & filters.user("me"))
     async def limited_promote(_, message):
@@ -107,7 +130,8 @@ try:
             if len(message.command) < 2:
                 return await message.reply("Reply to a user or enter the user ID to promote.")
             user_id = str(message.text.split(None, 1)[1])
-    
+        if not user_id.startswith(('@', '1', '2', '3', '4', '5', '6', '7', '8', '9')):
+            return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't promote yourself!")
     
@@ -121,12 +145,26 @@ try:
             "can_manage_media": False,
             "can_manage_story": True
         }
-    
-        success = await promote_user(message.chat.id, user_id, privileges)
-        if success:
-            await message.reply(f"User with ID {user_id} has been promoted to limited admin.")
-        else:
-            await message.reply(f"Failed to promote user with ID {user_id}.")
+        try:
+            await Sophia.promote_chat_member(message.chat.id, user_id, privileges)
+            await message.reply("Successfuly promoted!")
+        except Exception as e:
+            e = str(e)
+            if e.startswith("Telegram says: [400 PEER_ID_INVALID]"):
+                try:
+                    m = await Sophia.send_message(id, ".")
+                    await Sophia.promote_chat_member(message.chat.id, user_id, privileges)
+                    m = m.delete()
+                    await message.reply("Successfuly promoted!")
+                except Exception as o:
+                    k = f"Already peer id invalid so tried send message to user now error: {o}"
+                    raise k
+                    return await message.reply(f"Error on promoting user: {o}")
+            elif e.startswith("Telegram says: [400 CHAT_ADMIN_REQUIRED]"):
+                return await message.reply("You need admin access to do this!")
+            await message.reply(f"Failed to promote: {e}")
+            e = f"I can't promote {user_id}: {e}"
+            raise e
 
     @Sophia.on_message(filters.command("demote", prefixes=HANDLER) & filters.user("me"))
     async def demote(_, message):
