@@ -42,4 +42,4 @@ async def run_java(_, message):
             )
             await message_text.delete()
     else:
-        await message_text.edit(f"Output:\n```Output\n{output}```")
+        await message_text.edit(f"```Output\n{output}```")
