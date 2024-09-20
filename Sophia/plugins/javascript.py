@@ -6,8 +6,6 @@ import asyncio
 import os
 import io
 
-run("apt update && apt install -y nodejs npm && nvm install node && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash")
-
 @Sophia.on_message(filters.command(["js", "jse"], prefixes=HANDLER) & filters.user('me'))
 async def run_js(_, message):
     if len(message.command) < 2:
