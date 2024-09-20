@@ -1,4 +1,4 @@
-from Sophia.__main__ import Sophia
+from Sophia import *
 from pyrogram import filters
 import asyncio
 import io
