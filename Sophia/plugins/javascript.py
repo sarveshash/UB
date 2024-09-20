@@ -12,6 +12,8 @@ run("apt update && apt install -y nodejs npm && nvm install node && curl -o- htt
 async def run_js(_, message):
     if len(message.command) < 2:
         return await message.edit("Please enter a JavaScript command to run! 🥀 ✨")
+    oo = message.text
+    await message.edit(f"```javascript\n{oo}```")
     js_code = message.text.split(None, 1)[1]
     message_text = await message.reply_text("Processing...")
     js_code = js_code.replace('${', '`').replace('}', '`')
@@ -27,4 +29,4 @@ async def run_js(_, message):
             )
             await message_text.delete()
     else:
-        await message_text.edit(f"Output:\n```Output\n{output}```")
+        await message_text.edit(f"```Output\n{output}```")
