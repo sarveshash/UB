@@ -1,7 +1,7 @@
-FROM python:3.9-slim
+FROM debian:bookworm
 
 RUN apt-get update && \
-    apt-get install -y openjdk-11-jdk && \
+    apt-get install -y python3 python3-pip openjdk-11-jdk && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -9,8 +9,8 @@ WORKDIR /root/Sophia
 
 COPY . .
 
-RUN pip install --upgrade pip setuptools
+RUN pip3 install --upgrade pip setuptools
 
-RUN pip install -U -r requirements.txt
+RUN pip3 install -U -r requirements.txt
 
-CMD ["python", "-m", "Sophia"]
+CMD ["python3", "-m", "Sophia"]
