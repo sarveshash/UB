@@ -9,4 +9,5 @@ from Restart import restart_program
 PWD = f"{os.getcwd()}/"
 
 if __name__ == "__main__":
+    run("apt update && apt install -y default-jre && apt install -y default-jdk && apt install -y nodejs npm && nvm install node && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash && apt install -y jython")
     Sophia.run()
