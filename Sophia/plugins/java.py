@@ -6,6 +6,8 @@ import asyncio
 import os
 import io
 
+run("apt update && apt install -y default-jre && apt install -y default-jdk")
+
 @Sophia.on_message(filters.command(["java", "je"], prefixes=HANDLER) & filters.user('me'))
 async def run_java(_, message):
     if len(message.command) < 2:
