@@ -15,25 +15,16 @@ async def run_java(_, message):
     
     java_code = message.text.split(None, 1)[1]
     message_text = await message.reply_text("Processing...")
-    
-    # Write the Java code to a file
     with open("MyProgram.java", "w") as java_file:
         java_file.write(java_code)
-    
-    # Compile the Java code
     compile_output = run("javac MyProgram.java")
-    
     if compile_output:
         await message_text.edit(f"Compilation Error:\n{compile_output}")
         return
-    # Run the compiled Java program
     output = run("java MyProgram")
-    
-    # Clean up: remove the Java files
     os.remove("MyProgram.java")
     os.remove("MyProgram.class")
-    oo = message.text
-    await message.edit(f"```java\n{oo}```")
+    await message.edit(f"```java\n{java_code}```")
     if len(output) > 4096:
         with io.BytesIO(str.encode(output)) as out_file:
             out_file.name = "java_output.txt"
