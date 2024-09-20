@@ -17,13 +17,21 @@ async def run_java(_, message):
         java_file.write(java_code)
     compile_output = run("javac MyProgram.java")
     if compile_output:
-        await message_text.edit(f"Compilation Error:\n{compile_output}")
-        return
+        if len(compile_output) > 3900:
+            with io.BytesIO(str.encode(output)) as out_file:
+                out_file.name = "error_output.txt"
+                await message.reply_document(
+                    document=out_file, disable_notification=True
+                )
+                await message_text.delete()
+                return
+        else:
+            return await message_text.edit(f"Compilation Error:\n{compile_output}")
     output = run("java MyProgram")
     os.remove("MyProgram.java")
     os.remove("MyProgram.class")
     await message.edit(f"```java\n{java_code}```")
-    if len(output) > 3000:
+    if len(output) > 3900:
         with io.BytesIO(str.encode(output)) as out_file:
             out_file.name = "java_output.txt"
             await message.reply_document(
