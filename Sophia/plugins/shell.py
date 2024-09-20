@@ -37,7 +37,7 @@ async def start_shell(_, message):
         await message.reply_text(f"Output:\n`{output}`")
 
 
-@Sophia.on_message(filters.command("esh", prefixes=HANDLER)filters.user("me"))
+@Sophia.on_message(filters.command("esh", prefixes=HANDLER) & filters.user("me"))
 async def exit_shell(_, message):
     user_id = message.from_user.id
     shell = user_shells.pop(user_id)
