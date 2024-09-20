@@ -1,4 +1,4 @@
-FROM python
+FROM python:3.9-slim
 
 RUN apt-get update && \
     apt-get install -y openjdk-11-jdk && \
@@ -9,8 +9,8 @@ WORKDIR /root/Sophia
 
 COPY . .
 
-RUN pip3 install --upgrade pip setuptools
+RUN pip install --upgrade pip setuptools
 
-RUN pip3 install -U -r requirements.txt
+RUN pip install -U -r requirements.txt
 
-CMD ["python3", "-m", "Sophia"]
+CMD ["python", "-m", "Sophia"]
