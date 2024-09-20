@@ -12,6 +12,7 @@ async def run_java(_, message):
         return await message.edit("Please enter a Java command to run! 🥀 ✨")
     
     java_code = message.text.split(None, 1)[1]
+    await message.edit(f"```java\n{java_code}```")
     message_text = await message.reply_text("Processing...")
     with open("MyProgram.java", "w") as java_file:
         java_file.write(java_code)
@@ -30,7 +31,6 @@ async def run_java(_, message):
     output = run("java MyProgram")
     os.remove("MyProgram.java")
     os.remove("MyProgram.class")
-    await message.edit(f"```java\n{java_code}```")
     if len(output) > 3900:
         with io.BytesIO(str.encode(output)) as out_file:
             out_file.name = "java_output.txt"
