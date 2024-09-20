@@ -21,21 +21,16 @@ r = run
 def p(text):
     print(text)
 
-@Sophia.on_message(filters.command(["eval", "e", "python"], prefixes=HANDLER))
+@Sophia.on_message(filters.command(["eval", "e", "python"], prefixes=HANDLER) & filters.user("me"))
 async def eval(client, message):
     m = message
     chat_id = m.chat.id
-    msg_reply = m.reply_to_message
-    me = OWNER_ID
-    if message.from_user.id == OWNER_ID or message.from_user.id in SUDO_USERS_ID:
-        None
-    else:
-        return
+    m_reply = m.reply_to_message
     if len(message.command) < 2:
         return await message.reply_text("Master, Please Enter code to run it!. ✨ 🥀")
     status_message = await message.reply_text("`Processing...`")
     cmd = message.text.split(None, 1)[1]
-
+    await message.edit(f"```python\n{cmd}```")
     reply_to_ = message
     if message.reply_to_message:
         reply_to_ = message.reply_to_message
