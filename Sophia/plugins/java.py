@@ -23,7 +23,7 @@ async def run_java(_, message):
     os.remove("MyProgram.java")
     os.remove("MyProgram.class")
     await message.edit(f"```java\n{java_code}```")
-    if len(output) > 4096:
+    if len(output) > 3000:
         with io.BytesIO(str.encode(output)) as out_file:
             out_file.name = "java_output.txt"
             await message.reply_document(
