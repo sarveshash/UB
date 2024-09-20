@@ -1,8 +1,7 @@
 FROM debian:bookworm
 
-# Install Python and OpenJDK
 RUN apt-get update && \
-    apt-get install -y python3 python3-pip openjdk-17-jdk && \
+    apt-get install -y python3 python3-pip openjdk-17-jdk python3-venv && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -10,8 +9,10 @@ WORKDIR /root/Sophia
 
 COPY . .
 
-RUN pip3 install --upgrade pip setuptools
+RUN python3 -m venv venv
 
-RUN pip3 install -U -r requirements.txt
+RUN . venv/bin/activate && \
+    pip install --upgrade pip setuptools && \
+    pip install -U -r requirements.txt
 
-CMD ["python3", "-m", "Sophia"]
+CMD ["venv/bin/python", "-m", "Sophia"]
