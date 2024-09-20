@@ -28,10 +28,17 @@ async def translate_java(_, message):
         os.remove(class_file_path)
     except FileNotFoundError:
         pass
+    try:
+        java_code = java_code.split("""
+        /*
+        * Decompiled with CFR 0.152.
+        */""")[1]
+    except Exception as e:
+        print("Cannot split decompiled message:", e)
     if len(java_code) > 4096:
         with io.BytesIO(str.encode(java_code)) as out_file:
             out_file.name = "java_output.txt"
             await message.reply_document(document=out_file, disable_notification=True)
             await message_text.delete()
     else:
-        await message_text.edit(f"```java\n{java_code}")
+        await message_text.edit(f"```java\n{java_code}```")
