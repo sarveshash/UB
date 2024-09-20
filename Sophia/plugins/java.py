@@ -18,7 +18,7 @@ async def run_java(_, message):
     compile_output = run("javac MyProgram.java")
     if compile_output:
         if len(compile_output) > 3900:
-            with io.BytesIO(str.encode(output)) as out_file:
+            with io.BytesIO(str.encode(compile_output)) as out_file:
                 out_file.name = "error_output.txt"
                 await message.reply_document(
                     document=out_file, disable_notification=True
