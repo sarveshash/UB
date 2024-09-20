@@ -15,7 +15,7 @@ async def translate_java(_, message):
         download_output = run("wget https://www.benf.org/other/cfr/cfr-0.152.jar -O cfr.jar")
         if "error" in download_output.lower():
             return await message_text.edit(f"Error downloading cfr.jar: {download_output}")
-    reverse_output = run(f"java -jar cfr.jar --renameillegalidents true --renamedupmembers true {class_file_path} && java -jar cfr.jar {class_file_path}")
+    reverse_output = run(f"java -jar cfr.jar {class_file_path}")
     if "error" in reverse_output.lower():
         return await message_text.edit(f"Error during bytecode reversal: {reverse_output}")
     java_file_path = "MyProgram.java"
@@ -34,4 +34,4 @@ async def translate_java(_, message):
             await message.reply_document(document=out_file, disable_notification=True)
             await message_text.delete()
     else:
-        await message_text.edit(f"```java\n// This code may not work properly\n{java_code}")
+        await message_text.edit(f"```java\n{java_code}")
