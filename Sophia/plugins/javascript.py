@@ -13,7 +13,6 @@ async def run_js(_, message):
     js_code = message.text.split(None, 1)[1]
     await message.edit(f"```javascript\n{js_code}```")
     message_text = await message.reply_text("Processing...")
-    js_code = js_code.replace('${', '`').replace('}', '`')
     with open("MyProgram.js", "w") as js_file:
         js_file.write(js_code)
     output = run("node MyProgram.js")
