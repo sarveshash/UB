@@ -8,9 +8,6 @@ from pyrogram import *
 def fetch_crypto_details(crypto):
     url = f"https://www.coingecko.com/en/coins/{crypto}"
     response = requests.get(url)
-    
-    if response.status_code != 200:
-        return "N/A", "N/A", "N/A", "N/A", "N/A"
 
     soup = BeautifulSoup(response.content, 'html.parser')
     
