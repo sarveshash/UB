@@ -30,7 +30,6 @@ async def eval(client, message):
         return await message.reply_text("Master, Please Enter code to run it!. ✨ 🥀")
     status_message = await message.reply_text("`Processing...`")
     cmd = message.text.split(None, 1)[1]
-    await message.edit(f"```python\n{cmd}```")
     reply_to_ = message
     if message.reply_to_message:
         reply_to_ = message.reply_to_message
