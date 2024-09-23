@@ -9,9 +9,9 @@ def fetch_crypto_details(crypto):
     url = f"https://www.coingecko.com/en/coins/{crypto}"
     response = requests.get(url)
     soup = BeautifulSoup(response.content, 'html.parser')
+    
     price_tag = soup.find("span", {"class": "no-wrap"})
-    if price_tag:
-        current_price_usd = price_tag.text.strip()
+    current_price_usd = price_tag.text.strip() if price_tag else "N/A"
     high_price_tag = soup.find("span", {"data-target": "price.high_24h"})
     low_price_tag = soup.find("span", {"data-target": "price.low_24h"})
     high_price_usd = high_price_tag.text.strip() if high_price_tag else "N/A"
