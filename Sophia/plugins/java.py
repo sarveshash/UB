@@ -27,7 +27,7 @@ async def run_java(_, message):
                 await message_text.delete()
                 return
         else:
-            return await message_text.edit(f"Compilation Error:\n{compile_output}")
+            return await message_text.edit(f"```Error\n{compile_output}```")
     output = run("java MyProgram")
     os.remove("MyProgram.java")
     os.remove("MyProgram.class")
