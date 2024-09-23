@@ -3,7 +3,7 @@ try:
     from Sophia.__main__ import Sophia
     from Sophia import HANDLER
     import asyncio
-    from pyrogram.enums import *
+    from pyrogram.enums import ChatType
 
     @Sophia.on_message(filters.command("purge", prefixes=HANDLER) & filters.user("me"))
     async def purge_messages(_, message):
