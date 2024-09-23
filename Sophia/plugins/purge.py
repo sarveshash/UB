@@ -3,9 +3,12 @@ try:
     from Sophia.__main__ import Sophia
     from Sophia import HANDLER
     import asyncio
+    from pyrogram.enums import *
 
     @Sophia.on_message(filters.command("purge", prefixes=HANDLER) & filters.user("me"))
     async def purge_messages(_, message):
+        if message.chat.type.ChatType.PRIVATE:
+            return await message.reply("This command is only works on group!")
         if not message.reply_to_message:
             return await message.reply("Reply to the first message you want to delete.")
         start_msg_id = message.reply_to_message.id
