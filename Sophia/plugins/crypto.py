@@ -52,6 +52,10 @@ def crypto_graph(_, message):
         return message.edit("Please enter a crypto name!")
     crypto = message.text.split(None, 1)[1]
     current_price, high_price, low_price, percent_change, launch_date = fetch_crypto_details(crypto)
+    
+    if current_price == "N/A":
+        return message.edit("Could not fetch current price. Please check the cryptocurrency name.")
+    
     timestamps = [datetime.now() for _ in range(10)]
     prices = [float(current_price.strip('$').replace(',', '')) for _ in range(10)]
     image_path = plot_crypto_price(timestamps, prices, crypto)
