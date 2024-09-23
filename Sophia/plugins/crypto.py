@@ -8,19 +8,26 @@ from pyrogram import *
 def fetch_crypto_details(crypto):
     url = f"https://www.coingecko.com/en/coins/{crypto}"
     response = requests.get(url)
+    
+    if response.status_code != 200:
+        return "N/A", "N/A", "N/A", "N/A", "N/A"
+
     soup = BeautifulSoup(response.content, 'html.parser')
     
     price_tag = soup.find("span", {"class": "no-wrap"})
     current_price_usd = price_tag.text.strip() if price_tag else "N/A"
+    
     high_price_tag = soup.find("span", {"data-target": "price.high_24h"})
     low_price_tag = soup.find("span", {"data-target": "price.low_24h"})
     high_price_usd = high_price_tag.text.strip() if high_price_tag else "N/A"
     low_price_usd = low_price_tag.text.strip() if low_price_tag else "N/A"
+
     percent_change_tag = soup.find("span", {"class": "percent-change"})
     percent_change = percent_change_tag.text.strip() if percent_change_tag else "N/A"
+
     launch_date_tag = soup.find("td", string="Launch Date")
     launch_date = launch_date_tag.find_next_sibling("td").text.strip() if launch_date_tag else "N/A"
-    
+
     return current_price_usd, high_price_usd, low_price_usd, percent_change, launch_date
 
 def plot_crypto_price(timestamps, prices, crypto):
