@@ -8,9 +8,7 @@ from Restart import restart_program
 
 PWD = f"{os.getcwd()}/"
 
-async def start():
-    await Sophia.send_message(-1001859707851, "Sophia system started!")
 
 if __name__ == "__main__":
     # run("apt update && apt install -y default-jre && apt install -y default-jdk && apt install -y nodejs npm && nvm install node && curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash")
-    Sophia.run(start)
+    Sophia.run()
