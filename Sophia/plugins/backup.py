@@ -18,15 +18,12 @@ async def backup_enabled(_, client, update):
                     return False
     if not await GET_BACKUP():
         return False
+    if not update.chat.type == enums.ChatType.PRIVATE:
+        if not await GET_BACKUP(group=True):
+            return False
     else:
         if update.chat.id in await GET_STOP_BACKUP_CHATS():
             return False
-        j = str(update.chat.id)
-        if j.startswith('-'):
-            if await GET_BACKUP(group=True):
-                return True
-            else:
-                return False
         return True
 
 @Sophia.on_message(filters.command(["chatbackup", "cbackup", "backup"], prefixes=HANDLER) & filters.user(OWNER_ID))
