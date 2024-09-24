@@ -3,21 +3,32 @@ import asyncio
 
 db = DATABASE["BACKUP_MESSAGE_TM"]
 
-async def ENABLE_BACKUP():
+async def ENABLE_BACKUP(group=False):
     doc = {"_id": 1, "stats": True}
+    gdoc = {"_id": 1, "gstats": True}
     try:
+        if group:
+            return await db.insert_one(gdoc)
         await db.insert_one(doc)
     except Exception:
+        if group:
+           return await db.update_one({"_id": 1}, {"$set": {"gstats": True}})
         await db.update_one({"_id": 1}, {"$set": {"stats": True}})
         
-async def DISABLE_BACKUP():
+async def DISABLE_BACKUP(group=False):
+    if group:
+        await db.update_one({"_id": 1}, {"$set": {"gstats": False}})
+        return
     await db.update_one({"_id": 1}, {"$set": {"stats": False}})
 
-async def GET_BACKUP():
+async def GET_BACKUP(group=False):
     Find = await db.find_one({"_id": 1})
     if not Find:
         return False
     else:
+        if group:
+            stats = Find["gstats"]
+            return stats
         stats = Find["stats"]
         return stats
 
