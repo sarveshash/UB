@@ -18,7 +18,7 @@ async def backup_enabled(_, client, update):
                     return False
     if not await GET_BACKUP():
         return False
-    if not update.chat.type == enums.ChatType.PRIVATE:
+    if str(update.chat.id).startswith('-'):
         if not await GET_BACKUP(group=True):
             return False
     else:
