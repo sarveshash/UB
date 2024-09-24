@@ -39,9 +39,7 @@ async def backup_chats(_, message):
     if not message.chat.id == OWNER_ID and message.chat.id in await GET_BACKUP_CHATS():
         chat_id = await GET_BACKUP_CHANNEL_ID(message.chat.id)
         try:
-            if not message.chat.id == OWNER_ID and not message.chat.type == enums.ChatType.BOT:
-                await Sophia.forward_messages(chat_id, message.chat.id, message.id)
-                pass
+            await Sophia.forward_messages(chat_id, message.chat.id, message.id)
         except Exception as e:
             if str(e) == """Telegram says: [400 CHANNEL_INVALID] - The channel parameter is invalid (caused by "channels.GetChannels")""":
                 chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
@@ -63,10 +61,33 @@ async def backup_chats(_, message):
         else:
             pass
 
+@Sophia.on_message(filters.group & filters.create(backup_enabled) & ~filters.bot & ~filters.text)
+async def backup_group_chats(_, message):
+    CHATS = await GET_BACKUP_CHATS()
+    if message.chat.id in CHATS:
+        chat_id = await GET_BACKUP_CHANNEL_ID(message.chat.id)
+        try:
+            await Sophia.forward_messages(chat_id, message.chat.id, message.id)
+        except Exception as e:
+            if str(e) == """Telegram says: [400 CHANNEL_INVALID] - The channel parameter is invalid (caused by "channels.GetChannels")""":
+                chat = await Sophia.create_channel(f"{message.chat.title} GROUP BACKUP", "~ @Hyper_Speed0")
+                await ADD_BACKUP_CHAT(message.chat.id)
+                await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
+                await Sophia.forward_messages(chat.id, message.chat.id, message.id)
+                return await Sophia.archive_chats(chat.id)
+            else:
+                print("Somthing went wrong in backup msg", e)
+    else:
+        chat = await Sophia.create_channel(f"{message.chat.title} GROUP BACKUP", "~ @Hyper_Speed0")
+        await ADD_BACKUP_CHAT(message.chat.id)
+        await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
+        await Sophia.forward_messages(chat.id, message.chat.id, message.id)
+        await Sophia.archive_chats(chat.id)
+                
+
+
 @Sophia.on_message(filters.command(["resetbackup", "rbackup", "delbackup"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def delete_backup(_, message):
-    if not message.chat.type == enums.ChatType.PRIVATE:
-        return await message.reply("This command only works on Private chats")
     USERS = await GET_BACKUP_CHATS()
     if message.chat.id in USERS:
         CH = await GET_BACKUP_CHANNEL_ID(message.chat.id)
@@ -83,8 +104,6 @@ async def delete_backup(_, message):
         
 @Sophia.on_message(filters.command(["stopbackup", "sbackup"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def stop_backup(_, message):
-    if not message.chat.type == enums.ChatType.PRIVATE:
-        return await message.reply("This command Only works on Private chat")
     elif message.chat.id in await GET_STOP_BACKUP_CHATS():
         return await message.reply("This chat already stoped in backup")
     await ADD_STOP_BACKUP_CHAT(message.chat.id)
@@ -97,8 +116,6 @@ async def stop_backup(_, message):
 
 @Sophia.on_message(filters.command(["unstopbackup", "usbackup"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def unstop_backup(_, message):
-    if not message.chat.type == enums.ChatType.PRIVATE:
-        return await message.reply("This command Only works on Private chat")
     elif message.chat.id not in await GET_STOP_BACKUP_CHATS():
         return await message.reply("This chat is not stoped in backup")
     await REMOVE_STOP_BACKUP_CHAT(message.chat.id)
