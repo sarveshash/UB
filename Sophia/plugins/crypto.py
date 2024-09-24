@@ -73,12 +73,12 @@ def plot_crypto_price(timestamps, prices, crypto):
     return image_path
 
 def format_caption(crypto, current_price, high_price, low_price, percent_change, launch_date):
-    caption = (f"{crypto.capitalize()} Performance\n\n"
-               f"Current Price (USD): ${current_price}\n"
-               f"High Price (24h): ${high_price}\n"
-               f"Low Price (24h): ${low_price}\n"
-               f"Launch Date: {launch_date}\n"
-               f"Percentage Change (24h): {percent_change}%\n")
+    caption = (f"**{crypto.capitalize()} Performance**\n\n"
+               f"**Current Price (USD):** $`{current_price}`\n"
+               f"**High Price (24h):** $`{high_price}`\n"
+               f"**Low Price (24h):** $`{low_price}`\n"
+               f"**Launch Date:** `{launch_date}`\n"
+               f"**Percentage Change (24h):** `{percent_change}%`\n")
     
     return caption
 
