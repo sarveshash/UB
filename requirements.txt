@@ -8,6 +8,8 @@ wget
 wikipedia
 pymongo
 google
+fuzzywuzzy
+aiohttp
 lyricsgenius
 pymongo[srv]
 yt_dlp
