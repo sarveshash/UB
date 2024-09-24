@@ -18,9 +18,14 @@ async def backup_enabled(_, client, update):
                     return False
     if not await GET_BACKUP():
         return False
-    if str(update.chat.id).startswith('-'):
-        if not await GET_BACKUP(group=True):
+    else:
+        if update.chat.id in await GET_STOP_BACKUP_CHATS():
             return False
+        return True
+
+async def group_backup(_, client, update):
+    if not await GET_BACKUP(group=True):
+        return False
     else:
         if update.chat.id in await GET_STOP_BACKUP_CHATS():
             return False
@@ -75,7 +80,7 @@ async def backup_chats(_, message):
         else:
             pass
 
-@Sophia.on_message(filters.group & filters.create(backup_enabled) & ~filters.bot & ~filters.text)
+@Sophia.on_message(filters.group & filters.create(group_backup) & ~filters.bot & ~filters.text)
 async def backup_group_chats(_, message):
     CHATS = await GET_BACKUP_CHATS()
     if message.chat.id in CHATS:
