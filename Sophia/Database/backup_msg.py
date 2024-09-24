@@ -27,10 +27,16 @@ async def GET_BACKUP(group=False):
         return False
     else:
         if group:
-            stats = Find["gstats"]
+            try:
+                stats = Find["gstats"]
+                return stats
+            except:
+                return False
+        try:
+            stats = Find["stats"]
             return stats
-        stats = Find["stats"]
-        return stats
+        except:
+            return False
 
 async def ADD_BACKUP_CHAT(chat_id: int):
     await db.update_one({"_id": 1}, {"$addToSet": {"CHATS": chat_id}}, upsert=True)
