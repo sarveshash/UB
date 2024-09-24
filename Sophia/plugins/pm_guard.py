@@ -31,15 +31,8 @@ async def set_pm_guard(_, message):
             RESULT = await GET_DEFAULT_MESSAGE_LIMIT()
             RESULT2 = str(RESULT)
             if RESULT2.isdigit():
-                BACKUP_MSG = await GET_BACKUP()
-                if BACKUP_MSG == True:
-                    await DISABLE_BACKUP()
-                    await SET_PM_GUARD(RESULT)
-                    await message.reply('**➲ I have enabled Pmguard with Default warning limit and Backup chats disabled both never work same time**')
-                    return
                 await SET_PM_GUARD(RESULT)
-                await message.reply('**➲ I have enabled PmGuard successfully with Default Warning limit 🥀 ✨**')
-                return
+                return await message.reply('**➲ I have enabled PmGuard successfully with Default Warning limit 🥀 ✨**')
             else:
                 return await message.reply_text("➲ Master, Please enter the maximum message warning limit.")
         count = " ".join(message.command[1:])
@@ -52,12 +45,6 @@ async def set_pm_guard(_, message):
             return
         if intCount > 20:
             await message.reply("➲ Maximum Applable warning count is 20.")
-            return
-        BACKUP_MSG = await GET_BACKUP()
-        if BACKUP_MSG == True:
-            await DISABLE_BACKUP()
-            await SET_PM_GUARD(intCount)
-            await message.reply('**➲ I have enabled Pmguard successfully and Backup Chats disabled both never work same time**')
             return
         await SET_PM_GUARD(intCount)
         await message.reply('**➲ I have enabled PmGuard successfully 🥀 ✨**')
@@ -73,16 +60,8 @@ async def set_pm_guard(_, message):
             )
 async def warn_users(_, message):
     global warning_count
-    is_pm_block_enabled = await GET_PM_GUARD()
-    if is_pm_block_enabled:
-        valueotazuki = "value57"
-    else:
-        restart_program()
     user_id = message.chat.id
     maximum_message_count = await GET_WARNING_COUNT()
-    if BOTS_ALLOWED_TO_WORK_IN_BUSY_COMMANDS == False:
-        if message.chat.type == enums.ChatType.BOT:
-            return
     if user_id not in warning_count:
         warning_count[user_id] = 0
     warning_count[user_id] += 1
@@ -95,11 +74,24 @@ async def warn_users(_, message):
         except Exception as e:
             print(e)
             await Sophia.send_message(OWNER_ID, e)
+    if await GET_BACKUP():
+        backup_chat = await GET_BACKUP_CHANNEL_ID(message.chat.id)
+        try:
+            await Sophia.forward_messages(backup_chat, message.chat.id, message.id)
+        except Exception as e:
+            if str(e) == """Telegram says: [400 CHANNEL_INVALID] - The channel parameter is invalid (caused by "channels.GetChannels")""":
+                chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
+                await ADD_BACKUP_CHAT(message.chat.id)
+                await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
+                await Sophia.forward_messages(chat.id, message.chat.id, message.id)
+                return await Sophia.archive_chats(chat.id)
+            else:
+                print(f"Error on pm_guard.py when backuping message {message.chat.id}: {str(e)}")
             
                     
 
 @Sophia.on_message(filters.command(['a', 'approve', 'allow'], prefixes=HANDLER) & filters.user(OWNER_ID))
-async def Approve_user(_, message):
+async def approve_user(_, message):
     is_pm_block_enabled = await GET_PM_GUARD()
     approved_users = await GET_APPROVED_USERS()
     if is_pm_block_enabled:
@@ -109,7 +101,7 @@ async def Approve_user(_, message):
         user_id = message.chat.id
         try:
             if user_id in approved_users:
-                await message.reply('**➲ This User is Already Approved ✨ 🥀**')
+                await message.reply('**➲ This User is already approved ✨ 🥀**')
                 return
             await ADD_APPROVED_USER(user_id)
             await message.reply("➲ Successfully Approved 🥀⚡")
@@ -146,7 +138,7 @@ async def Unapprove_user(_, message):
 
         
 @Sophia.on_message(filters.command(['cw', 'clearwarns'], prefixes=HANDLER) & filters.user(OWNER_ID))
-async def Clear_User_Warns(_, message):
+async def clear_warn(_, message):
     global warning_count
     is_pm_block_enabled = await GET_PM_GUARD()
     if is_pm_block_enabled:
@@ -166,22 +158,22 @@ async def Clear_User_Warns(_, message):
         await message.reply('**➲ PmGuard Not Enabled ❌.**')
                 
 @Sophia.on_message(filters.command(['setmsglimit', 'setpmlimit'], prefixes=HANDLER) & filters.user(OWNER_ID))
-async def Set_default_message_limit(_, message):
+async def set_limit(_, message):
     if len(message.command) < 2:
-        return await message.reply_text("➲ Master, Please enter the maximum message warning limit.")
+        return await message.reply_text("➲ Please enter the maximum message warning limit.")
     count = " ".join(message.command[1:])
     intCount = int(count)
     if intCount == 1:
-        await message.reply("➲ Master, Count must be atleast 2.")
+        await message.reply("➲ Count must be atleast 2.")
         return
     if intCount <= 0:
-        await message.reply("➲ Master, Count must be positive Integers.")
+        await message.reply("➲ Count must be positive Integers.")
         return
     if intCount > 20:
         await message.reply("➲ Maximum Applable warning count is 20.")
         return
     await SET_DEFAULT_MESSAGE_LIMIT(intCount)
-    await message.reply(f"**➲ Master, I have set Default Pmguard Warning Limit Your Default Limit is: {intCount} 🥀 ✨**")
+    await message.reply(f"**➲ Successfuly set default Warning limit! 🥀 ✨**")
 
 @Sophia.on_message(filters.command(["ausers", "achats"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def get_approved_users(_, message):
