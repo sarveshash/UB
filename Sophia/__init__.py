@@ -36,12 +36,8 @@ parsed_url = urlparse(REPO_URL)
 path_parts = parsed_url.path.split('/')
 repo_name = path_parts[2] if len(path_parts) > 2 else None
 
-# CLIENTS
+# CLIENT
 Sophia = Client("Sophia", session_string=SESSION, api_id=API_ID, api_hash=API_HASH, plugins=dict(root="Sophia/plugins"))
-Start_message = Client("Start_message", session_string=SESSION, api_id=API_ID, api_hash=API_HASH, plugins=dict(root="Sophia/plugins"))
-Start_message.start()
-Start_message.send_message(-1001859707851, "Started")
-Start_message.stop()
 
 # DATABASE 
 MONGO_DB = MongoClient(MONGO_DB_URI) # Special Thanks To KoraXD For Giving This Codes!!
