@@ -28,10 +28,10 @@ async def enable_backup(_, message):
     STATUS = await GET_BACKUP()
     if not STATUS == True:
         await ENABLE_BACKUP()
-        await message.reply("Ok bro")
+        await message.reply("Successfully enabled backup mode!")
     else:
         await DISABLE_BACKUP()
-        await message.reply("Done bro")
+        await message.reply("Successfully disabled backup mode!")
 
 
 @Sophia.on_message(filters.private & filters.create(backup_enabled) & ~filters.bot)
