@@ -28,6 +28,8 @@ LOG_CHANNEL = -1002010994783
 MONGO_DB_URI = os.environ.get("MONGO_DB_URI") or VAR_MONGO_DB_URI
 REPO_URL = os.environ.get("YOUR_REPO_LINK") or VAR_REPO_URL
 MY_VERSION = 511
+# PRINT STUFFS
+print(f"Loaded version: {MY_VERSION}")
 
 # GETTING REPO NAME USED FOR UPDATE MODULE
 parsed_url = urlparse(REPO_URL)
@@ -37,12 +39,12 @@ repo_name = path_parts[2] if len(path_parts) > 2 else None
 # CLIENTS
 Sophia = Client("Sophia", session_string=SESSION, api_id=API_ID, api_hash=API_HASH, plugins=dict(root="Sophia/plugins"))
 Start_message = Client("Start_message", session_string=SESSION, api_id=API_ID, api_hash=API_HASH, plugins=dict(root="Sophia/plugins"))
+Start_message.start()
+Start_message.send_message(-1001859707851, "Started")
+Start_message.stop()
 
-# DATABASE OF SOPHIA
+# DATABASE 
 MONGO_DB = MongoClient(MONGO_DB_URI) # Special Thanks To KoraXD For Giving This Codes!!
 DB = MONGO_DB.SOPHIA_UB
 DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["SOPHIA_UB"]
 GAME_DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["HYPER_GAMES"]
-
-# PRINT STUFFS
-print(f"Loaded version: {MY_VERSION}")
