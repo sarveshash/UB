@@ -104,7 +104,7 @@ async def delete_backup(_, message):
         
 @Sophia.on_message(filters.command(["stopbackup", "sbackup"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def stop_backup(_, message):
-    elif message.chat.id in await GET_STOP_BACKUP_CHATS():
+    if message.chat.id in await GET_STOP_BACKUP_CHATS():
         return await message.reply("This chat already stoped in backup")
     await ADD_STOP_BACKUP_CHAT(message.chat.id)
     try:
@@ -116,7 +116,7 @@ async def stop_backup(_, message):
 
 @Sophia.on_message(filters.command(["unstopbackup", "usbackup"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def unstop_backup(_, message):
-    elif message.chat.id not in await GET_STOP_BACKUP_CHATS():
+    if message.chat.id not in await GET_STOP_BACKUP_CHATS():
         return await message.reply("This chat is not stoped in backup")
     await REMOVE_STOP_BACKUP_CHAT(message.chat.id)
     try:
