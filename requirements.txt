@@ -6,6 +6,8 @@ aiofiles
 requests
 py-tgcalls
 wget
+SpeechRecognition
+pydub
 wikipedia
 pymongo
 google
