@@ -10,7 +10,9 @@ async def voice_to_text(_, message):
         return await message.reply('Please reply to a audio file to convert')
     if message.reply_to_message.media == "MessageMediaType.VOICE":
         await message.reply_to_message.download(file_name="voice_convert/output.mp3")
-    elif message.reply_to_message.document.file_name.endswith('.mp3') or message.reply_to_message.document.file_name.endswith('.oga') or message.reply_to_message.document.file_name.endswith('.wav'):
+    elif message.reply_to_message.audio:
+        await message.reply_to_message.download(file_name="voice_convert/output.mp3")
+    elif message.reply_to_message.document.file_name.endswith('.mp3') or message.reply_to_message.document.file_name.endswith('.oga') or message.reply_to_message.document.file_name.endswith('.wav') or message.reply_to_message.document.file_name.endswith('.m4a'):
         await message.reply_to_message.download(file_name="voice_convert/output.mp3")
     else:
         return await message.reply("Please reply to a valid audio file!")
