@@ -14,7 +14,7 @@ from subprocess import getoutput as run
 from Sophia.Database.games import *
 from pytgcalls import *
 from pytgcalls.types import *
-from pytgcalls.type.input_stream import *
+from pytgcalls.types.input_stream import *
 
 app = Sophia
 Client = Sophia
