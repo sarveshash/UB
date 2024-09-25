@@ -39,9 +39,10 @@ async def voice_to_text(_, message):
             break
         except sr.RequestError as e:
             if attempt < retries - 1:
-                await edit_message.edit(f"Error: {e}. Retrying in {delay} seconds...")
+                await edit_message.edit(f"Error: {e}. Retrying, remaining {retries} attempt...")
                 time.sleep(delay)
             else:
                 await message.reply(f"Failed to connect to Google Speech Recognition service after {retries} attempts.")
+                print(f"An error occurred on voice_to_text.py: {e}")
     
     await r("rm -rf voice_convert")
