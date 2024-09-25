@@ -16,9 +16,12 @@ async def backup_enabled(_, client, update):
     ignore_bad = IGNORE_BAD()
     is_enabled = await ignore_bad.GET()
     if is_enabled:
-        if re.search(pattern, message.text, re.IGNORECASE):
-            await message.delete()
-            return False
+        try:
+            if re.search(pattern, message.text, re.IGNORECASE):
+                await message.delete()
+                return False
+        except:
+            None
     if update.from_user.id == OWNER_ID:
         for x in HANDLER:
             if update.text:
