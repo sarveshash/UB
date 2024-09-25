@@ -4,12 +4,13 @@ from pydub import AudioSegment
 import speech_recognition as sr
 from subprocess import getoutput as r
 import time
+from pyrogram import enums
 
 @Sophia.on_message(filters.command('vtt', prefixes=HANDLER) & filters.user('me'))
 async def voice_to_text(_, message):
     if not message.reply_to_message:
         return await message.reply('Please reply to an audio file to convert')
-    if message.reply_to_message.media == "MessageMediaType.VOICE":
+    if message.reply_to_message.media == enums.MessageMediaType.VOICE:
         await message.reply_to_message.download(file_name="voice_convert/output.mp3")
     elif message.reply_to_message.audio:
         await message.reply_to_message.download(file_name="voice_convert/output.mp3")
