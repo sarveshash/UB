@@ -72,7 +72,10 @@ async def backup_chats(_, message):
             await Sophia.forward_messages(chat_id, message.chat.id, message.id)
         except Exception as e:
             if str(e) == """Telegram says: [400 CHANNEL_INVALID] - The channel parameter is invalid (caused by "channels.GetChannels")""":
-                chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
+                if message.chat.username:
+                    chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", f"Username: @{message.chat.username}\n\n~ @Hyper_Speed0")
+                else:
+                    chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
                 await ADD_BACKUP_CHAT(message.chat.id)
                 await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
                 await Sophia.forward_messages(chat.id, message.chat.id, message.id)
@@ -83,7 +86,10 @@ async def backup_chats(_, message):
         pass
     else:
         if not message.chat.id == OWNER_ID and not message.chat.type == enums.ChatType.BOT:
-            chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
+            if message.chat.username:
+                chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", f"Username: @{message.chat.username}\n\n~ @Hyper_Speed0")
+            else:
+                chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
             await ADD_BACKUP_CHAT(message.chat.id)
             await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
             await Sophia.forward_messages(chat.id, message.chat.id, message.id)
@@ -100,7 +106,10 @@ async def backup_group_chats(_, message):
             await Sophia.forward_messages(chat_id, message.chat.id, message.id)
         except Exception as e:
             if str(e) == """Telegram says: [400 CHANNEL_INVALID] - The channel parameter is invalid (caused by "channels.GetChannels")""":
-                chat = await Sophia.create_channel(f"{message.chat.title} GROUP BACKUP", "~ @Hyper_Speed0")
+                if message.chat.username:
+                    chat = await Sophia.create_channel(f"{message.chat.title} GROUP BACKUP", f"Username: @{message.chat.username}\n\n~ @Hyper_Speed0")
+                else:
+                    chat = await Sophia.create_channel(f"{message.chat.title} GROUP BACKUP", "~ @Hyper_Speed0")
                 await ADD_BACKUP_CHAT(message.chat.id)
                 await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
                 await Sophia.forward_messages(chat.id, message.chat.id, message.id)
@@ -108,7 +117,10 @@ async def backup_group_chats(_, message):
             else:
                 print("Somthing went wrong in backup msg", e)
     else:
-        chat = await Sophia.create_channel(f"{message.chat.title} GROUP BACKUP", "~ @Hyper_Speed0")
+        if message.chat.username:
+            chat = await Sophia.create_channel(f"{message.chat.title} GROUP BACKUP", f"Username: @{message.chat.username}\n\n~ @Hyper_Speed0")
+        else:
+            chat = await Sophia.create_channel(f"{message.chat.title} GROUP BACKUP", "~ @Hyper_Speed0")
         await ADD_BACKUP_CHAT(message.chat.id)
         await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
         await Sophia.forward_messages(chat.id, message.chat.id, message.id)
