@@ -4,6 +4,7 @@ matplotlib
 beautifulsoup4
 aiofiles
 requests
+py-tgcalls
 wget
 wikipedia
 pymongo
