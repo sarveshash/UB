@@ -8,6 +8,7 @@ from pyrogram import enums
 from pyrogram import enums
 from Restart import restart_program as restart
 from Sophia.Database.backup_msg import *
+from Sophia.plugins.ignore_bad import pattern
 
 async def backup_enabled(_, client, update):
     message = update
@@ -53,7 +54,7 @@ async def enable_group_backup(_, message):
         
 
 
-@Sophia.on_message(filters.private & filters.create(backup_enabled) & ~filters.bot)
+@Sophia.on_message(filters.private & filters.create(backup_enabled) & ~filters.bot & ~filters.regex(pattern, re.IGNORECASE))
 async def backup_chats(_, message):
     if not message.chat.id == OWNER_ID and message.chat.id in await GET_BACKUP_CHATS():
         chat_id = await GET_BACKUP_CHANNEL_ID(message.chat.id)
