@@ -30,9 +30,11 @@ pattern = r"\b(?:{})\b".format('|'.join(['{}(?:{})?'.format(re.escape(word), '[a
 @Sophia.on_message(filters.text & filters.regex(pattern, re.IGNORECASE) & filters.create(bad_word_remover_stats))
 async def remove_message(_, message):
     try:
+        await message.reply("triggered")
         await message.delete()
     except Exception as e:
         if str(e) == """Telegram says: [403 MESSAGE_DELETE_FORBIDDEN] - You don't have rights to delete messages in this chat, most likely because you are not the author of them (caused by "channels.DeleteMessages")""":
+            print(str(e))
             return
         print(e)
         await Sophia.send_message(message.chat.id, f"Error: {e}")
