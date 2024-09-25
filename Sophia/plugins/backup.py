@@ -6,7 +6,6 @@ import asyncio
 import re
 import os
 from pyrogram import enums
-from pyrogram import enums
 from Restart import restart_program as restart
 from Sophia.Database.backup_msg import *
 from Sophia.plugins.ignore_bad import pattern
