@@ -8,6 +8,7 @@ from Restart import restart_program
 from pyrogram import enums
 from Sophia.Database.backup_msg import *
 from Sophia.Database.pmguard import *
+from Sophia.plugins.message_handler import warning_count
         
 @Sophia.on_message(filters.command(["pmblock", "pmguard"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def set_pm_guard(_, message):
@@ -87,7 +88,7 @@ async def Unapprove_user(_, message):
             
 
         
-@Sophia.on_message(filters.command(['cw', 'clearwarns'], prefixes=HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command(['cw', 'clearwarn'], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def clear_warn(_, message):
     global warning_count
     is_pm_block_enabled = await GET_PM_GUARD()
