@@ -10,7 +10,6 @@ from datetime import datetime
 from Sophia.Database.afk import *
 from Sophia.Database.ignore_users import *
 from Sophia.Database.backup_msg import *
-from Sophia.plugins.backup import backup_chats, backup_group_chats
 
 def calculate_time(start_time, end_time):
     ping_time = (end_time - start_time).total_seconds() * 1000
