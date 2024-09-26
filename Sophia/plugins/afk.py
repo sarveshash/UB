@@ -14,7 +14,7 @@ async def afk_remove(_, client, update):
         Busy_time = await GET_AFK_TIME()
         formatted_elapsed_time = calculate_time(Busy_time, datetime.now())
         await UNSET_AFK()
-        await message.reply_text(f"➲ **Hello**, Master Welcome Again ✨🥀.\n➲ **Your Offline Duration**: `{formatted_elapsed_time}`🥺")
+        await update.reply_text(f"➲ **Hello**, Master Welcome Again ✨🥀.\n➲ **Your Offline Duration**: `{formatted_elapsed_time}`🥺")
         return False
 
 def calculate_time(start_time, end_time):
