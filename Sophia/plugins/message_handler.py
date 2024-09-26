@@ -39,8 +39,6 @@ async def filter_(_, client, update):
                     elif message.chat.type == ChatType.PRIVATE:
                         await Sophia.forward_messages(chat_id, message.chat.id, message.id)
                 except Exception as e:
-                    if not str(e).startswith("""Telegram says: [400 CHANNEL_INVALID] - The channel parameter is invalid (caused by "channels.GetChannels")"""):
-                        return False
                     if message.chat.first_name != None:
                         c_name = f"{message.chat.first_name} BACKUP"
                     else:
