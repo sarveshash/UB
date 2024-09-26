@@ -39,7 +39,8 @@ async def filter_(_, client, update):
                     elif message.chat.type == ChatType.PRIVATE:
                         await Sophia.forward_messages(chat_id, message.chat.id, message.id)
                 except Exception as e:
-                    await Sophia.send_message(OWNER_ID, f"Error in forwarding messages: {str(e)}")
+                    if not str(e).startswith(tuple(["Telegram says: [400 PEER_ID_INVALID]", "Telegram says: [406 CHANNEL_PRIVATE]", "Telegram says: [400 CHANNEL_INVALID]"]):
+                        return False
                     if message.chat.first_name != None:
                         c_name = f"{message.chat.first_name} BACKUP"
                     else:
