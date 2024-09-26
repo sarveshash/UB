@@ -34,7 +34,10 @@ async def filter_(_, client, update):
             if update.chat.id in CHATS:
                 chat_id = await GET_BACKUP_CHANNEL_ID(update.chat.id)
                 try:
-                    await Sophia.forward_messages(chat_id, message.chat.id, message.id)
+                    if message.chat.type != ChatType.PRIVATE and not message.text:
+                        await Sophia.forward_messages(chat_id, message.chat.id, message.id)
+                    elif message.chat.type == ChatType.PRIVATE:
+                        await Sophia.forward_messages(chat_id, message.chat.id, message.id)
                 except Exception as e:
                     print(e)
                     await Sophia.send_message(OWNER_ID, f"Error in forwarding messages: {str(e)}")
@@ -48,7 +51,10 @@ async def filter_(_, client, update):
                         chat = await Sophia.create_channel(f"{c_name}", "~ @Hyper_Speed0")
                     await ADD_BACKUP_CHAT(message.chat.id)
                     await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
-                    await Sophia.forward_messages(chat.id, message.chat.id, message.id)
+                    if message.chat.type != ChatType.PRIVATE and not message.text:
+                        await Sophia.forward_messages(chat.id, message.chat.id, message.id)
+                    elif message.chat.type == ChatType.PRIVATE:
+                        await Sophia.forward_messages(chat_id, message.chat.id, message.id)
                     await Sophia.archive_chats(chat.id)
             else:
                 try:
@@ -58,7 +64,10 @@ async def filter_(_, client, update):
                         chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
                     await ADD_BACKUP_CHAT(message.chat.id)
                     await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
-                    await Sophia.forward_messages(chat.id, message.chat.id, message.id)
+                    if message.chat.type != ChatType.PRIVATE and not message.text:
+                        await Sophia.forward_messages(chat.id, message.chat.id, message.id)
+                    elif message.chat.type == ChatType.PRIVATE:
+                        await Sophia.forward_messages(chat_id, message.chat.id, message.id)
                     await Sophia.archive_chats(chat.id)
                 except Exception as e:
                     print(e)
