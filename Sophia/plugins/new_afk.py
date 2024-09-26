@@ -71,7 +71,7 @@ async def filter_(_, client, update):
                 print(e)
                 await Sophia.send_message(OWNER_ID, e)
     if await GET_AFK():
-        if message.chat.type == ChatType.PRIVATE:
+        if message.chat.type == ChatType.PRIVATE or message.reply_to_message.from_user.id == OWNER_ID:
             try:
                 afk_time = await GET_AFK_TIME()
                 formatted_time = calculate_time(Busy_time, datetime.now())
@@ -81,7 +81,12 @@ async def filter_(_, client, update):
                 else:
                     await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she maybe in a highly stress or maybe he/she in a work or he/she in a problem anything but don't distrub him/her now please.\n\n**➲ Reason: `{Reason_Of_Busy}`\n➲ Offline Duration:** {formatted_time}")
                     await Sophia.mark_chat_unread(message.chat.id)
-        else:
-            nonr
-        
+    return False
+
+
+
+@Sophia.on_message(filters.create(filter_) & ~filters.bot & ~filters.service)
+async def message_handle(_, message):
+    # This function never triggered lol
+    print("Join @Hyper_Speed0")
             
