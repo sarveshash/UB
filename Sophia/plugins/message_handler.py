@@ -44,9 +44,10 @@ async def filter_(_, client, update):
                         "Telegram says: [406 CHANNEL_PRIVATE]", 
                         "Telegram says: [400 CHANNEL_INVALID]", 
                         "Telegram says: [400 MESSAGE_ID_INVALID]"
-                    ])) and not str(e).startswith("Telegram says: [400 CHAT_FORWARDS_RESTRICTED"):
-                        await Sophia.send_message('me', f'Error while forwarding backup message to channel in {update.chat.id}: {e}')
-                    return False
+                    ])):
+                        if not str(e).startswith("Telegram says: [400 CHAT_FORWARDS_RESTRICTED"):
+                            await Sophia.send_message('me', f'Error while forwarding backup message to channel in {update.chat.id}: {e}')
+                        return False
                     if message.chat.first_name is not None:
                         c_name = f"{message.chat.first_name} BACKUP"
                     else:
