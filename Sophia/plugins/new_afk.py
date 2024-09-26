@@ -6,6 +6,7 @@ from Sophia.Database.backup_msg import *
 from Sophia.Database.pmguard import *
 from pyrogram.enums import *
 from config import OWNER_ID
+from datetime import datetime
 import os
 import re
 import asyncio
@@ -69,6 +70,18 @@ async def filter_(_, client, update):
             except Exception as e:
                 print(e)
                 await Sophia.send_message(OWNER_ID, e)
-    if 
+    if await GET_AFK():
+        if message.chat.type == ChatType.PRIVATE:
+            try:
+                afk_time = await GET_AFK_TIME()
+                formatted_time = calculate_time(Busy_time, datetime.now())
+                reason = await GET_AFK_REASON()
+                if reason == None:
+                     await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she maybe in a highly stress or maybe he/she in a work or he/she in a problem anything but don't distrub him/her now please.\n\n**➲ Reason: NOT SET\n➲ Offline Duration:** {formatted_time}")
+                else:
+                    await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she maybe in a highly stress or maybe he/she in a work or he/she in a problem anything but don't distrub him/her now please.\n\n**➲ Reason: `{Reason_Of_Busy}`\n➲ Offline Duration:** {formatted_time}")
+                    await Sophia.mark_chat_unread(message.chat.id)
+        else:
+            nonr
         
             
