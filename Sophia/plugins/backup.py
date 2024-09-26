@@ -42,12 +42,13 @@ async def delete_backup(_, message):
     if message.chat.id in USERS:
         CH = await GET_BACKUP_CHANNEL_ID(message.chat.id)
         try:
+            await SET_BACKUP_CHANNEL_ID(message.chat.id, 0)
+            eee = await message.reply("I have deleted this chat backup!")
             await Sophia.delete_channel(CH)
             await message.reply("I have deleted this chat backup!")
-            await restart()
         except Exception as e:
             if str(e) == """Telegram says: [400 CHANNEL_INVALID] - The channel parameter is invalid (caused by "channels.GetChannels")""" or str(e) == """Peer id invalid: 0""":
-                return await message.reply("This chat backup channel was already deleted.")
+                return await eee.edit("This chat backup channel was already deleted.")
             await message.reply(f"Error, {e}")
     else:
         await message.reply("This chat has no backup!")
