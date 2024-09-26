@@ -81,7 +81,7 @@ async def filter_(_, client, update):
         if message.chat.type == ChatType.PRIVATE or message.reply_to_message.from_user.id == OWNER_ID:
             try:
                 afk_time = await GET_AFK_TIME()
-                formatted_time = calculate_time(Busy_time, datetime.now())
+                formatted_time = calculate_time(afk_time, datetime.now())
                 reason = await GET_AFK_REASON()
                 if reason is None:
                     await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she may be in a highly stressed situation, working, or facing a problem. Please do not disturb him/her now.\n\n**➲ Reason: NOT SET\n➲ Offline Duration:** {formatted_time}")
