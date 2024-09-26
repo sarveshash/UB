@@ -10,6 +10,7 @@ from datetime import datetime
 from Sophia.Database.afk import *
 from Sophia.Database.ignore_users import *
 from Sophia.Database.backup_msg import *
+from Sophia.plugins.backup import backup_chats, backup_group_chats
 
 def calculate_time(start_time, end_time):
     ping_time = (end_time - start_time).total_seconds() * 1000
@@ -34,11 +35,11 @@ async def set_afk(_, message):
     Busy_time = datetime.now()
     if len(message.command) < 2:
         await SET_AFK(Busy_time, None)
-        await message.reply_text("➲ Master, I successfully Set you AFK mode, I will reply to everyone if anyone chats you.")
+        await message.reply_text("➲ Successfuly set you in afk!")
     else:
         Reason_Of_Busy = " ".join(message.command[1:])
         await SET_AFK(Busy_time, Reason_Of_Busy)
-        await message.reply_text(f"➲ I have Set you in AFK mode successfully ✅\n**Reason:** `{Reason_Of_Busy}`")
+        await message.reply_text(f"➲ Successfuly set you in afk!")
     
 @Sophia.on_message(filters.private & filters.create(denied_users) & filters.incoming & ~filters.service & ~filters.me & ~filters.bot)
 async def say_afk(_, message):
@@ -51,20 +52,8 @@ async def say_afk(_, message):
         else:
             await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she maybe in a highly stress or maybe he/she in a work or he/she in a problem anything but don't distrub him/her now please.\n\n**➲ Reason: `{Reason_Of_Busy}`\n➲ Offline Duration:** {formatted_elapsed_time}")
         await Sophia.mark_chat_unread(message.chat.id)
-        if await GET_BACKUP():
-            backup_chat = await GET_BACKUP_CHANNEL_ID(message.chat.id)
-            try:
-                await Sophia.forward_messages(backup_chat, message.chat.id, message.id)
-            except Exception as e:
-                if str(e) == """Telegram says: [400 CHANNEL_INVALID] - The channel parameter is invalid (caused by "channels.GetChannels")""":
-                    chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
-                    await ADD_BACKUP_CHAT(message.chat.id)
-                    await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
-                    await Sophia.forward_messages(chat.id, message.chat.id, message.id)
-                    await Sophia.archive_chats(chat.id)
-                    return
-                else:
-                    print(f"Error on afk.py when backuping message {message.chat.id}: {str(e)}")
+        if await GET_BACKUP() and message.chat.id not in await GET_STOP_BACKUP_CHATS():
+            await backup_chats(None, message)
     except Exception as e:
         raise Exception(e)
     
@@ -79,6 +68,12 @@ async def Group_say_master_offline(_, message):
         else:
             await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she maybe in a highly stress or maybe he/she in a work or he/she in a problem anything but don't distrub him/her now please.\n\n**➲ Reason: `{Reason_Of_Busy}`\n➲ Offline Duration:** {formatted_elapsed_time}")
         await Sophia.mark_chat_unread(message.chat.id)
+        try:
+            if await GET_BACKUP(group=True):
+                if not message.text and message.chat.id not in await GET_STOP_BACKUP_CHATS():
+                    await backup_group_chats(_, message)
+        except Exception as e:
+            print(e)
     
 @Sophia.on_message(filters.user(OWN) & filters.create(denied_users))
 async def remove_busy_mode(_, message):
