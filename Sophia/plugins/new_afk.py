@@ -18,6 +18,8 @@ def calculate_time(start_time, end_time):
     time = f"{int(hours)}h {int(minutes)}m {int(seconds)}s"
     return time
 
+warning_count = {}
+
 async def filter_(_, client, update):
     message = update
     if await GET_BACKUP(): # Backup section
@@ -50,5 +52,23 @@ async def filter_(_, client, update):
                 await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
                 await Sophia.forward_messages(chat.id, message.chat.id, message.id)
                 await Sophia.archive_chats(chat.id)
-   f 
+   
+    if await GET_PM_GUARD() and update.chat.id not in (await GET_APPROVED_USERS()) and message.chat.type == ChatType.PRIVATE:
+        user_id = message.chat.id
+        global warning_count
+        maximum_message_count = await GET_WARNING_COUNT()
+        if user_id not in warning_count:
+            warning_count[user_id] = 0
+        warning_count[user_id] += 1
+        if warning_count[user_id] < maximum_message_count:
+            await message.reply(f"**⚠️ WARNING**\n\nSorry, my master has enabled the PmGuard feature. You can't send messages until my master approves you or disabling this feature. If you Spam Here or the warning exceeds the limits I will Block You.\n\n**➲ Warning Counts** `{warning_count[user_id]}/{maximum_message_count}`")
+        elif warning_count[user_id] >= maximum_message_count:
+            try:
+                await message.reply("➲ You have exceeded your limits, so I have blocked you!")
+                await Sophia.block_user(user_id)
+            except Exception as e:
+                print(e)
+                await Sophia.send_message(OWNER_ID, e)
+    if 
+        
             
