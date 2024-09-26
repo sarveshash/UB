@@ -29,7 +29,7 @@ async def filter_(_, client, update):
             if update.text:
                 if update.text.startswith(tuple(HANDLER)) and not len(update.text) < 2:
                     command = True
-        if not command and update.chat.id not in await GET_STOP_BACKUP_CHATS() and update.chat.id != OWNER_ID and not message.chat.type == ChatType.BOT and not message.chat.type == ChatType.CHANNEL:
+        if not command and update.chat.id not in await GET_STOP_BACKUP_CHATS() and update.chat.id != OWNER_ID and not message.chat.type == ChatType.BOT and not message.chat.type == ChatType.CHANNEL and not message.from_user.is_bot:
             CHATS = await GET_BACKUP_CHATS()
             if update.chat.id in CHATS:
                 chat_id = await GET_BACKUP_CHANNEL_ID(update.chat.id)
