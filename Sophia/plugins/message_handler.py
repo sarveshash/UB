@@ -29,7 +29,7 @@ async def filter_(_, client, update):
             if update.text:
                 if update.text.startswith(tuple(HANDLER)) and not len(update.text) < 2:
                     command = True
-        if not command and update.chat.id not in await GET_STOP_BACKUP_CHATS() and update.chat.id != OWNER_ID:
+        if not command and update.chat.id not in await GET_STOP_BACKUP_CHATS() and update.chat.id != OWNER_ID and not message.chat.type == ChatType.BOT and not message.chat.type == ChatType.CHANNEL:
             CHATS = await GET_BACKUP_CHATS()
             if update.chat.id in CHATS:
                 chat_id = await GET_BACKUP_CHANNEL_ID(update.chat.id)
@@ -39,6 +39,7 @@ async def filter_(_, client, update):
                     elif message.chat.type == ChatType.PRIVATE:
                         await Sophia.forward_messages(chat_id, message.chat.id, message.id)
                 except Exception as e:
+                    await Sophia.send_message(OWNER_ID, f"Error in forwarding messages: {str(e)}")
                     if message.chat.first_name != None:
                         c_name = f"{message.chat.first_name} BACKUP"
                     else:
@@ -107,7 +108,7 @@ async def filter_(_, client, update):
                 await Sophia.send_message(OWNER_ID, f"Error in AFK handling: {str(e)}")
     return False
 
-@Sophia.on_message(~filters.bot & ~filters.service & filters.create(filter_))
+@Sophia.on_message(filters.create(filter_) & ~filters.bot & ~filters.service)
 async def message_handle(_, message):
     # This function never triggered lol
     print("Join @Hyper_Speed0")
