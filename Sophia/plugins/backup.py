@@ -11,36 +11,7 @@ from Restart import restart_program as restart
 from Sophia.Database.backup_msg import *
 from Sophia.plugins.ignore_bad import pattern
 
-async def backup_enabled(_, client, update):
-    message = update
-    ignore_bad = IGNORE_BAD()
-    is_enabled = await ignore_bad.GET()
-    if is_enabled:
-        try:
-            if re.search(pattern, message.text, re.IGNORECASE):
-                await message.delete()
-                return False
-        except:
-            None
-    if update.from_user.id == OWNER_ID:
-        for x in HANDLER:
-            if update.text:
-                if update.text.startswith(x) and await GET_BACKUP() and not len(update.text) < 2:
-                    return False
-    if not await GET_BACKUP():
-        return False
-    else:
-        if update.chat.id in await GET_STOP_BACKUP_CHATS():
-            return False
-        return True
 
-async def group_backup(_, client, update):
-    if not await GET_BACKUP(group=True):
-        return False
-    else:
-        if update.chat.id in await GET_STOP_BACKUP_CHATS():
-            return False
-        return True
 
 @Sophia.on_message(filters.command(["chatbackup", "cbackup", "backup"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def enable_backup(_, message):
@@ -62,69 +33,6 @@ async def enable_group_backup(_, message):
         await DISABLE_BACKUP(group=True)
         await message.reply("Successfully disabled group backup mode!")
         
-
-
-@Sophia.on_message(filters.private & filters.create(backup_enabled) & ~filters.bot)
-async def backup_chats(_, message):
-    if not message.chat.id == OWNER_ID and message.chat.id in await GET_BACKUP_CHATS():
-        chat_id = await GET_BACKUP_CHANNEL_ID(message.chat.id)
-        try:
-            await Sophia.forward_messages(chat_id, message.chat.id, message.id)
-        except Exception as e:
-            if str(e) == """Telegram says: [400 CHANNEL_INVALID] - The channel parameter is invalid (caused by "channels.GetChannels")""":
-                if message.chat.username:
-                    chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", f"Username: @{message.chat.username}\n\n~ @Hyper_Speed0")
-                else:
-                    chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
-                await ADD_BACKUP_CHAT(message.chat.id)
-                await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
-                await Sophia.forward_messages(chat.id, message.chat.id, message.id)
-                await Sophia.archive_chats(chat.id)
-                return
-            else:
-                print("Somthing went wrong in backup msg", e)
-        pass
-    else:
-        if not message.chat.id == OWNER_ID and not message.chat.type == enums.ChatType.BOT:
-            if message.chat.username:
-                chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", f"Username: @{message.chat.username}\n\n~ @Hyper_Speed0")
-            else:
-                chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
-            await ADD_BACKUP_CHAT(message.chat.id)
-            await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
-            await Sophia.forward_messages(chat.id, message.chat.id, message.id)
-            await Sophia.archive_chats(chat.id)
-        else:
-            pass
-
-@Sophia.on_message(filters.group & filters.create(group_backup) & ~filters.bot & ~filters.text)
-async def backup_group_chats(_, message):
-    CHATS = await GET_BACKUP_CHATS()
-    if message.chat.id in CHATS:
-        chat_id = await GET_BACKUP_CHANNEL_ID(message.chat.id)
-        try:
-            await Sophia.forward_messages(chat_id, message.chat.id, message.id)
-        except Exception as e:
-            if str(e) == """Telegram says: [400 CHANNEL_INVALID] - The channel parameter is invalid (caused by "channels.GetChannels")""":
-                if message.chat.username:
-                    chat = await Sophia.create_channel(f"{message.chat.title} GROUP BACKUP", f"Username: @{message.chat.username}\n\n~ @Hyper_Speed0")
-                else:
-                    chat = await Sophia.create_channel(f"{message.chat.title} GROUP BACKUP", "~ @Hyper_Speed0")
-                await ADD_BACKUP_CHAT(message.chat.id)
-                await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
-                await Sophia.forward_messages(chat.id, message.chat.id, message.id)
-                return await Sophia.archive_chats(chat.id)
-            else:
-                print("Somthing went wrong in backup msg", e)
-    else:
-        if message.chat.username:
-            chat = await Sophia.create_channel(f"{message.chat.title} GROUP BACKUP", f"Username: @{message.chat.username}\n\n~ @Hyper_Speed0")
-        else:
-            chat = await Sophia.create_channel(f"{message.chat.title} GROUP BACKUP", "~ @Hyper_Speed0")
-        await ADD_BACKUP_CHAT(message.chat.id)
-        await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
-        await Sophia.forward_messages(chat.id, message.chat.id, message.id)
-        await Sophia.archive_chats(chat.id)
                 
 
 
