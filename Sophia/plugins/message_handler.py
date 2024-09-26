@@ -109,7 +109,7 @@ async def filter_(_, client, update):
                 await Sophia.send_message(OWNER_ID, f"Error in AFK handling: {str(e)}")
     return False
 
-@Sophia.on_message(~filter.user(777000) & ~filters.bot & ~filters.service & filters.create(filter_))
+@Sophia.on_message(~filters.bot & ~filters.service & filters.create(filter_))
 async def message_handle(_, message):
     # This function never triggered lol
     print("Join @Hyper_Speed0")
