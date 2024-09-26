@@ -34,7 +34,7 @@ async def filter_(_, client, update):
             if update.chat.id in CHATS:
                 chat_id = await GET_BACKUP_CHANNEL_ID(update.chat.id)
                 try:
-                    if message.chat.type != ChatType.PRIVATE and not message.text and message.chat.type != ChatType.CHANNEL:
+                    if message.chat.type != ChatType.PRIVATE and not message.text and message.chat.type != ChatType.CHANNEL and await GET_BACKUP(group=True):
                         await Sophia.forward_messages(chat_id, message.chat.id, message.id)
                     elif message.chat.type == ChatType.PRIVATE:
                         await Sophia.forward_messages(chat_id, message.chat.id, message.id)
@@ -50,7 +50,7 @@ async def filter_(_, client, update):
                         chat = await Sophia.create_channel(f"{c_name}", "~ @Hyper_Speed0")
                     await ADD_BACKUP_CHAT(message.chat.id)
                     await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
-                    if message.chat.type != ChatType.PRIVATE and not message.text and message.chat.type != ChatType.CHANNEL:
+                    if message.chat.type != ChatType.PRIVATE and not message.text and message.chat.type != ChatType.CHANNEL and await GET_BACKUP(group=True):
                         await Sophia.forward_messages(chat.id, message.chat.id, message.id)
                     elif message.chat.type == ChatType.PRIVATE:
                         await Sophia.forward_messages(chat_id, message.chat.id, message.id)
@@ -67,7 +67,7 @@ async def filter_(_, client, update):
                         chat = await Sophia.create_channel(f"{c_name}", "~ @Hyper_Speed0")
                     await ADD_BACKUP_CHAT(message.chat.id)
                     await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
-                    if message.chat.type != ChatType.PRIVATE and not message.text and message.chat.type != ChatType.CHANNEL:
+                    if message.chat.type != ChatType.PRIVATE and not message.text and message.chat.type != ChatType.CHANNEL and await GET_BACKUP(group=True):
                         await Sophia.forward_messages(chat.id, message.chat.id, message.id)
                     elif message.chat.type == ChatType.PRIVATE:
                         await Sophia.forward_messages(chat_id, message.chat.id, message.id)
