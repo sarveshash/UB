@@ -8,8 +8,14 @@ import os
 import re
 from datetime import datetime
 from Sophia.Database.afk import *
-from Sophia.Database.ignore_users import *
-from Sophia.Database.backup_msg import *
+
+async def afk_remove(_, client, update):
+    if await GET_AFK():
+        Busy_time = await GET_AFK_TIME()
+        formatted_elapsed_time = calculate_time(Busy_time, datetime.now())
+        await UNSET_AFK()
+        await message.reply_text(f"➲ **Hello**, Master Welcome Again ✨🥀.\n➲ **Your Offline Duration**: `{formatted_elapsed_time}`🥺")
+        return False
 
 def calculate_time(start_time, end_time):
     ping_time = (end_time - start_time).total_seconds() * 1000
@@ -31,9 +37,6 @@ async def set_afk(_, message):
         await message.reply_text(f"➲ Successfuly set you in afk!")
     
     
-@Sophia.on_message(filters.user(OWN) & filters.create(denied_users))
+@Sophia.on_message(filters.user(OWN) & filters.create(afk_check))
 async def remove_busy_mode(_, message):
-    Busy_time = await GET_AFK_TIME()
-    formatted_elapsed_time = calculate_time(Busy_time, datetime.now())
-    await UNSET_AFK()
-    await message.reply_text(f"➲ **Hello**, Master Welcome Again ✨🥀.\n➲ **Your Offline Duration**: `{formatted_elapsed_time}`🥺")
+    None
