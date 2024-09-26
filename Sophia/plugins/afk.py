@@ -37,6 +37,6 @@ async def set_afk(_, message):
         await message.reply_text(f"➲ Successfuly set you in afk!")
     
     
-@Sophia.on_message(filters.user(OWN) & filters.create(afk_check))
+@Sophia.on_message(filters.user(OWN) & filters.create(afk_remove))
 async def remove_busy_mode(_, message):
     None
