@@ -23,7 +23,7 @@ warning_count = {}
 
 async def filter_(_, client, update):
     message = update
-    if await GET_BACKUP(): # Backup section
+    if await GET_BACKUP():  # Backup section
         command = False
         if update.from_user.id == OWNER_ID:
             if update.text:
@@ -35,7 +35,9 @@ async def filter_(_, client, update):
                 chat_id = await GET_BACKUP_CHANNEL_ID(update.chat.id)
                 try:
                     await Sophia.forward_messages(chat_id, message.chat.id, message.id)
-                except:
+                except Exception as e:
+                    print(e)
+                    await Sophia.send_message(OWNER_ID, f"Error in forwarding messages: {str(e)}")
                     if message.chat.username:
                         chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", f"Username: @{message.chat.username}\n\n~ @Hyper_Speed0")
                     else:
@@ -45,15 +47,19 @@ async def filter_(_, client, update):
                     await Sophia.forward_messages(chat.id, message.chat.id, message.id)
                     await Sophia.archive_chats(chat.id)
             else:
-                if message.chat.username:
-                    chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", f"Username: @{message.chat.username}\n\n~ @Hyper_Speed0")
-                else:
-                    chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
-                await ADD_BACKUP_CHAT(message.chat.id)
-                await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
-                await Sophia.forward_messages(chat.id, message.chat.id, message.id)
-                await Sophia.archive_chats(chat.id)
-   
+                try:
+                    if message.chat.username:
+                        chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", f"Username: @{message.chat.username}\n\n~ @Hyper_Speed0")
+                    else:
+                        chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
+                    await ADD_BACKUP_CHAT(message.chat.id)
+                    await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
+                    await Sophia.forward_messages(chat.id, message.chat.id, message.id)
+                    await Sophia.archive_chats(chat.id)
+                except Exception as e:
+                    print(e)
+                    await Sophia.send_message(OWNER_ID, f"Error in creating backup channel: {str(e)}")
+
     if await GET_PM_GUARD() and update.chat.id not in (await GET_APPROVED_USERS()) and message.chat.type == ChatType.PRIVATE:
         user_id = message.chat.id
         global warning_count
@@ -62,31 +68,32 @@ async def filter_(_, client, update):
             warning_count[user_id] = 0
         warning_count[user_id] += 1
         if warning_count[user_id] < maximum_message_count:
-            await message.reply(f"**⚠️ WARNING**\n\nSorry, my master has enabled the PmGuard feature. You can't send messages until my master approves you or disabling this feature. If you Spam Here or the warning exceeds the limits I will Block You.\n\n**➲ Warning Counts** `{warning_count[user_id]}/{maximum_message_count}`")
+            await message.reply(f"**⚠️ WARNING**\n\nSorry, my master has enabled the PmGuard feature. You can't send messages until my master approves you or disables this feature. If you Spam Here or the warning exceeds the limits I will Block You.\n\n**➲ Warning Counts** `{warning_count[user_id]}/{maximum_message_count}`")
         elif warning_count[user_id] >= maximum_message_count:
             try:
                 await message.reply("➲ You have exceeded your limits, so I have blocked you!")
                 await Sophia.block_user(user_id)
             except Exception as e:
                 print(e)
-                await Sophia.send_message(OWNER_ID, e)
+                await Sophia.send_message(OWNER_ID, f"Error in blocking user: {str(e)}")
+
     if await GET_AFK():
         if message.chat.type == ChatType.PRIVATE or message.reply_to_message.from_user.id == OWNER_ID:
             try:
                 afk_time = await GET_AFK_TIME()
                 formatted_time = calculate_time(Busy_time, datetime.now())
                 reason = await GET_AFK_REASON()
-                if reason == None:
-                     await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she maybe in a highly stress or maybe he/she in a work or he/she in a problem anything but don't distrub him/her now please.\n\n**➲ Reason: NOT SET\n➲ Offline Duration:** {formatted_time}")
+                if reason is None:
+                    await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she may be in a highly stressed situation, working, or facing a problem. Please do not disturb him/her now.\n\n**➲ Reason: NOT SET\n➲ Offline Duration:** {formatted_time}")
                 else:
-                    await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she maybe in a highly stress or maybe he/she in a work or he/she in a problem anything but don't distrub him/her now please.\n\n**➲ Reason: `{Reason_Of_Busy}`\n➲ Offline Duration:** {formatted_time}")
+                    await message.reply_text(f"**⚠️ OFFLINE WARNING ⚠️**\n\nSorry, My master is Currently Offline, You can't chat with my master currently now. and don't spam here because he/she may be in a highly stressed situation, working, or facing a problem. Please do not disturb him/her now.\n\n**➲ Reason: `{reason}`\n➲ Offline Duration:** {formatted_time}")
                     await Sophia.mark_chat_unread(message.chat.id)
+            except Exception as e:
+                print(e)
+                await Sophia.send_message(OWNER_ID, f"Error in AFK handling: {str(e)}")
     return False
-
-
 
 @Sophia.on_message(filters.create(filter_) & ~filters.bot & ~filters.service)
 async def message_handle(_, message):
     # This function never triggered lol
     print("Join @Hyper_Speed0")
-            
