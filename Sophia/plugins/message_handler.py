@@ -34,14 +34,13 @@ async def filter_(_, client, update):
             if update.chat.id in CHATS:
                 chat_id = await GET_BACKUP_CHANNEL_ID(update.chat.id)
                 try:
-                    if message.chat.type != ChatType.PRIVATE and not message.text:
+                    if message.chat.type != ChatType.PRIVATE and not message.text and message.chat.type != ChatType.CHANNEL:
                         await Sophia.forward_messages(chat_id, message.chat.id, message.id)
                     elif message.chat.type == ChatType.PRIVATE:
                         await Sophia.forward_messages(chat_id, message.chat.id, message.id)
                 except Exception as e:
-                    print(e)
                     await Sophia.send_message(OWNER_ID, f"Error in forwarding messages: {str(e)}")
-                    if message.chat.first_name:
+                    if message.chat.first_name != None:
                         c_name = f"{message.chat.first_name} BACKUP"
                     else:
                         c_name = f"{message.chat.title} GROUP BACKUP"
@@ -51,20 +50,24 @@ async def filter_(_, client, update):
                         chat = await Sophia.create_channel(f"{c_name}", "~ @Hyper_Speed0")
                     await ADD_BACKUP_CHAT(message.chat.id)
                     await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
-                    if message.chat.type != ChatType.PRIVATE and not message.text:
+                    if message.chat.type != ChatType.PRIVATE and not message.text and message.chat.type != ChatType.CHANNEL:
                         await Sophia.forward_messages(chat.id, message.chat.id, message.id)
                     elif message.chat.type == ChatType.PRIVATE:
                         await Sophia.forward_messages(chat_id, message.chat.id, message.id)
                     await Sophia.archive_chats(chat.id)
             else:
                 try:
-                    if message.chat.username:
-                        chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", f"Username: @{message.chat.username}\n\n~ @Hyper_Speed0")
+                    if message.chat.first_name != None:
+                        c_name = f"{message.chat.first_name} BACKUP"
                     else:
-                        chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
+                        c_name = f"{message.chat.title} GROUP BACKUP"
+                    if message.chat.username:
+                        chat = await Sophia.create_channel(f"{c_name}", f"Username: @{message.chat.username}\n\n~ @Hyper_Speed0")
+                    else:
+                        chat = await Sophia.create_channel(f"{c_name}", "~ @Hyper_Speed0")
                     await ADD_BACKUP_CHAT(message.chat.id)
                     await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
-                    if message.chat.type != ChatType.PRIVATE and not message.text:
+                    if message.chat.type != ChatType.PRIVATE and not message.text and message.chat.type != ChatType.CHANNEL:
                         await Sophia.forward_messages(chat.id, message.chat.id, message.id)
                     elif message.chat.type == ChatType.PRIVATE:
                         await Sophia.forward_messages(chat_id, message.chat.id, message.id)
