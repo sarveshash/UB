@@ -8,16 +8,6 @@ from Restart import restart_program
 from pyrogram import enums
 from Sophia.Database.backup_msg import *
 from Sophia.Database.pmguard import *
-
-warning_count = {}
-
-async def denied_users(_, client, update):
-    if not await GET_PM_GUARD():
-        return False
-    if update.chat.id not in (await GET_APPROVED_USERS()):
-        return True
-    else:
-        return False
         
 @Sophia.on_message(filters.command(["pmblock", "pmguard"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def set_pm_guard(_, message):
@@ -49,46 +39,6 @@ async def set_pm_guard(_, message):
         await SET_PM_GUARD(intCount)
         await message.reply('**➲ I have enabled PmGuard successfully 🥀 ✨**')
     
-
-@Sophia.on_message(
-    filters.private
-    & filters.create(denied_users)
-    & filters.incoming
-    & ~filters.service
-    & ~filters.me
-    & ~filters.bot
-            )
-async def warn_users(_, message):
-    global warning_count
-    user_id = message.chat.id
-    maximum_message_count = await GET_WARNING_COUNT()
-    if user_id not in warning_count:
-        warning_count[user_id] = 0
-    warning_count[user_id] += 1
-    if warning_count[user_id] < maximum_message_count:
-        await message.reply(f"**⚠️ WARNING**\n\nSorry, my master has enabled the PmGuard feature. You can't send messages until my master approves you or disabling this feature. If you Spam Here or the warning exceeds the limits I will Block You.\n\n**➲ Warning Counts** `{warning_count[user_id]}/{maximum_message_count}`")
-    elif warning_count[user_id] >= maximum_message_count:
-        try:
-            await message.reply("➲ You have exceeded your limits, so I have blocked you!")
-            await Sophia.block_user(user_id)
-        except Exception as e:
-            print(e)
-            await Sophia.send_message(OWNER_ID, e)
-    if await GET_BACKUP():
-        backup_chat = await GET_BACKUP_CHANNEL_ID(message.chat.id)
-        try:
-            await Sophia.forward_messages(backup_chat, message.chat.id, message.id)
-        except Exception as e:
-            if str(e) == """Telegram says: [400 CHANNEL_INVALID] - The channel parameter is invalid (caused by "channels.GetChannels")""":
-                chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
-                await ADD_BACKUP_CHAT(message.chat.id)
-                await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
-                await Sophia.forward_messages(chat.id, message.chat.id, message.id)
-                return await Sophia.archive_chats(chat.id)
-            else:
-                print(f"Error on pm_guard.py when backuping message {message.chat.id}: {str(e)}")
-            
-                    
 
 @Sophia.on_message(filters.command(['a', 'approve', 'allow'], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def approve_user(_, message):
