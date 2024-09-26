@@ -38,10 +38,14 @@ async def filter_(_, client, update):
                 except Exception as e:
                     print(e)
                     await Sophia.send_message(OWNER_ID, f"Error in forwarding messages: {str(e)}")
-                    if message.chat.username:
-                        chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", f"Username: @{message.chat.username}\n\n~ @Hyper_Speed0")
+                    if message.chat.first_name:
+                        c_name = f"{message.chat.first_name} BACKUP"
                     else:
-                        chat = await Sophia.create_channel(f"{message.chat.first_name} BACKUP", "~ @Hyper_Speed0")
+                        c_name = f"{message.chat.title} GROUP BACKUP"
+                    if message.chat.username:
+                        chat = await Sophia.create_channel(f"{c_name}", f"Username: @{message.chat.username}\n\n~ @Hyper_Speed0")
+                    else:
+                        chat = await Sophia.create_channel(f"{c_name}", "~ @Hyper_Speed0")
                     await ADD_BACKUP_CHAT(message.chat.id)
                     await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
                     await Sophia.forward_messages(chat.id, message.chat.id, message.id)
@@ -58,7 +62,6 @@ async def filter_(_, client, update):
                     await Sophia.archive_chats(chat.id)
                 except Exception as e:
                     print(e)
-                    await Sophia.send_message(OWNER_ID, f"Error in creating backup channel: {str(e)}")
 
     if await GET_PM_GUARD() and update.chat.id not in (await GET_APPROVED_USERS()) and message.chat.type == ChatType.PRIVATE and message.from_user.id != OWNER_ID:
         user_id = message.chat.id
