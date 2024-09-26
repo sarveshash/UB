@@ -60,7 +60,7 @@ async def filter_(_, client, update):
                     print(e)
                     await Sophia.send_message(OWNER_ID, f"Error in creating backup channel: {str(e)}")
 
-    if await GET_PM_GUARD() and update.chat.id not in (await GET_APPROVED_USERS()) and message.chat.type == ChatType.PRIVATE:
+    if await GET_PM_GUARD() and update.chat.id not in (await GET_APPROVED_USERS()) and message.chat.type == ChatType.PRIVATE and message.from_user.id != OWNER_ID:
         user_id = message.chat.id
         global warning_count
         maximum_message_count = await GET_WARNING_COUNT()
