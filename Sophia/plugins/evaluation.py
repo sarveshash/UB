@@ -13,7 +13,7 @@ from pyrogram import enums
 from subprocess import getoutput as run
 from pytgcalls import *
 from pytgcalls.types import *
-from Sophia.Database. import *
+
 
 app = Sophia
 Client = Sophia
