@@ -27,7 +27,7 @@ async def voice_to_text(_, message):
     
     try:
         ffmpeg.input("voice_convert/output.mp3").output("voice_convert/output_file.wav").run()
-    except ffmpeg.Error as e:
+    except ffmpeg._run.Error as e:
         await edit_message.edit(f"Error converting file: {e}")
         return
     
