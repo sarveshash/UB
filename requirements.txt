@@ -21,6 +21,7 @@ asyncio
 youtube_search_python
 youtube_dl
 youtube_search
+python-ffmpeg
 ffmpeg
 motor==3.6.0
 telegraph
