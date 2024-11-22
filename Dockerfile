@@ -1,12 +1,10 @@
-FROM python
+FROM python:latest
 
 WORKDIR /root/Sophia
 
 COPY . .
 
-FROM openjdk:21-jre-slim as openjdk
-
-FROM node:latest as nodejs
+RUN apt-get update && apt-get install -y openjdk-21-jre nodejs npm
 
 RUN pip3 install --upgrade pip setuptools
 RUN pip3 install -U -r requirements.txt
