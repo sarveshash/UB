@@ -1,6 +1,5 @@
 from Sophia import *
 from pyrogram import *
-from pydub import AudioSegment
 import speech_recognition as sr
 from subprocess import getoutput as r
 import time
@@ -15,25 +14,18 @@ async def voice_to_text(_, message):
     os.makedirs("voice_convert", exist_ok=True)
     
     if message.reply_to_message.media == enums.MessageMediaType.VOICE:
-        await message.reply_to_message.download(file_name="voice_convert/output.mp3")
+        await message.reply_to_message.download(file_name="voice_convert/output.ogg")
     elif message.reply_to_message.audio:
-        await message.reply_to_message.download(file_name="voice_convert/output.mp3")
+        await message.reply_to_message.download(file_name="voice_convert/output.ogg")
     elif message.reply_to_message.document.file_name.endswith(('.mp3', '.oga', '.wav', '.m4a')):
-        await message.reply_to_message.download(file_name="voice_convert/output.mp3")
+        await message.reply_to_message.download(file_name="voice_convert/output.ogg")
     else:
         return await message.reply("Please reply to a valid audio file!")
     
     edit_message = await message.reply("Converting audio to text...")
     
-    try:
-        audio = AudioSegment.from_mp3("voice_convert/output.mp3")
-        audio.export("voice_convert/output_file.wav", format="wav")
-    except Exception as e:
-        await edit_message.edit(f"Error converting file: {e}")
-        return
-    
     recognizer = sr.Recognizer()
-    audio_file = "voice_convert/output_file.wav"
+    audio_file = "voice_convert/output.ogg"
     
     with sr.AudioFile(audio_file) as source:
         audio_data = recognizer.record(source)
