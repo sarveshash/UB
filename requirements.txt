@@ -22,6 +22,6 @@ youtube_search_python
 youtube_dl
 youtube_search
 ffmpeg
-motor
+motor==3.6.0
 telegraph
 gtts
