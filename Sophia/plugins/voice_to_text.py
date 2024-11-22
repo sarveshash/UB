@@ -5,6 +5,7 @@ from subprocess import getoutput as r
 import time
 from pyrogram import enums
 import os
+from pydub import AudioSegment
 
 @Sophia.on_message(filters.command('vtt', prefixes=HANDLER) & filters.user('me'))
 async def voice_to_text(_, message):
@@ -24,8 +25,17 @@ async def voice_to_text(_, message):
     
     edit_message = await message.reply("Converting audio to text...")
     
-    recognizer = sr.Recognizer()
     audio_file = "voice_convert/output.ogg"
+    
+    try:
+        audio = AudioSegment.from_file(audio_file)
+        audio.export("voice_convert/output.wav", format="wav")
+        audio_file = "voice_convert/output.wav"
+    except Exception as e:
+        await edit_message.edit(f"Error converting file: {e}")
+        return
+    
+    recognizer = sr.Recognizer()
     
     with sr.AudioFile(audio_file) as source:
         audio_data = recognizer.record(source)
