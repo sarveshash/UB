@@ -3,6 +3,7 @@ Sophia is a powerful Telegram userbot that enhances your Telegram experience wit
 Features
 Get the full list of Sophia's features by clicking this link: [Sophia Commands](http://graph.org/Sophia-Commands-01-30)
 ## Working Environments
+#### Linux only supported
  * Heroku: Tested and working without errors.
  * Railway: Works with some limitations. .restart command is not functional.
 ## Installation & Setup
