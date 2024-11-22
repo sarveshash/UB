@@ -29,8 +29,13 @@ LOG_CHANNEL = -1002010994783
 MONGO_DB_URI = os.environ.get("MONGO_DB_URI") or VAR_MONGO_DB_URI
 REPO_URL = os.environ.get("YOUR_REPO_LINK") or VAR_REPO_URL
 MY_VERSION = 511
+
+if not SESSION or not API_ID or not API_HASH or not MONGO_DB_URI or not REPO_URL:
+    logging.warn("You should enter the required details on variables.py or you need set env")
+    exit()
+
 # PRINT STUFFS
-print(f"Loaded version: {MY_VERSION}")
+logging.info(f"Loaded version: {MY_VERSION}")
 
 # GETTING REPO NAME USED FOR UPDATE MODULE
 parsed_url = urlparse(REPO_URL)
@@ -39,7 +44,6 @@ repo_name = path_parts[2] if len(path_parts) > 2 else None
 
 # CLIENT
 Sophia = Client("Sophia", session_string=SESSION, api_id=API_ID, api_hash=API_HASH, plugins=dict(root="Sophia/plugins"))
-Friday = PyTgCalls(Sophia)
 
 # DATABASE 
 MONGO_DB = MongoClient(MONGO_DB_URI) # Special Thanks To KoraXD For Giving This Codes!!
