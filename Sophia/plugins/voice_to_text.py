@@ -1,6 +1,6 @@
 from Sophia import *
 from pyrogram import *
-import ffmpeg
+from pydub import AudioSegment
 import speech_recognition as sr
 from subprocess import getoutput as r
 import time
@@ -26,8 +26,9 @@ async def voice_to_text(_, message):
     edit_message = await message.reply("Converting audio to text...")
     
     try:
-        ffmpeg.input("voice_convert/output.mp3").output("voice_convert/output_file.wav").run()
-    except ffmpeg.Error as e:
+        audio = AudioSegment.from_mp3("voice_convert/output.mp3")
+        audio.export("voice_convert/output_file.wav", format="wav")
+    except Exception as e:
         await edit_message.edit(f"Error converting file: {e}")
         return
     
