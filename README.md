@@ -5,7 +5,7 @@ Get the full list of Sophia's features by clicking this link: [Sophia Commands](
 ## Working Environments
 #### Linux only supported
  * Heroku: Tested and working without errors.
- * Railway: Works with some limitations. .restart command is not functional.
+ * Railway: Tested and working without errors.
 ## Installation & Setup
 Detailed installation instructions will be added in a future update.
 ## Support & Community
