@@ -133,7 +133,7 @@ try:
             can_pin_messages=False,
             can_manage_chat=False,
             can_manage_video_chats=True,
-            can_post_stories=True,
+            can_post_stories=False,
             can_manage_topics=False,
             can_delete_messages=False,
             is_anonymous=False
