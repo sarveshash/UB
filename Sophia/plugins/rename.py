@@ -16,7 +16,7 @@ def rename(_, message):
             return bot.send_message(message.chat.id, "Master, Please enter Text ⚠️")
         try:
             filename = message.text.replace(message.text.split(" ")[0], "")
-            if 0 = 0:
+            if True:
                 if reply := message.reply_to_message:
                     x = message.reply_text("`Downloading....`")
                     try:
