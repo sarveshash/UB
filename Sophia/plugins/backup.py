@@ -23,16 +23,6 @@ async def enable_backup(_, message):
         await DISABLE_BACKUP()
         await message.reply("Successfully disabled backup mode!")
 
-@Sophia.on_message(filters.command("gbackup", prefixes=HANDLER) & filters.user(OWNER_ID))
-async def enable_group_backup(_, message):
-    STATUS = await GET_BACKUP(group=True)
-    if not STATUS == True:
-        await ENABLE_BACKUP(group=True)
-        await message.reply("Successfully enabled group backup mode!")
-    else:
-        await DISABLE_BACKUP(group=True)
-        await message.reply("Successfully disabled group backup mode!")
-        
                 
 
 
