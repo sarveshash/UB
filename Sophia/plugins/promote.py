@@ -165,7 +165,7 @@ try:
         me_id = me.id
     
         if message.reply_to_message:
-            user_id = message.reply_to_message.from_user.id
+            user_id = str(message.reply_to_message.from_user.id)
         else:
             if len(message.command) < 2:
                 return await message.reply("Reply to a user or enter the user ID to demote.")
