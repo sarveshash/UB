@@ -105,7 +105,7 @@ try:
                     raise k
                     return await message.reply(f"Error on promoting user: {o}")
             elif e.startswith("Telegram says: [403 CHAT_ADMIN_REQUIRED]") or e.startswith("Telegram says: [403 RIGHT_FORBIDDEN]"):
-                return await message.reply("You need admin access to do this!")
+                return await message.reply("You need enough admin rights to do this!")
             await message.reply(f"Failed to promote: {e}")
             e = f"I can't promote {user_id}: {e}"
             raise e
