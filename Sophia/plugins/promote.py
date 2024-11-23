@@ -22,10 +22,7 @@ try:
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't promote yourself!")
-        user_is_admin = await Sophia.get_chat_member(message.chat.id, user_id)
-        if user_is_admin:
-            return await message.reply("The user is already admin, demote them and try!")
-    
+        
         privileges = ChatPrivileges(
             can_change_info=True,
             can_invite_users=True,
@@ -78,10 +75,7 @@ try:
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't promote yourself!")
-        user_is_admin = await Sophia.get_chat_member(message.chat.id, user_id)
-        if user_is_admin:
-            return await message.reply("The user is already admin, demote them and try!")
-    
+        
         privileges = ChatPrivileges(
             can_change_info=False,
             can_invite_users=True,
@@ -132,10 +126,7 @@ try:
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't promote yourself!")
-        user_is_admin = await Sophia.get_chat_member(message.chat.id, user_id)
-        if user_is_admin:
-            return await message.reply("The user is already admin, demote them and try!")
-    
+        
         privileges = ChatPrivileges(
             can_change_info=False,
             can_invite_users=True,
@@ -183,9 +174,7 @@ try:
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't demote yourself!")
-        user_is_admin = await Sophia.get_chat_member(message.chat.id, user_id)
-        if user_is_admin == None:
-            return await message.reply("This user is not a admin not demote!")
+        
         privileges = ChatPrivileges(
             can_change_info=False,
             can_invite_users=False,
