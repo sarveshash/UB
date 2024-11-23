@@ -22,6 +22,15 @@ try:
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't promote yourself!")
+        try:
+            user = await Sophia.get_chat_member(message.chat.id, user_id)
+            if user.custom_title:
+                return await message.reply("This user is already admin")
+        except Exception as e:
+            if str(e) == """Telegram says: [400 USER_NOT_PARTICIPANT] - The user is not a member of this chat (caused by "channels.GetParticipant")""":
+                return await message.reply('This user is not in this group!')
+            elif str(e) == """Telegram says: [400 USERNAME_NOT_OCCUPIED] - The username is not occupied by anyone (caused by "contacts.ResolveUsername")""":
+                return await message.reply("Invalid user!")
         
         privileges = ChatPrivileges(
             can_change_info=True,
@@ -75,6 +84,16 @@ try:
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't promote yourself!")
+        try:
+            user = await Sophia.get_chat_member(message.chat.id, user_id)
+            if user.custom_title:
+                return await message.reply("This user is already admin")
+        except Exception as e:
+            if str(e) == """Telegram says: [400 USER_NOT_PARTICIPANT] - The user is not a member of this chat (caused by "channels.GetParticipant")""":
+                return await message.reply('This user is not in this group!')
+            elif str(e) == """Telegram says: [400 USERNAME_NOT_OCCUPIED] - The username is not occupied by anyone (caused by "contacts.ResolveUsername")""":
+                return await message.reply("Invalid user!")
+
         
         privileges = ChatPrivileges(
             can_change_info=False,
@@ -126,6 +145,17 @@ try:
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't promote yourself!")
+        try:
+            user = await Sophia.get_chat_member(message.chat.id, user_id)
+            if user.custom_title:
+                return await message.reply("This user is already admin")
+        except Exception as e:
+            if str(e) == """Telegram says: [400 USER_NOT_PARTICIPANT] - The user is not a member of this chat (caused by "channels.GetParticipant")""":
+                return await message.reply('This user is not in this group!')
+            elif str(e) == """Telegram says: [400 USERNAME_NOT_OCCUPIED] - The username is not occupied by anyone (caused by "contacts.ResolveUsername")""":
+                return await message.reply("Invalid user!")
+
+
         
         privileges = ChatPrivileges(
             can_change_info=False,
@@ -174,6 +204,15 @@ try:
             return await message.reply("Please enter a valid id.")
         if user_id == str(me_id):
             return await message.reply("You can't demote yourself!")
+        try:
+            user = await Sophia.get_chat_member(message.chat.id, user_id)
+            if user.custom_title == None:
+                return await message.reply("This user is not admin")
+        except Exception as e:
+            if str(e) == """Telegram says: [400 USER_NOT_PARTICIPANT] - The user is not a member of this chat (caused by "channels.GetParticipant")""":
+                return await message.reply('This user is not in this group!')
+            elif str(e) == """Telegram says: [400 USERNAME_NOT_OCCUPIED] - The username is not occupied by anyone (caused by "contacts.ResolveUsername")""":
+                return await message.reply("Invalid user!")
         
         privileges = ChatPrivileges(
             can_change_info=False,
