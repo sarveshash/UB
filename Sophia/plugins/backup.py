@@ -26,7 +26,7 @@ async def enable_backup(_, message):
                 
 
 
-@Sophia.on_message(filters.command(["resetbackup", "rbackup", "delbackup"], prefixes=HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command(["resetbackup", "rbackup", "delbackup"], prefixes=HANDLER) & filters.user(OWNER_ID) & filters.private)
 async def delete_backup(_, message):
     USERS = await GET_BACKUP_CHATS()
     if message.chat.id in USERS:
@@ -43,7 +43,7 @@ async def delete_backup(_, message):
     else:
         await message.reply("This chat has no backup!")
         
-@Sophia.on_message(filters.command(["stopbackup", "sbackup"], prefixes=HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command(["stopbackup", "sbackup"], prefixes=HANDLER) & filters.user(OWNER_ID) & filters.private)
 async def stop_backup(_, message):
     if message.chat.id in await GET_STOP_BACKUP_CHATS():
         return await message.reply("This chat already stoped in backup")
@@ -55,7 +55,7 @@ async def stop_backup(_, message):
         n = 0
     await message.reply("I have stopped this chat from backup")
 
-@Sophia.on_message(filters.command(["unstopbackup", "usbackup"], prefixes=HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command(["unstopbackup", "usbackup"], prefixes=HANDLER) & filters.user(OWNER_ID) & filters.private)
 async def unstop_backup(_, message):
     if message.chat.id not in await GET_STOP_BACKUP_CHATS():
         return await message.reply("This chat is not stoped in backup")
