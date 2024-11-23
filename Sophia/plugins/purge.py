@@ -7,7 +7,7 @@ try:
 
     @Sophia.on_message(filters.command("purge", prefixes=HANDLER) & filters.user("me"))
     async def purge_messages(_, message):
-        if message.chat.type.ChatType.PRIVATE:
+        if message.chat.type == ChatType.PRIVATE:
             return await message.reply("This command is only works on group!")
         if not message.reply_to_message:
             return await message.reply("Reply to the first message you want to delete.")
