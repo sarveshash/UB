@@ -13,7 +13,7 @@ async def mass_add(_, message):
     time_start = time.time()
     success = 0
     chat_username = message.text.split(None, 1)[1]
-    chat_info = await Sophia.get_chat(message.chat.id)
+    chat_info = await Sophia.get_chat(chat_username)
     if chat_info.type == ChatType.PRIVATE or chat_info.type == ChatType.CHANNEL:
         return await message.reply('Please enter a group id')
     loading_msg = await message.reply("Adding members...")
