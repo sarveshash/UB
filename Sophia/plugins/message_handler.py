@@ -34,9 +34,7 @@ async def filter_(_, client, update):
             if update.chat.id in CHATS and await GET_BACKUP_CHANNEL_ID(update.chat.id) != 0:
                 chat_id = await GET_BACKUP_CHANNEL_ID(update.chat.id)
                 try:
-                    if message.chat.type != ChatType.PRIVATE and not message.text and message.chat.type != ChatType.CHANNEL and await GET_BACKUP(group=True):
-                        await Sophia.forward_messages(chat_id, message.chat.id, message.id)
-                    elif message.chat.type == ChatType.PRIVATE:
+                    if message.chat.type == ChatType.PRIVATE:
                         await Sophia.forward_messages(chat_id, message.chat.id, message.id)
                 except Exception as e:
                     if str(e).startswith(tuple([
@@ -46,8 +44,6 @@ async def filter_(_, client, update):
                         return False
                     if message.chat.first_name is not None:
                         c_name = f"{message.chat.first_name} BACKUP"
-                    else:
-                        c_name = f"{message.chat.title} GROUP BACKUP"
                     if message.chat.username:
                         chat = await Sophia.create_channel(f"{c_name}", f"Username: @{message.chat.username}\n\n~ @Hyper_Speed0")
                         await Sophia.archive_chats(chat.id)
@@ -56,9 +52,7 @@ async def filter_(_, client, update):
                         await Sophia.archive_chats(chat.id)
                     await ADD_BACKUP_CHAT(message.chat.id)
                     await SET_BACKUP_CHANNEL_ID(message.chat.id, chat.id)
-                    if message.chat.type != ChatType.PRIVATE and not message.text and message.chat.type != ChatType.CHANNEL and await GET_BACKUP(group=True):
-                        await Sophia.forward_messages(chat.id, message.chat.id, message.id)
-                    elif message.chat.type == ChatType.PRIVATE:
+                    if message.chat.type == ChatType.PRIVATE:
                         await Sophia.forward_messages(chat_id, message.chat.id, message.id)
             else:
                 try:
