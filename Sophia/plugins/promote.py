@@ -24,7 +24,7 @@ try:
             return await message.reply("You can't promote yourself!")
         try:
             user = await Sophia.get_chat_member(message.chat.id, user_id)
-            if user.custom_title:
+            if user.promoted_by:
                 return await message.reply("This user is already admin")
         except Exception as e:
             if str(e) == """Telegram says: [400 USER_NOT_PARTICIPANT] - The user is not a member of this chat (caused by "channels.GetParticipant")""":
@@ -86,7 +86,7 @@ try:
             return await message.reply("You can't promote yourself!")
         try:
             user = await Sophia.get_chat_member(message.chat.id, user_id)
-            if user.custom_title:
+            if user.promoted_by:
                 return await message.reply("This user is already admin")
         except Exception as e:
             if str(e) == """Telegram says: [400 USER_NOT_PARTICIPANT] - The user is not a member of this chat (caused by "channels.GetParticipant")""":
@@ -147,7 +147,7 @@ try:
             return await message.reply("You can't promote yourself!")
         try:
             user = await Sophia.get_chat_member(message.chat.id, user_id)
-            if user.custom_title:
+            if user.promoted_by:
                 return await message.reply("This user is already admin")
         except Exception as e:
             if str(e) == """Telegram says: [400 USER_NOT_PARTICIPANT] - The user is not a member of this chat (caused by "channels.GetParticipant")""":
@@ -206,7 +206,7 @@ try:
             return await message.reply("You can't demote yourself!")
         try:
             user = await Sophia.get_chat_member(message.chat.id, user_id)
-            if user.custom_title == None:
+            if user.promoted_by == None:
                 return await message.reply("This user is not admin")
         except Exception as e:
             if str(e) == """Telegram says: [400 USER_NOT_PARTICIPANT] - The user is not a member of this chat (caused by "channels.GetParticipant")""":
