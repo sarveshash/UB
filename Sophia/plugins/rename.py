@@ -8,14 +8,6 @@ from pyrogram import *
 import asyncio
 import os
 
-video_formats = ['mp4', 'avi', 'mkv', 'mov', 'wmv', 'flv', 'webm', '3gp']
-audio_formats = ['mp3', 'wav', 'ogg', 'aac', 'flac', 'wma', 'm4a']
-text_formats = ['txt', 'csv', 'json', 'xml', 'html', 'md', 'pdf', 'text']
-coding_languages = ['py', 'java', 'js', 'c', 'css', 'ruby', 'php', 'swift']
-Image_Formats = ['jpeg', 'png', 'gif', 'tiff', 'bmp', 'webp', 'jpg']
-other_formats = ['apk', 'bat', 'jar', 'iso', 'rar', '7z', 'tar.gz', 'tar.bz2', 'zip', 'tar', 'exe']
-
-formats = [video_formats, audio_formats, text_formats, coding_languages, Image_Formats, other_formats]
 
 @bot.on_message(filters.command("rename", prefixes=HANDLER) & filters.user(OWNER_ID)) 
 def rename(_, message):
@@ -24,9 +16,7 @@ def rename(_, message):
             return bot.send_message(message.chat.id, "Master, Please enter Text ⚠️")
         try:
             filename = message.text.replace(message.text.split(" ")[0], "")
-            if not any(filename.endswith(format) for format_list in formats for format in format_list):
-                message.reply_text("Master, Please enter a valid format (e.g., .mp4).")
-            else:
+            if 0 = 0:
                 if reply := message.reply_to_message:
                     x = message.reply_text("`Downloading....`")
                     try:
