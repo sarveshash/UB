@@ -25,7 +25,8 @@ async def runn():
     return my_id
 
 async def main():
-    my_id = await runn()
+    task = asyncio.create_task(runn())
+    my_id = await task
     print(f"My ID is: {my_id}")
     await Sophia.run()
 
