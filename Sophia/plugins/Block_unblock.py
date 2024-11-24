@@ -1,12 +1,11 @@
 from Sophia import HANDLER
 from Sophia.__main__ import Sophia
-from config import OWNER_ID
 from pyrogram import filters
 import asyncio
 import os
 from pyrogram import enums
 
-@Sophia.on_message(filters.command("block", prefixes=HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command("block", prefixes=HANDLER) & filters.me)
 async def block_user(_, message):
     if message.chat.type == enums.ChatType.PRIVATE:
         try:
