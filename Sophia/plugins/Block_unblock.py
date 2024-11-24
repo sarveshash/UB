@@ -25,7 +25,7 @@ async def block_user(_, message):
                 await message.reply("ERROR", e)
 
 
-@Sophia.on_message(filters.command("unblock", prefixes=HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command("unblock", prefixes=HANDLER) & filters.me)
 async def unblock_user(_, message):
     if message.chat.type == enums.ChatType.SUPERGROUP:
         if not message.reply_to_message:
