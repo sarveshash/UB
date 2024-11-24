@@ -1,12 +1,11 @@
 from Sophia import HANDLER
 from Sophia.__main__ import Sophia
-from config import OWNER_ID
 from pyrogram import filters
 import asyncio
 import os
 from pyrogram import enums
 
-@Sophia.on_message(filters.command("broadcastall", prefixes=HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command("broadcastall", prefixes=HANDLER) & filters.me)
 async def broadcast_all(_, message):
     SUCCESS = 0
     FAILED = 0
