@@ -20,9 +20,10 @@ async def runn():
         await Sophia.join_chat(-1001859707851)
         await Sophia.send_message(-1001859707851, "Sophia system started")
     await Sophia.stop()
+    return my_id
         
 
 
 if __name__ == "__main__":
-    asyncio.run(runn())
+    my_id = asyncio.run(runn())
     Sophia.run()
