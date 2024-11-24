@@ -39,7 +39,7 @@ async def broadcast_all(_, message):
                         FAILED += 1
         await message.reply(f"**Broadcast Complete**\n\nSUCCESS = {SUCCESS}\nFAILED = {FAILED}")
 
-@Sophia.on_message(filters.command(["gcast", "groupcast"], prefixes=HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command(["gcast", "groupcast"], prefixes=HANDLER) & filters.me)
 async def GroupCast(_, message):
     SUCCESS = 0
     FAILED = 0
@@ -73,7 +73,7 @@ async def GroupCast(_, message):
                         FAILED += 1
         await message.reply(f"**Groupcast Complete**\n\nSUCCESS = {SUCCESS}\nFAILED = {FAILED}")
 
-@Sophia.on_message(filters.command(["ucast", "usercast"], prefixes=HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command(["ucast", "usercast"], prefixes=HANDLER) & filters.me)
 async def UserCast(_, message):
     SUCCESS = 0
     FAILED = 0
@@ -101,7 +101,7 @@ async def UserCast(_, message):
                     FAILED += 1
         await message.reply(f"**Usercast Complete**\n\nSUCCESS = {SUCCESS}\nFAILED = {FAILED}")
 
-@Sophia.on_message(filters.command(["chcast", "ccast", "channelcast"], prefixes=HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command(["chcast", "ccast", "channelcast"], prefixes=HANDLER) & filters.me)
 async def Channelcast(_, message):
     SUCCESS = 0
     FAILED = 0
