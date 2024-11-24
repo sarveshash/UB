@@ -7,7 +7,7 @@ from subprocess import getoutput as run
 from Restart import restart_program
 
 PWD = f"{os.getcwd()}/"
-my_id = 0
+my_id = None 
 async def runn():
     global my_id
     my_id = await Sophia.get_me()
