@@ -1,3 +1,4 @@
+import asyncio
 from Sophia import *
 from pyrogram import Client, filters
 import os
