@@ -1,4 +1,4 @@
-from Sophia import my_id
+from Sophia.__main__ import my_id
 
 # VARIABLES
 OWNER_ID = my_id or 5965055071
