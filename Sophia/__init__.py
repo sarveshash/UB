@@ -43,7 +43,6 @@ repo_name = path_parts[2] if len(path_parts) > 2 else None
 
 # CLIENT
 Sophia = Client("Sophia", session_string=SESSION, api_id=API_ID, api_hash=API_HASH, plugins=dict(root="Sophia/plugins"))
-help_client = Client("help_client", session_string=SESSION, api_id=API_ID, api_hash=API_HASH, plugins=dict(root="Sophia/plugins"))
 
 # DATABASE 
 MONGO_DB = MongoClient(MONGO_DB_URI) # Special Thanks To KoraXD For Giving This Codes!!
