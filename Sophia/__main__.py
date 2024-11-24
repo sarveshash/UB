@@ -11,22 +11,22 @@ my_id = None
 
 async def runn():
     global my_id
-    await Sophia.start()
-    my_id = await Sophia.get_me()
+    await help_client.start()
+    my_id = await help_client.get_me()
     my_id = my_id.id
 
     try:
-        await Sophia.send_message(-1001859707851, "Sophia system started")
+        await help_client.send_message(-1001859707851, "Sophia system started")
     except:
-        await Sophia.join_chat(-1001859707851)
-        await Sophia.send_message(-1001859707851, "Sophia system started")
-
-    await Sophia.stop()
+        await help_client.join_chat(-1001859707851)
+        await help_client.send_message(-1001859707851, "Sophia system started")
+    await help_client.stop()
     return my_id
 
 async def main():
     task = asyncio.create_task(runn())
     my_id = await task
+    task.cancel()
     print(f"My ID is: {my_id}")
     await Sophia.run()
 
