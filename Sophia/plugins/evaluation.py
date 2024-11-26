@@ -19,6 +19,7 @@ app = Sophia
 Client = Sophia
 bot = Sophia
 r = run
+ldb = DATABASE['ily']
 
 def p(text):
     print(text)
