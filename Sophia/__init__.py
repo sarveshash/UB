@@ -47,5 +47,5 @@ Sophia = Client("Sophia", session_string=SESSION, api_id=API_ID, api_hash=API_HA
 # DATABASE 
 MONGO_DB = MongoClient(MONGO_DB_URI) # Special Thanks To KoraXD For Giving This Codes!!
 DB = MONGO_DB.SOPHIA_UB
-DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["SOPHIA_UB"]
-GAME_DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["HYPER_GAMES"]
+DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["LinkUp"]
+GAME_DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["LinkUp"]
