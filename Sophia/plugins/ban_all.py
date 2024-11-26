@@ -8,6 +8,7 @@ from config import OWNER_ID as OWN
 from pyrogram import enums
 from pyrogram import filters
 from pyrogram.types import *
+import asyncio
 
 async def is_admin(chat_id: int, user_id: int):
     chat_members = await bot.get_chat_members(chat_id)
@@ -30,8 +31,12 @@ async def unbanall(_, message):
             unban = 0
             async for m in bot.get_chat_members(chat_id, filter=enums.ChatMembersFilter.BANNED):
                 BANNED.append(m.user.id)
-                await bot.unban_chat_member(chat_id, m.user.id)
-                unban += 1
+                try:
+                    await bot.unban_chat_member(chat_id, m.user.id)
+                    unban += 1
+                except:
+                    None 
+                await asyncio.sleep(0.8)
             await message.reply("Found Banned Members: {}\nUnbanned Successfully: {}".format(len(BANNED), unban))
         except Exception as e:
             if str(e) == """Telegram says: [400 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "channels.GetParticipants")""":
