@@ -4,8 +4,7 @@ WORKDIR /root/Sophia
 
 COPY . .
 
-# Remove comment if java and nodejs need
-# RUN apt-get update && apt-get install -y default-jre openjdk-17-jdk nodejs npm
+RUN apt-get update && apt-get install -y default-jre openjdk-17-jdk nodejs npm
 
 RUN pip3 install --upgrade pip setuptools
 RUN pip3 install -U -r requirements.txt
