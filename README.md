@@ -8,6 +8,7 @@ Get the full list of Sophia's features by clicking this link: [Sophia Commands](
  * Railway: Tested and working without errors.
 ## Installation & Setup
 -- ```bash
+
 apt update && apt upgrade```
 -- 
 ## Support & Community
