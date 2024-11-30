@@ -7,9 +7,12 @@ Get the full list of Sophia's features by clicking this link: [Sophia Commands](
  * Heroku: Tested and working without errors.
  * Railway: Tested and working without errors.
 ## Installation & Setup
--- ```apt update && apt upgrade```
--- ```git clone https://your_fork.repo/link/here```
--- 
+`apt update && apt upgrade`
+`git clone https://your_fork.repo/link/here`
+`cd downloaded_folder_name`
+`apt install python -y`
+`pip install -U -r requirements.txt`
+`python3 -m Sophia`
 ## Support & Community
  * Telegram Group: [Future_City](https://t.me/FutureCity005)
  * Owner: [Otazuki](https://t.me/Otazuki)
