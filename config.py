@@ -1,7 +1,6 @@
-from Sophia.__main__ import my_id
 
-# VARIABLES
-OWNER_ID = my_id or 5965055071
+from Sophia.__main__ import *
+OWNER_ID = Sophia.me.id
 
 # SETTINGS 
 Do_you_need_warnings = False # You will Get some Warning messages Using by some Commands. if you don't like change it False.
