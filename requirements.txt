@@ -1,6 +1,7 @@
 git+https://github.com/KurimuzonAkuma/pyrogram.git
 TgCrypto
 websocket-client
+websockets
 matplotlib
 beautifulsoup4
 aiofiles
