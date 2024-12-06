@@ -1,4 +1,5 @@
 import io
+import json
 import sys
 import traceback
 from Sophia import *
@@ -13,6 +14,7 @@ from pyrogram import enums
 from subprocess import getoutput as run
 from pytgcalls import *
 from pytgcalls.types import *
+import logging
 
 
 app = Sophia
