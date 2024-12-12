@@ -28,7 +28,7 @@ Get the full list of Sophia's features by clicking this link: [Sophia Commands](
 ## Disclaimer
 Sophia is a userbot, and its usage might violate Telegram's terms of service. Use it responsibly and at your own risk.
 ## Version & Status
- * Current Version: Beta 0.5
- * Upcoming Version: 1.0
+ * Current Version: 1.0
+ * Upcoming Version: 1.5
 ## Contributions
 Contributions and feedback are welcome! Please create an issue or submit a pull request.
