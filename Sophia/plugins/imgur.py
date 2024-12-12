@@ -25,7 +25,7 @@ async def imgur(_, message):
         headers = {"Authorization": "Client-ID a10ad04550b0648"}
         response = requests.post(url, headers=headers, data={"image": base64_data})
         result = response.json()
-        await msg.edit_text(f"""f"**Your link has been generated**: {result["data"]["link"]}""", disable_web_page_preview=True)
+        await msg.edit_text(f"""**Your link has been generated**: {result["data"]["link"]}""", disable_web_page_preview=True)
     else:
         await msg.edit_text("Please reply to a photo or animation (GIF) to upload to Imgur.")
 
