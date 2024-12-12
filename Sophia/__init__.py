@@ -27,7 +27,7 @@ HANDLER = ["~",".","!","$","#"]
 LOG_CHANNEL = -1002010994783
 MONGO_DB_URI = os.environ.get("MONGO_DB_URI") or VAR_MONGO_DB_URI
 REPO_URL = os.environ.get("YOUR_REPO_LINK") or VAR_REPO_URL
-MY_VERSION = 511
+MY_VERSION = 1.0
 
 if not SESSION or not API_ID or not API_HASH or not MONGO_DB_URI or not REPO_URL:
     logging.warn("You should enter the required details on variables.py or you need set env")
