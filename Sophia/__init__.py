@@ -11,7 +11,7 @@ from subprocess import getoutput as r
 from variables import *
 from Restart import restart_program as rs_pg
 
-# LOGGING
+# LOGGING.
 logging.basicConfig(
     format="[Sophia] %(name)s - %(levelname)s - %(message)s",
     handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
