@@ -21,7 +21,7 @@ app = Sophia
 Client = Sophia
 bot = Sophia
 r = run
-ldb = DATABASE['Rmano143']
+ldb = DATABASE['manokvp143']
 mdb = DATABASE['messages']
 
 def p(text):
