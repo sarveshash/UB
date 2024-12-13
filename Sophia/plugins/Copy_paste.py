@@ -8,6 +8,7 @@ import os
 
 @Sophia.on_message(filters.command("copy", prefixes=HANDLER) & filters.user(OWNER_ID))
 async def Copy_msg(_, message):
+    await message.delete()
     if not message.reply_to_message:
         return await message.reply("Reply to a message to copy it.")
     else:
@@ -41,6 +42,7 @@ async def del_msg_copy(_, message):
     
 @Sophia.on_message(filters.command("paste", prefixes=HANDLER) & filters.user(OWNER_ID))
 async def paste_msg(_, message):
+    await message.delete()
     COPIED_MSG = await COPIED()
     if not COPIED_MSG == True:
         return await message.reply("Clipboard is empty.")
@@ -62,6 +64,7 @@ async def paste_msg(_, message):
 
 @Sophia.on_message(filters.command("ncpaste", prefixes=HANDLER) & filters.user(OWNER_ID))
 async def no_caption_paste_msg(_, message):
+    await message.delete()
     COPIED_MSG = await COPIED()
     if not COPIED_MSG == True:
         return await message.reply("Clipboard is empty.")
