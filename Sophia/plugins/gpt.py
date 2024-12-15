@@ -5,7 +5,7 @@ from Sophia.__main__ import Sophia as app
 from config import OWNER_ID
 from Sophia import HANDLER
 import json
-import datetime 
+from datetime import datetime 
 
 def fetch_data(query: str, message: str) -> tuple:
     try:
