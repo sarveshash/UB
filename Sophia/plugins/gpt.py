@@ -36,11 +36,16 @@ async def chatgpt(_: Client, message: Message):
     if len(message.command) < 2:
         return await message.reply_text("Please provide a query.")
     query = " ".join(message.command[1:])
+    mquery = False
     if message.reply_to_message:
+        rname = message.reply_to_message.from_user.first_name
+        is_bot = message.reply_to_message.from_user.first_name.is_bot
+        urname = message.first_name
         if message.reply_to_message.text:
-            mquery = f"The replied message you see is the user replied msg he asking something about that thing so you should act like he asking about that reply to you\n\n\nuser replied msg: {message.reply_to_message.text}\n\nUser message: {query}"
+            mquery = f"The replied message you see is the user replied msg he asking something about that thing so you should act like he asking about that reply to you if he doesn't ask about that reply you shouldnt talk about that\n\n\nuser replied msg: {message.reply_to_message.text}\n\nUser message: {query}"
             if message.reply_to_message.reply_to_message and message.reply_to_message.reply_to_message.text:
-                mquery = f"The replied message you see is the user replied msg he asking something about that thing so you should act like he asking about that reply to you\n\n\nuser replied msg ( 2nd msg ): {message.reply_to_message.text}\n\n User replied message replied msg ( 1st msg ): {message.reply_to_message.reply_to_message.text}\n\n User message ( 3rd latest msg ): {query}"
+                mquery = f"The replied message you see is the user replied msg he asking something about that thing so you should act like he asking about that reply to you if he doesn't ask about that reply you shouldnt talk about that\n\n\nuser replied msg ( 2nd msg ): {message.reply_to_message.text}\n\n User replied message replied msg ( 1st msg ): {message.reply_to_message.reply_to_message.text}\n\n User message ( 3rd latest msg ): {query}"
+            mquery += f"ADDITIONAL INFORMATION ABOUT REPLIED USER:\n Reply user name: {rname}\n is replied user is bot: {is_bot}\n Sender name: {urname}\n\n This user using userbot to use you in telegram"
     txt = await message.reply_text("`Processing...`")
     if mquery:
         api_response = fetch_data(mquery, message)
