@@ -38,9 +38,9 @@ async def chatgpt(_: Client, message: Message):
     query = " ".join(message.command[1:])
     if message.reply_to_message:
         if message.reply_to_message.text:
-            mquery = f"user replied msg: {message.reply_to_message.text}\n\nUser message: {query}"
+            mquery = f"The replied message you see is the user replied msg he asking something about that thing so you should act like he asking about that reply to you\n\n\nuser replied msg: {message.reply_to_message.text}\n\nUser message: {query}"
             if message.reply_to_message.reply_to_message and message.reply_to_message.reply_to_message.text:
-                mquery = f"user replied msg ( 2nd msg ): {message.reply_to_message.text}\n\n User replied message replied msg ( 1st msg ): {message.reply_to_message.reply_to_message.text}\n\n User message ( 3rd latest msg ): {query}"
+                mquery = f"The replied message you see is the user replied msg he asking something about that thing so you should act like he asking about that reply to you\n\n\nuser replied msg ( 2nd msg ): {message.reply_to_message.text}\n\n User replied message replied msg ( 1st msg ): {message.reply_to_message.reply_to_message.text}\n\n User message ( 3rd latest msg ): {query}"
     txt = await message.reply_text("`Processing...`")
     if mquery:
         api_response = fetch_data(mquery, message)
