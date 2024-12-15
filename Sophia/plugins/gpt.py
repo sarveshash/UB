@@ -17,7 +17,7 @@ def fetch_data(query: str, message: str) -> tuple:
         url =  "https://api.binjie.fun/api/generateStream"
         data = {
             "prompt": query,
-            "userId": "#/chat/1722576084617",
+            "userId": f"#/chat/{message.from_user.id}",
             "network": True,
             "stream": False,
             "system": {
