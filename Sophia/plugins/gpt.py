@@ -26,7 +26,7 @@ def fetch_data(query: str, message: str) -> tuple:
             }
         }
         response = requests.post(url, headers=headers, data=json.dumps(data))
-        data = response.json()
+        data = response.text()
         return data.get("message", "No response from the API.")
     except Exception as e:
         return f"An error occurred: {str(e)}"
