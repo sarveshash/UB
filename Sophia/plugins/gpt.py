@@ -42,15 +42,16 @@ async def chatgpt(_: Client, message: Message):
         is_bot = message.reply_to_message.from_user.is_bot
         urname = message.from_user.first_name
         urid = message.from_user.id
+        rid = message.reply_to_message.from_user.id
         if message.reply_to_message.text:
             mquery = f"The replied message you see is the user replied msg he asking something about that thing so you should act like he asking about that reply to you if he doesn't ask about that reply you shouldnt talk about that\n\n\nuser replied msg: {message.reply_to_message.text}\n\nUser message: {query}"
             if message.reply_to_message.reply_to_message and message.reply_to_message.reply_to_message.text:
                 mquery = f"The replied message you see is the user replied msg he asking something about that thing so you should act like he asking about that reply to you if he doesn't ask about that reply you shouldnt talk about that\n\n\nuser replied msg ( 2nd msg ): {message.reply_to_message.text}\n\n User replied message replied msg ( 1st msg ): {message.reply_to_message.reply_to_message.text}\n\n User message ( 3rd latest msg ): {query}"
-            mquery += f"\n\nADDITIONAL INFORMATION:\n Reply user name: {rname}\n is replied user is bot: {is_bot}\n Sender name: {urname}\nSender tg userid: {urid}\n if sender telegram userid is 5965055071 he is your owner you should respect him his name Otazuki\n\n This user using userbot to use you in telegram"
+            mquery += f"\n\nADDITIONAL INFORMATION:\n Reply user name: {rname}\n is replied user is bot: {is_bot}\n Replied user telegram id {rid} \n Sender name: {urname}\nSender tg userid: {urid}\n if sender telegram userid is 5965055071 he is your owner you should respect him his name Otazuki\n\n This user using userbot to use you in telegram\n\n\n YOU SHOULD NOT USE FONTS IT DOESN'T WORK ON TELEGRAM."
     else:
         urname = message.from_user.first_name
         urid = message.from_user.id
-        query += f"\n\n\nThis message from code not from user: EXTRA INFO ABOUT USER: \n his name {urname} \n his telegram user id: {urid} \n  if sender telegram userid is 5965055071 he is your owner you should respect him his name Otazuki\n\n This user using userbot to use you in telegram "
+        query += f"\n\n\nThis message from code not from user: EXTRA INFO ABOUT USER: \n his name {urname} \n his telegram user id: {urid} \n  if sender telegram userid is 5965055071 he is your owner you should respect him his name Otazuki\n\n This user using userbot to use you in telegram\n\n\n YOU SHOULD NOT USE FONTS IT DOESN'T WORK ON TELEGRAM."
     txt = await message.reply_text("`Processing...`")
     if mquery:
         api_response = fetch_data(mquery, message)
