@@ -4,11 +4,28 @@ from pyrogram.types import Message
 from Sophia.__main__ import Sophia as app
 from config import OWNER_ID
 from Sophia import HANDLER
-
+import json
 
 def fetch_data(query: str, message: str) -> tuple:
     try:
-        response = requests.get(f"https://stark.animecloud.tech/chat?brain_id={message.from_user.id}&prompt={query}&bot_name=Sophia&user_name={message.from_user.first_name}&gender=FEMALE")
+        headers = {
+            "Accept": "application/json, text/plain, */*",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Content-Type": "application/json"
+        }
+        url =  "https://api.binjie.fun/api/generateStream"
+        oh = {
+            "prompt": query,
+            "network": True,
+            "stream": False,
+            "userId": "#/chat/1722576084617",
+            "system": {
+                "userId": "#/chat/1722576084617",
+                "withoutContext": False
+            }
+        }
+        response = requests.post(url, headers=headers, data=json.dumps(oh))
         response.raise_for_status()
         data = response.json()
         return data.get("message", "No response from the API."), None
