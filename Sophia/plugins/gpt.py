@@ -15,18 +15,17 @@ def fetch_data(query: str, message: str) -> tuple:
             "Content-Type": "application/json"
         }
         url =  "https://api.binjie.fun/api/generateStream"
-        oh = {
+        data = {
             "prompt": query,
+            "userId": "#/chat/1722576084617",
             "network": True,
             "stream": False,
-            "userId": "#/chat/1722576084617",
             "system": {
                 "userId": "#/chat/1722576084617",
                 "withoutContext": False
             }
         }
-        response = requests.post(url, headers=headers, data=json.dumps(oh))
-        response.raise_for_status()
+        response = requests.post(url, headers=headers, data=json.dumps(data))
         data = response.json()
         return data.get("message", "No response from the API."), None
     except requests.exceptions.RequestException as e:
@@ -35,7 +34,7 @@ def fetch_data(query: str, message: str) -> tuple:
         return None, f"An error occurred: {str(e)}"
 
 @app.on_message(filters.command(["chat", "gpt"], prefixes=HANDLER) & filters.user(OWNER_ID))
-async def chatgpt4(_: Client, message: Message):
+async def chatgpt(_: Client, message: Message):
     if len(message.command) < 2:
         return await message.reply_text("Master, Please provide a query.")
 
