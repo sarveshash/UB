@@ -3,7 +3,7 @@ from Sophia.__main__ import Sophia
 from config import OWNER_ID
 from pyrogram import filters
 
-@Sophia.on_message(filters.command(['del', 'delete'], prefixes=HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command(['del', 'delete', 'd'], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def message_del(_, message):
     if message.reply_to_message:
         try:
