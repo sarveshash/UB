@@ -76,7 +76,7 @@ async def eval(client, message):
         with io.BytesIO(str.encode(final_output)) as out_file:
             out_file.name = "eval.txt"
             await reply_to_.reply_document(
-                document=out_file, caption=cmd, disable_notification=True
+                document=out_file, disable_notification=True
             )
     else:
         await reply_to_.reply_text(output_code)
