@@ -67,7 +67,7 @@ async def play(_, message):
         await SophiaVC.play(message.chat.id, MediaStream(path))
         
     except Exception as e:
-        await m.edit(f"**Error:**{e} ")
+        await message.reply(f"**Error:**{e} ")
         print(e)
     try:
         os.remove(audio_file)
