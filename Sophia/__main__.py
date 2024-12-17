@@ -4,14 +4,9 @@ from pyrogram import Client, filters
 import os
 from subprocess import getoutput as run
 from Restart import restart_program
-from pytgcalls import idle
 
 PWD = f"{os.getcwd()}/"
 my_id = None
 
-def start_pyro():
-    Sophia.run()
-
 if __name__ == "__main__":
-    threading.Thread(target=start_pyro).start()
-    idle()
+    Sophia.run()
