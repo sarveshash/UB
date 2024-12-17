@@ -70,7 +70,7 @@ async def play(_, message):
             photo=thumb_name,
             caption=(
                 f"**✅ Started Streaming On VC.**\n\n"
-                f"**🥀 Title:** {title[:15] if len(title) > 15 else title}\n"
+                f"**🥀 Title:** {title[:19] if len(title) > 19 else title}\n"
                 f"**🐬 Duration:** __{dur // 60}:{dur % 60:02d}__ Mins\n"
                 f"**🦋 Stream Type:** Audio\n"
                 f"**👾 By:** SophiaUB\n"
