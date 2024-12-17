@@ -68,6 +68,10 @@ async def play(_, message):
         await m.delete()
         await message.reply_photo(photo=thumb_name, caption=f"Started playing: {title}")
         await SophiaVC.play(message.chat.id, MediaStream(audio_file))
+        try:
+            await SophiaVC.leave_call(message.chat.id)
+        except:
+            None
         
     except Exception as e:
         await message.reply(f"Error: {e} ")
