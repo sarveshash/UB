@@ -64,10 +64,10 @@ async def play(_, message):
             secmul *= 60
         await m.delete()
         await message.reply_photo(photo=thumb_name, caption=f"Started playing: {title}")
-        await SophiaVC.play(message.chat.id, MediaStream(path))
+        await SophiaVC.play(message.chat.id, MediaStream(audio_file))
         
     except Exception as e:
-        await message.reply(f"**Error:**{e} ")
+        await message.reply(f"Error: {e} ")
         print(e)
     try:
         os.remove(audio_file)
