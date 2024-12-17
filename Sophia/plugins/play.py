@@ -66,7 +66,17 @@ async def play(_, message):
             dur += int(float(dur_arr[i])) * secmul
             secmul *= 60
         await m.delete()
-        await message.reply_photo(photo=thumb_name, caption=f"**✅ Started Streaming On VC.**\n\n**🥀 Title:** {title[:15] if len(title) > 15 else title}\n**🐬 Duration:** __{dur // 60}:{dur % 60:02d}__ Mins\n**🦋 Stream Type:** Audio\n**👾 By:** SophiaUB⁧\n**⚕️ Join:* __@Hyper_Speed0 & @FutureCity005__")
+        await message.reply_photo(
+            photo=thumb_name,
+            caption=(
+                f"**✅ Started Streaming On VC.**\n\n"
+                f"**🥀 Title:** {title[:15] if len(title) > 15 else title}\n"
+                f"**🐬 Duration:** __{dur // 60}:{dur % 60:02d}__ Mins\n"
+                f"**🦋 Stream Type:** Audio\n"
+                f"**👾 By:** SophiaUB\n"
+                f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
+            )
+        )
         await SophiaVC.play(message.chat.id, MediaStream(audio_file))
         try:
             await asyncio.sleep(dur + 2)
