@@ -10,6 +10,7 @@ import wget
 from youtube_search import YoutubeSearch
 from yt_dlp import YoutubeDL
 import yt_dlp
+from pytgcalls.types import MediaStream
 
 
 flex = {}
