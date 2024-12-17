@@ -29,10 +29,13 @@ ydl_opts = {
 
 @bot.on_message(filters.command("play", prefixes=HANDLER) & filters.user(OWN))
 async def play(_, message):
+    try:
+        await SophiaVC.start()
+    except:
+        None
     if len(message.text.split()) <2:
         await message.reply("Give a song name to search it")
         return
-    await SophiaVC.start()
     query = " ".join(message.command[1:])
     m = await message.reply("🔄 Searching....")
     ydl_ops = {"format": "bestaudio[ext=m4a]"}
