@@ -1,8 +1,7 @@
-import asyncio
+import threading
 from Sophia import *
 from pyrogram import Client, filters
 import os
-import io
 from subprocess import getoutput as run
 from Restart import restart_program
 from pytgcalls import idle
@@ -10,6 +9,9 @@ from pytgcalls import idle
 PWD = f"{os.getcwd()}/"
 my_id = None
 
-if __name__ == "__main__":
-    idle()
+def start_pyro():
     Sophia.run()
+
+if __name__ == "__main__":
+    threading.Thread(target=start_pyro).start()
+    idle()
