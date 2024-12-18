@@ -27,8 +27,7 @@ ydl_opts = {
 @bot.on_message(filters.command("song", prefixes=HANDLER) & filters.user(OWN))
 async def song(_, message):
     if len(message.text.split()) <2:
-        await message.reply("Master, Give a song name to search it")
-        return
+        return await message.reply("Give a song name to search it")
     query = " ".join(message.command[1:])
     m = await message.reply("🔄 Searching....")
     ydl_ops = {"format": "bestaudio[ext=m4a]"}
@@ -74,5 +73,58 @@ async def song(_, message):
     try:
         os.remove(audio_file)
         os.remove(thumb_name)
+    except Exception as e:
+        print(e)
+
+# Video
+
+
+@HS.on_message(filters.command("video", prefixes=HANDLER) & filters.user(OWN))
+async def video(client, message):
+    if len(message.text.split()) <2:
+        return await message.reply("Give a video name to search it")
+    ydl_opts = {
+        "format": "best",
+        "keepvideo": True,
+        "prefer_ffmpeg": False,
+        "geo_bypass": True,
+        "outtmpl": "%(title)s.%(ext)s",
+        "quite": True,
+    }
+    query = " ".join(message.command[1:])
+    try:
+        results = YoutubeSearch(query, max_results=1).to_dict()
+        link = f"https://youtube.com{results[0]['url_suffix']}"
+        title = results[0]["title"][:40]
+        thumbnail = results[0]["thumbnails"][0]
+        thumb_name = f"{title}.jpg"
+        thumb = requests.get(thumbnail, allow_redirects=True)
+        open(thumb_name, "wb").write(thumb.content)
+        results[0]["duration"]
+        results[0]["url_suffix"]
+        results[0]["views"]
+        message.from_user.mention
+    except Exception as e:
+        print(e)
+    try:
+        msg = await message.reply("Video Processing..")
+        with YoutubeDL(ydl_opts) as ytdl:
+            ytdl_data = ytdl.extract_info(link, download=True)
+            file_name = ytdl.prepare_filename(ytdl_data)
+    except Exception as e:
+        return await msg.edit(f"🚫 Error: {e}")
+    preview = wget.download(thumbnail)
+    await msg.edit("Process Complete.\n Now Uploading.")
+    title = ytdl_data["title"]
+    await message.reply_video(
+        file_name,
+        duration=int(ytdl_data["duration"]),
+        thumb=preview,
+        caption=f"**{title} Powered by: @Hyper_Speed0**",
+    )
+
+    await msg.delete()
+    try:
+        os.remove(file_name)
     except Exception as e:
         print(e)
