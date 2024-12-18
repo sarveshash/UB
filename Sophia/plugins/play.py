@@ -35,7 +35,7 @@ async def play(_, message):
     except:
         None
     if len(message.text.split()) <2:
-        if message.reply_to_message && message.reply_to_message.audio:
+        if message.reply_to_message and message.reply_to_message.audio:
             try:
                 m = await message.reply("📥 Downloading...")
                 audio = message.reply_to_message.audio
