@@ -35,21 +35,21 @@ async def play(_, message):
     except:
         None
     if len(message.text.split()) <2:
-        if message.reply_to_message and message.reply_to_message.audio or message.reply_to_message and message.reply_to_message.video:
+        if message.reply_to_message and message.reply_to_message.audio:
             try:
                 m = await message.reply("📥 Downloading...")
-                file = message.reply_to_message.audio or message.reply_to_message.video
+                file = message.reply_to_message.audio
                 path = await message.reply_to_message.download()
-                title = file.title or file.file_name
+                title = file.title
                 dur = file.duration
                 await m.delete()
                 await message.reply_photo(
                     photo="https://i.imgur.com/KdPrxqN.jpeg",
                     caption=(
                         f"**✅ Started Streaming On VC.**\n\n"
-                        f"**🥀 Title:** {title[:19] if len(title) > 19 else title}\n"
+                        f"**🥀 Title:** {title[:20] if len(title) > 20 else title}\n"
                         f"**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n"
-                        f"**🦋 Stream Type:** Telegram {'audio' if message.reply_to_message.audio else 'video'}\n"
+                        f"**🦋 Stream Type:** Telegram audio\n"
                         f"**👾 By:** SophiaUB\n"
                         f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
                     )
@@ -60,11 +60,10 @@ async def play(_, message):
                     await SophiaVC.leave_call(message.chat.id)
                 except:
                     None
-                return
             except Exception as e:
                 await message.reply(f"Error: {e}")
                 logging.error(e)
-                return
+            return
         else:
             return await message.reply("Give a song name to search it")
     query = " ".join(message.command[1:])
@@ -101,7 +100,7 @@ async def play(_, message):
             photo=thumb_name,
             caption=(
                 f"**✅ Started Streaming On VC.**\n\n"
-                f"**🥀 Title:** {title[:19] if len(title) > 19 else title}\n"
+                f"**🥀 Title:** {title[:20] if len(title) > 20 else title}\n"
                 f"**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n"
                 f"**🦋 Stream Type:** Audio\n"
                 f"**👾 By:** SophiaUB\n"
