@@ -57,9 +57,8 @@ async def play(_, message):
                         f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
                     )
                 )
-                await SophiaVC.play(message.chat.id, MediaStream(path))
+                SophiaVC.play(message.chat.id, MediaStream(path))
                 try:
-                    await asyncio.sleep(dur+5)
                     await SophiaVC.leave_call(message.chat.id)
                 except:
                     None
@@ -110,8 +109,11 @@ async def play(_, message):
                 f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
             )
         )
-        await SophiaVC.play(message.chat.id, MediaStream(audio_file))
-        
+        SophiaVC.play(message.chat.id, MediaStream(audio_file))
+        try:
+            await SophiaVC.leave_call(message.chat.id)
+        except:
+            None
     except Exception as e:
         await message.reply(f"Error: {e} ")
         print(e)
