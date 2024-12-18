@@ -27,9 +27,12 @@ ydl_opts = {
     "quite": True,
 }
 
+songQ = {}
+
 
 @bot.on_message(filters.command(["play", "sp"], prefixes=HANDLER) & filters.user(OWN))
 async def play(_, message):
+    global songQ
     try:
         await SophiaVC.start()
     except:
