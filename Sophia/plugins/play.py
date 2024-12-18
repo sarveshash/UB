@@ -35,13 +35,13 @@ async def play(_, message):
     except:
         None
     if len(message.text.split()) <2:
-        if message.reply_to_message and message.reply_to_message.audio:
+        if message.reply_to_message and message.reply_to_message.audio or message.reply_to_message and message.reply_to_message.video:
             try:
                 m = await message.reply("📥 Downloading...")
-                audio = message.reply_to_message.audio
-                audioPath = await message.reply_to_message.download()
-                title = message.reply_to_message.audio.title
-                dur = message.reply_to_message.audio.duration
+                file = message.reply_to_message.audio or message.reply_to_message.video
+                path = await message.reply_to_message.download()
+                title = message.reply_to_message.audio.title or message.reply_to_message.video.title
+                dur = message.reply_to_message.audio.duration or message.reply_to_message.video.duration
                 await m.delete()
                 await message.reply_photo(
                     photo="https://i.imgur.com/KdPrxqN.jpeg",
@@ -49,12 +49,12 @@ async def play(_, message):
                         f"**✅ Started Streaming On VC.**\n\n"
                         f"**🥀 Title:** {title[:19] if len(title) > 19 else title}\n"
                         f"**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n"
-                        f"**🦋 Stream Type:** Telegram Audio\n"
+                        f"**🦋 Stream Type:** Telegram {'audio' if message.reply_to_message.audio else 'video'}\n"
                         f"**👾 By:** SophiaUB\n"
                         f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
                     )
                 )
-                await SophiaVC.play(message.chat.id, MediaStream(audioPath))
+                await SophiaVC.play(message.chat.id, MediaStream(path))
                 try:
                     await asyncio.sleep(dur+5)
                     await SophiaVC.leave_call(message.chat.id)
