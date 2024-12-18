@@ -40,7 +40,7 @@ async def play(_, message):
                 m = await message.reply("📥 Downloading...")
                 file = message.reply_to_message.audio or message.reply_to_message.video
                 path = await message.reply_to_message.download()
-                title = file.title
+                title = file.title or file.file_name
                 dur = file.duration
                 await m.delete()
                 await message.reply_photo(
