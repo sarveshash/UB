@@ -56,7 +56,7 @@ async def play(_, message):
                 )
                 await SophiaVC.play(message.chat.id, MediaStream(audioPath))
                 try:
-                    await asyncio.sleep(dur)
+                    await asyncio.sleep(dur+5)
                     await SophiaVC.leave_call(message.chat.id)
                 except:
                     None
