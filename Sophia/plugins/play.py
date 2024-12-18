@@ -60,9 +60,11 @@ async def play(_, message):
                     await SophiaVC.leave_call(message.chat.id)
                 except:
                     None
+                return
             except Exception as e:
                 await message.reply(f"Error: {e}")
                 logging.error(e)
+                return
         else:
             return await message.reply("Give a song name to search it")
     query = " ".join(message.command[1:])
