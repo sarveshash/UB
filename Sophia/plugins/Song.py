@@ -107,14 +107,14 @@ async def video(client, message):
     except Exception as e:
         print(e)
     try:
-        msg = await message.reply("Video Processing..")
+        msg = await message.reply("📥 Downloading...")
         with YoutubeDL(ydl_opts) as ytdl:
             ytdl_data = ytdl.extract_info(link, download=True)
             file_name = ytdl.prepare_filename(ytdl_data)
     except Exception as e:
         return await msg.edit(f"🚫 Error: {e}")
     preview = wget.download(thumbnail)
-    await msg.edit("Process Complete.\n Now Uploading.")
+    await msg.edit("📤 Uploading...")
     title = ytdl_data["title"]
     await message.reply_video(
         file_name,
