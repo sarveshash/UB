@@ -6,29 +6,11 @@ from pyrogram import filters
 import asyncio
 import os
 import requests
-import logging
-import wget
 from youtube_search import YoutubeSearch
 from yt_dlp import YoutubeDL
-import yt_dlp
-from pytgcalls import *
 from pytgcalls.types import MediaStream
 
-
-flex = {}
-chat_watcher_group = 3
-
-ydl_opts = {
-    "format": "low",
-    "keepvideo": True,
-    "prefer_ffmpeg": False,
-    "geo_bypass": True,
-    "outtmpl": "%(title)s.%(ext)s",
-    "quite": True,
-}
-
 vcInfo = {}
-
 
 @bot.on_message(filters.command(["play", "sp"], prefixes=HANDLER) & filters.user(OWN))
 async def play(_, message):
@@ -36,15 +18,15 @@ async def play(_, message):
     try:
         await SophiaVC.start()
     except:
-        None
-    if len(message.text.split()) <2:
+        pass
+    if len(message.text.split()) < 2:
         if message.reply_to_message and message.reply_to_message.audio:
             try:
                 m = await message.reply("📥 Downloading...")
                 file = message.reply_to_message.audio
                 path = await message.reply_to_message.download()
-                title = file.title
-                dur = file.duration
+                title = file.title or "Unknown Title"
+                dur = file.duration or 0
                 await m.delete()
                 await message.reply_photo(
                     photo="https://i.imgur.com/KdPrxqN.jpeg",
@@ -57,48 +39,38 @@ async def play(_, message):
                         f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
                     )
                 )
-                vcInfo[f'playing_{message.chat.id}'] = title
+                vcInfo[message.chat.id] = {"title": title, "duration": dur}
                 await SophiaVC.play(message.chat.id, MediaStream(path))
-                try:
-                    await asyncio.sleep(dur+5)
-                    if vcInfo.get(f'playing_{message.chat.id}') == title or not vcInfo.get(f'playing_{message.chat.id}'):
-                        await SophiaVC.leave_call(message.chat.id)
-                except:
-                    None
+                await manage_playback(message.chat.id, title, dur)
             except Exception as e:
                 await message.reply(f"Error: {e}")
-                logging.error(e)
             return
         else:
             return await message.reply("Give a song name to search it")
     query = " ".join(message.command[1:])
     m = await message.reply("🔄 Searching....")
-    ydl_ops = {"format": "bestaudio[ext=m4a]"}
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
         link = f"https://youtube.com{results[0]['url_suffix']}"
         title = results[0]["title"][:4000]
         thumbnail = results[0]["thumbnails"][0]
+        duration = results[0]["duration"]
         thumb_name = f"{title}.jpg"
         thumb = requests.get(thumbnail, allow_redirects=True)
         open(thumb_name, "wb").write(thumb.content)
-        duration = results[0]["duration"]
-
     except Exception as e:
-        await m.edit(
-            "⚠️ No results were found. Make sure you typed the information correctly"
-        )
-        print(str(e))
+        await m.edit("⚠️ No results were found.")
         return
     await m.edit("📥 Downloading...")
     try:
-        with yt_dlp.YoutubeDL(ydl_ops) as ydl:
+        ydl_opts = {"format": "bestaudio[ext=m4a]"}
+        with YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=False)
             audio_file = ydl.prepare_filename(info_dict)
             ydl.process_info(info_dict)
         secmul, dur, dur_arr = 1, 0, duration.split(":")
         for i in range(len(dur_arr) - 1, -1, -1):
-            dur += int(float(dur_arr[i])) * secmul
+            dur += int(dur_arr[i]) * secmul
             secmul *= 60
         await m.delete()
         await message.reply_photo(
@@ -112,19 +84,22 @@ async def play(_, message):
                 f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
             )
         )
-        vcInfo[f'playing_{message.chat.id}'] = title
+        vcInfo[message.chat.id] = {"title": title, "duration": dur}
         await SophiaVC.play(message.chat.id, MediaStream(audio_file))
-        try:
-            await asyncio.sleep(dur+5)
-            if vcInfo.get(f'playing_{message.chat.id}') == title or not vcInfo.get(f'playing_{message.chat.id}'):
-                await SophiaVC.leave_call(message.chat.id)
-        except:
-            None
+        await manage_playback(message.chat.id, title, dur)
     except Exception as e:
-        await message.reply(f"Error: {e} ")
-        print(e)
+        await message.reply(f"Error: {e}")
     try:
         os.remove(audio_file)
         os.remove(thumb_name)
-    except Exception as e:
-        print(e)
+    except:
+        pass
+
+async def manage_playback(chat_id, title, duration):
+    await asyncio.sleep(duration + 5)
+    if vcInfo.get(chat_id, {}).get("title") == title:
+        try:
+            await SophiaVC.leave_call(chat_id)
+            vcInfo.pop(chat_id, None)
+        except Exception as e:
+            logging.warn(e)
