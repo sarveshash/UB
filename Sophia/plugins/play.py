@@ -35,7 +35,7 @@ async def play(_, message):
     except:
         None
     if len(message.text.split()) <2:
-        if message.reply_to_message.audio:
+        if message.reply_to_message && message.reply_to_message.audio:
             try:
                 m = await message.reply("📥 Downloading...")
                 audio = message.reply_to_message.audio
@@ -48,8 +48,8 @@ async def play(_, message):
                     caption=(
                         f"**✅ Started Streaming On VC.**\n\n"
                         f"**🥀 Title:** {title[:19] if len(title) > 19 else title}\n"
-                        f"**🐬 Duration:** __{dur // 60}:{dur % 60:02d}__ Mins\n"
-                        f"**🦋 Stream Type:** Audio\n"
+                        f"**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n"
+                        f"**🦋 Stream Type:** Telegram Audio\n"
                         f"**👾 By:** SophiaUB\n"
                         f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
                     )
@@ -100,7 +100,7 @@ async def play(_, message):
             caption=(
                 f"**✅ Started Streaming On VC.**\n\n"
                 f"**🥀 Title:** {title[:19] if len(title) > 19 else title}\n"
-                f"**🐬 Duration:** __{dur // 60}:{dur % 60:02d}__ Mins\n"
+                f"**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n"
                 f"**🦋 Stream Type:** Audio\n"
                 f"**👾 By:** SophiaUB\n"
                 f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
