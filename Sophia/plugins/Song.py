@@ -79,7 +79,7 @@ async def song(_, message):
 # Video
 
 
-@HS.on_message(filters.command("video", prefixes=HANDLER) & filters.user(OWN))
+@bot.on_message(filters.command("video", prefixes=HANDLER) & filters.user(OWN))
 async def video(client, message):
     if len(message.text.split()) <2:
         return await message.reply("Give a video name to search it")
