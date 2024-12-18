@@ -6,6 +6,7 @@ from pyrogram import filters
 import asyncio
 import os
 import requests
+import logging
 import wget
 from youtube_search import YoutubeSearch
 from yt_dlp import YoutubeDL
@@ -27,15 +28,43 @@ ydl_opts = {
 }
 
 
-@bot.on_message(filters.command("play", prefixes=HANDLER) & filters.user(OWN))
+@bot.on_message(filters.command(["play", "sp"], prefixes=HANDLER) & filters.user(OWN))
 async def play(_, message):
     try:
         await SophiaVC.start()
     except:
         None
     if len(message.text.split()) <2:
-        await message.reply("Give a song name to search it")
-        return
+        if message.reply_to_message.audio:
+            try:
+                m = await message.reply("📥 Downloading...")
+                audio = message.reply_to_message.audio
+                audioPath = await message.reply_to_message.download()
+                title = message.reply_to_message.audio.title
+                dur = message.reply_to_message.audio.duration
+                await m.delete()
+                await message.reply_photo(
+                    photo="https://i.imgur.com/KdPrxqN.jpeg",
+                    caption=(
+                        f"**✅ Started Streaming On VC.**\n\n"
+                        f"**🥀 Title:** {title[:19] if len(title) > 19 else title}\n"
+                        f"**🐬 Duration:** __{dur // 60}:{dur % 60:02d}__ Mins\n"
+                        f"**🦋 Stream Type:** Audio\n"
+                        f"**👾 By:** SophiaUB\n"
+                        f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
+                    )
+                )
+                await SophiaVC.play(message.chat.id, MediaStream(audioPath))
+                try:
+                    await asyncio.sleep(dur + 7)
+                    await SophiaVC.leave_call(message.chat.id)
+                except:
+                    None
+            except Exception as e:
+                await message.reply(f"Error: {e}")
+                logging.error(e)
+        else:
+            return await message.reply("Give a song name to search it")
     query = " ".join(message.command[1:])
     m = await message.reply("🔄 Searching....")
     ydl_ops = {"format": "bestaudio[ext=m4a]"}
@@ -79,7 +108,7 @@ async def play(_, message):
         )
         await SophiaVC.play(message.chat.id, MediaStream(audio_file))
         try:
-            await asyncio.sleep(dur + 2)
+            await asyncio.sleep(dur + 7)
             await SophiaVC.leave_call(message.chat.id)
         except:
             None
