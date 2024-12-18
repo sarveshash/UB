@@ -27,12 +27,12 @@ ydl_opts = {
     "quite": True,
 }
 
-songQ = {}
+vcInfo = {}
 
 
 @bot.on_message(filters.command(["play", "sp"], prefixes=HANDLER) & filters.user(OWN))
 async def play(_, message):
-    global songQ
+    global vcInfo
     try:
         await SophiaVC.start()
     except:
@@ -57,9 +57,12 @@ async def play(_, message):
                         f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
                     )
                 )
-                SophiaVC.play(message.chat.id, MediaStream(path))
+                vcInfo[f'playing_{message.chat.id}'] = title
+                await SophiaVC.play(message.chat.id, MediaStream(path))
                 try:
-                    await SophiaVC.leave_call(message.chat.id)
+                    await asyncio.sleep(dur+5)
+                    if vcInfo.get(f'playing_{message.chat.id}') == title or not vcInfo.get(f'playing_{message.chat.id}'):
+                        await SophiaVC.leave_call(message.chat.id)
                 except:
                     None
             except Exception as e:
@@ -109,9 +112,12 @@ async def play(_, message):
                 f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
             )
         )
-        SophiaVC.play(message.chat.id, MediaStream(audio_file))
+        vcInfo[f'playing_{message.chat.id}'] = title
+        await SophiaVC.play(message.chat.id, MediaStream(audio_file))
         try:
-            await SophiaVC.leave_call(message.chat.id)
+            await asyncio.sleep(dur+5)
+            if vcInfo.get(f'playing_{message.chat.id}') == title or not vcInfo.get(f'playing_{message.chat.id}'):
+                await SophiaVC.leave_call(message.chat.id)
         except:
             None
     except Exception as e:
