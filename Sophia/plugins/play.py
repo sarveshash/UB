@@ -114,6 +114,10 @@ async def manage_playback(chat_id, title, duration):
 
 @bot.on_message(filters.command("skip", prefixes=HANDLER) & filters.user(OWN) & ~filters.private & ~filters.bot)
 async def skip(_, message):
+    try:
+        await message.delete()
+    except:
+        pass
     if vcInfo.get(message.chat.id):
         try:
             await SophiaVC.leave_call(message.chat.id)
