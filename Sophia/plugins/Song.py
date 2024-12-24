@@ -15,15 +15,22 @@ async def song(_, message):
     query = " ".join(message.command[1:])
     if query.startswith(("www.youtube", "http://", "https://")):
         link = query
+        with YoutubeDL({'quiet': True}) as ydl:
+            info = ydl.extract_info(link, download=False)
+            title = info.get("title", "Unknown Title")
+            thumbnail = info.get("thumbnail")
+            duration = info.get("duration")
     else:
         results = YoutubeSearch(query, max_results=1).to_dict()
         link = f"https://youtube.com{results[0]['url_suffix']}"
-        title = results[0]["title"][:4000]
+        title = results[0]["title"]
         thumbnail = results[0]["thumbnails"][0]
-        thumb_name = f"{title}.jpg"
+        duration = results[0]["duration"]
+
+    thumb_name = f"{title}.jpg"
+    if thumbnail:
         thumb = requests.get(thumbnail, allow_redirects=True)
         open(thumb_name, "wb").write(thumb.content)
-        duration = results[0]["duration"]
 
     msg = await message.reply("📥 Downloading...")
     ydl_opts = {"format": "bestaudio[ext=m4a]"}
@@ -31,7 +38,7 @@ async def song(_, message):
         with YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=True)
             audio_file = ydl.prepare_filename(info_dict)
-        secmul, dur, dur_arr = 1, 0, duration.split(":")
+        secmul, dur, dur_arr = 1, 0, str(duration).split(":")
         for i in range(len(dur_arr) - 1, -1, -1):
             dur += int(float(dur_arr[i])) * secmul
             secmul *= 60
@@ -57,12 +64,20 @@ async def video(_, message):
     query = " ".join(message.command[1:])
     if query.startswith(("www.youtube", "http://", "https://")):
         link = query
+        with YoutubeDL({'quiet': True}) as ydl:
+            info = ydl.extract_info(link, download=False)
+            title = info.get("title", "Unknown Title")
+            thumbnail = info.get("thumbnail")
+            duration = info.get("duration")
     else:
         results = YoutubeSearch(query, max_results=1).to_dict()
         link = f"https://youtube.com{results[0]['url_suffix']}"
-        title = results[0]["title"][:40]
+        title = results[0]["title"]
         thumbnail = results[0]["thumbnails"][0]
-        thumb_name = f"{title}.jpg"
+        duration = results[0]["duration"]
+
+    thumb_name = f"{title}.jpg"
+    if thumbnail:
         thumb = requests.get(thumbnail, allow_redirects=True)
         open(thumb_name, "wb").write(thumb.content)
 
@@ -72,11 +87,9 @@ async def video(_, message):
         with YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=True)
             video_file = ydl.prepare_filename(info_dict)
-            duration = info_dict["duration"]
-            title = info_dict["title"]
         await msg.edit("📤 Uploading...")
         await message.reply_video(
-            video=video_file,
+            video_file,
             thumb=thumb_name,
             caption=f"**{title}**",
             duration=duration,
