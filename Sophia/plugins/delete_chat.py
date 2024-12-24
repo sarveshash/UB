@@ -5,7 +5,7 @@ from config import OWNER_ID
 
 @Sophia.on_message(filters.command("delchat", HANDLER) & filters.user('me'))
 async def delete_chat(_, m):
-  if not m.chat.type == ChatType.PRIVATE or not m.chat.type == ChatType.BOT:
+  if not m.chat.type == ChatType.PRIVATE and not m.chat.type == ChatType.BOT:
     return await m.reply("Please use this command on private chat!")
   if m.chat.id == OWNER_ID:
     return await m.reply("Sorry you cannot use this here!")
