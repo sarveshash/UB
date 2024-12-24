@@ -28,5 +28,5 @@ jobs:
         git config user.name "GitHub Actions"
         git config user.email "action@github.com"
         git add .
-        git commit -m "Add copyright header to Python files" || echo "No changes to commit."
+        git diff --cached --quiet || git commit -m "Add copyright header to Python files"
         git push
