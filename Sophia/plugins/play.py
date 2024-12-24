@@ -12,7 +12,7 @@ from pytgcalls.types import MediaStream
 
 vcInfo = {}
 
-@bot.on_message(filters.command(["play", "sp"], prefixes=HANDLER) & filters.user(OWN))
+@bot.on_message(filters.command(["play", "sp"], prefixes=HANDLER) & filters.user(OWN) & ~filters.PRIVATE & ~filters.BOT)
 async def play(_, message):
     global vcInfo
     try:
@@ -111,3 +111,13 @@ async def manage_playback(chat_id, title, duration):
             vcInfo.pop(chat_id, None)
         except Exception:
             pass
+
+@bot.on_message(filters.command("skip", prefixes=HANDLER) & filters.user(OWN) & ~filters.PRIVATE & ~filters.BOT)
+async def skip(_, message):
+    if vcInfo.get(message.chat.id):
+        try:
+            await SophiaVC.leave_call(message.chat.id)
+        except Exception as e:
+            await message.reply('Nothing streaming in vc ❌')
+    else:
+        await message.reply('Nothing streaming in vc ❌')
