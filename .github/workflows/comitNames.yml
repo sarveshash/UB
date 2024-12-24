@@ -17,14 +17,9 @@ jobs:
       run: |
         git config user.name "GitHub Action Bot"
         git config user.email "action@github.com"
-        
-        commit_count=$(git rev-list --count HEAD)
-        if [ "$commit_count" -gt 1 ]; then
-          git rebase -i HEAD~"$commit_count" << EOF
-          exec git commit --amend -m "Sophia V-1"
-          EOF
-        else
-          echo "Not enough commits to rebase."
-        fi
 
-        git push --force
+        git rebase -i HEAD~$(git rev-list --count HEAD) << EOF
+        exec git commit --amend -m "Sophia V-1"
+        EOF
+
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:main
