@@ -13,7 +13,7 @@ async def say(_, m):
   except:
     pass 
   if m.reply_to_message:
-    if ~m.reply_to_message.media_group_id:
+    if not m.reply_to_message.media_group_id:
       return await Sophia.copy_message(m.chat.id, m.chat.id, m.reply_to_message.id)
     return await Sophia.copy_media_group(m.chat.id, m.chat.id, m.reply_to_message.id)
   else:
