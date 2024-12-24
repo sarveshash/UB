@@ -46,29 +46,37 @@ async def play(_, message):
                 await message.reply(f"Error: {e}")
             return
         else:
-            return await message.reply("Give a song name to search it")
+            return await message.reply("Provide a song name or link.")
     query = " ".join(message.command[1:])
     m = await message.reply("🔄 Searching....")
-    try:
-        results = YoutubeSearch(query, max_results=1).to_dict()
-        link = f"https://youtube.com{results[0]['url_suffix']}"
-        title = results[0]["title"][:4000]
-        thumbnail = results[0]["thumbnails"][0]
-        duration = results[0]["duration"]
-        thumb_name = f"{title}.jpg"
+    if query.startswith(("www.youtube", "http://", "https://")):
+        link = query
+        with YoutubeDL({'quiet': True}) as ydl:
+            info = ydl.extract_info(link, download=False)
+            title = info.get("title", "Unknown Title")
+            thumbnail = info.get("thumbnail")
+            duration = info.get("duration")
+    else:
+        try:
+            results = YoutubeSearch(query, max_results=1).to_dict()
+            link = f"https://youtube.com{results[0]['url_suffix']}"
+            title = results[0]["title"]
+            thumbnail = results[0]["thumbnails"][0]
+            duration = results[0]["duration"]
+        except:
+            await m.edit("⚠️ No results were found.")
+            return
+    thumb_name = f"{title}.jpg"
+    if thumbnail:
         thumb = requests.get(thumbnail, allow_redirects=True)
         open(thumb_name, "wb").write(thumb.content)
-    except Exception as e:
-        await m.edit("⚠️ No results were found.")
-        return
     await m.edit("📥 Downloading...")
     try:
         ydl_opts = {"format": "bestaudio[ext=m4a]"}
         with YoutubeDL(ydl_opts) as ydl:
-            info_dict = ydl.extract_info(link, download=False)
+            info_dict = ydl.extract_info(link, download=True)
             audio_file = ydl.prepare_filename(info_dict)
-            ydl.process_info(info_dict)
-        secmul, dur, dur_arr = 1, 0, duration.split(":")
+        secmul, dur, dur_arr = 1, 0, str(duration).split(":")
         for i in range(len(dur_arr) - 1, -1, -1):
             dur += int(dur_arr[i]) * secmul
             secmul *= 60
@@ -101,5 +109,5 @@ async def manage_playback(chat_id, title, duration):
         try:
             await SophiaVC.leave_call(chat_id)
             vcInfo.pop(chat_id, None)
-        except Exception as e:
-            logging.warn(e)
+        except Exception:
+            pass
