@@ -1,0 +1,32 @@
+name: Add Copyright
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  add-copyright:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Add Copyright
+      run: |
+        copyright_notice="Test"
+        for file in $(find . -name '*.py'); do
+          if ! grep -q "$copyright_notice" "$file"; then
+            echo -e "$copyright_notice\n$(cat $file)" > $file
+          fi
+        done
+
+    - name: Commit Changes
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "action@github.com"
+        git add .
+        git commit -m "Add copyright header to Python files" || echo "No changes to commit."
+        git push
