@@ -5,7 +5,7 @@ import asyncio
 import os
 from pyrogram import enums
 
-@Sophia.on_message(filters.command("broadcastall", prefixes=HANDLER) & filters.me)
+@Sophia.on_message(filters.command(["bcast", "cast", "broadcast", "broadcastall"], prefixes=HANDLER) & filters.me)
 async def broadcast_all(_, message):
     SUCCESS = 0
     FAILED = 0
