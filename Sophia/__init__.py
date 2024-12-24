@@ -24,14 +24,15 @@ logging.basicConfig(
 SESSION = os.environ.get("SESSION") or VAR_SESSION
 API_ID = os.environ.get("API_ID") or VAR_API_ID
 API_HASH = os.environ.get("API_HASH") or VAR_API_HASH
-HANDLER = ["~",".","!","$","#"]
+HANDLER = ["~",".",". ","!","$","#"]
 LOG_CHANNEL = -1002010994783
 MONGO_DB_URI = os.environ.get("MONGO_DB_URI") or VAR_MONGO_DB_URI
 REPO_URL = os.environ.get("YOUR_REPO_LINK") or VAR_REPO_URL
 MY_VERSION = 1.0
 
 if not SESSION or not API_ID or not API_HASH or not MONGO_DB_URI or not REPO_URL:
-    logging.warn("You should enter the required details on variables.py or you need set env")
+    raise "Values not found"
+    logging.error("You should enter the required details on variables.py or you need set env")
     exit()
 
 # PRINT STUFFS
