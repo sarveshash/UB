@@ -12,11 +12,13 @@ async def say(_, m):
     await m.delete()
   except:
     pass 
-  if m.reply_to_message:
+  if m.reply_to_message and len(m.command) < 2:
     if not m.reply_to_message.media_group_id:
       return await Sophia.copy_message(m.chat.id, m.chat.id, m.reply_to_message.id)
     return await Sophia.copy_media_group(m.chat.id, m.chat.id, m.reply_to_message.id)
   else:
     if len(m.command) >= 2:
       txt = m.text.split(None, 1)[1]
-      await Sophia.send_message(m.chat.id, )
+      if m.reply_to_message:
+        return await m.reply_to_message.reply(txt)
+      return await Sophia.send_message(m.chat.id, txt)
