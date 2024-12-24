@@ -5,11 +5,12 @@ from Sophia.__main__ import Sophia
 from config import OWNER_ID
 from pyrogram import filters
 
-@Sophia.on_message(filters.command(["say", "rsay"], prefixes=HANDLER) & filters.user(OWNER_ID))
-async def say(_, m):
+@Sophia.on_message(filters.command(["echo", "recho"], prefixes=HANDLER) & filters.user(OWNER_ID))
+async def echo(_, m):
   message=m
   try:
-    await m.delete()
+    if len(m.command) >= 2 or m.reply_to_message:
+      await m.delete()
   except:
     pass 
   if m.reply_to_message and len(m.command) < 2:
