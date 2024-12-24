@@ -117,7 +117,7 @@ async def skip(_, message):
     if vcInfo.get(message.chat.id):
         try:
             await SophiaVC.leave_call(message.chat.id)
-            vcInfo.pop(chat_id, None)
+            vcInfo.pop(message.chat.id, None)
         except Exception as e:
             await message.reply('Nothing streaming in vc ❌')
     else:
