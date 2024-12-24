@@ -1,0 +1,25 @@
+name: comitNames
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-commit-messages:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Change Commit Names
+      run: |
+        git config user.name "GitHub Action Bot"
+        git config user.email "action@github.com"
+
+        git rebase -i HEAD~$(git rev-list --count HEAD) << EOF
+        exec git commit --amend -m "Sophia V-1"
+        EOF
+
+        git push --force
