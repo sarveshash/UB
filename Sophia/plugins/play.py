@@ -6,7 +6,6 @@ from pyrogram import filters
 import asyncio
 import os
 import requests
-import logging 
 from youtube_search import YoutubeSearch
 from yt_dlp import YoutubeDL
 from pytgcalls.types import MediaStream
@@ -123,9 +122,9 @@ async def vplay(_, message):
                 await m.delete()
                 await message.reply_photo(
                     photo="https://i.imgur.com/9KKPfOA.jpeg",
-                    caption=f"**✅ Started Streaming On VC.**\n\n**🥀 Title:** {title[:20] if len(title) > 20 else title}\n**🐬 Duration:** {dur // 60}:{dur % 60:02} Mins\n**🦋 Stream Type:** Telegram video\n**👾 By:** SophiaUB\n**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
+                    caption=f"**✅ Started Streaming On VC.**\n\n**🥀 Title:** {title[:20] if len(title) > 20 else title}\n**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n**🦋 Stream Type:** Telegram video\n**👾 By:** SophiaUB\n**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
                 )
-                vcInfo[message.chat.id] = {"title": title, "duration": dur, "type": "video"}
+                vcInfo[message.chat.id] = {"title": title, "duration": dur}
                 await SophiaVC.play(message.chat.id, MediaStream(path))
                 await manage_playback(message.chat.id, title, dur)
             except Exception as e:
@@ -137,12 +136,12 @@ async def vplay(_, message):
     m = await message.reply("🔄 Searching....")
     if query.startswith(("www.youtube", "http://", "https://")):
         link = query
-        with YoutubeDL({'quiet': True}) as ydl:
+        with YoutubeDL({'quiet': True, 'noplaylist': True}) as ydl:
             info = ydl.extract_info(link, download=False)
             title = info.get("title", "Unknown Title")
             thumbnail = info.get("thumbnail")
             duration = int(info.get("duration", 0))
-            is_video = "video" in info.get("formats", [{}])[0].get("ext", "")
+            is_video = True  # Assume it's a video if using a direct link
     else:
         try:
             results = YoutubeSearch(query, max_results=1).to_dict()
@@ -150,9 +149,8 @@ async def vplay(_, message):
             title = results[0]["title"]
             thumbnail = results[0]["thumbnails"][0]
             duration = int(results[0]["duration"].split(":")[0]) * 60 + int(results[0]["duration"].split(":")[1])
-            is_video = "video" in results[0]["type"]
-        except Exception as w:
-            logging.error(w)
+            is_video = True
+        except:
             await m.edit("⚠️ No results were found.")
             return
     thumb_name = f"{title}.jpg"
@@ -161,27 +159,26 @@ async def vplay(_, message):
         open(thumb_name, "wb").write(thumb.content)
     await m.edit("📥 Downloading...")
     try:
-        ydl_opts = {"format": "bestaudio[ext=m4a]"} if not is_video else {"format": "bestvideo[ext=mp4]"}
+        ydl_opts = {"format": "bestvideo[ext=mp4]+bestaudio/best"} if is_video else {"format": "bestaudio[ext=m4a]"}
         with YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=True)
-            media_file = ydl.prepare_filename(info_dict)
+            video_file = ydl.prepare_filename(info_dict)
         await m.delete()
         await message.reply_photo(
             photo=thumb_name,
-            caption=f"**✅ Started Streaming On VC.**\n\n**🥀 Title:** {title[:20] if len(title) > 20 else title}\n**🐬 Duration:** {duration // 60}:{duration % 60:02} Mins\n**🦋 Stream Type:** {'Video' if is_video else 'Audio'}\n**👾 By:** SophiaUB\n**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
+            caption=f"**✅ Started Streaming On VC.**\n\n**🥀 Title:** {title[:20] if len(title) > 20 else title}\n**🐬 Duration:** {duration // 60}:{duration % 60:02d} Mins\n**🦋 Stream Type:** Video\n**👾 By:** SophiaUB\n**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
         )
-        vcInfo[message.chat.id] = {"title": title, "duration": duration, "type": "video" if is_video else "audio"}
-        await SophiaVC.play(message.chat.id, MediaStream(media_file))
+        vcInfo[message.chat.id] = {"title": title, "duration": duration}
+        await SophiaVC.play(message.chat.id, MediaStream(video_file))
         await manage_playback(message.chat.id, title, duration)
     except Exception as e:
         await message.reply(f"Error: {e}")
     try:
-        os.remove(media_file)
+        os.remove(video_file)
         os.remove(thumb_name)
     except:
         pass
-
-
+        
 async def manage_playback(chat_id, title, duration):
     await asyncio.sleep(duration + 5)
     if vcInfo.get(chat_id, {}).get("title") == title:
