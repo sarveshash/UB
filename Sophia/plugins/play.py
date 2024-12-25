@@ -12,12 +12,12 @@ from pytgcalls.types import MediaStream
 
 vcInfo = {}
 async def publicFilter(_, client, message):
-    if not message.from_user.id == OWN and message.chat.id in [-1001166530483] and message.text.startswith(tuple(["/", ".", "$"])):
+    if message.from_user.id == OWN:
         return True
-    elif message.from_user.id == OWN:
+    if message.chat.id in [-1001166530483] and message.text.startswith(("/", ".", "$")):
         return True
     return False
-
+    
 @bot.on_message(filters.command(["play", "sp"], prefixes=HANDLER) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
 async def play(_, message):
     global vcInfo
