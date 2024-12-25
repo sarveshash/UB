@@ -24,11 +24,12 @@ async def lyrics(_, message):
           url = f"https://api.lyrics.ovh/v1/{artist_name}/{song_title}"
           async with session.get(url) as lyric:
             if lyric.status == 200:
-              lyric_data = await lyric.json()['lyrics']
-              lyric_data = lyric_data.replace('\n', '')
-              lyric_data = lyric_data.replace('\n\n', '')
-              lyric_data = lyric_data.replace('\n\n\n', '\n')
-              await message.reply(f"**Lyrics of: {artist_name} - {song_title}**\n\n{lyric_data}")
+              lyric_data = await lyric.json()
+              lyric_text = lyric_data['lyrics']
+              lyric_text = lyric_text.replace('\n', '')
+              lyric_text = lyric_text.replace('\n\n', '')
+              lyric_text = lyric_text.replace('\n\n\n', '\n')
+              await message.reply(f"**Lyrics of: {artist_name} - {song_title}**\n\n{lyric_text}")
             else:
               await message.reply("Couldn't find the song ❌")
         else:
