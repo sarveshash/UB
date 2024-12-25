@@ -25,7 +25,7 @@ async def play(_, message):
                 m = await message.reply("📥 Downloading...")
                 file = message.reply_to_message.audio
                 path = await message.reply_to_message.download()
-                title = file.title or "Unknown Title"
+                title = file.title or file.file_name or "Unknown Title"
                 dur = file.duration or 0
                 await m.delete()
                 await message.reply_photo(
