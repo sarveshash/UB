@@ -116,21 +116,13 @@ async def vplay(_, message):
                 m = await message.reply("📥 Downloading...")
                 file = message.reply_to_message.video
                 path = await message.reply_to_message.download()
-                try: file_name = file.file_name or "Unknown Title"
-                except: file_name = "Unknown Title"
+                file_name = file.file_name or "Unknown Title"
                 title = file_name
-                dur = file.duration or 0
+                dur = int(file.duration or 0)
                 await m.delete()
                 await message.reply_photo(
                     photo="https://i.imgur.com/9KKPfOA.jpeg",
-                    caption=(
-                        f"**✅ Started Streaming On VC.**\n\n"
-                        f"**🥀 Title:** {title[:20] if len(title) > 20 else title}\n"
-                        f"**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n"
-                        f"**🦋 Stream Type:** Telegram video\n"
-                        f"**👾 By:** SophiaUB\n"
-                        f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
-                    )
+                    caption=f"**✅ Started Streaming On VC.**\n\n**🥀 Title:** {title[:20] if len(title) > 20 else title}\n**🐬 Duration:** {dur // 60}:{dur % 60:02} Mins\n**🦋 Stream Type:** Telegram video\n**👾 By:** SophiaUB\n**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
                 )
                 vcInfo[message.chat.id] = {"title": title, "duration": dur, "type": "video"}
                 await SophiaVC.play(message.chat.id, MediaStream(path))
@@ -148,14 +140,14 @@ async def vplay(_, message):
             info = ydl.extract_info(link, download=False)
             title = info.get("title", "Unknown Title")
             thumbnail = info.get("thumbnail")
-            duration = info.get("duration")
+            duration = int(info.get("duration", 0))
     else:
         try:
             results = YoutubeSearch(query, max_results=1).to_dict()
             link = f"https://youtube.com{results[0]['url_suffix']}"
             title = results[0]["title"]
             thumbnail = results[0]["thumbnails"][0]
-            duration = results[0]["duration"]
+            duration = int(results[0]["duration"].split(":")[0]) * 60 + int(results[0]["duration"].split(":")[1])
         except:
             await m.edit("⚠️ No results were found.")
             return
@@ -169,25 +161,14 @@ async def vplay(_, message):
         with YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=True)
             video_file = ydl.prepare_filename(info_dict)
-        secmul, dur, dur_arr = 1, 0, str(duration).split(":")
-        for i in range(len(dur_arr) - 1, -1, -1):
-            dur += int(dur_arr[i]) * secmul
-            secmul *= 60
         await m.delete()
         await message.reply_photo(
             photo=thumb_name,
-            caption=(
-                f"**✅ Started Streaming On VC.**\n\n"
-                f"**🥀 Title:** {title[:20] if len(title) > 20 else title}\n"
-                f"**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n"
-                f"**🦋 Stream Type:** Video\n"
-                f"**👾 By:** SophiaUB\n"
-                f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
-            )
+            caption=f"**✅ Started Streaming On VC.**\n\n**🥀 Title:** {title[:20] if len(title) > 20 else title}\n**🐬 Duration:** {duration // 60}:{duration % 60:02} Mins\n**🦋 Stream Type:** Video\n**👾 By:** SophiaUB\n**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
         )
-        vcInfo[message.chat.id] = {"title": title, "duration": dur}
+        vcInfo[message.chat.id] = {"title": title, "duration": duration}
         await SophiaVC.play(message.chat.id, MediaStream(video_file))
-        await manage_playback(message.chat.id, title, dur)
+        await manage_playback(message.chat.id, title, duration)
     except Exception as e:
         await message.reply(f"Error: {e}")
     try:
