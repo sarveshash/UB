@@ -11,8 +11,14 @@ from yt_dlp import YoutubeDL
 from pytgcalls.types import MediaStream
 
 vcInfo = {}
+async def publicFilter(_, client, message):
+    if not message.from_user.id == OWN and message.chat.id in [-1001166530483]:
+        return True
+    elif message.from_user.id == OWN:
+        return True
+    return False
 
-@bot.on_message(filters.command(["play", "sp"], prefixes=HANDLER) & filters.user(OWN) & ~filters.private & ~filters.bot)
+@bot.on_message(filters.command(["play", "sp"], prefixes=HANDLER) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
 async def play(_, message):
     global vcInfo
     try:
