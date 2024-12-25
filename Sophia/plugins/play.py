@@ -12,6 +12,8 @@ from yt_dlp import YoutubeDL
 from pytgcalls.types import MediaStream
 
 vcInfo = {}
+PLAYPREFIXES = HANDLER
+PLAYPREFIXES += ["/"]
 async def publicFilter(_, client, message):
     if message.from_user.id == OWN:
         return True
@@ -19,7 +21,7 @@ async def publicFilter(_, client, message):
         return True
     return False
     
-@bot.on_message(filters.command(["play", "sp"], prefixes=HANDLER) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
+@bot.on_message(filters.command(["play", "sp"], prefixes=PLAYPREFIXES) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
 async def play(_, message):
     global vcInfo
     try:
@@ -111,7 +113,7 @@ async def play(_, message):
     except:
         pass
 
-@bot.on_message(filters.command("vplay", prefixes=HANDLER) & filters.user(OWN) & ~filters.private & ~filters.bot)
+@bot.on_message(filters.command("vplay", prefixes=PLAYPREFIXES) & filters.user(OWN) & ~filters.private & ~filters.bot)
 async def vplay(_, message):
     global vcInfo
     try:
@@ -197,7 +199,7 @@ async def manage_playback(chat_id, title, duration):
         except Exception:
             pass
 
-@bot.on_message(filters.command("skip", prefixes=HANDLER) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
+@bot.on_message(filters.command("skip", prefixes=PLAYPREFIXES) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
 async def skip(_, message):
     try:
         await message.delete()
