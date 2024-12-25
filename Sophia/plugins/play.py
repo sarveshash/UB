@@ -15,7 +15,7 @@ vcInfo = {}
 PLAYPREFIXES = HANDLER
 PLAYPREFIXES += ["/"]
 async def publicFilter(_, client, message):
-    if message.from_user.id == OWN:
+    if message.from_user.id == OWN and not message.text.startswith("/"):
         return True
     if message.chat.id in [-1001166530483] and message.text.startswith(("/", ".", "$")):
         return True
