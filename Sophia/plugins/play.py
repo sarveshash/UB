@@ -29,7 +29,7 @@ async def play(_, message):
                 dur = file.duration or 0
                 await m.delete()
                 await message.reply_photo(
-                    photo="https://i.imgur.com/KdPrxqN.jpeg",
+                    photo="https://i.imgur.com/9KKPfOA.jpeg",
                     caption=(
                         f"**✅ Started Streaming On VC.**\n\n"
                         f"**🥀 Title:** {title[:20] if len(title) > 20 else title}\n"
