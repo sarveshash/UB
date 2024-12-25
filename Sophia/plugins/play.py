@@ -103,6 +103,97 @@ async def play(_, message):
     except:
         pass
 
+@bot.on_message(filters.command("vplay", prefixes=HANDLER) & filters.user(OWN) & ~filters.private & ~filters.bot)
+async def vplay(_, message):
+    global vcInfo
+    try:
+        await SophiaVC.start()
+    except:
+        pass
+    if len(message.text.split()) < 2:
+        if message.reply_to_message and message.reply_to_message.video:
+            try:
+                m = await message.reply("📥 Downloading...")
+                file = message.reply_to_message.video
+                path = await message.reply_to_message.download()
+                title = file.title or "Unknown Title"
+                dur = file.duration or 0
+                await m.delete()
+                await message.reply_photo(
+                    photo="https://i.imgur.com/9KKPfOA.jpeg",
+                    caption=(
+                        f"**✅ Started Streaming On VC.**\n\n"
+                        f"**🥀 Title:** {title[:20] if len(title) > 20 else title}\n"
+                        f"**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n"
+                        f"**🦋 Stream Type:** Telegram video\n"
+                        f"**👾 By:** SophiaUB\n"
+                        f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
+                    )
+                )
+                vcInfo[message.chat.id] = {"title": title, "duration": dur, "type": "video"}
+                await SophiaVC.play(message.chat.id, MediaStream(path))
+                await manage_playback(message.chat.id, title, dur)
+            except Exception as e:
+                await message.reply(f"Error: {e}")
+            return
+        else:
+            return await message.reply("Provide a video name or link.")
+    query = " ".join(message.command[1:])
+    m = await message.reply("🔄 Searching....")
+    if query.startswith(("www.youtube", "http://", "https://")):
+        link = query
+        with YoutubeDL({'quiet': True}) as ydl:
+            info = ydl.extract_info(link, download=False)
+            title = info.get("title", "Unknown Title")
+            thumbnail = info.get("thumbnail")
+            duration = info.get("duration")
+    else:
+        try:
+            results = YoutubeSearch(query, max_results=1).to_dict()
+            link = f"https://youtube.com{results[0]['url_suffix']}"
+            title = results[0]["title"]
+            thumbnail = results[0]["thumbnails"][0]
+            duration = results[0]["duration"]
+        except:
+            await m.edit("⚠️ No results were found.")
+            return
+    thumb_name = f"{title}.jpg"
+    if thumbnail:
+        thumb = requests.get(thumbnail, allow_redirects=True)
+        open(thumb_name, "wb").write(thumb.content)
+    await m.edit("📥 Downloading...")
+    try:
+        ydl_opts = {"format": "bestaudio[ext=m4a]"}
+        with YoutubeDL(ydl_opts) as ydl:
+            info_dict = ydl.extract_info(link, download=True)
+            video_file = ydl.prepare_filename(info_dict)
+        secmul, dur, dur_arr = 1, 0, str(duration).split(":")
+        for i in range(len(dur_arr) - 1, -1, -1):
+            dur += int(dur_arr[i]) * secmul
+            secmul *= 60
+        await m.delete()
+        await message.reply_photo(
+            photo=thumb_name,
+            caption=(
+                f"**✅ Started Streaming On VC.**\n\n"
+                f"**🥀 Title:** {title[:20] if len(title) > 20 else title}\n"
+                f"**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n"
+                f"**🦋 Stream Type:** Video\n"
+                f"**👾 By:** SophiaUB\n"
+                f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
+            )
+        )
+        vcInfo[message.chat.id] = {"title": title, "duration": dur}
+        await SophiaVC.play(message.chat.id, MediaStream(video_file))
+        await manage_playback(message.chat.id, title, dur)
+    except Exception as e:
+        await message.reply(f"Error: {e}")
+    try:
+        os.remove(video_file)
+        os.remove(thumb_name)
+    except:
+        pass
+
 async def manage_playback(chat_id, title, duration):
     await asyncio.sleep(duration + 5)
     if vcInfo.get(chat_id, {}).get("title") == title:
