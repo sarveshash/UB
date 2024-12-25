@@ -116,7 +116,7 @@ async def vplay(_, message):
                 m = await message.reply("📥 Downloading...")
                 file = message.reply_to_message.video
                 path = await message.reply_to_message.download()
-                try: file_name = file.file_name
+                try: file_name = file.file_name or "Unknown Title"
                 except: file_name = "Unknown Title"
                 title = file_name
                 dur = file.duration or 0
