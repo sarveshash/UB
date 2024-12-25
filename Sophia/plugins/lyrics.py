@@ -26,9 +26,8 @@ async def lyrics(_, message):
             if lyric.status == 200:
               lyric_data = await lyric.json()
               lyric_text = lyric_data['lyrics']
-              lyric_text = lyric_text.replace('\n', '')
-              lyric_text = lyric_text.replace('\n\n', '')
               lyric_text = lyric_text.replace('\n\n\n', '\n')
+              lyric_text = lyric_text.replace('\n\n', '')
               await message.reply(f"**Lyrics of: {artist_name} - {song_title}**\n\n{lyric_text}")
             else:
               await message.reply("Couldn't find the song ❌")
