@@ -6,6 +6,7 @@ from pyrogram import filters
 import asyncio
 import os
 import requests
+import logging 
 from youtube_search import YoutubeSearch
 from yt_dlp import YoutubeDL
 from pytgcalls.types import MediaStream
@@ -150,7 +151,8 @@ async def vplay(_, message):
             thumbnail = results[0]["thumbnails"][0]
             duration = int(results[0]["duration"].split(":")[0]) * 60 + int(results[0]["duration"].split(":")[1])
             is_video = "video" in results[0]["type"]
-        except:
+        except Exception as w:
+            logging.error(w)
             await m.edit("⚠️ No results were found.")
             return
     thumb_name = f"{title}.jpg"
