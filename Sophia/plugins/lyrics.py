@@ -1,0 +1,38 @@
+from Sophia import HANDLER
+from Sophia.__main__ import Sophia
+from Sophia import *
+from config import OWNER_ID as OWN
+from pyrogram import filters
+import asyncio
+import logging
+import aiohttp
+
+@Sophia.on_message(filters.command("lyrics", prefixes=HANDLER) & filters.user(OWN))
+async def lyrics(_, message):
+  try:
+    if len(message.text.split()) < 2:
+      return await message.reply("Please enter song name to get lyrics.")
+    m = await message.reply('Searching...')
+    name = " ".join(message.command[1:])
+    surl = f"https://api.lyrics.ovh/suggest/{name.replace(' ', '%20')}"
+    async with aiohttp.ClientSession() as session:
+      async with session.get(surl) as info:
+        if info.status == 200:
+          data = await info.json()
+          artist_name = data['data'][0]['artist']['name']
+          song_title = data['data'][0]['title']
+          url = f"https://api.lyrics.ovh/v1/{artist_name}/{song_title}"
+          async with session.get(url) as lyric:
+            if lyric.status == 200:
+              lyric_data = await lyric.json()["lyrics"]
+              await message.reply(f"**Lyrics of: {artist_name} - {song_title}**\n\n{lyric_data}")
+            else:
+              await message.reply("Couldn't find the song ❌")
+        else:
+          await message.reply("Couldn't find the song ❌")
+  except Exception as e:
+    await message.reply("Couldn't find the song ❌")
+    logging.error(e)
+  await m.delete()
+
+# Thanks lyrics.ovh for api 
