@@ -12,7 +12,7 @@ from pytgcalls.types import MediaStream
 
 vcInfo = {}
 async def publicFilter(_, client, message):
-    if not message.from_user.id == OWN and message.chat.id in [-1001166530483]:
+    if not message.from_user.id == OWN and message.chat.id in [-1001166530483] and message.text.startswith(tuple(["/", ".", "$"])):
         return True
     elif message.from_user.id == OWN:
         return True
