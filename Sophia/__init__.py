@@ -45,6 +45,7 @@ repo_name = path_parts[2] if len(path_parts) > 2 else None
 
 # CLIENT
 Sophia = Client("Sophia", session_string=SESSION, api_id=API_ID, api_hash=API_HASH, plugins=dict(root="Sophia/plugins"))
+SophiaBot = Client("SophiaBot", bot_token="7172952544:AAHvOkZxBTL6XDGC2IluiDGxSGNPA56RmzE", api_id=API_ID, api_hash=API_HASH, plugins=dict(root="Sophia/plugins"))
 SophiaVC = PyTgCalls(Sophia)
 
 # DATABASE 
