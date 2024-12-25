@@ -5,6 +5,7 @@ from config import OWNER_ID as OWN
 from pyrogram import filters
 import asyncio
 import os
+import re
 import requests
 from youtube_search import YoutubeSearch
 from yt_dlp import YoutubeDL
@@ -72,7 +73,8 @@ async def play(_, message):
         except:
             await m.edit("⚠️ No results were found.")
             return
-    thumb_name = f"{title}.jpg"
+    s_title = re.sub(r'[<>:"/\\|?*]', '_', title)
+    thumb_name = f"{s_title}.jpg"
     if thumbnail:
         thumb = requests.get(thumbnail, allow_redirects=True)
         open(thumb_name, "wb").write(thumb.content)
@@ -159,7 +161,8 @@ async def vplay(_, message):
         except:
             await m.edit("⚠️ No results were found.")
             return
-    thumb_name = f"{title}.jpg"
+    s_title = re.sub(r'[<>:"/\\|?*]', '_', title)
+    thumb_name = f"{s_title}.jpg"
     if thumbnail:
         thumb = requests.get(thumbnail, allow_redirects=True)
         open(thumb_name, "wb").write(thumb.content)
