@@ -194,7 +194,7 @@ async def manage_playback(chat_id, title, duration):
         except Exception:
             pass
 
-@bot.on_message(filters.command("skip", prefixes=HANDLER) & filters.user(OWN) & ~filters.private & ~filters.bot)
+@bot.on_message(filters.command("skip", prefixes=HANDLER) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
 async def skip(_, message):
     try:
         await message.delete()
