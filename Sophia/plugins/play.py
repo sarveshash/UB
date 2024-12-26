@@ -25,7 +25,7 @@ async def publicFilter(_, client, message):
         return True
     return False
 
-@bot.on_message(filters.command("addplay", prefixes=HANDLER) & filters.user(OWN) & ~filters.private & ~filters.bot)
+@bot.on_message(filters.command(["addplay", 'aplay'], prefixes=HANDLER) & filters.user(OWN) & ~filters.private & ~filters.bot)
 async def addPlayGroups(_, message):
     chat_id = message.chat.id
     info = await oh.addRemove(chat_id)
@@ -43,6 +43,21 @@ async def removePlayGroups(_, message):
     elif info == 'ALREADY':
         await message.reply("❌ This chat already don't have permission to use play commands!")
 
+@bot.on_message(filters.command("getplay", prefixes=HANDLER) & filters.user(OWN) & ~filters.private & ~filters.bot)
+async def getPlayGroups(_, message):
+    info = await oh.get()
+    a = await message.reply("Searching...")
+    txt = "**⚕️ Here are the chats you allowed permission for play:**\n\n"
+    for x in info:
+        try:
+            d = await Sophia.get_chat(x)
+            txt += f"{d.title}{'' if not d.username else f' | {d.username}'}\n"
+        except:
+            pass
+    if info:
+        await a.delete()
+        return await message.reply(txt)
+    await message.reply('No chats have play commands permission ❌')
     
 @bot.on_message(filters.command(["play", "sp"], prefixes=PLAYPREFIXES) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
 async def play(_, message):
