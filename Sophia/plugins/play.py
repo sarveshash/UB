@@ -144,7 +144,7 @@ async def play(_, message):
                 f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
             )
         )
-        vcInfo[message.chat.id] = {"title": title, "duration": dur}
+        vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": dur}
         await SophiaVC.play(message.chat.id, MediaStream(audio_file))
         await manage_playback(message.chat.id, f'{title} {message.id}', dur)
     except Exception as e:
