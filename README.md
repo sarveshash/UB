@@ -5,6 +5,7 @@ Get the full list of Sophia's features by clicking this link: [Sophia Commands](
 #### Linux only supported
  * Heroku: Tested and working without errors.
  * Railway: Tested and working without errors.
+ * StackhostBot: Tested and working with errors 1. '.restart' not working 2. TgCrypto not supported.
 ## Installation & Setup
 #### Fork the repo
 ##### Then edit variables.py
