@@ -6,14 +6,14 @@ import logging
 db = DATABASE["playgroups"]
 
 class play:
-    async def get():
+    async def get(self):
         try:
             info = await db.find_one({"_id": 1})
             return info or ''
         except Exception as e:
             logging.error(e)
             return str(e)
-    async def addRemove(chat_id, addOrRemove='add'):
+    async def addRemove(self, chat_id, addOrRemove='add'):
         try:
             if addOrRemove == 'add':
                 info = await db.find_one({"_id": 1})
