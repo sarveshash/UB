@@ -26,12 +26,12 @@ API_ID = os.environ.get("API_ID") or VAR_API_ID
 API_HASH = os.environ.get("API_HASH") or VAR_API_HASH
 HANDLER = [".","~","","!","$","#"]
 LOG_CHANNEL = -1002010994783
-TOKEN = "BQCbcXYAiSQG7bAeyY1tR0zVoyTOhfU7LROEIvP_EGYpCWKq8-OO5HwZYjRIqS7mkrJPj6adatyD-cHS1O-b_q05wiuLrG1Fu508NdFBaB53qIQpTcVcjxl1Mz28Fc6E8qcR45SBxd3RjQ4uyU9rscNKcYTixH0LFmRoR9nBm-hcY6JnZ-FsYbgNUbXMjmMox_wmWIewAwUMSG3GXx7xUdQhlpk1KqjQedBFL2Was3mISV1-jf9uDGOL32gnQVUAg2z5JVUrqzXDbQc4niLgVg3GT1n4PTl27GCu5fpXwepbmAtxm7aTC255agwLHu8XN7CygOocYLY4mbd0UiUEELDIZxmFogAAAAGb5MbNAQ"
+TOKEN = os.environ.get("TOKEN") or VAR_TOKEN
 MONGO_DB_URI = os.environ.get("MONGO_DB_URI") or VAR_MONGO_DB_URI
 REPO_URL = os.environ.get("YOUR_REPO_LINK") or VAR_REPO_URL
 MY_VERSION = 1.0
 
-if not SESSION or not API_ID or not API_HASH or not MONGO_DB_URI or not REPO_URL:
+if not SESSION or not API_ID or not API_HASH or not MONGO_DB_URI or not REPO_URL or not TOKEN:
     raise "Values not found"
     logging.error("You should enter the required details on variables.py or you need set env")
     exit()
