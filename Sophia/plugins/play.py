@@ -47,16 +47,17 @@ async def removePlayGroups(_, message):
 async def getPlayGroups(_, message):
     info = await oh.get()
     a = await message.reply("Searching...")
-    txt = "**⚕️ Here are the chats you allowed permission for play:**\n\n"
+    txt = ""
     for x in info:
         try:
             d = await Sophia.get_chat(x)
             txt += f"{d.title}{'' if not d.username else f' | {d.username}'}\n"
-        except:
+        except Exception as e:
+            logging.error(e)
             pass
-    if info:
+    if info and txt:
         await a.delete()
-        return await message.reply(txt)
+        return await message.reply(f"**⚕️ Here are the chats you allowed permission for play:**\n\n{txt}")
     await message.reply('No chats have play commands permission ❌')
     
 @bot.on_message(filters.command(["play", "sp"], prefixes=PLAYPREFIXES) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
