@@ -88,9 +88,9 @@ async def play(_, message):
                         f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
                     )
                 )
-                vcInfo[message.chat.id] = {"title": title, "duration": dur}
+                vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": dur}
                 await SophiaVC.play(message.chat.id, MediaStream(path))
-                await manage_playback(message.chat.id, title, dur)
+                await manage_playback(message.chat.id, f'{title} {message.id}', dur)
             except Exception as e:
                 if str(e) == """Telegram says: [403 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "phone.CreateGroupCall")""":
                     return await message.reply('**Cannot play song admin rights required ❌**')
@@ -146,7 +146,7 @@ async def play(_, message):
         )
         vcInfo[message.chat.id] = {"title": title, "duration": dur}
         await SophiaVC.play(message.chat.id, MediaStream(audio_file))
-        await manage_playback(message.chat.id, title, dur)
+        await manage_playback(message.chat.id, f'{title} {message.id}', dur)
     except Exception as e:
         if str(e) == """Telegram says: [403 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "phone.CreateGroupCall")""":
             return await message.reply('**Cannot play song admin rights required ❌**')
@@ -178,9 +178,9 @@ async def vplay(_, message):
                     photo="https://i.imgur.com/9KKPfOA.jpeg",
                     caption=f"**✅ Started Streaming On VC.**\n\n**🥀 Title:** {title[:20] if len(title) > 20 else title}\n**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n**🦋 Stream Type:** Telegram video\n**👾 Requested By:** {message.from_user.first_name if not message.from_user.last_name else f'{message.from_user.first_name} {message.from_user.last_name}'}\n**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
                 )
-                vcInfo[message.chat.id] = {"title": title, "duration": dur}
+                vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": dur}
                 await SophiaVC.play(message.chat.id, MediaStream(path))
-                await manage_playback(message.chat.id, title, dur)
+                await manage_playback(message.chat.id, f'{title} {message.id}', dur)
             except Exception as e:
                 if str(e) == """Telegram says: [403 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "phone.CreateGroupCall")""":
                     return await message.reply('**Cannot play song admin rights required ❌**')
@@ -225,9 +225,9 @@ async def vplay(_, message):
             photo=thumb_name,
             caption=f"**✅ Started Streaming On VC.**\n\n**🥀 Title:** {title[:20] if len(title) > 20 else title}\n**🐬 Duration:** {duration // 60}:{duration % 60:02d} Mins\n**🦋 Stream Type:** Video\n**👾 Requested By:** {message.from_user.first_name if not message.from_user.last_name else f'{message.from_user.first_name} {message.from_user.last_name}'}\n**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
         )
-        vcInfo[message.chat.id] = {"title": title, "duration": duration}
+        vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": duration}
         await SophiaVC.play(message.chat.id, MediaStream(video_file))
-        await manage_playback(message.chat.id, title, duration)
+        await manage_playback(message.chat.id, f'{title} {message.id}', duration)
     except Exception as e:
         if str(e) == """Telegram says: [403 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "phone.CreateGroupCall")""":
             return await message.reply('**Cannot play video admin rights required ❌**')
