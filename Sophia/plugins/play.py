@@ -49,14 +49,15 @@ async def getPlayGroups(_, message):
     a = await message.reply("Searching...")
     txt = ""
     for x in info:
+        global txt
         try:
             d = await Sophia.get_chat(x)
             txt += f"{d.title}{'' if not d.username else f' | {d.username}'}\n"
         except Exception as e:
             logging.error(e)
             pass
+    await a.delete()
     if info and txt:
-        await a.delete()
         return await message.reply(f"**⚕️ Here are the chats you allowed permission for play:**\n\n{txt}")
     await message.reply('No chats have play commands permission ❌')
     
