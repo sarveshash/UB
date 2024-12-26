@@ -1,6 +1,5 @@
 # Sophia Userbot
-Sophia is a powerful Telegram userbot that enhances your Telegram experience with a multitude of features. It's currently in beta version 0.5, with Version 1 on the horizon.
-Features
+Sophia is a powerful Telegram userbot that enhances your Telegram experience with a multitude of features.
 Get the full list of Sophia's features by clicking this link: [Sophia Commands](http://graph.org/Sophia-Commands-01-30)
 ## Working Environments
 #### Linux only supported
