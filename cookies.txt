@@ -1,4 +1,5 @@
 # Netscape HTTP Cookie File
+# Used for ytdlp.
 # This is a generated file! Do not edit.
 
 .youtube.com	TRUE	/	FALSE	0	VISITOR_INFO1_LIVE	9AjUofpmRCQ
