@@ -11,10 +11,11 @@ my_id = None
 
 if __name__ == "__main__":
     Sophia.start()
+    SophiaBot.start()
     try:
         if not 143 == 143:
-            Sophia.send_photo(
-                -1001859707851,
+            SophiaBot.send_photo(
+                my_id,
                 photo="https://i.imgur.com/DuoscLX.jpeg",
                 caption=(
                     f"**✅ Sophia started ⚡**\n\n"
@@ -26,5 +27,4 @@ if __name__ == "__main__":
             )
     except:
         pass
-    SophiaBot.start()
     idle()
