@@ -28,8 +28,7 @@ async def Sophia_Alive(_, message):
         Name_of_ubot = Name_of_ubot1
     else:
         Name_of_ubot = f"{Name_of_ubot1} {Name_of_ubot2}"
-    try:
-        py_ver = run("python --version")
+    try: py_ver = str(run('python --version').lower().split('python ')[1])
     except Exception as e:
         print(e)
         py_ver = "Error"
