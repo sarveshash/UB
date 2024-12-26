@@ -84,7 +84,7 @@ async def play(_, message):
                         f"**🥀 Title:** {title[:20] if len(title) > 20 else title}\n"
                         f"**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n"
                         f"**🦋 Stream Type:** Telegram audio\n"
-                        f"**👾 By:** SophiaUB\n"
+                        f"**👾 Requested By:** {message.from_user.first_name if not message.from_user.last_name else f'{message.from_user.first_name} {message.from_user.last_name}'}\n"
                         f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
                     )
                 )
@@ -140,7 +140,7 @@ async def play(_, message):
                 f"**🥀 Title:** {title[:20] if len(title) > 20 else title}\n"
                 f"**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n"
                 f"**🦋 Stream Type:** Audio\n"
-                f"**👾 By:** SophiaUB\n"
+                f"**👾 Requested By:** {message.from_user.first_name if not message.from_user.last_name else f'{message.from_user.first_name} {message.from_user.last_name}'}\n"
                 f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
             )
         )
@@ -176,7 +176,7 @@ async def vplay(_, message):
                 await m.delete()
                 await message.reply_photo(
                     photo="https://i.imgur.com/9KKPfOA.jpeg",
-                    caption=f"**✅ Started Streaming On VC.**\n\n**🥀 Title:** {title[:20] if len(title) > 20 else title}\n**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n**🦋 Stream Type:** Telegram video\n**👾 By:** SophiaUB\n**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
+                    caption=f"**✅ Started Streaming On VC.**\n\n**🥀 Title:** {title[:20] if len(title) > 20 else title}\n**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n**🦋 Stream Type:** Telegram video\n**👾 Requested By:** {message.from_user.first_name if not message.from_user.last_name else f'{message.from_user.first_name} {message.from_user.last_name}'}\n**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
                 )
                 vcInfo[message.chat.id] = {"title": title, "duration": dur}
                 await SophiaVC.play(message.chat.id, MediaStream(path))
@@ -223,7 +223,7 @@ async def vplay(_, message):
         await m.delete()
         await message.reply_photo(
             photo=thumb_name,
-            caption=f"**✅ Started Streaming On VC.**\n\n**🥀 Title:** {title[:20] if len(title) > 20 else title}\n**🐬 Duration:** {duration // 60}:{duration % 60:02d} Mins\n**🦋 Stream Type:** Video\n**👾 By:** SophiaUB\n**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
+            caption=f"**✅ Started Streaming On VC.**\n\n**🥀 Title:** {title[:20] if len(title) > 20 else title}\n**🐬 Duration:** {duration // 60}:{duration % 60:02d} Mins\n**🦋 Stream Type:** Video\n**👾 Requested By:** {message.from_user.first_name if not message.from_user.last_name else f'{message.from_user.first_name} {message.from_user.last_name}'}\n**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
         )
         vcInfo[message.chat.id] = {"title": title, "duration": duration}
         await SophiaVC.play(message.chat.id, MediaStream(video_file))
