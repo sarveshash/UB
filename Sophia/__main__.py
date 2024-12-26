@@ -3,17 +3,18 @@ from Sophia import *
 from pyrogram import Client, filters
 import os
 from pyrogram import idle
-from config import *
 from subprocess import getoutput as r
 from Restart import restart_program
 
 PWD = f"{os.getcwd()}/"
+my_id = None
 
 if __name__ == "__main__":
     Sophia.start()
     SophiaBot.start()
     try:
         if 143 == 143:
+            from config import my_id
             SophiaBot.send_photo(
                 my_id,
                 photo="https://i.imgur.com/DuoscLX.jpeg",
