@@ -9,6 +9,7 @@ from urllib.parse import urlparse
 from motor.motor_asyncio import AsyncIOMotorClient
 from subprocess import getoutput as r
 from variables import *
+import asyncio
 from pytgcalls import PyTgCalls
 from Restart import restart_program as rs_pg
 
@@ -19,15 +20,38 @@ logging.basicConfig(
     level=logging.INFO,
 )
 
-# VARIABLES
+# DATABASE
+MONGO_DB_URI = os.environ.get("MONGO_DB_URI") or VAR_MONGO_DB_URI
+if not MONGO_DB_URI:
+    logging.error("Where is mongodb uri")
+    exit()
+MONGO_DB = MongoClient(MONGO_DB_URI) # Special Thanks To KoraXD For Giving This Codes!!
+DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["LinkUp"]
+DB = DATABASE['SophiaInfo']
+GAME_DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["LinkUp"]
 
-SESSION = os.environ.get("SESSION") or VAR_SESSION
+# Others 
+
+try:
+    dbSession = None
+    async def something():
+        global dbSession
+        dbSession = await DB.find_one({"_id": 143})
+        if dbSession and 'session' in dbSession:
+            dbSession = dbSession['session']
+        else: dbSession = None
+    asyncio.run(something())
+except Exception as e:
+    logging.error(e)
+    pass
+
+# VARIABLES
+SESSION = os.environ.get("SESSION") or VAR_SESSION or dbSession
 API_ID = os.environ.get("API_ID") or VAR_API_ID
 API_HASH = os.environ.get("API_HASH") or VAR_API_HASH
 HANDLER = [".","~","!","$","#"]
 LOG_CHANNEL = -1002010994783
 TOKEN = os.environ.get("TOKEN") or VAR_TOKEN
-MONGO_DB_URI = os.environ.get("MONGO_DB_URI") or VAR_MONGO_DB_URI
 REPO_URL = os.environ.get("YOUR_REPO_LINK") or VAR_REPO_URL
 MY_VERSION = 1.1
 
@@ -50,8 +74,3 @@ if len(TOKEN) > 50: SophiaBot = Client("SophiaBot", session_string=TOKEN, api_id
 else: SophiaBot = Client("SophiaBot", bot_token=TOKEN, api_id=API_ID, api_hash=API_HASH, plugins=dict(root="Sophia/plugins"))
 SophiaVC = PyTgCalls(Sophia)
 
-# DATABASE 
-MONGO_DB = MongoClient(MONGO_DB_URI) # Special Thanks To KoraXD For Giving This Codes!!
-DB = MONGO_DB.SOPHIA_UB
-DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["LinkUp"]
-GAME_DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["LinkUp"]
