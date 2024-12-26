@@ -172,7 +172,7 @@ async def vplay(_, message):
         open(thumb_name, "wb").write(thumb.content)
     await m.edit("📥 Downloading...")
     try:
-        ydl_opts = {"format": "bestvideo[ext=mp4]+bestaudio/best"} if is_video else {"format": "bestaudio[ext=m4a]"}
+        ydl_opts = {"format": "worstvideo[ext=mp4]+bestaudio/best"} if is_video else {"format": "bestaudio[ext=m4a]"}
         with YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=True)
             video_file = ydl.prepare_filename(info_dict)
