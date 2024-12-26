@@ -1,6 +1,6 @@
 {
    "name":"Sophia",
-   "description":"No words, Just Use Me",
+   "description":"Beta 1.1",
    "logo":"https://telegra.ph/file/af2a44b84e649a0a60679.jpg",
    "keywords":[
       "telegram",
@@ -20,12 +20,12 @@
    ],
    "env":{
       "API_ID":{
-         "description":"Get API_ID from my.telegram.org, used for telethon based modules.",
+         "description":"Get API_ID from my.telegram.org",
          "required":true,
          "value":""
       },
       "API_HASH":{
-         "description":"Get API_HASH from my.telegram.org, used for telethon based modules.",
+         "description":"Get API_HASH from my.telegram.org",
          "required":true,
          "value":""
       },
@@ -36,6 +36,11 @@
       },
       "MONGO_DB_URI":{
          "description":"Your MongoDB URI, Database is Required for This Userbot.",
+         "required":true,
+         "value":""
+      },
+      "TOKEN":{
+         "description":"Your bot token, if you don't have get from t.me/botfather",
          "required":true,
          "value":""
       },
