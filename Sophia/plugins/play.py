@@ -52,7 +52,7 @@ async def getPlayGroups(_, message):
     for x in info:
         try:
             d = await Sophia.get_chat(x)
-            txt += f"{d.title}{'' if not d.username else f' | {d.username}'}\n"
+            txt += f"{d.title}{'' if not d.username else f' | @{d.username}'}\n"
         except Exception as e:
             logging.error(e)
             pass
