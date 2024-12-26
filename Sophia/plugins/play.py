@@ -46,11 +46,12 @@ async def removePlayGroups(_, message):
 @bot.on_message(filters.command("getplay", prefixes=HANDLER) & filters.user(OWN) & ~filters.private & ~filters.bot)
 async def getPlayGroups(_, message):
     info = await oh.get()
+    logging.info(f'Info is {info} play.py 49')
     a = await message.reply("Searching...")
     txt = ""
     for x in info:
-        global txt
         try:
+            logging.info(f'Fetching info of: {x} play.py 53')
             d = await Sophia.get_chat(x)
             txt += f"{d.title}{'' if not d.username else f' | {d.username}'}\n"
         except Exception as e:
