@@ -32,7 +32,7 @@ async def addPlayGroups(_, message):
     if info == "SUCCESS":
         await message.reply('Successfully allowed play commands in this chat ✅')
     elif info == 'ALREADY':
-        await message.reply('❌ This chat already have permission to use play commands!')
+        await message.reply("❌ This chat already have permission to use play commands!")
 
 @bot.on_message(filters.command("rplay", prefixes=HANDLER) & filters.user(OWN) & ~filters.private & ~filters.bot)
 async def removePlayGroups(_, message):
@@ -41,7 +41,7 @@ async def removePlayGroups(_, message):
     if info == "SUCCESS":
         await message.reply('Successfully removed play commands access in this chat ✅')
     elif info == 'ALREADY':
-        await message.reply('❌ This chat already don't have permission to use play commands!')
+        await message.reply("❌ This chat already don't have permission to use play commands!")
 
     
 @bot.on_message(filters.command(["play", "sp"], prefixes=PLAYPREFIXES) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
