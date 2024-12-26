@@ -15,7 +15,7 @@ async def song(_, message):
     query = " ".join(message.command[1:])
     if query.startswith(("www.youtube", "http://", "https://")):
         link = query
-        with YoutubeDL({'quiet': True}) as ydl:
+        with YoutubeDL({'quiet': True, 'cookiefile': 'cookies.txt'}) as ydl:
             info = ydl.extract_info(link, download=False)
             title = info.get("title", "Unknown Title")
             thumbnail = info.get("thumbnail")
@@ -33,7 +33,7 @@ async def song(_, message):
         open(thumb_name, "wb").write(thumb.content)
 
     msg = await message.reply("📥 Downloading...")
-    ydl_opts = {"format": "bestaudio[ext=m4a]"}
+    ydl_opts = {"format": "bestaudio[ext=m4a]", "cookiefile": "cookies.txt"}
     try:
         with YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=True)
@@ -64,7 +64,7 @@ async def video(_, message):
     query = " ".join(message.command[1:])
     if query.startswith(("www.youtube", "http://", "https://")):
         link = query
-        with YoutubeDL({'quiet': True}) as ydl:
+        with YoutubeDL({'quiet': True, 'cookiefile': 'cookies.txt'}) as ydl:
             info = ydl.extract_info(link, download=False)
             title = info.get("title", "Unknown Title")
             thumbnail = info.get("thumbnail")
@@ -82,7 +82,7 @@ async def video(_, message):
         open(thumb_name, "wb").write(thumb.content)
 
     msg = await message.reply("📥 Downloading...")
-    ydl_opts = {"format": "best"}
+    ydl_opts = {"format": "best", "cookiefile": "cookies.txt"}
     try:
         with YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(link, download=True)
