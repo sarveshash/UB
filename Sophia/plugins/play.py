@@ -92,6 +92,8 @@ async def play(_, message):
                 await SophiaVC.play(message.chat.id, MediaStream(path))
                 await manage_playback(message.chat.id, title, dur)
             except Exception as e:
+                if str(e) == """Telegram says: [403 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "phone.CreateGroupCall")""":
+                    return await message.reply('**Cannot play song admin rights required ❌**')
                 await message.reply(f"Error: {e}")
             return
         else:
@@ -146,6 +148,8 @@ async def play(_, message):
         await SophiaVC.play(message.chat.id, MediaStream(audio_file))
         await manage_playback(message.chat.id, title, dur)
     except Exception as e:
+        if str(e) == """Telegram says: [403 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "phone.CreateGroupCall")""":
+            return await message.reply('**Cannot play song admin rights required ❌**')
         await message.reply(f"Error: {e}")
     try:
         os.remove(audio_file)
@@ -178,6 +182,8 @@ async def vplay(_, message):
                 await SophiaVC.play(message.chat.id, MediaStream(path))
                 await manage_playback(message.chat.id, title, dur)
             except Exception as e:
+                if str(e) == """Telegram says: [403 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "phone.CreateGroupCall")""":
+                    return await message.reply('**Cannot play song admin rights required ❌**')
                 await message.reply(f"Error: {e}")
             return
         else:
@@ -223,6 +229,8 @@ async def vplay(_, message):
         await SophiaVC.play(message.chat.id, MediaStream(video_file))
         await manage_playback(message.chat.id, title, duration)
     except Exception as e:
+        if str(e) == """Telegram says: [403 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "phone.CreateGroupCall")""":
+            return await message.reply('**Cannot play video admin rights required ❌**')
         await message.reply(f"Error: {e}")
     try:
         os.remove(video_file)
