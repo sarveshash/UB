@@ -10,18 +10,35 @@ import requests
 from youtube_search import YoutubeSearch
 from yt_dlp import YoutubeDL
 from pytgcalls.types import MediaStream
+from Sophia.Database.play import *
 
 vcInfo = {}
 PLAYPREFIXES = HANDLER
 PLAYPREFIXES += ["/"]
+oh = play()
 async def publicFilter(_, client, message):
     if not message.text.startswith(tuple(PLAYPREFIXES)):
         return False
     if message.from_user.id == OWN:
         return True
-    if message.chat.id in [-1001166530483] and message.text.startswith(("/", ".", "$")):
+    if message.chat.id in await oh.get() and message.text.startswith(("/", ".", "$")):
         return True
     return False
+
+@bot.on_message(filters.command("addplay", prefixes=HANDLER) & filters.user(OWN) & ~filters.private & ~filters.bot)
+async def addPlayGroups(_, message):
+    chat_id = message.chat.id
+    info = await oh.addRemove(chat_id=chat_id)
+    if info == "SUCCESS":
+        await message.reply('Successfully allowed play commands in this chat ✅')
+
+@bot.on_message(filters.command("rplay", prefixes=HANDLER) & filters.user(OWN) & ~filters.private & ~filters.bot)
+async def removePlayGroups(_, message):
+    chat_id = message.chat.id
+    info = await oh.addRemove(chat_id=chat_id, addOrRemove='remove')
+    if info == "SUCCESS":
+        await message.reply('Successfully removed play commands access in this chat ✅')
+
     
 @bot.on_message(filters.command(["play", "sp"], prefixes=PLAYPREFIXES) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
 async def play(_, message):
