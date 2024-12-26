@@ -16,6 +16,7 @@ vcInfo = {}
 PLAYPREFIXES = HANDLER
 PLAYPREFIXES += ["/"]
 oh = play()
+Sophia = bot
 async def publicFilter(_, client, message):
     if not message.text.startswith(tuple(PLAYPREFIXES)):
         return False
@@ -46,12 +47,10 @@ async def removePlayGroups(_, message):
 @bot.on_message(filters.command("getplay", prefixes=HANDLER) & filters.user(OWN) & ~filters.private & ~filters.bot)
 async def getPlayGroups(_, message):
     info = await oh.get()
-    logging.info(f'Info is {info} play.py 49')
     a = await message.reply("Searching...")
     txt = ""
     for x in info:
         try:
-            logging.info(f'Fetching info of: {x} play.py 53')
             d = await Sophia.get_chat(x)
             txt += f"{d.title}{'' if not d.username else f' | {d.username}'}\n"
         except Exception as e:
