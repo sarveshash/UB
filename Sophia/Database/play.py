@@ -18,14 +18,14 @@ class play:
     async def addRemove(self, chat_id, addOrRemove='add'):
         try:
             if addOrRemove == 'add':
-                info = await db.find_one({"_id": 1})['chats'] or []
-                if chat_id in info:
+                info = await db.find_one({"_id": 1}) or []
+                if 'chats' in info and chat_id in info['chats']:
                     return 'ALREADY'
                 await db.update_one({"_id": 1}, {"$addToSet": {"chats": int(chat_id)}}, upsert=True)
                 return "SUCCESS"
             elif addOrRemove == 'remove':
                 info = await db.find_one({"_id": 1})['chats'] or []
-                if chat_id in info:
+                if 'chats' in info and chat_id in info['chats']:
                     await db.update_one({"_id": 1}, {"$pull": {"chats": int(chat_id)}})
                     return "SUCCESS"
                 else: return 'ALREADY'
