@@ -13,7 +13,7 @@ if __name__ == "__main__":
     Sophia.start()
     SophiaBot.start()
     try:
-        if not 143 == 143:
+        if 143 == 143:
             SophiaBot.send_photo(
                 my_id,
                 photo="https://i.imgur.com/DuoscLX.jpeg",
