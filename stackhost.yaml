@@ -10,7 +10,7 @@ commands:
     - "pip install -U -r requirements.txt"
   package:
     - "ffmpeg"
-    - "build-essential"
+    - "libffi-dev"
   start:
     - "python3 -m Sophia"
 
