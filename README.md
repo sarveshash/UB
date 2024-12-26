@@ -23,11 +23,16 @@ Get the full list of Sophia's features by clicking this link: [Sophia Commands](
 ## Support & Community
  * Telegram Group: [Future_City](https://t.me/FutureCity005)
  * Owner: [Otazuki](https://t.me/Otazuki)
- * Channel: [Hyper_speed](https://t.me/Hyper_Speed0)
+ * Channel: [HyperSpeed](https://t.me/Hyper_Speed0)
 ## Disclaimer
-Sophia is a userbot, and its usage might violate Telegram's terms of service. Use it responsibly and at your own risk.
+Sophia is a userbot, and it's usage might violate Telegram's terms of service. Use it responsibly and at your own risk.
 ## Version & Status
- * Current Version: 1.0
- * Upcoming Version: 1.5
+ * Current Version: 1.1
+ * Upcoming Version: 1.2
+## Changelog 1.1
+ * Added /play you can listen songs in vc (voice chat)
+ * Fixed /lyrics issue
+ * Added extra bot support ( for buttons )
+ * Fixed some bugs
 ## Contributions
 Contributions and feedback are welcome! Please create an issue or submit a pull request.
