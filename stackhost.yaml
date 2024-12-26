@@ -10,6 +10,8 @@ commands:
     - "pip install -U -r requirements.txt"
   package:
     - "nano inxi"
+    - "ffmpeg"
+    - "nodejs"
   start:
     - "python3 -m Sophia"
 
