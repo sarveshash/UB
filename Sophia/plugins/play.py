@@ -18,31 +18,24 @@ PLAYPREFIXES += ["/"]
 oh = play()
 Sophia = bot
 async def publicFilter(_, client, message):
-    if not message.text.startswith(tuple(PLAYPREFIXES)):
-        return False
-    if message.from_user.id == OWN:
-        return True
-    if message.chat.id in await oh.get() and message.text.startswith(("/", ".", "$")):
-        return True
+    if not message.text.startswith(tuple(PLAYPREFIXES)): return False
+    if message.from_user.id == OWN: return True
+    if message.chat.id in await oh.get() and message.text.startswith(("/", ".", "$")): return True
     return False
 
 @bot.on_message(filters.command(["addplay", 'aplay'], prefixes=HANDLER) & filters.user(OWN) & ~filters.private & ~filters.bot)
 async def addPlayGroups(_, message):
     chat_id = message.chat.id
     info = await oh.addRemove(chat_id)
-    if info == "SUCCESS":
-        await message.reply('Successfully allowed play commands in this chat ✅')
-    elif info == 'ALREADY':
-        await message.reply("❌ This chat already have permission to use play commands!")
+    if info == "SUCCESS": await message.reply('Successfully allowed play commands in this chat ✅')
+    elif info == 'ALREADY': await message.reply("❌ This chat already have permission to use play commands!")
 
 @bot.on_message(filters.command("rplay", prefixes=HANDLER) & filters.user(OWN) & ~filters.private & ~filters.bot)
 async def removePlayGroups(_, message):
     chat_id = message.chat.id
     info = await oh.addRemove(chat_id, addOrRemove='remove')
-    if info == "SUCCESS":
-        await message.reply('Successfully removed play commands access in this chat ✅')
-    elif info == 'ALREADY':
-        await message.reply("❌ This chat already don't have permission to use play commands!")
+    if info == "SUCCESS": await message.reply('Successfully removed play commands access in this chat ✅')
+    elif info == 'ALREADY': await message.reply("❌ This chat already don't have permission to use play commands!")
 
 @bot.on_message(filters.command("getplay", prefixes=HANDLER) & filters.user(OWN) & ~filters.private & ~filters.bot)
 async def getPlayGroups(_, message):
@@ -57,8 +50,7 @@ async def getPlayGroups(_, message):
             logging.error(e)
             pass
     await a.delete()
-    if info and txt:
-        return await message.reply(f"**⚕️ Here are the chats you allowed permission for play:**\n\n{txt}")
+    if info and txt: return await message.reply(f"**⚕️ Here are the chats you allowed permission for play:**\n\n{txt}")
     await message.reply('No chats have play commands permission ❌')
     
 @bot.on_message(filters.command(["play", "sp"], prefixes=PLAYPREFIXES) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
