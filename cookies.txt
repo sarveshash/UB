@@ -1,0 +1,8 @@
+.youtube.com    TRUE    /    FALSE    1893456000    PREF    f6=40000000&tz=Asia.Calcutta
+.youtube.com    TRUE    /    FALSE    1893456000    CONSISTENCY    AKreu9suJ4dvzxALDzoipVgXjwQ-jdyEGJSVNmQgdqt0K53OM2a3DSZPCncXdyBbjCoyC4KEW9yjakq-0bBRxdC_OThJGMIABH0O9iVFPLGRBaPO5I4DgNc
+.youtube.com    TRUE    /    FALSE    1893456000    APISID    zUOaDH-sVbWwpE51/AK8DFEyGcsm3-jryO
+.youtube.com    TRUE    /    FALSE    1893456000    SAPISID    CHI3en2HWgw8HJ9W/A9GjzAES61H_U9PQd
+.youtube.com    TRUE    /    FALSE    1893456000    __Secure-1PAPISID    CHI3en2HWgw8HJ9W/A9GjzAES61H_U9PQd
+.youtube.com    TRUE    /    FALSE    1893456000    __Secure-3PAPISID    CHI3en2HWgw8HJ9W/A9GjzAES61H_U9PQd
+.youtube.com    TRUE    /    FALSE    1893456000    SID    g.a000rgieVZ24tBrcIBtkwQCy4A7j34vPinUQ5TaoNlTvdwHUF6glY_aHrX_Uq493jdXsvdJ5oAACgYKAb8SARMSFQHGX2Mi7PSZo83RD-NNibnU2NHB6hoVAUF8yKpZFWXr0BfFLT2MpPIEQipC0076
+.youtube.com    TRUE    /    FALSE    1893456000    SIDCC    AKEyXzWm4YvwVRX7IpjFAousYFlweG3OFH3HwSPtTP7iVx2CFjXoxdvalPqs26mtrZJXerld
