@@ -9,7 +9,6 @@ commands:
   build:
     - "pip install -U -r requirements.txt"
   package:
-    - "nano inxi"
     - "ffmpeg"
     - "build-essential"
   start:
