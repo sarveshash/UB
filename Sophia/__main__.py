@@ -5,16 +5,12 @@ import os
 from pyrogram import idle
 from subprocess import getoutput as r
 from Restart import restart_program
-from others.restarted import is_restarted, restart_msg
 
 PWD = f"{os.getcwd()}/"
 my_id = None
 
 if __name__ == "__main__":
     Sophia.start()
-    if is_restarted:
-        restart_msg.delete()
-        a = Sophia.send_message(restart_msg.chat.id, "`Booting...`")
     SophiaBot.start()
     try:
         if 143 == 143:
@@ -32,10 +28,4 @@ if __name__ == "__main__":
             )
     except:
         pass
-    if is_restarted:
-        a.reply('Restart successful!')
-        a.delete()
-        with open("others/restarted.py", "w") as mano:
-            ctx = "is_restarted = False\nrestart_msg = None"
-            mano.write(ctx)
     idle()
