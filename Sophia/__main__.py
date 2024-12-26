@@ -19,7 +19,7 @@ if __name__ == "__main__":
                 caption=(
                     f"**✅ Sophia started ⚡**\n\n"
                     f"**👾 Version:** {MY_VERSION}\n"
-                    f"**🥀 Python:** {r('python --version').lower().split('python ')[1]}}\n"
+                    f"**🥀 Python:** {r('python --version').lower().split('python ')[1]}\n"
                     f"**🐬 Owner:** {Sophia.me.first_name if not Sophia.me.last_name else f'{Sophia.me.first_name} {Sophia.me.last_name}'}\n"
                     f"**🦋 Join:** __@Hyper_speed0 & @FutureCity005__"
                 )
