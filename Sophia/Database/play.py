@@ -9,25 +9,28 @@ class play:
     async def get(self):
         try:
             info = await db.find_one({"_id": 1})
-            return info or []
+            if info and 'chats' in info:
+                return info['chats'] or []
+            return []
         except Exception as e:
             logging.error(e)
             return str(e)
     async def addRemove(self, chat_id, addOrRemove='add'):
         try:
             if addOrRemove == 'add':
-                info = await db.find_one({"_id": 1}) or []
+                info = await db.find_one({"_id": 1})['chats'] or []
                 if chat_id in info:
                     return 'ALREADY'
-                await db.update_one({"_id": 1}, {"$addToSet": {"chats": chat_id}})
+                await db.update_one({"_id": 1}, {"$addToSet": {"chats": int(chat_id)}}, upsert=True)
+                return "SUCCESS"
             elif addOrRemove == 'remove':
-                info = await db.find_one({"_id": 1}) or []
+                info = await db.find_one({"_id": 1})['chats'] or []
                 if chat_id in info:
-                    await db.update_one({"_id": 1}, {"$pull": {"chats": chat_id}})
+                    await db.update_one({"_id": 1}, {"$pull": {"chats": int(chat_id)}})
+                    return "SUCCESS"
                 else: return 'ALREADY'
             else:
                 return "Invalid operation"
-            return "SUCCESS"
         except Exception as e:
             logging.error(e)
             return str(e)
