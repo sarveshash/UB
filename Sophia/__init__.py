@@ -12,9 +12,9 @@ from variables import *
 from pytgcalls import PyTgCalls
 from Restart import restart_program as rs_pg
 
-# LOGGING.
+# LOGGING
 logging.basicConfig(
-    format="[Sophia] %(name)s - %(levelname)s - %(message)s",
+    format="[Sophia-Beta] %(name)s - %(levelname)s - %(message)s",
     handlers=[logging.FileHandler("log.txt"), logging.StreamHandler()],
     level=logging.INFO,
 )
@@ -24,12 +24,12 @@ logging.basicConfig(
 SESSION = os.environ.get("SESSION") or VAR_SESSION
 API_ID = os.environ.get("API_ID") or VAR_API_ID
 API_HASH = os.environ.get("API_HASH") or VAR_API_HASH
-HANDLER = [".","~","","!","$","#"]
+HANDLER = [".","~","!","$","#"]
 LOG_CHANNEL = -1002010994783
 TOKEN = os.environ.get("TOKEN") or VAR_TOKEN
 MONGO_DB_URI = os.environ.get("MONGO_DB_URI") or VAR_MONGO_DB_URI
 REPO_URL = os.environ.get("YOUR_REPO_LINK") or VAR_REPO_URL
-MY_VERSION = 1.0
+MY_VERSION = 1.1
 
 if not SESSION or not API_ID or not API_HASH or not MONGO_DB_URI or not REPO_URL or not TOKEN:
     raise "Values not found"
