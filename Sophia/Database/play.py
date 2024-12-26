@@ -24,7 +24,7 @@ class play:
                 await db.update_one({"_id": 1}, {"$addToSet": {"chats": int(chat_id)}}, upsert=True)
                 return "SUCCESS"
             elif addOrRemove == 'remove':
-                info = await db.find_one({"_id": 1})['chats'] or []
+                info = await db.find_one({"_id": 1}) or []
                 if 'chats' in info and chat_id in info['chats']:
                     await db.update_one({"_id": 1}, {"$pull": {"chats": int(chat_id)}})
                     return "SUCCESS"
