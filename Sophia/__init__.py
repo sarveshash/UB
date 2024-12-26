@@ -40,7 +40,8 @@ try:
         if dbSession and 'session' in dbSession:
             dbSession = dbSession['session']
         else: dbSession = None
-    asyncio.run(something())
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(something())  
 except Exception as e:
     logging.error(e)
     pass
