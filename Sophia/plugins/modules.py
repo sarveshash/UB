@@ -4,8 +4,8 @@ from Sophia import *
 from pyrogram.types import InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardMarkup, InlineKeyboardButton
 
 a = r("ls Sophia/plugins").split('\n')
-help_data = {'safe': 'hey'}
-help_names = ['safe']
+help_data = {}
+help_names = []
 for x in a:
     if x.endswith('.py') and not x.startswith('__pycache__'):
         try:
@@ -17,7 +17,7 @@ for x in a:
             pass
 logging.info(f"{f'Loaded Modules: {help_names}' if help_names else 'No modules loaded'}")
 
-@SophiaBot.on_inline_query()
+@SophiaBot.on_inline_query(await qfilter('help'))
 async def showcommands(_, query):
     buttons = []
     row = []
@@ -26,12 +26,9 @@ async def showcommands(_, query):
         if len(row) == 2:
             buttons.append(row)
             row = []
-    
     if row:
         buttons.append(row)
-
     reply_markup = InlineKeyboardMarkup(buttons)
-
     result = InlineQueryResultArticle(
         title="Help",
         input_message_content=InputTextMessageContent("**Here are the available commands:**"),
