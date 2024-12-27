@@ -37,5 +37,8 @@ async def lyrics(_, message):
     await message.reply("Couldn't find the song ❌")
     logging.error(e)
   await m.delete()
+  
 
+MOD_NAME = 'Lyrics'
+MOD_HELP = ".lyrics <song name> - To get lyrics of that song from lyrics.ovh"
 # Thanks lyrics.ovh for api 
