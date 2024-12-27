@@ -36,4 +36,4 @@ async def id(_, m):
     await m.delete()
 
 MOD_NAME = "ID"
-MOD_HELP = "OGK"
+MOD_HELP = ".id - Reply to a user to get their id and Get your id and chat id."
