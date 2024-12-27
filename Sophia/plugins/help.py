@@ -1,3 +1,6 @@
+MOD_NAME = "Help"
+MOD_HELP = "Send .help to get this"
+
 from Sophia import HANDLER
 from Sophia.__main__ import Sophia
 from config import OWNER_ID
