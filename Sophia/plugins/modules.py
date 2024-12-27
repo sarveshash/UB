@@ -21,14 +21,11 @@ async def showcommands(_, query):
     buttons = []
     row = []
     for i, cmd in enumerate(help_names):
-        row.append(InlineKeyboardButton(cmd, callback_data=f"help: {cmd}"))
-        if (i + 1) % 2 == 0 or (i + 1) == len(help_names):
-            buttons.append(row)
-            row = []
-
+        buttons.append(InlineKeyboardButton(cmd, callback_data=f"help: {cmd}"))
+        
     reply_markup = InlineKeyboardMarkup(buttons)
 
-    InlineQueryResultArticle(
+    await InlineQueryResultArticle(
         title="Help",
         input_message_content=InputTextMessageContent("Here are the available commands:"),
         reply_markup=reply_markup
