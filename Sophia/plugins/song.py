@@ -99,3 +99,6 @@ async def video(_, message):
         os.remove(thumb_name)
     except Exception as e:
         await msg.edit(f"Error: {e}")
+
+MOD_NAME = "YouTube"
+MOD_HELP = ".song <text/link> - To download the song from Youtube.\n.video <text/link> - To download the video from Youtube."
