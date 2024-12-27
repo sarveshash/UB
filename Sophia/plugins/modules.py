@@ -17,7 +17,7 @@ for x in a:
             pass
 logging.info(f"{f'Loaded Modules: {a}' if a else 'No modules loaded'}")
 
-async def page_help(page=1, per_page=10):
+async def page_help(page=1, per_page=4):
     start = (page - 1) * per_page
     end = start + per_page
     buttons = []
