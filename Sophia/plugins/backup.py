@@ -88,4 +88,4 @@ MOD_HELP = """.backup - Use in pm/db to save the messages in a private channel.
 .usbackup - To unstop the backup-ing.
 .rbackup - To delete/reset the backup (the channel will deleted)
 
-**💡Pro tip:** Simply this command useful for scammer/your friend"""
+**💡Pro tip:** Simply use this command for scammer/your friend """
