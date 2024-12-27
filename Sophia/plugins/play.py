@@ -256,3 +256,18 @@ async def skip(_, message):
             await message.reply('Nothing streaming in vc ❌')
     else:
         await message.reply('Nothing streaming in vc ❌')
+
+MOD_NAME = "Play"
+MOD_HELP = """
+**🥀 Your commands**:
+.play - To play a song in voice chat
+.vplay - To play a youtube video on voice chat
+.skip - To skip a playing song/video
+.addplay - To allow a chat to use GroupUsers commands
+.rplay - To remove permission of a chat to use GroupUsers commands
+.getplay - To get allowed permission chats of GroupUsers commands
+
+**👤 GroupUsers commands**:
+.play - To play a song in voice chat
+.skip - To skip a playing song/video
+"""
