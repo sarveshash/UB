@@ -17,13 +17,13 @@ for x in a:
             pass
 logging.info(f"{f'Loaded Modules: {a}' if a else 'No modules loaded'}")
 
-async def page_help(page=1, per_page=4):
+async def page_help(page=1, per_page=10):
     start = (page - 1) * per_page
     end = start + per_page
     buttons = []
     row = []
     for cmd in help_names[start:end]:
-        row.append(InlineKeyboardButton(cmd, callback_data=f"help: {cmd}"))
+        row.append(InlineKeyboardButton(cmd, callback_data=f"help:{cmd}:{page}"))
         if len(row) == 2:
             buttons.append(row)
             row = []
@@ -48,18 +48,18 @@ async def showcommands(_, query):
     )
     await query.answer([result])
 
-@SophiaBot.on_callback_query(qfilter('help: '))
+@SophiaBot.on_callback_query(qfilter('help:'))
 async def showhelpinfo(_, query):
-    help_cmd = str(query.data).replace('help: ', '')
+    data = query.data.split(":")
+    help_cmd = data[1]
+    current_page = int(data[2]) if len(data) > 2 else 1
     if help_cmd in help_names:
-        index = help_names.index(help_cmd)
-        current_page = (index // 10) + 1
         txt = f"**⚡ Help for the module: {help_cmd}**\n\n{help_data[help_cmd]}"
         button = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back", callback_data=f"helppage:{current_page}")]])
         await query.edit_message_text(txt, reply_markup=button)
 
 @SophiaBot.on_callback_query(qfilter('helppage:'))
-async def paginate_callback(_, query):
+async def page_callback(_, query):
     page = int(query.data.split(":")[1])
     reply_markup = await page_help(page=page)
     await query.edit_message_text("**ıllıllı★ 𝙷𝚎𝚕𝚙 𝙼𝚎𝚗𝚞 ★ıllıllı**", reply_markup=reply_markup)
