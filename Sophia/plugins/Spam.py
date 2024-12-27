@@ -49,3 +49,9 @@ async def spam_stoper(_, message):
         if Do_you_need_warnings == True:
             await message.reply_text("**Warning ⚠️**: Its Restart All UserBot Process")
         await spam_killer()
+
+MOD_NAME = "Spam"
+MOD_HELP = """.spam <text> - To spam the text or reply to a message to spam it.
+.sspam - To stop the ongoing spam.
+.fsspam - To force stop the spam (restart the userbot).
+"""
