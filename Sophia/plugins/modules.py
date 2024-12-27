@@ -31,7 +31,7 @@ async def showcommands(_, query):
     reply_markup = InlineKeyboardMarkup(buttons)
     result = InlineQueryResultArticle(
         title="Help",
-        input_message_content=InputTextMessageContent("**Here are the available commands:**"),
+        input_message_content=InputTextMessageContent("**ıllıllı★ 𝙷𝚎𝚕𝚙 𝙼𝚎𝚗𝚞 ★ıllıllı**"),
         reply_markup=reply_markup
     )
 
@@ -57,4 +57,4 @@ async def backhelp(_, query):
     if row:
         buttons.append(row)
     reply_markup = InlineKeyboardMarkup(buttons)
-    await query.edit_message_text("**Here are the available commands:**", reply_markup=reply_markup)
+    await query.edit_message_text("**ıllıllı★ 𝙷𝚎𝚕𝚙 𝙼𝚎𝚗𝚞 ★ıllıllı**", reply_markup=reply_markup)
