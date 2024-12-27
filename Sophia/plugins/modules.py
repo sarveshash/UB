@@ -1,6 +1,7 @@
 from subprocess import getoutput as r
 from pyrogram import Client
 from Sophia import *
+import logging
 from pyrogram.types import InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardMarkup, InlineKeyboardButton
 
 a = r("ls Sophia/plugins").split('\n')
