@@ -39,7 +39,7 @@ async def showcommands(_, query):
 
 @SophiaBot.on_callback_query(qfilter('help: '))
 async def showhelpinfo(_, query):
-    help_cmd = query.data.replace('help: ', '')
+    help_cmd = str(query.data).replace('help: ', '')
     if help_cmd in help_names:
         txt = f"⚡ Help for the module: {help_cmd}:\n\n{help_data[help_cmd]}"
         await query.edit_message_text(txt)
