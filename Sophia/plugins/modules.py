@@ -17,24 +17,35 @@ for x in a:
             pass
 logging.info(f"{f'Loaded Modules: {a}' if a else 'No modules loaded'}")
 
-@SophiaBot.on_inline_query(qfilter('help'))
-async def showcommands(_, query):
+async def paginate_help(page=1, per_page=4):
+    start = (page - 1) * per_page
+    end = start + per_page
     buttons = []
     row = []
-    for i, cmd in enumerate(help_names):
+    for cmd in help_names[start:end]:
         row.append(InlineKeyboardButton(cmd, callback_data=f"help: {cmd}"))
         if len(row) == 2:
             buttons.append(row)
             row = []
     if row:
         buttons.append(row)
-    reply_markup = InlineKeyboardMarkup(buttons)
+    nav_buttons = []
+    if page > 1:
+        nav_buttons.append(InlineKeyboardButton("🔙 Back", callback_data=f"helppage:{page - 1}"))
+    if end < len(help_names):
+        nav_buttons.append(InlineKeyboardButton("Next 🔜", callback_data=f"helppage:{page + 1}"))
+    if nav_buttons:
+        buttons.append(nav_buttons)
+    return InlineKeyboardMarkup(buttons)
+
+@SophiaBot.on_inline_query(qfilter('help'))
+async def showcommands(_, query):
+    reply_markup = await paginate_help(page=1)
     result = InlineQueryResultArticle(
         title="Help",
         input_message_content=InputTextMessageContent("**ıllıllı★ 𝙷𝚎𝚕𝚙 𝙼𝚎𝚗𝚞 ★ıllıllı**"),
         reply_markup=reply_markup
     )
-
     await query.answer([result])
 
 @SophiaBot.on_callback_query(qfilter('help: '))
@@ -42,19 +53,12 @@ async def showhelpinfo(_, query):
     help_cmd = str(query.data).replace('help: ', '')
     if help_cmd in help_names:
         txt = f"**⚡ Help for the module: {help_cmd}**\n\n{help_data[help_cmd]}"
-        button = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back", callback_data="helpback")]])
+        current_page = (help_names.index(help_cmd) // 10) + 1
+        button = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back", callback_data=f"helppage:{current_page}")]])
         await query.edit_message_text(txt, reply_markup=button)
-        
-@SophiaBot.on_callback_query(qfilter('helpback'))
-async def backhelp(_, query):
-    buttons = []
-    row = []
-    for i, cmd in enumerate(help_names):
-        row.append(InlineKeyboardButton(cmd, callback_data=f"help: {cmd}"))
-        if len(row) == 2:
-            buttons.append(row)
-            row = []
-    if row:
-        buttons.append(row)
-    reply_markup = InlineKeyboardMarkup(buttons)
+
+@SophiaBot.on_callback_query(qfilter('helppage:'))
+async def page_callback(_, query):
+    page = int(query.data.split(":")[1])
+    reply_markup = await paginate_help(page=page)
     await query.edit_message_text("**ıllıllı★ 𝙷𝚎𝚕𝚙 𝙼𝚎𝚗𝚞 ★ıllıllı**", reply_markup=reply_markup)
