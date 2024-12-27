@@ -15,7 +15,7 @@ for x in a:
                 help_names.append(module.MOD_NAME)
         except:
             pass
-logging.info(f"{f'Loaded Modules: {help_names}' if help_names else 'No modules loaded'}")
+logging.info(f"{f'Loaded Modules: {a}' if a else 'No modules loaded'}")
 
 @SophiaBot.on_inline_query(qfilter('help'))
 async def showcommands(_, query):
