@@ -66,6 +66,6 @@ async def page_callback(_, query):
     page = int(query.data.split(":")[1])
     reply_markup, current_page, total_pages = await page_help(page=page)
     await query.edit_message_text(
-        f"**ıllıllı★ 𝙷𝚎𝚕𝚙 𝙼𝚎𝚗𝚞 ★ıllıllı**\n\nPage {current_page} of {total_pages}",
+        f"**Click buttons bellow to get the module info**\nPage {current_page} of {total_pages}",
         reply_markup=reply_markup
     )
