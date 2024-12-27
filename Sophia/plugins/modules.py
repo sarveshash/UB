@@ -1,16 +1,40 @@
-"""
 from subprocess import getoutput as r
-import logging 
-a = r("ls Sophia/plugins")
-a = a.split('\n')
-helpNames = []
-help = {}
+from pyrogram import Client
+from Sophia import *
+from pyrogram.types import InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardMarkup, InlineKeyboardButton
+
+a = r("ls Sophia/plugins").split('\n')
+help_data = {
+  'safe': 'hey'
+}
+help_names = ['safe']
 for x in a:
-  if x.endswith('.py'):
+  if x.endswith('.py') and not x.startswith('__pycache__'):
     try:
-      exec(f"from Sophia.plugins.{x.split('.py')[0]} import MOD_NAME, MOD_HELP")
-      helpNames += MOD_NAME
-      help[MOD_NAME] = MOD_HELP
-    except: pass
-p(help)
-"""
+      module = __import__(f"Sophia.plugins.{x.replace('.py', '')}", fromlist=["MOD_NAME", "MOD_HELP"])
+      if hasattr(module, 'MOD_NAME') and hasattr(module, 'MOD_HELP'):
+        help_data[module.MOD_NAME] = module.MOD_HELP
+        help_names.append(module.MOD_NAME)
+    except:
+      pass
+
+logging.info(f"{f'Loaded Modules: {help_names}' if help_names else 'No modules loaded'}")
+
+@SophiaBot.on_inline_query()
+async def showcommands(_, query):
+    logging.info('Yes received')
+    buttons = []
+    row = []
+    for i, cmd in enumerate(help_names):
+        row.append(InlineKeyboardButton(cmd, callback_data=f"help: {cmd}"))
+        if (i + 1) % 2 == 0 or (i + 1) == len(help_names):
+            buttons.append(row)
+            row = []
+
+    reply_markup = InlineKeyboardMarkup(buttons)
+
+    return InlineQueryResultArticle(
+        title="Help",
+        input_message_content=InputTextMessageContent("Here are the available commands:"),
+        reply_markup=reply_markup
+    )
