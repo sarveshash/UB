@@ -78,5 +78,5 @@ SophiaVC = PyTgCalls(Sophia)
 
 async def qfilter(inlineQuery):
     async def funcMano(_, __, query):
-        return query.query == inlineQuery
+        return str(query.query).startswith(inlineQuery)
     return filters.create(funcMano)
