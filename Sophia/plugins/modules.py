@@ -1,3 +1,4 @@
+"""
 from subprocess import getoutput as r
 import logging 
 a = r("ls Sophia/plugins")
@@ -12,3 +13,4 @@ for x in a:
       help[MOD_NAME] = MOD_HELP
     except: pass
 p(help)
+"""
