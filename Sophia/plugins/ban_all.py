@@ -108,3 +108,16 @@ async def kickall(_, message):
                 return
             await message.reply_text(f"**Sorry**, I got a error: {e}")
             print(e)
+
+MOD_NAME = 'Bans'
+MOD_HELP = """**⚕️ Banall**
+.banall - To ban all members from a group.
+.unbanall - To unban all members from a group.
+.kickall - To kick all members from a group.
+
+**🥀 Normal-Ban**
+.ban <Reply/id> - To ban them.
+.kick <Reply/id> - To kick them.
+.unban <Reply/id> - To unban them.
+**💡 LMAO:** Don't try to test this and destroy your group!
+"""
