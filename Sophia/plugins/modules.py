@@ -15,6 +15,7 @@ for x in a:
                 help_names.append(module.MOD_NAME)
         except:
             pass
+logging.info(f"{f'Loaded Modules: {help_names}' if help_names else 'No modules loaded'}")
 
 @SophiaBot.on_inline_query()
 async def showcommands(_, query):
@@ -25,7 +26,7 @@ async def showcommands(_, query):
         
     reply_markup = InlineKeyboardMarkup(buttons)
 
-    await InlineQueryResultArticle(
+    InlineQueryResultArticle(
         title="Help",
         input_message_content=InputTextMessageContent("Here are the available commands:"),
         reply_markup=reply_markup
