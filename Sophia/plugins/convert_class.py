@@ -36,3 +36,6 @@ async def translate_java(_, message):
             await message_text.delete()
     else:
         await message_text.edit(f"```java\n{java_code}```")
+
+MOD_NAME = "ClassConvert"
+MOD_HELP = "Send a java .class file to decode it"
