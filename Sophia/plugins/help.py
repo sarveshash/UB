@@ -1,5 +1,5 @@
 from Sophia import HANDLER
-from Sophia.__main__ import Sophia
+from Sophia.__main__ import Sophia, SophiaBot
 from config import OWNER_ID
 from config import SUDO_USERS_ID
 from pyrogram import filters
