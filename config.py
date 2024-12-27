@@ -1,7 +1,6 @@
-
 from Sophia.__main__ import *
+
 OWNER_ID = Sophia.me.id
-BOT_USERNAME = SophiaBot.me.username
 
 # SETTINGS 
 Do_you_need_warnings = False # You will Get some Warning messages Using by some Commands. if you don't like change it False.
