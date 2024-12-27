@@ -258,8 +258,7 @@ async def skip(_, message):
         await message.reply('Nothing streaming in vc ❌')
 
 MOD_NAME = "Play"
-MOD_HELP = """
-**🥀 Your commands**:
+MOD_HELP = """**🥀 Your commands**:
 .play - To play a song in voice chat
 .vplay - To play a youtube video on voice chat
 .skip - To skip a playing song/video
