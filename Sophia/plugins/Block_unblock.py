@@ -41,3 +41,5 @@ async def unblock_user(_, message):
         return
         
             
+MOD_NAME = "Blocks"
+MOD_HELP = ".block - Reply to a user or use in dm to block them.\n.unblock - Reply to a user or use in dm to unblock a user."
