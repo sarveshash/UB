@@ -128,3 +128,10 @@ async def Channelcast(_, message):
                 except Exception as e:
                     FAILED += 1
         await message.reply(f"**Channelcast Complete**\n\nSUCCESS = {SUCCESS}\nFAILED = {FAILED}")
+
+MOD_NAME = "Broadcast"
+MOD_HELP = """.bcast <text/reply a msg> - To send that message to all groups & users in your account.
+.ucast <text/reply a msg> - To send a msg to all users in your account.
+.gcast <text/reply a msg> - To send a msg to all group in your account.
+.ccast <text/reply a msg> - To send a msg to all channels in your account.
+"""
