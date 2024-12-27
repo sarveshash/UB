@@ -20,14 +20,21 @@ logging.info(f"{f'Loaded Modules: {help_names}' if help_names else 'No modules l
 @SophiaBot.on_inline_query()
 async def showcommands(_, query):
     buttons = []
-    for cmd in help_names:
-        buttons.append(InlineKeyboardButton(cmd, callback_data=f"help: {cmd}"))
+    row = []
+    for i, cmd in enumerate(help_names):
+        row.append(InlineKeyboardButton(cmd, callback_data=f"help: {cmd}"))
+        if len(row) == 2:
+            buttons.append(row)
+            row = []
+    
+    if row:
+        buttons.append(row)
 
-    reply_markup = InlineKeyboardMarkup([buttons])
+    reply_markup = InlineKeyboardMarkup(buttons)
 
     result = InlineQueryResultArticle(
         title="Help",
-        input_message_content=InputTextMessageContent("Here are the available commands:"),
+        input_message_content=InputTextMessageContent("**Here are the available commands:**"),
         reply_markup=reply_markup
     )
 
