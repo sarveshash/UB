@@ -41,7 +41,20 @@ async def showcommands(_, query):
 async def showhelpinfo(_, query):
     help_cmd = str(query.data).replace('help: ', '')
     if help_cmd in help_names:
-        txt = f"**⚡ Help for the module: {help_cmd}:\n\n{help_data[help_cmd]}**"
+        txt = f"**⚡ Help for the module: {help_cmd}:**\n\n{help_data[help_cmd]}"
         button = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 Back", callback_data="helpback")]])
         await query.edit_message_text(txt, reply_markup=button)
         
+@SophiaBot.on_callback_query(qfilter('helpback'))
+async def backhelp(_, query):
+    buttons = []
+    row = []
+    for i, cmd in enumerate(help_names):
+        row.append(InlineKeyboardButton(cmd, callback_data=f"help: {cmd}"))
+        if len(row) == 2:
+            buttons.append(row)
+            row = []
+    if row:
+        buttons.append(row)
+    reply_markup = InlineKeyboardMarkup(buttons)
+    await query.edit_message_text("**Here are the available commands:**", reply_markup=reply_markup)
