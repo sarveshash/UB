@@ -2,7 +2,6 @@ from subprocess import getoutput as r
 from pyrogram import Client
 from Sophia import *
 from pyrogram.types import InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardMarkup, InlineKeyboardButton
-import logging
 
 a = r("ls Sophia/plugins").split('\n')
 help_data = {'safe': 'hey'}
@@ -17,11 +16,8 @@ for x in a:
         except:
             pass
 
-logging.info(f"Loaded Modules: {help_names}")
-
 @SophiaBot.on_inline_query()
 async def showcommands(_, query):
-    logging.info('Inline query received')
     buttons = []
     row = []
     for i, cmd in enumerate(help_names):
@@ -36,4 +32,4 @@ async def showcommands(_, query):
         title="Help",
         input_message_content=InputTextMessageContent("Here are the available commands:"),
         reply_markup=reply_markup
-  )
+    )
