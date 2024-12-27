@@ -13,7 +13,7 @@ from Sophia.plugins.ignore_bad import pattern
 
 
 
-@Sophia.on_message(filters.command(["chatbackup", "cbackup", "backup"], prefixes=HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command("backup", prefixes=HANDLER) & filters.user(OWNER_ID))
 async def enable_backup(_, message):
     STATUS = await GET_BACKUP()
     if not STATUS == True:
@@ -81,3 +81,11 @@ async def get_stoped_backup_chats(_, message):
     for name in NAMES:
         FORMATTED_NAMES += f"-» `{name}`\n"
     await MSG.edit(f"**Results:**\n{FORMATTED_NAMES}")
+
+MOD_NAME = 'Backup'
+MOD_HELP = """.backup - Use in pm/db to save the messages in a private channel.
+.sbackup - Stop backup-ing for temporary 
+.usbackup - To unstop the backup-ing.
+.rbackup - To delete/reset the backup (the channel will deleted)
+
+**💡Pro tip:** Simply this command useful for scammer/your friend"""
