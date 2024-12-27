@@ -17,7 +17,7 @@ for x in a:
             pass
 logging.info(f"{f'Loaded Modules: {a}' if a else 'No modules loaded'}")
 
-async def page_help(page=1, per_page=10):
+async def page_help(page=1, per_page=4):
     start = (page - 1) * per_page
     end = start + per_page
     total_pages = (len(help_names) + per_page - 1) // per_page
@@ -62,7 +62,7 @@ async def showhelpinfo(_, query):
         await query.edit_message_text(txt, reply_markup=button)
 
 @SophiaBot.on_callback_query(qfilter('helppage:'))
-async def paginate_callback(_, query):
+async def page_callback(_, query):
     page = int(query.data.split(":")[1])
     reply_markup, current_page, total_pages = await page_help(page=page)
     await query.edit_message_text(
