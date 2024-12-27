@@ -34,3 +34,6 @@ async def id(_, m):
         _reply += f"**Photo ID**: `{reply.photo.file_id}`"
     await reply.reply_text(_reply)
     await m.delete()
+
+MOD_NAME = "ID"
+MOD_HELP = "OGK"
