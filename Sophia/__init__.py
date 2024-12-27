@@ -2,8 +2,7 @@ import os
 import sys
 import requests
 import logging
-from pyrogram import Client
-from pyrogram import Client
+from pyrogram import *
 from pymongo import MongoClient
 from urllib.parse import urlparse
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -75,3 +74,9 @@ if len(TOKEN) > 50: SophiaBot = Client("SophiaBot", session_string=TOKEN, api_id
 else: SophiaBot = Client("SophiaBot", bot_token=TOKEN, api_id=API_ID, api_hash=API_HASH, plugins=dict(root="Sophia/plugins"))
 SophiaVC = PyTgCalls(Sophia)
 
+# Functions
+
+async def qfilter(inlineQuery):
+    async def funcMano(_, __, query):
+        return query.query == inlineQuery
+    return filters.create(funcMano)
