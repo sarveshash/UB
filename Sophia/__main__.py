@@ -14,9 +14,8 @@ if __name__ == "__main__":
     SophiaBot.start()
     try:
         if 143 == 143:
-            from config import OWNER_ID
             SophiaBot.send_photo(
-                OWNER_ID,
+                Sophia.me.id,
                 photo="https://i.imgur.com/DuoscLX.jpeg",
                 caption=(
                     f"**✅ Sophia started ⚡**\n\n"
