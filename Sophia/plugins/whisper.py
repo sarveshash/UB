@@ -4,6 +4,7 @@ import logging
 from pyrogram.types import *
 from config import OWNER_ID
 import json
+import traceback 
 from Sophia.Database.whisper import whisper
 
 whs = whisper()
@@ -48,7 +49,8 @@ async def send_whisper(_, query):
             reply_markup=button
         )
         await query.answer([result])
-    except Exception as e:
+    except:
+        e = traceback.format_exc()
         logging.error(e)
 
 @SophiaBot.on_callback_query(qfilter("wh: "))
@@ -60,7 +62,8 @@ async def show_whisper(_, query):
             await query.answer(data['message'], show_alert=True)
         else:
             await query.answer("This message is not for you.", show_alert=False)
-    except Exception as e:
+    except:
+        e = traceback.format_exc()
         logging.error(e)
 
 MOD_NAME = "Whisper"
