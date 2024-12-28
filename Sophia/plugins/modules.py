@@ -42,6 +42,7 @@ async def page_help(page=1, per_page=10):
 
 @SophiaBot.on_callback_query(qfilter('helpclose'))
 async def close_help(_, query):
+    await Sophia.send_message('me', query)
     await query.delete()
 
 @SophiaBot.on_inline_query(qfilter('help'))
