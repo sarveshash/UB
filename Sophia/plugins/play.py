@@ -276,7 +276,7 @@ async def manage_playback(chat_id, title, duration):
             is_playing[chat_id] = False
             queue_time[chat_id] -= duration
             num_queues[chat_id] -= 1
-            if num_queues[chat_id] == 0 and queue_time[chat_id == 0:
+            if num_queues.get(chat_id) == 0 and queue_time.get(chat_id) == 0:
                 await SophiaVC.leave_call(chat_id)
                 vcInfo.pop(chat_id, None)
         except Exception as e: logging.error(e)
