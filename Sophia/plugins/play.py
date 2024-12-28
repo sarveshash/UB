@@ -7,6 +7,7 @@ import asyncio
 import os
 import re
 import requests
+import traceback
 from youtube_search import YoutubeSearch
 from yt_dlp import YoutubeDL
 from pytgcalls.types import MediaStream
@@ -107,7 +108,7 @@ async def play_(_, message):
                 dur = file.duration or 0
                 await m.delete()
                 queue[message.chat.id] += 1
-                vcInfo[message.chat.id+queue[message.chat.id]] = {
+                vcInfo[int(message.chat.id)+queue[message.chat.id]] = {
                     "title": f'{title} {message.id}',
                     "duration": dur,
                     "type": "Telegram audio",
@@ -116,7 +117,8 @@ async def play_(_, message):
                     "message": message 
                 }
                 await play(message, queue[message.chat.id])
-            except Exception as e:
+            except:
+                e = traceback.format_exc()
                 await message.reply(f"Error: {e}")
                 return logging.error(e)
             return
