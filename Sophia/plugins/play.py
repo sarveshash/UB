@@ -65,6 +65,7 @@ async def play(message, number):
         except: pass
         is_playing[message.chat.id] = True
         data = vcInfo.get(message.chat.id+number)
+        await message.reply(data)
         title, dur = data.title, data.duration
         type, path, thumb = data.type, data.path, data.thumb
         await message.reply_photo(
