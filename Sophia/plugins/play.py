@@ -60,7 +60,7 @@ is_playing = {}
 async def play(message, number):
     global is_playing
     try:
-        if is_playing[message.chat.id] and not vcInfo[message.chat.id+number]: return
+        if is_playing.get(message.chat.id) and not vcInfo.get(message.chat.id+number): return
         try: await SophiaVC.start()
         except: pass
         is_playing[message.chat.id] = True
@@ -80,7 +80,7 @@ async def play(message, number):
         )
         await SophiaVC.play(message.chat.id, MediaStream(path))
         await asyncio.sleep(dur + 5)
-        if queue[number+1]:
+        if queue.get(number+1):
             del vcInfo[message.chat.id+number]
             data = vcInfo[message.chat.id+number+1]
             await play(data.message, number+1)
