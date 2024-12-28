@@ -18,7 +18,7 @@ async def whisper(_, message):
     'message': " ".join(message.command[1:]),
     'sender': message.from_user.id,
   }
-  results = await Sophia.get_inline_bot_results(SophiaBot.me.username, f"whisper: {data}")
+  results = await Sophia.get_inline_bot_results(SophiaBot.me.username, f"whisper: {json.dumps(data)}")
   await Sophia.send_inline_bot_result(
     chat_id=message.chat.id,
     query_id=results.query_id,
@@ -29,6 +29,7 @@ async def whisper(_, message):
 @Sophia.on_inline_query(qfilter('whisper: '))
 async def send_whisper(_, query):
   data = json.loads(str(query.data).replace('whisper: ', ''))
+  logging.info(f'Received yeah data is: {data}')
   button = InlineKeyboardMarkup([[InlineKeyboardButton("View 🔓", callback_data=f"whisper: {data}")]])
   result = InlineQueryResultArticle(
     title="Whisper message",
