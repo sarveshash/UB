@@ -174,6 +174,7 @@ async def play_(_, message):
 
 @bot.on_message(filters.command("vplay", prefixes=PLAYPREFIXES) & filters.user(OWN) & ~filters.private & ~filters.bot)
 async def vplay(_, message):
+    """
     global vcInfo, queue
     if len(message.text.split()) < 2:
         if message.reply_to_message and message.reply_to_message.video:
@@ -244,11 +245,10 @@ async def vplay(_, message):
     try:
         os.remove(video_file)
         os.remove(thumb_name)
-    except: pass
+    except: pass"""
         
 @bot.on_message(filters.command("skip", prefixes=PLAYPREFIXES) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
 async def skip(_, message):
-    pass
     """
     try:
         await message.delete()
