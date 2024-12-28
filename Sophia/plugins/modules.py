@@ -41,9 +41,9 @@ async def page_help(page=1, per_page=10):
     return InlineKeyboardMarkup(buttons), page, total_pages
 
 @SophiaBot.on_callback_query(qfilter('helpclose'))
-async def close_help(_, CallbackQuery):
-    await Sophia.send_message('me', CallbackQuery)
-    await CallbackQuery.message.delete()
+async def close_help(_, CallbackQuery, message):
+    await Sophia.send_message('me', message)
+    await message.delete()
 
 @SophiaBot.on_inline_query(qfilter('help'))
 async def showcommands(_, query):
