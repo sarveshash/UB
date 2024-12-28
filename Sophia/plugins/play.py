@@ -56,7 +56,7 @@ async def getPlayGroups(_, message):
 is_playing = {}
 queue_time = {}
 
-async def play_filter(_, message):
+async def play_filter(client, message):
     if is_playing.get(message.chat.id):
         logging.info(f'Is playing: {is_playing}')
         logging.info(f'queue_time: {queue_time}')
