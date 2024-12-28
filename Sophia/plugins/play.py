@@ -83,8 +83,9 @@ async def play(message, number):
         )
         await SophiaVC.play(message.chat.id, MediaStream(path))
         await asyncio.sleep(dur + 5)
-        if queue.get(number + 1):
+        if queue.get(message.chat.id) and queue[message.chat.id] > 1:
             del vcInfo[message.chat.id + number]
+            queue[message.chat.id] -= 1
             data = vcInfo.get(message.chat.id + number + 1)
             await play(data['message'], number + 1)
         else:
