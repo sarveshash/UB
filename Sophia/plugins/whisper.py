@@ -46,7 +46,7 @@ async def send_whisper(_, query):
             input_message_content=InputTextMessageContent(
                 f"""🔒 A whisper message to [{data['name']}]({mention}), only they can open it.
 
-                {f"**🦋 To: @{data['username'}" if not data['username'] == "Nothing" else ""}
+                {f"**🦋 To: @{data['username']}" if data['username'] != "Nothing" else ""}
                 **👾 By:** SophiaUB
                 """,
                 parse_mode=enums.ParseMode.MARKDOWN,
