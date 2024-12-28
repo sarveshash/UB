@@ -15,9 +15,9 @@ async def whisper(_, message):
         return await message.reply('Please reply someone to whisper!')
     reply = message.reply_to_message
     data = {
-        'name': str(reply.from_user.first_name).replace(' ', '%20'),
+        'name': str(reply.from_user.first_name).replace(' ', '_'),
         'id': reply.from_user.id,
-        'message': str(" ".join(message.command[1:])).replace(' ', '%20')
+        'message': str(" ".join(message.command[1:])).replace(' ', '_')
     }
     results = await Sophia.get_inline_bot_results(SophiaBot.me.username, f"whisper: {json.dumps(data)}")
     if results.results:
@@ -38,7 +38,7 @@ async def send_whisper(_, query):
         result = InlineQueryResultArticle(
             title="Whisper message",
             input_message_content=InputTextMessageContent(
-                f"🔒 A whisper message to {str(data['name']).replace('%20', ' ')}, Only he/she can open it."
+                f"🔒 A whisper message to {str(data['name']).replace('_', ' ')}, Only he/she can open it."
             ),
             reply_markup=button
         )
@@ -48,7 +48,7 @@ async def send_whisper(_, query):
 
 @SophiaBot.on_callback_query(qfilter('wh: '))
 async def show_whisper(_, query):
-    data = str(query.data.replace(' ', '%20').replace('wh: ', '')).split(' ')
+    data = str(query.data.replace('_', ' ').replace('wh: ', '')).split(' ')
     logging.info(f'Data is {data}')
 
 MOD_NAME = 'Whisper'
