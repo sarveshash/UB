@@ -15,9 +15,9 @@ async def whisper(_, message):
         return await message.reply('Please reply someone to whisper!')
     reply = message.reply_to_message
     data = {
-        'name': str(reply.from_user.first_name).replace(' ', 'π'),
+        'name': str(reply.from_user.first_name).replace(' ', '%20'),
         'id': reply.from_user.id,
-        'message': str(" ".join(message.command[1:])).replace(' ', 'π')
+        'message': str(" ".join(message.command[1:])).replace(' ', '%20')
     }
     results = await Sophia.get_inline_bot_results(SophiaBot.me.username, f"whisper: {json.dumps(data)}")
     if results.results:
@@ -25,8 +25,7 @@ async def whisper(_, message):
         await Sophia.send_inline_bot_result(
             chat_id=message.chat.id,
             query_id=results.query_id,
-            result_id=results.results[0].id,
-            reply_to_message=message.reply_to_message_id
+            result_id=results.results[0].id
         )
     else:
         await message.reply("Error: No result returned by the inline bot.")
@@ -40,13 +39,18 @@ async def send_whisper(_, query):
         result = InlineQueryResultArticle(
             title="Whisper message",
             input_message_content=InputTextMessageContent(
-                f"🔒 A whisper message to {str(data['name']).replace('π', ' ')}, Only he/she can open it."
+                f"🔒 A whisper message to {str(data['name']).replace('%20', ' ')}, Only he/she can open it."
             ),
             reply_markup=button
         )
         await query.answer([result])
     except Exception as e:
         logging.error(e)
+
+@SophiaBot.on_callback_query(qfilter('wh: '))
+async def show_whisper(_, query):
+    data = str(query.data.replace(' ', '%20')).spilt(' ')
+    logging.info(f'Data is {data}')
 
 MOD_NAME = 'Whisper'
 MOD_HELP = "Beta module help updated soon!"
