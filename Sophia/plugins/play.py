@@ -61,16 +61,13 @@ async def play_filter(_, client, message):
     if is_playing.get(message.chat.id):
         logging.info(f'Is playing: {is_playing}')
         logging.info(f'queue_time: {queue_time}')
-        await message.reply('Add in queue')
+        await message.reply("Successfully added your query in queue! ✅")
         if queue_time.get(message.chat.id) and queue_time.get(message.chat.id) > 0:
             a = queue_time.get(message.chat.id)
             await asyncio.sleep(a)
             return True
-        else: 
-            return True
-        return True
-    else:
-        return True
+        else: return True
+    else: return True
 
 @bot.on_message(filters.command(["play", "sp"], prefixes=PLAYPREFIXES) & filters.create(publicFilter) & filters.create(play_filter) & ~filters.private & ~filters.bot)
 async def play(_, message):
@@ -100,11 +97,13 @@ async def play(_, message):
                     )
                 )
                 vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": dur}
+                # Queue -------------
                 is_playing[message.chat.id] = True
                 if queue_time.get(message.chat.id) and queue_time.get(message.chat.id) > 0: queue_time[message.chat.id] += dur
                 else: queue_time[message.chat.id] = dur
                 if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
                 else: num_queues[message.chat.id) = 1
+                # -------------------
                 await SophiaVC.play(message.chat.id, MediaStream(path))
                 await manage_playback(message.chat.id, f'{title} {message.id}', dur)
             except Exception as e:
@@ -161,6 +160,13 @@ async def play(_, message):
             )
         )
         vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": dur}
+        # Queue -------------
+        is_playing[message.chat.id] = True
+        if queue_time.get(message.chat.id) and queue_time.get(message.chat.id) > 0: queue_time[message.chat.id] += dur
+        else: queue_time[message.chat.id] = dur
+        if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
+        else: num_queues[message.chat.id) = 1
+        # -------------------  
         await SophiaVC.play(message.chat.id, MediaStream(audio_file))
         await manage_playback(message.chat.id, f'{title} {message.id}', dur)
     except Exception as e:
@@ -195,6 +201,13 @@ async def vplay(_, message):
                     caption=f"**✅ Started Streaming On VC.**\n\n**🥀 Title:** {title[:20] if len(title) > 20 else title}\n**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n**🦋 Stream Type:** Telegram video\n**👾 Requested By:** {message.from_user.first_name if not message.from_user.last_name else f'{message.from_user.first_name} {message.from_user.last_name}'}\n**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
                 )
                 vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": dur}
+                # Queue -------------
+                is_playing[message.chat.id] = True
+                if queue_time.get(message.chat.id) and queue_time.get(message.chat.id) > 0: queue_time[message.chat.id] += dur
+                else: queue_time[message.chat.id] = dur
+                if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
+                else: num_queues[message.chat.id) = 1
+                # -------------------
                 await SophiaVC.play(message.chat.id, MediaStream(path))
                 await manage_playback(message.chat.id, f'{title} {message.id}', dur)
             except Exception as e:
@@ -245,6 +258,13 @@ async def vplay(_, message):
             caption=f"**✅ Started Streaming On VC.**\n\n**🥀 Title:** {title[:20] if len(title) > 20 else title}\n**🐬 Duration:** {duration // 60}:{duration % 60:02d} Mins\n**🦋 Stream Type:** Video\n**👾 Requested By:** {message.from_user.first_name if not message.from_user.last_name else f'{message.from_user.first_name} {message.from_user.last_name}'}\n**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
         )
         vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": duration}
+        # Queue -------------
+        is_playing[message.chat.id] = True
+        if queue_time.get(message.chat.id) and queue_time.get(message.chat.id) > 0: queue_time[message.chat.id] += dur
+        else: queue_time[message.chat.id] = dur
+        if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
+        else: num_queues[message.chat.id) = 1
+        # -------------------
         await SophiaVC.play(message.chat.id, MediaStream(video_file))
         await manage_playback(message.chat.id, f'{title} {message.id}', duration)
     except Exception as e:
@@ -264,7 +284,7 @@ async def manage_playback(chat_id, title, duration):
             is_playing[chat_id] = False
             queue_time[chat_id] -= duration
             num_queues[chat_id] -1
-            if num_queues[chat_id] <= 1:
+            if num_queues[chat_id] < 1:
                 await SophiaVC.leave_call(chat_id)
                 vcInfo.pop(chat_id, None)
         except Exception:
