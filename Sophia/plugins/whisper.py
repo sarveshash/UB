@@ -21,6 +21,7 @@ async def whisper(_, message):
     'sender': message.from_user.id,
   }
   results = await Sophia.get_inline_bot_results(SophiaBot.me.username, f"whisper: {json.dumps(data)}")
+  await message.reply(results)
   await Sophia.send_inline_bot_result(
     chat_id=message.chat.id,
     query_id=results.query_id,
