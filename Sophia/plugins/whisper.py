@@ -15,7 +15,7 @@ async def whisper(_, message):
         return await message.reply('Please reply someone to whisper!')
     reply = message.reply_to_message
     data = {
-        'n': reply.from_user.first_name
+        'n': reply.from_user.first_name,
         'i': reply.from_user.id,
         'm': " ".join(message.command[1:])
     }
