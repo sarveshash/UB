@@ -51,9 +51,15 @@ async def send_whisper(_, query):
 
 @SophiaBot.on_callback_query(qfilter('wh: '))
 async def show_whisper(_, query):
-    id = int(query.data.replace('wh: ', ''))
-    data = await whs.get(id)
-    logging.info(f'Data is {data}')
+    try:
+        wid = int(query.data.replace('wh: ', ''))
+        data = await whs.get(wid)
+        if data and query.from_user.id == data['id'] or query.from_user.id == OWNER_ID:
+            await await query.answer(data['message'], show_alert=True)
+        else:
+            await query.answer("This message not for you.", show_alert=False)
+    except Exception as e:
+        logging.error(e)
 
 MOD_NAME = 'Whisper'
 MOD_HELP = "Beta module help updated soon!"
