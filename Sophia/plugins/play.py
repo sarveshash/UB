@@ -103,6 +103,7 @@ async def play(_, message):
                 else: num_queues[message.chat.id] = 1
                 # -------------------
                 await SophiaVC.play(message.chat.id, MediaStream(path))
+                await asyncio.sleep(dur + 5)
                 await manage_playback(message.chat.id, f'{title} {message.id}', dur)
             except Exception as e:
                 if str(e) == """Telegram says: [403 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "phone.CreateGroupCall")""":
@@ -163,6 +164,7 @@ async def play(_, message):
         else: num_queues[message.chat.id] = 1
         # -------------------  
         await SophiaVC.play(message.chat.id, MediaStream(audio_file))
+        await asyncio.sleep(dur + 5)
         await manage_playback(message.chat.id, f'{title} {message.id}', dur)
     except Exception as e:
         if str(e) == """Telegram says: [403 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "phone.CreateGroupCall")""":
@@ -201,6 +203,7 @@ async def vplay(_, message):
                 else: num_queues[message.chat.id] = 1
                 # -------------------
                 await SophiaVC.play(message.chat.id, MediaStream(path))
+                await asyncio.sleep(dur + 5)
                 await manage_playback(message.chat.id, f'{title} {message.id}', dur)
             except Exception as e:
                 if str(e) == """Telegram says: [403 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "phone.CreateGroupCall")""":
@@ -255,6 +258,7 @@ async def vplay(_, message):
         else: num_queues[message.chat.id] = 1
         # -------------------
         await SophiaVC.play(message.chat.id, MediaStream(video_file))
+        await asyncio.sleep(dur + 5)
         await manage_playback(message.chat.id, f'{title} {message.id}', duration)
     except Exception as e:
         if str(e) == """Telegram says: [403 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "phone.CreateGroupCall")""":
@@ -267,13 +271,12 @@ async def vplay(_, message):
         
 async def manage_playback(chat_id, title, duration):
     global vcInfo, is_playing, queue_time, num_queues
-    await asyncio.sleep(duration + 5)
     if vcInfo.get(chat_id, {}).get("title") == title:
         try:
             is_playing[chat_id] = False
             queue_time[chat_id] -= duration
-            num_queues[chat_id] -1
-            if num_queues[chat_id] < 1:
+            num_queues[chat_id] -= 1
+            if num_queues[chat_id] == 0:
                 await SophiaVC.leave_call(chat_id)
                 vcInfo.pop(chat_id, None)
         except Exception as e: logging.error(e)
