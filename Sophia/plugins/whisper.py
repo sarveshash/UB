@@ -1,5 +1,6 @@
 from Sophia import *
 from pyrogram import *
+import logging 
 from pyrogram.types import *
 from config import OWNER_ID
 import json
@@ -28,18 +29,21 @@ async def whisper(_, message):
 
 @Sophia.on_inline_query(qfilter('whisper: '))
 async def send_whisper(_, query):
-  print('Yes received')
-  data = json.loads(str(query.data).replace('whisper: ', ''))
-  logging.info(f'Received yeah data is: {data}')
-  button = InlineKeyboardMarkup([[InlineKeyboardButton("View 🔓", callback_data=f"whisper: {data}")]])
-  result = InlineQueryResultArticle(
-    title="Whisper message",
-    input_message_content=InputTextMessageContent(
-      f"🔒 A whisper message to {data['name']}, Only he/she can open it."
-    ),
-    reply_markup=button
-  )
-  await query.answer([result])
+  try:
+    print('Yes received')
+    data = json.loads(str(query.data).replace('whisper: ', ''))
+    logging.info(f'Received yeah data is: {data}')
+    button = InlineKeyboardMarkup([[InlineKeyboardButton("View 🔓", callback_data=f"whisper: {data}")]])
+    result = InlineQueryResultArticle(
+      title="Whisper message",
+      input_message_content=InputTextMessageContent(
+        f"🔒 A whisper message to {data['name']}, Only he/she can open it."
+      ),
+      reply_markup=button
+    )
+    await query.answer([result])
+  except Exception as e:
+    logging.error(e)
 
 MOD_NAME = 'Whisper'
 MOD_HELP = "Beta module help updated soon!"
