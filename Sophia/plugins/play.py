@@ -60,6 +60,8 @@ async def play(message, number):
     global is_playing
     try:
         if is_playing[message.chat.id] and not vcInfo[message.chat.id+number]: return
+        try: await SophiaVC.start()
+        except: pass
         is_playing[message.chat.id] = True
         data = vcInfo[message.chat.id+number]
         title, dur = data.title.replace(message.id, ''), data.duration
@@ -116,9 +118,9 @@ async def play_(_, message):
                 await play(message, queue[message.chat.id])
             except Exception as e:
                 await message.reply(f"Error: {e}")
+                return logging.error(e)
             return
-        else:
-            return await message.reply("Provide a song name or link.")
+        else: return await message.reply("Provide a song name or link.")
     query = " ".join(message.command[1:])
     m = await message.reply("🔄 Searching....")
     if query.startswith(("www.youtube", "http://", "https://")):
@@ -135,9 +137,7 @@ async def play_(_, message):
             title = results[0]["title"]
             thumbnail = results[0]["thumbnails"][0]
             duration = results[0]["duration"]
-        except:
-            await m.edit("⚠️ No results were found.")
-            return
+        except: return await m.edit("⚠️ No results were found.")
     s_title = re.sub(r'[<>:"/\\|?*]', '_', title)
     thumb_name = f"{s_title}.jpg"
     if thumbnail:
@@ -174,11 +174,7 @@ async def play_(_, message):
 
 @bot.on_message(filters.command("vplay", prefixes=PLAYPREFIXES) & filters.user(OWN) & ~filters.private & ~filters.bot)
 async def vplay(_, message):
-    global vcInfo
-    try:
-        await SophiaVC.start()
-    except:
-        pass
+    global vcInfo, queue
     if len(message.text.split()) < 2:
         if message.reply_to_message and message.reply_to_message.video:
             try:
@@ -197,12 +193,10 @@ async def vplay(_, message):
                 await SophiaVC.play(message.chat.id, MediaStream(path))
                 await manage_playback(message.chat.id, f'{title} {message.id}', dur)
             except Exception as e:
-                if str(e) == """Telegram says: [403 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "phone.CreateGroupCall")""":
-                    return await message.reply('**Cannot play song admin rights required ❌**')
                 await message.reply(f"Error: {e}")
+                return logging.error(e)
             return
-        else:
-            return await message.reply("Provide a video name or link.")
+        else: return await message.reply("Provide a video name or link.")
     query = " ".join(message.command[1:])
     m = await message.reply("🔄 Searching....")
     if query.startswith(("www.youtube", "http://", "https://")):
@@ -212,7 +206,7 @@ async def vplay(_, message):
             title = info.get("title", "Unknown Title")
             thumbnail = info.get("thumbnail")
             duration = int(info.get("duration", 0))
-            is_video = True  # Assume it's a video if using a direct link
+            is_video = True 
     else:
         try:
             results = YoutubeSearch(query, max_results=1).to_dict()
@@ -221,9 +215,7 @@ async def vplay(_, message):
             thumbnail = results[0]["thumbnails"][0]
             duration = int(results[0]["duration"].split(":")[0]) * 60 + int(results[0]["duration"].split(":")[1])
             is_video = True
-        except:
-            await m.edit("⚠️ No results were found.")
-            return
+        except: return await m.edit("⚠️ No results were found.")
     s_title = re.sub(r'[<>:"/\\|?*]', '_', title)
     thumb_name = f"{s_title}.jpg"
     if thumbnail:
@@ -247,27 +239,17 @@ async def vplay(_, message):
         await SophiaVC.play(message.chat.id, MediaStream(video_file))
         await manage_playback(message.chat.id, f'{title} {message.id}', duration)
     except Exception as e:
-        if str(e) == """Telegram says: [403 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "phone.CreateGroupCall")""":
-            return await message.reply('**Cannot play video admin rights required ❌**')
         await message.reply(f"Error: {e}")
+        return logging.error(e)
     try:
         os.remove(video_file)
         os.remove(thumb_name)
-    except:
-        pass
+    except: pass
         
-async def manage_playback(chat_id, title, duration):
-    await asyncio.sleep(duration + 5)
-    queue[chat_id] -= 1
-    if vcInfo.get(chat_id+queue[chat_id], {}).get("title") == title:
-        try:
-            await SophiaVC.leave_call(chat_id)
-            vcInfo.pop(chat_id, None)
-        except Exception:
-            pass
-
 @bot.on_message(filters.command("skip", prefixes=PLAYPREFIXES) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
 async def skip(_, message):
+    pass
+    """
     try:
         await message.delete()
     except:
@@ -279,7 +261,7 @@ async def skip(_, message):
         except Exception as e:
             await message.reply('Nothing streaming in vc ❌')
     else:
-        await message.reply('Nothing streaming in vc ❌')
+        await message.reply('Nothing streaming in vc ❌')"""
 
 MOD_NAME = "Play"
 MOD_HELP = """**🥀 Your commands**:
