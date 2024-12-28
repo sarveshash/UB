@@ -33,7 +33,7 @@ async def send_whisper(_, query):
   try:
     data = json.loads(str(query.query).replace('whisper: ', ''))
     logging.info(f'Received yeah data is: {data}')
-    button = InlineKeyboardMarkup([[InlineKeyboardButton("View 🔓", callback_data=f"whisper: {data}")]])
+    button = InlineKeyboardMarkup([[InlineKeyboardButton("View 🔓", callback_data=f"whisper: {json.dumps(data)}")]])
     result = InlineQueryResultArticle(
       title="Whisper message",
       input_message_content=InputTextMessageContent(
