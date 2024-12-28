@@ -72,10 +72,8 @@ async def play_filter(_, client, message):
 @bot.on_message(filters.command(["play", "sp"], prefixes=PLAYPREFIXES) & filters.create(publicFilter) & filters.create(play_filter) & ~filters.private & ~filters.bot)
 async def play(_, message):
     global vcInfo, is_playing, queue_time, num_queues
-    try:
-        await SophiaVC.start()
-    except:
-        pass
+    try: await SophiaVC.start()
+    except: pass
     if len(message.text.split()) < 2:
         if message.reply_to_message and message.reply_to_message.audio:
             try:
@@ -111,8 +109,7 @@ async def play(_, message):
                     return await message.reply('**Cannot play song admin rights required ❌**')
                 await message.reply(f"Error: {e}")
             return
-        else:
-            return await message.reply("Provide a song name or link.")
+        else: return await message.reply("Provide a song name or link.")
     query = " ".join(message.command[1:])
     m = await message.reply("🔄 Searching....")
     if query.startswith(("www.youtube", "http://", "https://")):
@@ -129,9 +126,7 @@ async def play(_, message):
             title = results[0]["title"]
             thumbnail = results[0]["thumbnails"][0]
             duration = results[0]["duration"]
-        except:
-            await m.edit("⚠️ No results were found.")
-            return
+        except: return await m.edit("⚠️ No results were found.")
     s_title = re.sub(r'[<>:"/\\|?*]', '_', title)
     thumb_name = f"{s_title}.jpg"
     if thumbnail:
@@ -176,16 +171,13 @@ async def play(_, message):
     try:
         os.remove(audio_file)
         os.remove(thumb_name)
-    except:
-        pass
+    except: pass
 
 @bot.on_message(filters.command("vplay", prefixes=PLAYPREFIXES) & filters.user(OWN) & ~filters.private & ~filters.bot)
 async def vplay(_, message):
-    global vcInfo
-    try:
-        await SophiaVC.start()
-    except:
-        pass
+    global vcInfo, is_playing, queue_time, num_queues
+    try: await SophiaVC.start()
+    except: pass
     if len(message.text.split()) < 2:
         if message.reply_to_message and message.reply_to_message.video:
             try:
@@ -215,8 +207,7 @@ async def vplay(_, message):
                     return await message.reply('**Cannot play song admin rights required ❌**')
                 await message.reply(f"Error: {e}")
             return
-        else:
-            return await message.reply("Provide a video name or link.")
+        else: return await message.reply("Provide a video name or link.")
     query = " ".join(message.command[1:])
     m = await message.reply("🔄 Searching....")
     if query.startswith(("www.youtube", "http://", "https://")):
@@ -235,9 +226,7 @@ async def vplay(_, message):
             thumbnail = results[0]["thumbnails"][0]
             duration = int(results[0]["duration"].split(":")[0]) * 60 + int(results[0]["duration"].split(":")[1])
             is_video = True
-        except:
-            await m.edit("⚠️ No results were found.")
-            return
+        except: return await m.edit("⚠️ No results were found.")
     s_title = re.sub(r'[<>:"/\\|?*]', '_', title)
     thumb_name = f"{s_title}.jpg"
     if thumbnail:
@@ -287,8 +276,7 @@ async def manage_playback(chat_id, title, duration):
             if num_queues[chat_id] < 1:
                 await SophiaVC.leave_call(chat_id)
                 vcInfo.pop(chat_id, None)
-        except Exception:
-            pass
+        except Exception as e: logging.error(e)
 
 @bot.on_message(filters.command("skip", prefixes=PLAYPREFIXES) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
 async def skip(_, message):
