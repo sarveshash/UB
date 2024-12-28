@@ -55,7 +55,7 @@ async def show_whisper(_, query):
         wid = int(query.data.replace('wh: ', ''))
         data = await whs.get(wid)
         if data and query.from_user.id == data['id'] or query.from_user.id == OWNER_ID:
-            await await query.answer(data['message'], show_alert=True)
+            await query.answer(data['message'], show_alert=True)
         else:
             await query.answer("This message not for you.", show_alert=False)
     except Exception as e:
