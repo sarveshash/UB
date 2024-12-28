@@ -173,7 +173,7 @@ async def play(_, message):
         os.remove(thumb_name)
     except: pass
 
-@bot.on_message(filters.command("vplay", prefixes=PLAYPREFIXES) & filters.user(OWN) & ~filters.private & ~filters.bot)
+@bot.on_message(filters.command("vplay", prefixes=PLAYPREFIXES) & filters.create(publicFilter) & filters.create(play_filter) & filters.user(OWN) & ~filters.private & ~filters.bot)
 async def vplay(_, message):
     global vcInfo, is_playing, queue_time, num_queues
     try: await SophiaVC.start()
@@ -304,5 +304,6 @@ MOD_HELP = """**🥀 Your commands**:
 
 **👤 GroupUsers commands**:
 .play - To play a song in voice chat
+.vplay - To play a youtube video on voice chat
 .skip - To skip a playing song/video
 """
