@@ -5,6 +5,9 @@ from pyrogram.types import *
 from config import OWNER_ID
 import json
 from Sophia import *
+from Sophia.Database.whisper import *
+
+whs = whisper()
 
 @Sophia.on_message(filters.command("whisper", prefixes=HANDLER) & filters.user(OWNER_ID) & ~filters.private & ~filters.bot)
 async def whisper(_, message):
@@ -15,9 +18,9 @@ async def whisper(_, message):
         return await message.reply('Please reply someone to whisper!')
     reply = message.reply_to_message
     data = {
-        'name': str(reply.from_user.first_name).replace(' ', '_'),
+        'name': str(reply.from_user.first_name),
         'id': reply.from_user.id,
-        'message': str(" ".join(message.command[1:])).replace(' ', '_')
+        'message': str(" ".join(message.command[1:]))
     }
     results = await Sophia.get_inline_bot_results(SophiaBot.me.username, f"whisper: {json.dumps(data)}")
     if results.results:
@@ -33,12 +36,12 @@ async def whisper(_, message):
 async def send_whisper(_, query):
     try:
         data = json.loads(str(query.query).replace('whisper: ', ''))
-        logging.info(f'Received yeah data is: {data}')
-        button = InlineKeyboardMarkup([[InlineKeyboardButton("View 🔓", callback_data=f"wh: {data['name']} {data['id']} {data['message']}")]])
+        wid = await whs.add(data['message'], data['id'])
+        button = InlineKeyboardMarkup([[InlineKeyboardButton("View 🔓", callback_data=f"wh: {wid}")]])
         result = InlineQueryResultArticle(
             title="Whisper message",
             input_message_content=InputTextMessageContent(
-                f"🔒 A whisper message to {str(data['name']).replace('_', ' ')}, Only he/she can open it."
+                f"🔒 A whisper message to {data['name']}, Only he/she can open it."
             ),
             reply_markup=button
         )
@@ -48,7 +51,8 @@ async def send_whisper(_, query):
 
 @SophiaBot.on_callback_query(qfilter('wh: '))
 async def show_whisper(_, query):
-    data = str(query.data.replace('_', ' ').replace('wh: ', '')).split(' ')
+    id = int(query.data.replace('wh: ', ''))
+    data = await whs.get(id)
     logging.info(f'Data is {data}')
 
 MOD_NAME = 'Whisper'
