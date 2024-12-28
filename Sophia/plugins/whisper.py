@@ -31,8 +31,7 @@ async def whisper(_, message):
 @SophiaBot.on_inline_query(qfilter('whisper: '))
 async def send_whisper(_, query):
   try:
-    logging.info(query)
-    data = json.loads(str(query).replace('whisper: ', ''))
+    data = json.loads(str(query.query).replace('whisper: ', ''))
     logging.info(f'Received yeah data is: {data}')
     button = InlineKeyboardMarkup([[InlineKeyboardButton("View 🔓", callback_data=f"whisper: {data}")]])
     result = InlineQueryResultArticle(
