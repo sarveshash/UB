@@ -18,9 +18,10 @@ async def whisper(_, message):
         return await message.reply('Please reply someone to whisper!')
     reply = message.reply_to_message
     data = {
-        'name': str(reply.from_user.first_name),
+        'name': f"{reply.from_user.first_name if not reply.from_user.last_name else f'{reply.from_user.first_name} {reply.from_user.last_name}'}",
         'id': reply.from_user.id,
-        'message': str(" ".join(message.command[1:]))
+        'message': str(" ".join(message.command[1:])),
+        'username': reply.from_user.username or 'Nothing'
     }
     results = await Sophia.get_inline_bot_results(SophiaBot.me.username, f"whisper: {json.dumps(data)}")
     if results.results:
@@ -37,11 +38,13 @@ async def send_whisper(_, query):
     try:
         data = json.loads(str(query.query).replace('whisper: ', ''))
         wid = await whs.add(data['message'], data['id'])
+        mention = f'https://t.me/{data['username']}' if not data.get('username') == 'Nothing' else ' '
         button = InlineKeyboardMarkup([[InlineKeyboardButton("View 🔓", callback_data=f"wh: {wid}")]])
         result = InlineQueryResultArticle(
             title="Whisper message",
             input_message_content=InputTextMessageContent(
-                f"🔒 A whisper message to {data['name']}, Only he/she can open it.\n\n**👾 By:** SophiaUB"
+                f"🔒 A whisper message to [{data['name']}]({mention}), Only he/she can open it.\n\n**👾 By:** SophiaUB",
+                parse_mode='markdown'
             ),
             reply_markup=button
         )
