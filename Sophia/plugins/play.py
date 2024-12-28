@@ -52,12 +52,35 @@ async def getPlayGroups(_, message):
     await a.delete()
     if info and txt: return await message.reply(f"**⚕️ Here are the chats you allowed permission for play:**\n\n{txt}")
     await message.reply('No chats have play commands permission ❌')
-cu
-async def play(message):
-    data = vcInfo[message.chat.id]
+
+queue = {}
+is_playing = {}
+
+async def play(message, number):
+    global is_playing
+    if is_playing[message.chat.id]: return
+    is_playing[message.chat.id] = True
+    data = vcInfo[message.chat.id+number]
     title, dur = data.title.replace(message.id, ''), data.duration
     type, path, thumb = data.type, data.path, data.thumb
-    
+    await message.reply_photo(
+        photo=thumb,
+        caption=(
+            f"**✅ Started Streaming On VC.**\n\n"
+            f"**🥀 Title:** {title[:20] if len(title) > 20 else title}\n"
+            f"**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n"
+            f"**🦋 Stream Type:** {type}\n"
+            f"**👾 Requested By:** {message.from_user.first_name if not message.from_user.last_name else f'{message.from_user.first_name} {message.from_user.last_name}'}\n"
+            f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
+        )
+    )
+    await SophiaVC.play(message.chat.id, MediaStream(path))
+    await asyncio.sleep(dur + 5)
+    if queue[number+1]:
+        await play(data.message, number+1)
+    else:
+        is_playing[message.chat.id] = False
+        await SophiaVC.leave_call(message.chat.id)
 @bot.on_message(filters.command(["play", "sp"], prefixes=PLAYPREFIXES) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
 async def play_(_, message):
     global vcInfo
@@ -72,25 +95,15 @@ async def play_(_, message):
                 title = file.title or file.file_name or "Unknown Title"
                 dur = file.duration or 0
                 await m.delete()
-                await message.reply_photo(
-                    photo="https://i.imgur.com/9KKPfOA.jpeg",
-                    caption=(
-                        f"**✅ Started Streaming On VC.**\n\n"
-                        f"**🥀 Title:** {title[:20] if len(title) > 20 else title}\n"
-                        f"**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n"
-                        f"**🦋 Stream Type:** Telegram audio\n"
-                        f"**👾 Requested By:** {message.from_user.first_name if not message.from_user.last_name else f'{message.from_user.first_name} {message.from_user.last_name}'}\n"
-                        f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
-                    )
-                )
-                vcInfo[message.chat.id+] = {
+                queue[message.chat.id] += 1
+                vcInfo[message.chat.id+queue[message.chat.id]] = {
                     "title": f'{title} {message.id}',
                     "duration": dur,
                     "type": "Telegram audio",
                     "path": path,
-                    "thumb": "https://i.imgur.com/9KKPfOA.jpeg"
+                    "thumb": "https://i.imgur.com/9KKPfOA.jpeg",
+                    "message": message 
                 }
-                await SophiaVC.play(message.chat.id, MediaStream(path))
                 await manage_playback(message.chat.id, f'{title} {message.id}', dur)
             except Exception as e:
                 if str(e) == """Telegram says: [403 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "phone.CreateGroupCall")""":
@@ -244,7 +257,8 @@ async def vplay(_, message):
         
 async def manage_playback(chat_id, title, duration):
     await asyncio.sleep(duration + 5)
-    if vcInfo.get(chat_id, {}).get("title") == title:
+    queue[chat_id] -= 1
+    if vcInfo.get(chat_id+queue[chat_id], {}).get("title") == title:
         try:
             await SophiaVC.leave_call(chat_id)
             vcInfo.pop(chat_id, None)
@@ -259,7 +273,7 @@ async def skip(_, message):
         pass
     if vcInfo.get(message.chat.id):
         try:
-            await SophiaVC.leave_call(message.chat.id)
+            
             vcInfo.pop(message.chat.id, None)
         except Exception as e:
             await message.reply('Nothing streaming in vc ❌')
