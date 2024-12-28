@@ -1,9 +1,10 @@
-from Sophia import *
+from Sophia import HANDLER, SophiaBot, Sophia, qfilter
 from pyrogram import *
 import logging 
 from pyrogram.types import *
 from config import OWNER_ID
 import json
+from Sophia import *
 
 @Sophia.on_message(filters.command("whisper", prefixes=HANDLER) & filters.user(OWNER_ID) & ~filters.private & ~filters.bot)
 async def whisper(_, message):
@@ -27,10 +28,9 @@ async def whisper(_, message):
     reply_to_message=message.reply_to_message_id
   )
 
-@Sophia.on_inline_query(qfilter('whisper: '))
+@SophiaBot.on_inline_query(qfilter('whisper: '))
 async def send_whisper(_, query):
   try:
-    print('Yes received')
     data = json.loads(str(query.data).replace('whisper: ', ''))
     logging.info(f'Received yeah data is: {data}')
     button = InlineKeyboardMarkup([[InlineKeyboardButton("View 🔓", callback_data=f"whisper: {data}")]])
