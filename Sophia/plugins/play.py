@@ -100,7 +100,7 @@ async def play(_, message):
                 if queue_time.get(message.chat.id) and queue_time.get(message.chat.id) > 0: queue_time[message.chat.id] += dur
                 else: queue_time[message.chat.id] = dur
                 if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
-                else: num_queues[message.chat.id) = 1
+                else: num_queues[message.chat.id] = 1
                 # -------------------
                 await SophiaVC.play(message.chat.id, MediaStream(path))
                 await manage_playback(message.chat.id, f'{title} {message.id}', dur)
@@ -160,7 +160,7 @@ async def play(_, message):
         if queue_time.get(message.chat.id) and queue_time.get(message.chat.id) > 0: queue_time[message.chat.id] += dur
         else: queue_time[message.chat.id] = dur
         if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
-        else: num_queues[message.chat.id) = 1
+        else: num_queues[message.chat.id] = 1
         # -------------------  
         await SophiaVC.play(message.chat.id, MediaStream(audio_file))
         await manage_playback(message.chat.id, f'{title} {message.id}', dur)
@@ -198,7 +198,7 @@ async def vplay(_, message):
                 if queue_time.get(message.chat.id) and queue_time.get(message.chat.id) > 0: queue_time[message.chat.id] += dur
                 else: queue_time[message.chat.id] = dur
                 if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
-                else: num_queues[message.chat.id) = 1
+                else: num_queues[message.chat.id] = 1
                 # -------------------
                 await SophiaVC.play(message.chat.id, MediaStream(path))
                 await manage_playback(message.chat.id, f'{title} {message.id}', dur)
@@ -252,7 +252,7 @@ async def vplay(_, message):
         if queue_time.get(message.chat.id) and queue_time.get(message.chat.id) > 0: queue_time[message.chat.id] += dur
         else: queue_time[message.chat.id] = dur
         if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
-        else: num_queues[message.chat.id) = 1
+        else: num_queues[message.chat.id] = 1
         # -------------------
         await SophiaVC.play(message.chat.id, MediaStream(video_file))
         await manage_playback(message.chat.id, f'{title} {message.id}', duration)
