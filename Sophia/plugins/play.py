@@ -252,8 +252,8 @@ async def vplay(_, message):
         vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": duration}
         # Queue -------------
         is_playing[message.chat.id] = True
-        if queue_time.get(message.chat.id) and queue_time.get(message.chat.id) > 0: queue_time[message.chat.id] += dur
-        else: queue_time[message.chat.id] = dur
+        if queue_time.get(message.chat.id) and queue_time.get(message.chat.id) > 0: queue_time[message.chat.id] += duration
+        else: queue_time[message.chat.id] = duration
         if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
         else: num_queues[message.chat.id] = 1
         # -------------------
