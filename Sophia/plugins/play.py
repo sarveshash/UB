@@ -258,7 +258,7 @@ async def vplay(_, message):
         else: num_queues[message.chat.id] = 1
         # -------------------
         await SophiaVC.play(message.chat.id, MediaStream(video_file))
-        await asyncio.sleep(dur + 5)
+        await asyncio.sleep(duration + 5)
         await manage_playback(message.chat.id, f'{title} {message.id}', duration)
     except Exception as e:
         if str(e) == """Telegram says: [403 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "phone.CreateGroupCall")""":
