@@ -82,7 +82,7 @@ async def play(message, number):
         await asyncio.sleep(dur + 5)
         if queue.get(number+1):
             del vcInfo[message.chat.id+number]
-            data = vcInfo[message.chat.id+number+1]
+            data = vcInfo.get(message.chat.id+number+1)
             await play(data.message, number+1)
         else:
             is_playing[message.chat.id] = False
