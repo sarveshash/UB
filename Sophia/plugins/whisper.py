@@ -49,7 +49,7 @@ async def send_whisper(_, query):
 
 @SophiaBot.on_callback_query(qfilter('wh: '))
 async def show_whisper(_, query):
-    data = str(query.data.replace(' ', '%20')).spilt(' ')
+    data = str(query.data.replace(' ', '%20').replace('wh: ', '')).split(' ')
     logging.info(f'Data is {data}')
 
 MOD_NAME = 'Whisper'
