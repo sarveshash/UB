@@ -12,7 +12,6 @@ my_id = None
 if __name__ == "__main__":
     Sophia.start()
     SophiaBot.start()
-    SophiaVC.start()
     try:
         if 143 == 143:
             SophiaBot.send_photo(
