@@ -60,12 +60,14 @@ is_playing = {}
 async def play(message, number):
     global is_playing
     try:
-        if is_playing.get(message.chat.id) and not vcInfo.get(message.chat.id+number): return
-        try: await SophiaVC.start()
-        except: pass
+        if is_playing.get(message.chat.id) and not vcInfo.get(message.chat.id + number): 
+            return
+        try: 
+            await SophiaVC.start()
+        except: 
+            pass
         is_playing[message.chat.id] = True
-        data = vcInfo.get(message.chat.id+number)
-        logging.info(data)
+        data = vcInfo.get(message.chat.id + number)
         title, dur = data['title'], data['duration']
         type, path, thumb = data['type'], data['path'], data['thumb']
         await message.reply_photo(
@@ -81,10 +83,10 @@ async def play(message, number):
         )
         await SophiaVC.play(message.chat.id, MediaStream(path))
         await asyncio.sleep(dur + 5)
-        if queue.get(number+1):
-            del vcInfo[message.chat.id+number]
-            data = vcInfo.get(message.chat.id+number+1)
-            await play(data.message, number+1)
+        if queue.get(number + 1):
+            del vcInfo[message.chat.id + number]
+            data = vcInfo.get(message.chat.id + number + 1)
+            await play(data['message'], number + 1)
         else:
             is_playing[message.chat.id] = False
             await SophiaVC.leave_call(message.chat.id)
@@ -98,8 +100,10 @@ async def play(message, number):
 @bot.on_message(filters.command(["play", "sp"], prefixes=PLAYPREFIXES) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
 async def play_(_, message):
     global vcInfo, queue
-    try: await SophiaVC.start()
-    except: pass
+    try: 
+        await SophiaVC.start()
+    except: 
+        pass
     if len(message.text.split()) < 2:
         if message.reply_to_message and message.reply_to_message.audio:
             try:
@@ -109,9 +113,11 @@ async def play_(_, message):
                 title = file.title or file.file_name or "Unknown Title"
                 dur = file.duration or 0
                 await m.delete()
-                if queue.get(message.chat.id): queue[message.chat.id] += 1
-                else: queue[message.chat.id] = 1
-                vcInfo[int(message.chat.id)+queue[message.chat.id]] = {
+                if queue.get(message.chat.id): 
+                    queue[message.chat.id] += 1
+                else: 
+                    queue[message.chat.id] = 1
+                vcInfo[int(message.chat.id) + queue[message.chat.id]] = {
                     "title": f'{title} {message.id}',
                     "duration": dur,
                     "type": "Telegram audio",
@@ -125,7 +131,8 @@ async def play_(_, message):
                 await message.reply(f"Error: {e}")
                 return logging.error(e)
             return
-        else: return await message.reply("Provide a song name or link.")
+        else: 
+            return await message.reply("Provide a song name or link.")
     query = " ".join(message.command[1:])
     m = await message.reply("🔄 Searching....")
     if query.startswith(("www.youtube", "http://", "https://")):
@@ -142,7 +149,8 @@ async def play_(_, message):
             title = results[0]["title"]
             thumbnail = results[0]["thumbnails"][0]
             duration = results[0]["duration"]
-        except: return await m.edit("⚠️ No results were found.")
+        except: 
+            return await m.edit("⚠️ No results were found.")
     s_title = re.sub(r'[<>:"/\\|?*]', '_', title)
     thumb_name = f"{s_title}.jpg"
     if thumbnail:
@@ -159,9 +167,11 @@ async def play_(_, message):
             dur += int(dur_arr[i]) * secmul
             secmul *= 60
         await m.delete()
-        if queue.get(message.chat.id): queue[message.chat.id] += 1
-        else: queue.get[message.chat.id] = 1
-        vcInfo[message.chat.id+queue[message.chat.id]] = {
+        if queue.get(message.chat.id): 
+            queue[message.chat.id] += 1
+        else: 
+            queue[message.chat.id] = 1
+        vcInfo[message.chat.id + queue[message.chat.id]] = {
             "title": f'{title} {message.id}',
             "duration": dur,
             "type": "Audio",
@@ -177,7 +187,8 @@ async def play_(_, message):
     try:
         os.remove(audio_file)
         os.remove(thumb_name)
-    except: pass
+    except: 
+        pass
 
 @bot.on_message(filters.command("vplay", prefixes=PLAYPREFIXES) & filters.user(OWN) & ~filters.private & ~filters.bot)
 async def vplay(_, message):
