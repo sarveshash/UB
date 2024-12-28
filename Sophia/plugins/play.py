@@ -90,8 +90,9 @@ async def play(message, number):
     except Exception as e:
         if str(e) == """Telegram says: [403 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "phone.CreateGroupCall")""":
             return await message.reply('**Cannot play song admin rights required ❌**')
-        await message.reply(f"Error: {e}")
-        return logging.error(e)
+        e = traceback.format_exc()
+        logging.error(e)
+        return await message.reply(f"Error: {e}")
 
 @bot.on_message(filters.command(["play", "sp"], prefixes=PLAYPREFIXES) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
 async def play_(_, message):
@@ -107,7 +108,8 @@ async def play_(_, message):
                 title = file.title or file.file_name or "Unknown Title"
                 dur = file.duration or 0
                 await m.delete()
-                queue[message.chat.id] += 1
+                if queue[message.chat.id]: queue[message.chat.id] += 1
+                else: queue[message.chat.id] = 1
                 vcInfo[int(message.chat.id)+queue[message.chat.id]] = {
                     "title": f'{title} {message.id}',
                     "duration": dur,
@@ -156,7 +158,8 @@ async def play_(_, message):
             dur += int(dur_arr[i]) * secmul
             secmul *= 60
         await m.delete()
-        queue[message.chat.id] += 1
+        if queue[message.chat.id]: queue[message.chat.id] += 1
+        else: queue[message.chat.id] = 1
         vcInfo[message.chat.id+queue[message.chat.id]] = {
             "title": f'{title} {message.id}',
             "duration": dur,
@@ -166,9 +169,10 @@ async def play_(_, message):
             "message": message 
         }
         await play(message, queue[message.chat.id])
-    except Exception as e:
-        await message.reply(f"Error: {e}")
+    except:
+        e = traceback.format_exc()
         logging.error(e)
+        await message.reply(f"Error: {e}")
     try:
         os.remove(audio_file)
         os.remove(thumb_name)
