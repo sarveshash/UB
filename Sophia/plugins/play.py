@@ -52,14 +52,17 @@ async def getPlayGroups(_, message):
     await a.delete()
     if info and txt: return await message.reply(f"**⚕️ Here are the chats you allowed permission for play:**\n\n{txt}")
     await message.reply('No chats have play commands permission ❌')
+cu
+async def play(message):
+    data = vcInfo[message.chat.id]
+    title, dur = data.title.replace(message.id, ''), data.duration
+    type, path, thumb = data.type, data.path, data.thumb
     
 @bot.on_message(filters.command(["play", "sp"], prefixes=PLAYPREFIXES) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
-async def play(_, message):
+async def play_(_, message):
     global vcInfo
-    try:
-        await SophiaVC.start()
-    except:
-        pass
+    try: await SophiaVC.start()
+    except: pass
     if len(message.text.split()) < 2:
         if message.reply_to_message and message.reply_to_message.audio:
             try:
@@ -80,7 +83,13 @@ async def play(_, message):
                         f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
                     )
                 )
-                vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": dur}
+                vcInfo[message.chat.id+] = {
+                    "title": f'{title} {message.id}',
+                    "duration": dur,
+                    "type": "Telegram audio",
+                    "path": path,
+                    "thumb": "https://i.imgur.com/9KKPfOA.jpeg"
+                }
                 await SophiaVC.play(message.chat.id, MediaStream(path))
                 await manage_playback(message.chat.id, f'{title} {message.id}', dur)
             except Exception as e:
