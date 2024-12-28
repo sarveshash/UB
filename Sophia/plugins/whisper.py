@@ -4,8 +4,7 @@ import logging
 from pyrogram.types import *
 from config import OWNER_ID
 import json
-from Sophia import *
-from Sophia.Database.whisper import *
+from Sophia.Database.whisper import whisper
 
 whs = whisper()
 
@@ -15,12 +14,12 @@ async def whisper(_, message):
     if len(message.text.split()) < 2:
         return await message.reply("Please enter a text to whisper!")
     if not message.reply_to_message:
-        return await message.reply('Please reply someone to whisper!')
+        return await message.reply("Please reply to someone to whisper!")
     reply = message.reply_to_message
     data = {
-        'name': f"{reply.from_user.first_name if not reply.from_user.last_name else f'{reply.from_user.first_name} {reply.from_user.last_name}'}",
+        'name': f"{reply.from_user.first_name} {reply.from_user.last_name or ''}".strip(),
         'id': reply.from_user.id,
-        'message': str(" ".join(message.command[1:])),
+        'message': " ".join(message.command[1:]),
         'username': reply.from_user.username or 'Nothing'
     }
     results = await Sophia.get_inline_bot_results(SophiaBot.me.username, f"whisper: {json.dumps(data)}")
@@ -33,18 +32,18 @@ async def whisper(_, message):
     else:
         await message.reply("Error: No result returned by the inline bot.")
 
-@SophiaBot.on_inline_query(qfilter('whisper: '))
+@SophiaBot.on_inline_query(qfilter("whisper: "))
 async def send_whisper(_, query):
     try:
-        data = json.loads(str(query.query).replace('whisper: ', ''))
+        data = json.loads(query.query.replace("whisper: ", ""))
         wid = await whs.add(data['message'], data['id'])
-        mention = f'https://t.me/{data['username']}' if not data.get('username') == 'Nothing' else ' '
+        mention = f"https://t.me/{data['username']}" if data.get('username') != 'Nothing' else ' '
         button = InlineKeyboardMarkup([[InlineKeyboardButton("View 🔓", callback_data=f"wh: {wid}")]])
         result = InlineQueryResultArticle(
             title="Whisper message",
             input_message_content=InputTextMessageContent(
-                f"🔒 A whisper message to [{data['name']}]({mention}), Only he/she can open it.\n\n**👾 By:** SophiaUB",
-                parse_mode='markdown'
+                f"🔒 A whisper message to [{data['name']}]({mention}), only they can open it.\n\n**👾 By:** SophiaUB",
+                parse_mode="markdown"
             ),
             reply_markup=button
         )
@@ -52,17 +51,17 @@ async def send_whisper(_, query):
     except Exception as e:
         logging.error(e)
 
-@SophiaBot.on_callback_query(qfilter('wh: '))
+@SophiaBot.on_callback_query(qfilter("wh: "))
 async def show_whisper(_, query):
     try:
-        wid = int(query.data.replace('wh: ', ''))
+        wid = int(query.data.replace("wh: ", ""))
         data = await whs.get(wid)
-        if data and query.from_user.id == data['id'] or query.from_user.id == OWNER_ID:
+        if data and (query.from_user.id == data['id'] or query.from_user.id == OWNER_ID):
             await query.answer(data['message'], show_alert=True)
         else:
-            await query.answer("This message not for you.", show_alert=False)
+            await query.answer("This message is not for you.", show_alert=False)
     except Exception as e:
         logging.error(e)
 
-MOD_NAME = 'Whisper'
+MOD_NAME = "Whisper"
 MOD_HELP = ".whisper <text & reply> - To send a message privately like @WhisperBot!"
