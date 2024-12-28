@@ -64,8 +64,8 @@ async def play(message, number):
         try: await SophiaVC.start()
         except: pass
         is_playing[message.chat.id] = True
-        data = vcInfo[message.chat.id+number]
-        title, dur = data.title.replace(message.id, ''), data.duration
+        data = vcInfo.get(message.chat.id+number)
+        title, dur = data.title, data.duration
         type, path, thumb = data.type, data.path, data.thumb
         await message.reply_photo(
             photo=thumb,
