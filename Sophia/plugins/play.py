@@ -100,7 +100,7 @@ async def play(_, message):
                 )
                 vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": dur}
                 is_playing[message.chat.id] = True
-                if queue_time.get(message.chat.id) > 0: queue_time[message.chat.id] += dur
+                if queue_time.get(message.chat.id) and queue_time.get(message.chat.id) > 0: queue_time[message.chat.id] += dur
                 else: queue_time[message.chat.id] = dur
                 await SophiaVC.play(message.chat.id, MediaStream(path))
                 await manage_playback(message.chat.id, f'{title} {message.id}', dur)
