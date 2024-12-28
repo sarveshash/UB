@@ -40,6 +40,10 @@ async def page_help(page=1, per_page=10):
     buttons.append([InlineKeyboardButton("Close ❌", callback_data=f"helpclose")])
     return InlineKeyboardMarkup(buttons), page, total_pages
 
+@SophiaBot.on_callback_query(qfilter('helpclose'))
+async def close_help(_, query):
+    await query.message.delete()
+
 @SophiaBot.on_inline_query(qfilter('help'))
 async def showcommands(_, query):
     reply_markup, current_page, total_pages = await page_help(page=1)
