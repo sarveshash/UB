@@ -4,6 +4,7 @@ import logging
 from pyrogram.types import *
 from config import OWNER_ID
 import json
+from pyrogram import enums
 import traceback 
 from Sophia.Database.whisper import whisper
 
@@ -44,7 +45,7 @@ async def send_whisper(_, query):
             title="Whisper message",
             input_message_content=InputTextMessageContent(
                 f"🔒 A whisper message to [{data['name']}]({mention}), only they can open it.\n\n**👾 By:** SophiaUB",
-                parse_mode="markdown"
+                parse_mode=enums.ParseMode.MARKDOWN
             ),
             reply_markup=button
         )
