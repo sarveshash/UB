@@ -39,7 +39,7 @@ async def page_help(page=1, per_page=10):
         buttons.append(nav_buttons)
     return InlineKeyboardMarkup(buttons), page, total_pages
 
-@SophiaBot.on_inline_query(qfilter('help'))
+@SophiaBot.on_inline_query(filters.regex('help'))
 async def showcommands(_, query):
     reply_markup, current_page, total_pages = await page_help(page=1)
     result = InlineQueryResultArticle(
