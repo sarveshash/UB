@@ -108,7 +108,7 @@ async def play_(_, message):
                 title = file.title or file.file_name or "Unknown Title"
                 dur = file.duration or 0
                 await m.delete()
-                if queue[message.chat.id]: queue[message.chat.id] += 1
+                if queue.get(message.chat.id): queue[message.chat.id] += 1
                 else: queue[message.chat.id] = 1
                 vcInfo[int(message.chat.id)+queue[message.chat.id]] = {
                     "title": f'{title} {message.id}',
@@ -158,8 +158,8 @@ async def play_(_, message):
             dur += int(dur_arr[i]) * secmul
             secmul *= 60
         await m.delete()
-        if queue[message.chat.id]: queue[message.chat.id] += 1
-        else: queue[message.chat.id] = 1
+        if queue.get(message.chat.id): queue[message.chat.id] += 1
+        else: queue.get[message.chat.id] = 1
         vcInfo[message.chat.id+queue[message.chat.id]] = {
             "title": f'{title} {message.id}',
             "duration": dur,
