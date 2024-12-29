@@ -59,3 +59,6 @@ async def chatgpt(_: Client, message: Message):
     else:
         api_response = fetch_data(query, message)
     await txt.edit(api_response)
+
+MOD_NAME = 'Gpt'
+MOD_HELP = ".gpt <query> - To ask the query to gpt"
