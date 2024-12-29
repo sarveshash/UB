@@ -73,7 +73,7 @@ async def make_queue(chat_id):
 async def play_filter(_, client, message):
     if is_playing.get(message.chat.id) or (queue_id.get(message.chat.id) and len(queue_id[message.chat.id]) != 0):
         logging.info(f"Debug play_filter: is_playing={is_playing}, queue_id={queue_id}")
-        await message.reply("Successfully added your query in queue! ✅")
+        msg = await message.reply("Successfully added your query in queue! ✅")
         id = await make_queue(message.chat.id)
         logging.info(f"Debug play_filter: Created queue with id={id}")
         while queue_id[message.chat.id][0] != id:
@@ -81,6 +81,8 @@ async def play_filter(_, client, message):
                 logging.info(f"Debug play_filter: id={id} not in queue_id={queue_id[message.chat.id]}")
                 return False
             await asyncio.sleep(0.3)
+        try: await msg.delete()
+        except: pass
         return True
     else:
         id = await make_queue(message.chat.id)
@@ -289,7 +291,7 @@ async def manage_playback(chat_id, title, duration):
             queue_id[chat_id].remove(queue_id.get(chat_id)[0])
             is_playing[chat_id] = False
             num_queues[chat_id] -= 1
-            if num_queues.get(chat_id) == 0 and not len(queue_id.get(chat_id)) > 1:
+            if num_queues.get(chat_id) == 0 and not len(queue_id.get(chat_id)) > 0:
                 await SophiaVC.leave_call(chat_id)
                 vcInfo.pop(chat_id, None)
         except Exception as e: logging.error(e)
