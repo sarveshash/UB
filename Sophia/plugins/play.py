@@ -122,6 +122,7 @@ async def play(_, message):
                 await SophiaVC.play(message.chat.id, MediaStream(path))
                 await asyncio.sleep(dur + 5)
                 await manage_playback(message.chat.id, f'{title} {message.id}', dur)
+                os.remove(path)
             except Exception as e:
                 if str(e) == """Telegram says: [403 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "phone.CreateGroupCall")""":
                     return await message.reply('**Cannot play song admin rights required ❌**')
@@ -218,6 +219,7 @@ async def vplay(_, message):
                 await SophiaVC.play(message.chat.id, MediaStream(path))
                 await asyncio.sleep(dur + 5)
                 await manage_playback(message.chat.id, f'{title} {message.id}', dur)
+                os.remove(path)
             except Exception as e:
                 if str(e) == """Telegram says: [403 CHAT_ADMIN_REQUIRED] - The method requires chat admin privileges (caused by "phone.CreateGroupCall")""":
                     return await message.reply('**Cannot play song admin rights required ❌**')
@@ -287,7 +289,7 @@ async def manage_playback(chat_id, title, duration):
             queue_id[chat_id].remove(queue_id.get(chat_id)[0])
             is_playing[chat_id] = False
             num_queues[chat_id] -= 1
-            if num_queues.get(chat_id) == 0 and len(queue_id.get(chat_id)) != 0:
+            if num_queues.get(chat_id) == 0 and not len(queue_id.get(chat_id)) > 1:
                 await SophiaVC.leave_call(chat_id)
                 vcInfo.pop(chat_id, None)
         except Exception as e: logging.error(e)
@@ -299,11 +301,12 @@ async def skip(_, message):
     chat_id = message.chat.id
     if vcInfo.get(message.chat.id):
         try:
-            if len(queue_id.get(message.chat.id)) != 0:
+            if len(queue_id.get(message.chat.id)) > 1:
                 queue_id[chat_id].remove(queue_id.get(chat_id)[0])
-                logging.info("Debug play.py 299: queue skipped")
+                logging.info("Debug play.py 304: queue skipped")
             else:
                 await SophiaVC.leave_call(message.chat.id)
+                logging.info(f"Debug play.py 307: looks like no more queue in this chat leaving.. {queue_id[chat_id]}")
                 vcInfo.pop(message.chat.id, None)
         except Exception as e: await message.reply('Nothing streaming in vc ❌')
     else: await message.reply('Nothing streaming in vc ❌')
