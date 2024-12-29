@@ -54,24 +54,42 @@ async def getPlayGroups(_, message):
     await message.reply('No chats have play commands permission ❌')
 
 is_playing = {}
-queue_time = {}
 num_queues = {}
+queue_id = {}
+async def make_queue(chat_id):
+    global queue_id
+    if queue_id.get(chat_id):
+        last_key = queue_id.get(chat_id).reverse()[0] or 0
+        if not last_key+1 in queue_id.get(chat_id):
+            queue_id[chat_id].append(last_key+1)
+            logging.info(f"Debug play.py 65: lastkey: {last_key+1}\nqueue_id: {queue_id}")
+            return last_key+1
+    else:
+        queue_id[chat_id] = [1]
+        return 1
+        
 
 async def play_filter(_, client, message):
-    if is_playing.get(message.chat.id):
+    if is_playing.get(message.chat.id) or len(queue_id.get(message.chat.id)) != 0:
         logging.info(f'Is playing: {is_playing}')
-        logging.info(f'queue_time: {queue_time}')
+        logging.info(f'num_queues: {num_queues}\nqueue_id: {queue_id}')
         await message.reply("Successfully added your query in queue! ✅")
-        if queue_time.get(message.chat.id) and queue_time.get(message.chat.id) > 0:
-            a = queue_time.get(message.chat.id)
-            await asyncio.sleep(a)
+        id = await make_queue(message.chat.id)
+        while not id == queue_id.get(message.chat.id).reverse()[0]:
+            if id not in queue_id.get(message.chat.id):
+                return False
+            e = 'mc'
+            await asyncio.sleep(0.3)
+        return True
+    else:
+        id = await make_queue(message.chat.id)
+        if id == 1:
             return True
-        else: return True
-    else: return True
+        logging.info(f"Debug line 86 play.py: {id}")
 
 @bot.on_message(filters.command(["play", "sp"], prefixes=PLAYPREFIXES) & filters.create(publicFilter) & filters.create(play_filter) & ~filters.private & ~filters.bot)
 async def play(_, message):
-    global vcInfo, is_playing, queue_time, num_queues
+    global vcInfo, is_playing, num_queues
     try: await SophiaVC.start()
     except: pass
     if len(message.text.split()) < 2:
@@ -97,8 +115,6 @@ async def play(_, message):
                 vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": dur}
                 # Queue -------------
                 is_playing[message.chat.id] = True
-                if queue_time.get(message.chat.id) and queue_time.get(message.chat.id) > 0: queue_time[message.chat.id] += dur
-                else: queue_time[message.chat.id] = dur
                 if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
                 else: num_queues[message.chat.id] = 1
                 # -------------------
@@ -158,8 +174,6 @@ async def play(_, message):
         vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": dur}
         # Queue -------------
         is_playing[message.chat.id] = True
-        if queue_time.get(message.chat.id) and queue_time.get(message.chat.id) > 0: queue_time[message.chat.id] += dur
-        else: queue_time[message.chat.id] = dur
         if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
         else: num_queues[message.chat.id] = 1
         # -------------------  
@@ -177,7 +191,7 @@ async def play(_, message):
 
 @bot.on_message(filters.command("vplay", prefixes=PLAYPREFIXES) & filters.create(publicFilter) & filters.create(play_filter) & filters.user(OWN) & ~filters.private & ~filters.bot)
 async def vplay(_, message):
-    global vcInfo, is_playing, queue_time, num_queues
+    global vcInfo, is_playing, num_queues
     try: await SophiaVC.start()
     except: pass
     if len(message.text.split()) < 2:
@@ -197,8 +211,6 @@ async def vplay(_, message):
                 vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": dur}
                 # Queue -------------
                 is_playing[message.chat.id] = True
-                if queue_time.get(message.chat.id) and queue_time.get(message.chat.id) > 0: queue_time[message.chat.id] += dur
-                else: queue_time[message.chat.id] = dur
                 if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
                 else: num_queues[message.chat.id] = 1
                 # -------------------
@@ -252,8 +264,6 @@ async def vplay(_, message):
         vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": duration}
         # Queue -------------
         is_playing[message.chat.id] = True
-        if queue_time.get(message.chat.id) and queue_time.get(message.chat.id) > 0: queue_time[message.chat.id] += duration
-        else: queue_time[message.chat.id] = duration
         if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
         else: num_queues[message.chat.id] = 1
         # -------------------
@@ -270,31 +280,32 @@ async def vplay(_, message):
     except: pass
         
 async def manage_playback(chat_id, title, duration):
-    global vcInfo, is_playing, queue_time, num_queues
+    global vcInfo, is_playing, num_queues
     if vcInfo.get(chat_id, {}).get("title") == title:
         try:
+            queue_id[chat_id].remove(queue_id.get(chat_id).reverse()[0])
             is_playing[chat_id] = False
-            queue_time[chat_id] -= duration
             num_queues[chat_id] -= 1
-            if num_queues.get(chat_id) == 0 and queue_time.get(chat_id) == 0:
+            if num_queues.get(chat_id) == 0 and len(queue_id.get(chat_id)) != 0:
                 await SophiaVC.leave_call(chat_id)
                 vcInfo.pop(chat_id, None)
         except Exception as e: logging.error(e)
 
 @bot.on_message(filters.command("skip", prefixes=PLAYPREFIXES) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
 async def skip(_, message):
-    try:
-        await message.delete()
-    except:
-        pass
+    try: await message.delete()
+    except: pass
+    chat_id = message.chat.id
     if vcInfo.get(message.chat.id):
         try:
-            await SophiaVC.leave_call(message.chat.id)
-            vcInfo.pop(message.chat.id, None)
-        except Exception as e:
-            await message.reply('Nothing streaming in vc ❌')
-    else:
-        await message.reply('Nothing streaming in vc ❌')
+            if len(queue_id.get(message.chat.id)) != 0:
+                queue_id[chat_id].remove(queue_id.get(chat_id).reverse()[0])
+                logging.info("Debug play.py 299: queue skipped")
+            else:
+                await SophiaVC.leave_call(message.chat.id)
+                vcInfo.pop(message.chat.id, None)
+        except Exception as e: await message.reply('Nothing streaming in vc ❌')
+    else: await message.reply('Nothing streaming in vc ❌')
 
 MOD_NAME = "Play"
 MOD_HELP = """**🥀 Your commands**:
