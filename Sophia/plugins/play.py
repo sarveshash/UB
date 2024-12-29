@@ -70,7 +70,7 @@ async def make_queue(chat_id):
         
 
 async def play_filter(_, client, message):
-    if is_playing.get(message.chat.id) or len(queue_id.get(message.chat.id)) != 0:
+    if is_playing.get(message.chat.id) or queue_id.get(message.chat.id) and len(queue_id.get(message.chat.id)) != 0:
         logging.info(f'Is playing: {is_playing}')
         logging.info(f'num_queues: {num_queues}\nqueue_id: {queue_id}')
         await message.reply("Successfully added your query in queue! ✅")
