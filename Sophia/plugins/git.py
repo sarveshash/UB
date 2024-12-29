@@ -13,17 +13,17 @@ async def git(_, message):
     user = message.text.split(None, 1)[1]
     res = get(f"https://api.github.com/users/{user}").json()
     data = f"""
-Nᴀᴍᴇ: {res['name']}
-Usᴇʀɴᴀᴍᴇ: `{res['login']}`
-Lɪɴᴋ: [{res['login']}]({res['html_url']})
-Bɪᴏ: `{res['bio']}`
-Cᴏᴍᴘᴀɴʏ: {res['company']}
-Bʟᴏɢ: {res['blog']}
-Lᴏᴄᴀᴛɪᴏɴ: {res['location']}
-Pᴜʙɪʟɪᴄ Rᴇᴘᴏs: `{res['public_repos']}`
-Fᴏʟʟᴏᴡᴇʀs: `{res['followers']}`
-Fᴏʟʟᴏᴡɪɴɢ: `{res['following']}`
-Aᴄᴄᴏᴜɴᴛ Cʀᴇᴀᴛᴇᴅ: `{res['created_at']}`
+**👤 Name:** {res['name']}
+**🌐 Username:** `{res['login']}`
+**🔗 Link:** [{res['login']}]({res['html_url']})
+**⚕️ Bio:** `{res['bio']}`
+**💻 Company:** {res['company']}
+**🍃 Blog:** {res['blog']}
+**🚩 Location:** {res['location']}
+**🛠️ Repos:** `{res['public_repos']}`
+**✨ Followers:** `{res['followers']}`
+**🌟 Following:** `{res['following']}`
+**🏦 Account created:** `{res['created_at']}`
 """
     with open(f"{user}.jpg", "wb") as f:
         kek = get(res["avatar_url"]).content
@@ -31,3 +31,6 @@ Aᴄᴄᴏᴜɴᴛ Cʀᴇᴀᴛᴇᴅ: `{res['created_at']}`
 
     await message.reply_photo(f"{user}.jpg", caption=data)
     os.remove(f"{user}.jpg")
+
+MOD_NAME = 'Git'
+MOD_HELP = ".git <github username> - To get information of that github account"
