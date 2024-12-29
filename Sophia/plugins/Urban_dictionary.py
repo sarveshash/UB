@@ -29,3 +29,6 @@ async def urban_dictionary(_, message):
               return await bot.send_message(message.chat.id, f"Somthing wrong Happens:\n`{e}`")
         ud = await bot.send_message(message.chat.id, "Exploring....")
         await ud.edit_text(reply_text)
+
+MOD_NAME = "UD"
+MOD_HELP = ".ud <word> - To get definition of that word!"
