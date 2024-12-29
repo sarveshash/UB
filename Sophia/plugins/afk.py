@@ -42,4 +42,4 @@ async def remove_busy_mode(_, message):
     pass
 
 MOD_NAME = 'Afk'
-MOD_HELP = ".afk <reason __optional__> - To set you in afk, if anyone dm you they get alert!"
+MOD_HELP = ".afk <reason (optional)> - To set you in afk, if anyone dm you they get alert!"
