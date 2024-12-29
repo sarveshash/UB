@@ -56,37 +56,38 @@ async def getPlayGroups(_, message):
 is_playing = {}
 num_queues = {}
 queue_id = {}
+
 async def make_queue(chat_id):
     global queue_id
-    if queue_id.get(chat_id):
-        last_key = queue_id.get(chat_id).reverse()[0] or 0
-        if not last_key+1 in queue_id.get(chat_id):
-            queue_id[chat_id].append(last_key+1)
-            logging.info(f"Debug play.py 65: lastkey: {last_key+1}\nqueue_id: {queue_id}")
-            return last_key+1
+    if chat_id in queue_id:
+        last_key = queue_id[chat_id][-1] if queue_id[chat_id] else 0
+        new_key = last_key + 1
+        queue_id[chat_id].append(new_key)
+        logging.info(f"Debug make_queue: last_key={last_key}, new_key={new_key}, queue_id={queue_id}")
+        return new_key
     else:
         queue_id[chat_id] = [1]
+        logging.info(f"Debug make_queue: Initialized queue_id for chat_id {chat_id}, queue_id={queue_id}")
         return 1
-        
 
 async def play_filter(_, client, message):
-    if is_playing.get(message.chat.id) or queue_id.get(message.chat.id) and len(queue_id.get(message.chat.id)) != 0:
-        logging.info(f'Is playing: {is_playing}')
-        logging.info(f'num_queues: {num_queues}\nqueue_id: {queue_id}')
+    if is_playing.get(message.chat.id) or (queue_id.get(message.chat.id) and len(queue_id[message.chat.id]) != 0):
+        logging.info(f"Debug play_filter: is_playing={is_playing}, queue_id={queue_id}")
         await message.reply("Successfully added your query in queue! ✅")
         id = await make_queue(message.chat.id)
-        while not id == queue_id.get(message.chat.id).reverse()[0]:
-            if id not in queue_id.get(message.chat.id):
+        logging.info(f"Debug play_filter: Created queue with id={id}")
+        while id != queue_id[message.chat.id][-1]:
+            if id not in queue_id[message.chat.id]:
+                logging.info(f"Debug play_filter: id={id} not in queue_id={queue_id[message.chat.id]}")
                 return False
-            e = 'mc'
             await asyncio.sleep(0.3)
         return True
     else:
         id = await make_queue(message.chat.id)
+        logging.info(f"Debug play_filter: Created queue with id={id}")
         if id == 1:
             return True
-        logging.info(f"Debug line 86 play.py: {id}")
-
+            
 @bot.on_message(filters.command(["play", "sp"], prefixes=PLAYPREFIXES) & filters.create(publicFilter) & filters.create(play_filter) & ~filters.private & ~filters.bot)
 async def play(_, message):
     global vcInfo, is_playing, num_queues
