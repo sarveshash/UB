@@ -76,7 +76,7 @@ async def play_filter(_, client, message):
         await message.reply("Successfully added your query in queue! ✅")
         id = await make_queue(message.chat.id)
         logging.info(f"Debug play_filter: Created queue with id={id}")
-        while id != queue_id[message.chat.id][-1]:
+        while queue_id[message.chat.id][0] != id:
             if id not in queue_id[message.chat.id]:
                 logging.info(f"Debug play_filter: id={id} not in queue_id={queue_id[message.chat.id]}")
                 return False
