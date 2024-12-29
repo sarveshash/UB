@@ -1,6 +1,3 @@
-# We Take This Codes From GitHub.com/Otazuki004/QuantumRobot.git
-# Please Use Our QuantumRobot
-
 from Sophia import HANDLER
 from Sophia.__main__ import Sophia as bot
 from config import OWNER_ID
@@ -42,3 +39,6 @@ def rename(_, message):
             bot.send_message(message.chat.id, f"**Error: **{er}")
     else:
         bot.send_message(message.chat.id, "**Reply to a file 🗃️**")
+
+MOD_NAME = "Rename"
+MOD_HELP = ".rename <new filename & reply a file> - To rename a file."
