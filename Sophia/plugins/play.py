@@ -284,7 +284,7 @@ async def manage_playback(chat_id, title, duration):
     global vcInfo, is_playing, num_queues
     if vcInfo.get(chat_id, {}).get("title") == title:
         try:
-            queue_id[chat_id].remove(queue_id.get(chat_id).reverse()[0])
+            queue_id[chat_id].remove(queue_id.get(chat_id)[0])
             is_playing[chat_id] = False
             num_queues[chat_id] -= 1
             if num_queues.get(chat_id) == 0 and len(queue_id.get(chat_id)) != 0:
@@ -300,7 +300,7 @@ async def skip(_, message):
     if vcInfo.get(message.chat.id):
         try:
             if len(queue_id.get(message.chat.id)) != 0:
-                queue_id[chat_id].remove(queue_id.get(chat_id).reverse()[0])
+                queue_id[chat_id].remove(queue_id.get(chat_id)[0])
                 logging.info("Debug play.py 299: queue skipped")
             else:
                 await SophiaVC.leave_call(message.chat.id)
