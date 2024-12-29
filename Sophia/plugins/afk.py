@@ -39,4 +39,7 @@ async def set_afk(_, message):
     
 @Sophia.on_message(filters.user(OWN) & filters.create(afk_remove))
 async def remove_busy_mode(_, message):
-    None
+    pass
+
+MOD_NAME = 'Afk'
+MOD_HELP = ".afk <reason __optional__> - To set you in afk, if anyone dm you they get alert!"
