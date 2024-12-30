@@ -284,7 +284,7 @@ async def vplay(_, message):
     except: pass
         
 async def manage_playback(chat_id, title, duration):
-    global vcInfo, is_playing, num_queues
+    global vcInfo, is_playing, num_queues, queue_id
     if vcInfo.get(chat_id, {}).get("title") == title:
         try:
             queue_id[chat_id].remove(queue_id.get(chat_id)[0])
