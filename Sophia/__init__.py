@@ -53,16 +53,22 @@ HANDLER = [".","~","!","$","#"]
 LOG_CHANNEL = -1002010994783
 TOKEN = os.environ.get("TOKEN") or VAR_TOKEN
 REPO_URL = os.environ.get("YOUR_REPO_LINK") or VAR_REPO_URL
-MY_VERSION = 1.1
+MY_VERSION = 1.2
 bot_start_time = datetime.now()
 python_version = r('python --version').lower().replace('python ', '')
-release_type = 'beta'
+release_type = 'betaTesting'
 what_is_new = f"""Update {MY_VERSION} changelog:\n
-1. Added .play - Vc music player
+1. Added queue on .play
 2. Enhanced .help
 3. Added .whisper
 4. Added extra bot support for buttons
-5. Bug & ui fixes
+5. Added .bug To report a bug
+6. added .stats
+7. Added settings
+8. Bug & ui fixes
+
+⚕️ Support: @FutureCity005 🥀
+👾 Updates: @Hyper_Speed0 ✨
 """
 if not SESSION or not API_ID or not API_HASH or not MONGO_DB_URI or not REPO_URL or not TOKEN:
     raise "Values not found"
