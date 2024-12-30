@@ -7,6 +7,7 @@ from pyrogram import enums
 import os
 from pyrogram import *
 import asyncio
+from Sophia.plugins.modules import a, help_names
 from pyrogram.types import InlineQueryResultPhoto, InlineKeyboardMarkup, InlineKeyboardButton
 
 @SophiaBot.on_inline_query(filters.regex('IRLYMANOFR'))
@@ -33,3 +34,16 @@ async def send_btns(_, query):
     reply_markup=btns
   )
   await query.answer([result])
+
+@SophiaBot.on_callback_query(filters.regex('SophiaStats'))
+async def show_stats(_, query):
+  stats_txt = f"""𝗦𝗼𝗽𝗵𝗶𝗮 𝗦𝘆𝘀𝘁𝗲𝗺\n
+  Uᴘᴛɪᴍᴇ: 0.1
+  Pʏᴛʜᴏɴ: 
+  Pʏʀᴏɢʀᴀᴍ: 
+  Pɪɴɢ: 5ᴍs
+  Sᴏɴɢs ᴘʟᴀʏɪɴɢ: 0
+  Hᴇʟᴘ Mᴏᴅᴜʟᴇs: {len(help_names)}/{len(a)}
+  Mʏ ᴠᴇʀsɪᴏɴ: 1.1
+  """
+  await query.answer(stats_txt, show_alert=True)
