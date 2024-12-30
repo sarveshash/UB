@@ -71,6 +71,12 @@ async def make_queue(chat_id):
         return 1
 
 async def play_filter(_, client, message):
+    global num_queues
+    if len(message.text.split()) < 2:
+        if not message.reply_to_message: return True
+        if message.reply_to_message.audio or message.reply_to_message.video: pass
+        else: return True
+    else: return True
     if is_playing.get(message.chat.id) or (queue_id.get(message.chat.id) and len(queue_id[message.chat.id]) != 0):
         logging.info(f"Debug play_filter: is_playing={is_playing}, queue_id={queue_id}")
         msg = await message.reply("Successfully added your query in queue! ✅")
@@ -83,6 +89,8 @@ async def play_filter(_, client, message):
             await asyncio.sleep(0.3)
         try: await msg.delete()
         except: pass
+        if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
+        else: num_queues[message.chat.id] = 1
         return True
     else:
         id = await make_queue(message.chat.id)
@@ -117,8 +125,6 @@ async def play(_, message):
                 vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": dur}
                 # Queue -------------
                 is_playing[message.chat.id] = True
-                if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
-                else: num_queues[message.chat.id] = 1
                 # -------------------
                 await SophiaVC.play(message.chat.id, MediaStream(path))
                 await asyncio.sleep(dur + 5)
@@ -177,8 +183,6 @@ async def play(_, message):
         vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": dur}
         # Queue -------------
         is_playing[message.chat.id] = True
-        if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
-        else: num_queues[message.chat.id] = 1
         # -------------------  
         await SophiaVC.play(message.chat.id, MediaStream(audio_file))
         await asyncio.sleep(dur + 5)
@@ -214,8 +218,6 @@ async def vplay(_, message):
                 vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": dur}
                 # Queue -------------
                 is_playing[message.chat.id] = True
-                if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
-                else: num_queues[message.chat.id] = 1
                 # -------------------
                 await SophiaVC.play(message.chat.id, MediaStream(path))
                 await asyncio.sleep(dur + 5)
@@ -268,8 +270,6 @@ async def vplay(_, message):
         vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": duration}
         # Queue -------------
         is_playing[message.chat.id] = True
-        if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
-        else: num_queues[message.chat.id] = 1
         # -------------------
         await SophiaVC.play(message.chat.id, MediaStream(video_file))
         await asyncio.sleep(duration + 5)
@@ -290,14 +290,15 @@ async def manage_playback(chat_id, title, duration):
             queue_id[chat_id].remove(queue_id.get(chat_id)[0])
             is_playing[chat_id] = False
             num_queues[chat_id] -= 1
-            if num_queues.get(chat_id) == 0 and not len(queue_id.get(chat_id)) > 0:
+            if num_queues.get(chat_id) == 0:
                 await SophiaVC.leave_call(chat_id)
                 vcInfo.pop(chat_id, None)
+                await Sophia.send_message(chat_id, "**ℹ️ No more queues in the chat leaving...**")
         except Exception as e: logging.error(e)
 
 @bot.on_message(filters.command("skip", prefixes=PLAYPREFIXES) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
 async def skip(_, message):
-    global queue_id, vcInfo
+    global queue_id, vcInfo, num_queues, is_playing
     try: await message.delete()
     except: pass
     chat_id = message.chat.id
@@ -313,6 +314,8 @@ async def skip(_, message):
                 vcInfo.pop(message.chat.id, None)
                 try: queue_id[chat_id].remove(queue_id.get(chat_id)[0])
                 except: pass
+                num_queues[chat_id] -= 1
+                is_playing[chat_id] = False
         except Exception as e:
             await message.reply('**ℹ️ No active voice chat to skip.**')
     else:
