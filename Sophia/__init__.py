@@ -61,12 +61,9 @@ what_is_new = f"""Update {MY_VERSION} changelog:\n
 1. Added queue on .play
 2. Enhanced .help
 3. Added .whisper
-4. Added extra bot support for buttons
-5. Added .bug To report a bug
-6. added .stats
-7. Added settings
-8. Bug & ui fixes
-
+4. Added .bug To report a bug
+5. Added .stats
+6. Bug & ui fixes\n
 ⚕️ Support: @FutureCity005 🥀
 👾 Updates: @Hyper_Speed0 ✨
 """
