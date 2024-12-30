@@ -63,9 +63,8 @@ what_is_new = f"""Update {MY_VERSION} changelog:\n
 3. Added .whisper
 4. Added .bug To report a bug
 5. Added .stats
-6. Bug & ui fixes\n
-⚕️ Support: @FutureCity005 🥀
-👾 Updates: @Hyper_Speed0 ✨
+6. Added settings
+7. Bug fixes, Etc
 """
 if not SESSION or not API_ID or not API_HASH or not MONGO_DB_URI or not REPO_URL or not TOKEN:
     raise "Values not found"
