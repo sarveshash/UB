@@ -89,7 +89,6 @@ async def play_filter(_, client, message):
         logging.info(f"Debug play_filter: Created queue with id={id}")
         if id == 1:
             return True
-            
 @bot.on_message(filters.command(["play", "sp"], prefixes=PLAYPREFIXES) & filters.create(publicFilter) & filters.create(play_filter) & ~filters.private & ~filters.bot)
 async def play(_, message):
     global vcInfo, is_playing, num_queues
@@ -298,6 +297,7 @@ async def manage_playback(chat_id, title, duration):
 
 @bot.on_message(filters.command("skip", prefixes=PLAYPREFIXES) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
 async def skip(_, message):
+    global queue_id, vcInfo
     try: await message.delete()
     except: pass
     chat_id = message.chat.id
@@ -310,6 +310,8 @@ async def skip(_, message):
                 await SophiaVC.leave_call(message.chat.id)
                 logging.info(f"Debug play.py 307: looks like no more queue in this chat leaving.. {queue_id[chat_id]}")
                 vcInfo.pop(message.chat.id, None)
+                try: queue_id[chat_id].remove(queue_id.get(chat_id)[0])
+                except: pass
         except Exception as e: await message.reply('Nothing streaming in vc ❌')
     else: await message.reply('Nothing streaming in vc ❌')
 
