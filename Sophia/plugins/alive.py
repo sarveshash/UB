@@ -1,4 +1,4 @@
-from Sophia import HANDLER
+from Sophia import *
 from Sophia import MY_VERSION as Root_version
 from Sophia.__main__ import Sophia
 from config import OWNER_ID as OWN
@@ -8,8 +8,6 @@ import asyncio
 from datetime import datetime
 import os
 from subprocess import getoutput as run
-
-bot_start_time = datetime.now()
 
 @Sophia.on_message(filters.command("alive", prefixes=HANDLER) & filters.user(OWN))
 async def Sophia_Alive(_, message):
