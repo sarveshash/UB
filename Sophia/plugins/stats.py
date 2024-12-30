@@ -39,9 +39,7 @@ async def send_btns(_, query):
     result = InlineQueryResultPhoto(
       photo_url="https://i.imgur.com/lgzEDVh.jpeg",
       caption="""**✦ 𝙎𝙤𝙥𝙝𝙞𝙖 𝙎𝙮𝙨𝙩𝙚𝙢 ⚕️**\n
-**– The Ultimate UserBot 👾**
-
-**__🥀 Sophia is a next-generation 🧩 userbot designed 🕸️ to automate and simplify your Telegram experience. 🥀 ✨__**
+**__🍃 Sophia is a next-generation 🧩 userbot designed 👾 to automate and simplify your Telegram experience 🦋. 🥀 ✨__**
 
 **👇 Explore the Features Below ✅**
       """,
