@@ -11,6 +11,7 @@ from Sophia.plugins.modules import a, help_names
 from Sophia.plugins.ping import ping_website
 from pyrogram.types import InlineQueryResultPhoto, InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram import __version__
+from Sophia.plugins.play import vcInfo
 
 @SophiaBot.on_inline_query(filters.regex('IRLYMANOFR'))
 async def send_btns(_, query):
@@ -46,12 +47,17 @@ async def show_stats(_, query):
   hours, remainder = divmod(uptime, 3600)
   minutes, seconds = divmod(remainder, 60)
   stats_txt = f"""𝗦𝗼𝗽𝗵𝗶𝗮 𝗦𝘆𝘀𝘁𝗲𝗺\n
-  Uᴘᴛɪᴍᴇ: {int(hours)}h {int(minutes)}m {int(seconds)}s
-  Pʏᴛʜᴏɴ: {python_version}
-  Pʏʀᴏɢʀᴀᴍ: {__version__}
-  Pɪɴɢ: {ping_website("https://google.com")}ms
-  Sᴏɴɢs ᴘʟᴀʏɪɴɢ: 0
-  Hᴇʟᴘ Mᴏᴅᴜʟᴇs: {len(help_names)}/{len(a)}
-  Mʏ ᴠᴇʀsɪᴏɴ: {MY_VERSION}
+Uᴘᴛɪᴍᴇ: {int(hours)}h {int(minutes)}m {int(seconds)}s
+Pʏᴛʜᴏɴ: {python_version}
+Pʏʀᴏɢʀᴀᴍ: {__version__}
+Pɪɴɢ: {ping_website("https://google.com")}ms
+Sᴏɴɢs ᴘʟᴀʏɪɴɢ: {len(vcInfo) if vcInfo else 0}
+Hᴇʟᴘ ᴍᴏᴅᴜʟᴇs: {len(help_names)}/{len(a)}
+Mʏ ᴠᴇʀsɪᴏɴ: {MY_VERSION}
+Rᴇʟᴇᴀsᴇ ᴛʏᴘᴇ: {release_type}
   """
   await query.answer(stats_txt, show_alert=True)
+
+@SophiaBot.on_callback_query(filters.regex('SophiaNew'))
+async def show_newUpdates(_, query):
+  await query.answer(what_is_new, show_alert=True)
