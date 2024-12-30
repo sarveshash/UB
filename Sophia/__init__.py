@@ -56,7 +56,7 @@ REPO_URL = os.environ.get("YOUR_REPO_LINK") or VAR_REPO_URL
 MY_VERSION = 1.2
 bot_start_time = datetime.now()
 python_version = r('python --version').lower().replace('python ', '')
-release_type = 'betaTesting'
+release_type = 'beta'
 what_is_new = f"""Update {MY_VERSION} changelog:\n
 1. Added queue on .play
 2. Enhanced .help
