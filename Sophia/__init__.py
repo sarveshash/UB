@@ -54,6 +54,7 @@ LOG_CHANNEL = -1002010994783
 TOKEN = os.environ.get("TOKEN") or VAR_TOKEN
 REPO_URL = os.environ.get("YOUR_REPO_LINK") or VAR_REPO_URL
 MY_VERSION = 1.1
+bot_start_time = datetime.now()
 
 if not SESSION or not API_ID or not API_HASH or not MONGO_DB_URI or not REPO_URL or not TOKEN:
     raise "Values not found"
