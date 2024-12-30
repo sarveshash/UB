@@ -56,6 +56,7 @@ REPO_URL = os.environ.get("YOUR_REPO_LINK") or VAR_REPO_URL
 MY_VERSION = 1.1
 bot_start_time = datetime.now()
 python_version = r('python --version').lower().replace('python ', '')
+release_type = 'beta'
 if not SESSION or not API_ID or not API_HASH or not MONGO_DB_URI or not REPO_URL or not TOKEN:
     raise "Values not found"
     logging.error("You should enter the required details on variables.py or you need set env")
