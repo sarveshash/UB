@@ -72,6 +72,8 @@ async def show_newUpdates(_, query):
 
 @SophiaBot.on_callback_query(filters.regex('SophiaPageSettigns'))
 async def show_settings(_, query):
+  if query.from_user.id != OWNER_ID:
+        return await query.answer('This is not for you!', show_alert=False)
   await query.answer("Coming soon", show_alert=False)
 
 @Sophia.on_message(filters.command(["sophia", "stats"], prefixes=HANDLER) & filters.user(OWNER_ID))
