@@ -7,33 +7,29 @@ from pyrogram import enums
 import os
 from pyrogram import *
 import asyncio
-from pyrogram.types import InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.types import InlineQueryResultPhoto, InlineKeyboardMarkup, InlineKeyboardButton
 
 @SophiaBot.on_inline_query(filters.regex('IRLYMANOFR'))
 async def send_btns(_, query):
   btns = InlineKeyboardMarkup([
     [
-      InlineKeyboardButton("What is new?", callback_data=f"SophiaNew"),
-      InlineKeyboardButton("Settings", callback_data=f"SophiaPageSettigns")
+      InlineKeyboardButton("🆕 What is new?", callback_data=f"SophiaNew"),
+      InlineKeyboardButton("⚙️ Settings", callback_data=f"SophiaPageSettigns")
     ],
     [
-      InlineKeyboardButton("Repo", url=f"https://github.com/Otazuki004/SophiaUB"),
-      InlineKeyboardButton("Commands", callback_data=f"helppage:1")
+      InlineKeyboardButton("🗂️ GitHub", url=f"https://github.com/Otazuki004/SophiaUB"),
+      InlineKeyboardButton("📖 Help", callback_data=f"helppage:1")
     ],
     [
-      InlineKeyboardButton("Stats", callback_data=f"SophiaStats")
+      InlineKeyboardButton("⚕️ Stats ⚕️", callback_data=f"SophiaStats")
     ],
     [
-      InlineKeyboardButton("Updates", url="https://t.me/Hyper_Speed0")
+      InlineKeyboardButton("👥 Community", url="https://t.me/Hyper_Speed0")
     ]
   ])
-  result = InlineQueryResultArticle(
-    title="Sophia",
-    input_message_content=InputTextMessageContent(
-      f"Sophia system.."
-    ),
+  result = InlineQueryResultPhoto(
+    photo_url="https://i.imgur.com/lgzEDVh.jpeg",
+    caption="Sophia system..",
     reply_markup=btns
   )
   await query.answer([result])
-  
-  
