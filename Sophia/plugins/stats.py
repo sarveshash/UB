@@ -61,7 +61,7 @@ async def show_stats(_, query):
   hours, remainder = divmod(uptime, 3600)
   minutes, seconds = divmod(remainder, 60)
   stats_txt = f"""𝗦𝗼𝗽𝗵𝗶𝗮 𝗦𝘆𝘀𝘁𝗲𝗺\n
-Uᴘᴛɪᴍᴇ: {int(hours)}h {int(minutes)}m {int(seconds)}s
+Uᴘᴛɪᴍᴇ: {int(hours)}h {int(minutes)}m
 Pʏᴛʜᴏɴ: {python_version}
 Pʏʀᴏɢʀᴀᴍ: {__version__}
 Pɪɴɢ: {ping_website("https://google.com")}
