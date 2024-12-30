@@ -70,27 +70,7 @@ async def make_queue(chat_id):
         logging.info(f"Debug make_queue: Initialized queue_id for chat_id {chat_id}, queue_id={queue_id}")
         return 1
 
-async def play_filter(_, client, message):
-    if is_playing.get(message.chat.id) or (queue_id.get(message.chat.id) and len(queue_id[message.chat.id]) != 0):
-        logging.info(f"Debug play_filter: is_playing={is_playing}, queue_id={queue_id}")
-        msg = await message.reply("Successfully added your query in queue! ✅")
-        id = await make_queue(message.chat.id)
-        logging.info(f"Debug play_filter: Created queue with id={id}")
-        while queue_id[message.chat.id][0] != id:
-            if id not in queue_id[message.chat.id]:
-                logging.info(f"Debug play_filter: id={id} not in queue_id={queue_id[message.chat.id]}")
-                return False
-            await asyncio.sleep(0.3)
-        try: await msg.delete()
-        except: pass
-        return True
-    else:
-        id = await make_queue(message.chat.id)
-        logging.info(f"Debug play_filter: Created queue with id={id}")
-        if id == 1:
-            return True
-            
-@bot.on_message(filters.command(["play", "sp"], prefixes=PLAYPREFIXES) & filters.create(publicFilter) & filters.create(play_filter) & ~filters.private & ~filters.bot)
+@bot.on_message(filters.command(["play", "sp"], prefixes=PLAYPREFIXES) & filters.create(publicFilter) & ~filters.private & ~filters.bot)
 async def play(_, message):
     global vcInfo, is_playing, num_queues
     try: await SophiaVC.start()
@@ -104,6 +84,28 @@ async def play(_, message):
                 title = file.title or file.file_name or "Unknown Title"
                 dur = file.duration or 0
                 await m.delete()
+                # Queue -------------
+                if is_playing.get(message.chat.id) or (queue_id.get(message.chat.id) and len(queue_id[message.chat.id]) != 0):
+                    logging.info(f"Debug play: is_playing={is_playing}, queue_id={queue_id}")
+                    msg = await message.reply("Successfully added your query in queue! ✅")
+                    id = await make_queue(message.chat.id)
+                    logging.info(f"Debug play: Created queue with id={id}")
+                    while queue_id[message.chat.id][0] != id:
+                        if id not in queue_id[message.chat.id]:
+                            logging.info(f"Debug play: id={id} not in queue_id={queue_id[message.chat.id]}")
+                            return False
+                    await asyncio.sleep(0.3)
+                    try: await msg.delete()
+                    except: pass
+                else:
+                    id = await make_queue(message.chat.id)
+                    logging.info(f"Debug play: Created queue with id={id}")
+                    if id != 1:
+                        return False
+                is_playing[message.chat.id] = True
+                if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
+                else: num_queues[message.chat.id] = 1
+                # -------------------
                 await message.reply_photo(
                     photo="https://i.imgur.com/9KKPfOA.jpeg",
                     caption=(
@@ -116,11 +118,6 @@ async def play(_, message):
                     )
                 )
                 vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": dur}
-                # Queue -------------
-                is_playing[message.chat.id] = True
-                if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
-                else: num_queues[message.chat.id] = 1
-                # -------------------
                 await SophiaVC.play(message.chat.id, MediaStream(path))
                 await asyncio.sleep(dur + 5)
                 await manage_playback(message.chat.id, f'{title} {message.id}', dur)
@@ -164,6 +161,28 @@ async def play(_, message):
             dur += int(dur_arr[i]) * secmul
             secmul *= 60
         await m.delete()
+        # Queue -------------
+        if is_playing.get(message.chat.id) or (queue_id.get(message.chat.id) and len(queue_id[message.chat.id]) != 0):
+            logging.info(f"Debug play: is_playing={is_playing}, queue_id={queue_id}")
+            msg = await message.reply("Successfully added your query in queue! ✅")
+            id = await make_queue(message.chat.id)
+            logging.info(f"Debug play: Created queue with id={id}")
+            while queue_id[message.chat.id][0] != id:
+                if id not in queue_id[message.chat.id]:
+                    logging.info(f"Debug play: id={id} not in queue_id={queue_id[message.chat.id]}")
+                    return False
+            await asyncio.sleep(0.3)
+            try: await msg.delete()
+            except: pass
+        else:
+            id = await make_queue(message.chat.id)
+            logging.info(f"Debug play: Created queue with id={id}")
+            if id != 1:
+                return False
+        is_playing[message.chat.id] = True
+        if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
+        else: num_queues[message.chat.id] = 1
+        # -------------------
         await message.reply_photo(
             photo=thumb_name,
             caption=(
@@ -176,11 +195,6 @@ async def play(_, message):
             )
         )
         vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": dur}
-        # Queue -------------
-        is_playing[message.chat.id] = True
-        if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
-        else: num_queues[message.chat.id] = 1
-        # -------------------  
         await SophiaVC.play(message.chat.id, MediaStream(audio_file))
         await asyncio.sleep(dur + 5)
         await manage_playback(message.chat.id, f'{title} {message.id}', dur)
@@ -193,7 +207,7 @@ async def play(_, message):
         os.remove(thumb_name)
     except: pass
 
-@bot.on_message(filters.command("vplay", prefixes=PLAYPREFIXES) & filters.create(publicFilter) & filters.create(play_filter) & filters.user(OWN) & ~filters.private & ~filters.bot)
+@bot.on_message(filters.command("vplay", prefixes=PLAYPREFIXES) & filters.create(publicFilter) & filters.user(OWN) & ~filters.private & ~filters.bot)
 async def vplay(_, message):
     global vcInfo, is_playing, num_queues
     try: await SophiaVC.start()
@@ -208,16 +222,33 @@ async def vplay(_, message):
                 title = file_name
                 dur = int(file.duration or 0)
                 await m.delete()
+                # Queue -------------
+                if is_playing.get(message.chat.id) or (queue_id.get(message.chat.id) and len(queue_id[message.chat.id]) != 0):
+                    logging.info(f"Debug play: is_playing={is_playing}, queue_id={queue_id}")
+                    msg = await message.reply("Successfully added your query in queue! ✅")
+                    id = await make_queue(message.chat.id)
+                    logging.info(f"Debug play: Created queue with id={id}")
+                    while queue_id[message.chat.id][0] != id:
+                        if id not in queue_id[message.chat.id]:
+                            logging.info(f"Debug play: id={id} not in queue_id={queue_id[message.chat.id]} so skipped")
+                            return False
+                    await asyncio.sleep(0.3)
+                    try: await msg.delete()
+                    except: pass
+                else:
+                    id = await make_queue(message.chat.id)
+                    logging.info(f"Debug play: Created queue with id={id}")
+                    if id != 1:
+                        return False
+                is_playing[message.chat.id] = True
+                if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
+                else: num_queues[message.chat.id] = 1
+                # -------------------
                 await message.reply_photo(
                     photo="https://i.imgur.com/9KKPfOA.jpeg",
                     caption=f"**✅ Started Streaming On VC.**\n\n**🥀 Title:** {title[:20] if len(title) > 20 else title}\n**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n**🦋 Stream Type:** Telegram video\n**👾 Requested By:** {message.from_user.first_name if not message.from_user.last_name else f'{message.from_user.first_name} {message.from_user.last_name}'}\n**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
                 )
                 vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": dur}
-                # Queue -------------
-                is_playing[message.chat.id] = True
-                if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
-                else: num_queues[message.chat.id] = 1
-                # -------------------
                 await SophiaVC.play(message.chat.id, MediaStream(path))
                 await asyncio.sleep(dur + 5)
                 await manage_playback(message.chat.id, f'{title} {message.id}', dur)
@@ -268,6 +299,23 @@ async def vplay(_, message):
         )
         vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": duration}
         # Queue -------------
+        if is_playing.get(message.chat.id) or (queue_id.get(message.chat.id) and len(queue_id[message.chat.id]) != 0):
+            logging.info(f"Debug play: is_playing={is_playing}, queue_id={queue_id}")
+            msg = await message.reply("Successfully added your query in queue! ✅")
+            id = await make_queue(message.chat.id)
+            logging.info(f"Debug play: Created queue with id={id}")
+            while queue_id[message.chat.id][0] != id:
+                if id not in queue_id[message.chat.id]:
+                    logging.info(f"Debug play: id={id} not in queue_id={queue_id[message.chat.id]}")
+                    return False
+            await asyncio.sleep(0.3)
+            try: await msg.delete()
+            except: pass
+        else:
+            id = await make_queue(message.chat.id)
+            logging.info(f"Debug play: Created queue with id={id}")
+            if id != 1:
+                return False
         is_playing[message.chat.id] = True
         if num_queues.get(message.chat.id): num_queues[message.chat.id] += 1
         else: num_queues[message.chat.id] = 1
