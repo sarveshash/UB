@@ -51,7 +51,7 @@ async def show_stats(_, query):
 Uᴘᴛɪᴍᴇ: {int(hours)}h {int(minutes)}m {int(seconds)}s
 Pʏᴛʜᴏɴ: {python_version}
 Pʏʀᴏɢʀᴀᴍ: {__version__}
-Pɪɴɢ: {ping_website("https://google.com")}ms
+Pɪɴɢ: {ping_website("https://google.com")}
 Sᴏɴɢs ᴘʟᴀʏɪɴɢ: {len(vcInfo) if vcInfo else 0}
 Hᴇʟᴘ ᴍᴏᴅᴜʟᴇs: {len(help_names)}/{len(a)}
 Mʏ ᴠᴇʀsɪᴏɴ: {MY_VERSION}
@@ -62,3 +62,16 @@ Rᴇʟᴇᴀsᴇ ᴛʏᴘᴇ: {release_type}
 @SophiaBot.on_callback_query(filters.regex('SophiaNew'))
 async def show_newUpdates(_, query):
   await query.answer(what_is_new, show_alert=True)
+
+@SophiaBot.on_callback_query(filters.regex('SophiaPageSettigns'))
+async def show_settings(_, query):
+  await query.answer("Coming soon", show_alert=False)
+
+@Sophia.on_message(filters.command(["sophia", "stats"], prefixes=HANDLER) & filters.user(OWNER_ID))
+async def send_stats(_, message):
+    results = await Sophia.get_inline_bot_results(SophiaBot.me.username, 'IRLYMANOFR')
+    await Sophia.send_inline_bot_result(
+        chat_id=message.chat.id,
+        query_id=results.query_id,
+        result_id=results.results[0].id
+    )
