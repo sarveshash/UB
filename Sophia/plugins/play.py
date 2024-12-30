@@ -290,7 +290,7 @@ async def manage_playback(chat_id, title, duration):
             queue_id[chat_id].remove(queue_id.get(chat_id)[0])
             is_playing[chat_id] = False
             num_queues[chat_id] -= 1
-            if num_queues.get(chat_id) == 0:
+            if not queue_id.get(chat_id):
                 await SophiaVC.leave_call(chat_id)
                 vcInfo.pop(chat_id, None)
                 await Sophia.send_message(chat_id, "**ℹ️ No more queues in the chat leaving...**")
@@ -316,8 +316,9 @@ async def skip(_, message):
                 except: pass
                 num_queues[chat_id] -= 1
                 is_playing[chat_id] = False
-        except Exception as e:
-            await message.reply('**ℹ️ No active voice chat to skip.**')
+        except Exception as w:
+            logging.error(w)
+            await message.reply('**ℹ️ No active voice chat to skip!**')
     else:
         await message.reply('**ℹ️ No active voice chat to skip.**')
 
