@@ -21,7 +21,7 @@ def ping_website(url):
 
         if response.status_code == 200:
             response_time_ms = (end_time - start_time) * 1000
-            return f"{int({response_time_ms:.2f})}ms"
+            return f"{response_time_ms:.2f}ms"
         else:
             return f"Failed to ping {url}. Status code: {response.status_code}"
 
