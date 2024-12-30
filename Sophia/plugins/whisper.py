@@ -21,7 +21,7 @@ async def whisper(_, message):
     data = {
         'name': f"{reply.from_user.first_name} {reply.from_user.last_name or ''}".strip(),
         'id': reply.from_user.id,
-        'message': " ".join(message.command[1:]),
+        'message': message.text.split(None, 1)[1],
         'username': reply.from_user.username or 'Nothing'
     }
     results = await Sophia.get_inline_bot_results(SophiaBot.me.username, f"whisper: {json.dumps(data)}")
