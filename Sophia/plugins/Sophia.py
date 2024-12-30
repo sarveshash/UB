@@ -85,28 +85,6 @@ async def send_stats(_, message):
         result_id=results.results[0].id
     )
 
-@SophiaBot.on_inline_query(filters.regex('SophiaReportBug'))
-async def send_reportBug(_, query):
-  try:
-    btn = InlineKeyboardMarkup([[InlineKeyboardButton("🪲 Report a bug", user_id=5965055071)]])
-    result = InlineQueryResultArticle(
-      title="Report bug",
-      input_message_content=InputTextMessageContent(
-        f"Click the button below to report bug 🪲"
-      ),
-      reply_markup=btn
-    )
-    await query.answer([result])
-  except:
-    e = traceback.format_exc()
-    logging.error(e)
 
-@Sophia.on_message(filters.command("bug", prefixes=HANDLER) & filters.user(OWNER_ID))
-async def send_rbug(_, message):
-    results = await Sophia.get_inline_bot_results(SophiaBot.me.username, 'SophiaReportBug')
-    await Sophia.send_inline_bot_result(
-        chat_id=message.chat.id,
-        query_id=results.query_id,
-        result_id=results.results[0].id
-    )
-  
+MOD_NAME = 'Sophia'
+MOD_HELP = ".sophia | .stats - To get info of userbot & change settings of userbot."
