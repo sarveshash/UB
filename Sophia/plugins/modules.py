@@ -1,3 +1,4 @@
+from config import *
 from subprocess import getoutput as r
 from pyrogram import Client
 from Sophia import *
