@@ -1,7 +1,7 @@
 # This Codes We take from https://github.com/otazuki004/QuantumRobot.git
 # Please use QuantumRobot
 
-from Sophia import HANDLER
+from Sophia import *
 from Sophia.__main__ import Sophia as bot
 from config import OWNER_ID
 from config import SUDO_USERS_ID
@@ -30,8 +30,6 @@ def ping_website(url):
 
 # Example: Ping Telegram's website
 telegram_url = "https://google.com"
-
-bot_start_time = datetime.now()
 
 @bot.on_message(filters.command("ping", prefixes=HANDLER))
 async def ping_pong(client, message):
