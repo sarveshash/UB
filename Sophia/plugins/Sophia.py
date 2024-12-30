@@ -8,6 +8,7 @@ import os
 from pyrogram import *
 import asyncio
 from Sophia.plugins.modules import a, help_names
+from Sophia.plugins.ping import ping_website
 from pyrogram.types import InlineQueryResultPhoto, InlineKeyboardMarkup, InlineKeyboardButton
 
 @SophiaBot.on_inline_query(filters.regex('IRLYMANOFR'))
@@ -37,13 +38,19 @@ async def send_btns(_, query):
 
 @SophiaBot.on_callback_query(filters.regex('SophiaStats'))
 async def show_stats(_, query):
+  start_time = bot_start_time
+  end_time = datetime.now()
+  ping_time = (end_time - start_time).total_seconds() * 1000
+  uptime = (end_time - bot_start_time).total_seconds()
+  hours, remainder = divmod(uptime, 3600)
+  minutes, seconds = divmod(remainder, 60)
   stats_txt = f"""𝗦𝗼𝗽𝗵𝗶𝗮 𝗦𝘆𝘀𝘁𝗲𝗺\n
-  Uᴘᴛɪᴍᴇ: 0.1
-  Pʏᴛʜᴏɴ: 
+  Uᴘᴛɪᴍᴇ: {int(hours)}h {int(minutes)}m {int(seconds)}s
+  Pʏᴛʜᴏɴ: {python_version}
   Pʏʀᴏɢʀᴀᴍ: 
-  Pɪɴɢ: 5ᴍs
+  Pɪɴɢ: {ping_website("https://google.com")}ms
   Sᴏɴɢs ᴘʟᴀʏɪɴɢ: 0
   Hᴇʟᴘ Mᴏᴅᴜʟᴇs: {len(help_names)}/{len(a)}
-  Mʏ ᴠᴇʀsɪᴏɴ: 1.1
+  Mʏ ᴠᴇʀsɪᴏɴ: {MY_VERSION}
   """
   await query.answer(stats_txt, show_alert=True)
