@@ -53,6 +53,8 @@ async def showcommands(_, query):
 
 @SophiaBot.on_callback_query(qfilter('help:'))
 async def showhelpinfo(_, query):
+    if query.from_user.id != OWNER_ID:
+        return await query.answer('This is not for you!', show_alert=False)
     data = query.data.split(":")
     help_cmd = data[1]
     current_page = int(data[2]) if len(data) > 2 else 1
@@ -63,6 +65,8 @@ async def showhelpinfo(_, query):
 
 @SophiaBot.on_callback_query(qfilter('helppage:'))
 async def page_callback(_, query):
+    if query.from_user.id != OWNER_ID:
+        return await query.answer('This is not for you!', show_alert=False)
     page = int(query.data.split(":")[1])
     reply_markup, current_page, total_pages = await page_help(page=page)
     await query.edit_message_text(
