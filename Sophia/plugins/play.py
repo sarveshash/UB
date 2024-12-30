@@ -307,13 +307,16 @@ async def skip(_, message):
                 queue_id[chat_id].remove(queue_id.get(chat_id)[0])
                 logging.info("Debug play.py 304: queue skipped")
             else:
+                await message.reply("**ℹ️ No more queues in the chat leaving...**")
                 await SophiaVC.leave_call(message.chat.id)
                 logging.info(f"Debug play.py 307: looks like no more queue in this chat leaving.. {queue_id[chat_id]}")
                 vcInfo.pop(message.chat.id, None)
                 try: queue_id[chat_id].remove(queue_id.get(chat_id)[0])
                 except: pass
-        except Exception as e: await message.reply('Nothing streaming in vc ❌')
-    else: await message.reply('Nothing streaming in vc ❌')
+        except Exception as e:
+            await message.reply('**ℹ️ No active voice chat to skip.**')
+    else:
+        await message.reply('**ℹ️ No active voice chat to skip.**')
 
 MOD_NAME = "Play"
 MOD_HELP = """**🥀 Your commands**:
