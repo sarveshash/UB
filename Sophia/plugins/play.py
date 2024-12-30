@@ -76,7 +76,6 @@ async def play_filter(_, client, message):
         if not message.reply_to_message: return True
         if message.reply_to_message.audio or message.reply_to_message.video: pass
         else: return True
-    else: return True
     if is_playing.get(message.chat.id) or (queue_id.get(message.chat.id) and len(queue_id[message.chat.id]) != 0):
         logging.info(f"Debug play_filter: is_playing={is_playing}, queue_id={queue_id}")
         msg = await message.reply("Successfully added your query in queue! ✅")
