@@ -29,8 +29,7 @@ DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["LinkUp"]
 DB = DATABASE['SophiaInfo']
 GAME_DATABASE = AsyncIOMotorClient(MONGO_DB_URI)["LinkUp"]
 
-# Others 
-
+# Db session ( ignore )
 try:
     dbSession = None
     async def something():
@@ -57,6 +56,13 @@ MY_VERSION = 1.1
 bot_start_time = datetime.now()
 python_version = r('python --version').lower().replace('python ', '')
 release_type = 'beta'
+what_is_new = f"""Update {MY_VERSION} changelog:\n
+1. Added .play - Vc music player
+2. Enhanced .help
+3. Added .whisper
+4. Added extra bot support for buttons
+5. Bug & ui fixes
+"""
 if not SESSION or not API_ID or not API_HASH or not MONGO_DB_URI or not REPO_URL or not TOKEN:
     raise "Values not found"
     logging.error("You should enter the required details on variables.py or you need set env")
@@ -77,7 +83,6 @@ else: SophiaBot = Client("SophiaBot", bot_token=TOKEN, api_id=API_ID, api_hash=A
 SophiaVC = PyTgCalls(Sophia)
 
 # Functions
-
 def qfilter(inlineQuery):
     async def funcMano(_, __, query):
         try: return str(query.query).startswith(inlineQuery)
