@@ -15,7 +15,9 @@ from Sophia.plugins.ping import ping_website
 from pyrogram.types import *
 from pyrogram import __version__
 from Sophia.plugins.play import vcInfo
-
+from Sophia.Database.afk import *
+from Sophia.Database.backup_msg import *
+from Sophia.Database.pmguard import *
 
 @SophiaBot.on_inline_query(filters.regex('IRLYMANOFR'))
 async def send_btns(_, query):
@@ -67,6 +69,9 @@ Sᴏɴɢs ᴘʟᴀʏɪɴɢ: {len(vcInfo) if vcInfo else 0}
 Hᴇʟᴘ ᴍᴏᴅᴜʟᴇs: {len(help_names)}/{len(a)}
 Mʏ ᴠᴇʀsɪᴏɴ: {MY_VERSION}
 Rᴇʟᴇᴀsᴇ ᴛʏᴘᴇ: {release_type}
+Aғᴋ: {await GET_AFK()}
+Bᴀᴄᴋᴜᴘ: {await GET_BACKUP()}
+Pᴍɢᴜᴀʀᴅ: {await GET_PM_GUARD()}
   """
   await query.answer(stats_txt, show_alert=True)
 
