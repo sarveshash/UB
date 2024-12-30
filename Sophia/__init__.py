@@ -10,7 +10,7 @@ from subprocess import getoutput as r
 from variables import *
 import asyncio
 from pytgcalls import PyTgCalls
-import datetime
+from datetime import datetime
 from Restart import restart_program as rs_pg
 
 # LOGGING
