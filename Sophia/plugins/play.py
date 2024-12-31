@@ -118,7 +118,7 @@ async def play(_, message):
                         f"**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n"
                         f"**🦋 Stream Type:** Telegram audio\n"
                         f"**👾 Requested By:** {message.from_user.first_name if not message.from_user.last_name else f'{message.from_user.first_name} {message.from_user.last_name}'}\n"
-                        f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
+                        f"**⚕️ Join:** __@Paradopia & @ParadopiaSupport"
                     )
                 )
                 vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": dur}
@@ -176,7 +176,7 @@ async def play(_, message):
                 f"**🐬 Duration:** {dur // 60}:{dur % 60:02d} Mins\n"
                 f"**🦋 Stream Type:** Audio\n"
                 f"**👾 Requested By:** {message.from_user.first_name if not message.from_user.last_name else f'{message.from_user.first_name} {message.from_user.last_name}'}\n"
-                f"**⚕️ Join:** __@Hyper_Speed0 & @FutureCity005__"
+                f"**⚕️ Join:** __@Paradopia & @ParadopiaSupport__"
             )
         )
         vcInfo[message.chat.id] = {"title": f'{title} {message.id}', "duration": dur}
