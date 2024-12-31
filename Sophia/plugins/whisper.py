@@ -44,7 +44,7 @@ async def send_whisper(_, query):
         result = InlineQueryResultArticle(
             title="Whisper message",
             input_message_content=InputTextMessageContent(
-                f"🔒 A whisper message to [{data['name']}]({mention}), only they can open it.\n\n{f"**🦋 To:** @{data['username']}" if data['username'] != "Nothing" else ""}\n**👾 By:** SophiaUB",
+                f"🔒 A whisper message to [{data['name']}]({mention}), only they can open it.\n\n{f"**🦋 To:** @{data['username']}" if data['username'] != "Nothing" else ""}\n**👾 By:** System",
                 parse_mode=enums.ParseMode.MARKDOWN,
                 disable_web_page_preview=True
             ),
