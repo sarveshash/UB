@@ -28,20 +28,20 @@ async def send_btns(_, query):
         InlineKeyboardButton("⚙️ Settings", callback_data=f"SophiaPageSettigns")
       ],
       [
-        InlineKeyboardButton("🗂️ GitHub", url=f"https://github.com/Otazuki004/SophiaUB"),
+        InlineKeyboardButton("🗂️ GitHub", url=f"https://github.com/FR-AKITO"),
         InlineKeyboardButton("📖 Help", callback_data=f"helppage:1")
       ],
       [
         InlineKeyboardButton("⚕️ Stats ⚕️", callback_data=f"SophiaStats")
       ],
       [
-        InlineKeyboardButton("👥 Community", url="https://t.me/Hyper_Speed0")
+        InlineKeyboardButton("👥 Community", url="https://t.me/THE_AKITO")
       ]
     ])
     result = InlineQueryResultPhoto(
-      photo_url="https://i.imgur.com/lgzEDVh.jpeg",
-      caption="""**✦ 𝙎𝙤𝙥𝙝𝙞𝙖 𝙎𝙮𝙨𝙩𝙚𝙢 ⚕️**\n
-**__🍃 Sophia is a next-generation 🧩 userbot designed 👾 to automate and simplify your Telegram experience 🦋. 🥀 ✨__**
+      photo_url="http://ibb.co/zNPxZZy",
+      caption="""**✦ 𝙎𝙮𝙨𝙩𝙚𝙢 ⚕️**\n
+**__🍃 System is a next-generation 🧩 userbot designed 👾 to automate and simplify your Telegram experience 🦋. 🥀 ✨__**
 
 **👇 Explore the Features Below ✅**
       """,
@@ -60,7 +60,7 @@ async def show_stats(_, query):
   uptime = (end_time - bot_start_time).total_seconds()
   hours, remainder = divmod(uptime, 3600)
   minutes, seconds = divmod(remainder, 60)
-  stats_txt = f"""𝗦𝗼𝗽𝗵𝗶𝗮 𝗦𝘆𝘀𝘁𝗲𝗺\n
+  stats_txt = f"""𝗦𝘆𝘀𝘁𝗲𝗺\n
 Uᴘᴛɪᴍᴇ: {int(hours)}h {int(minutes)}m {int(seconds)}s
 Pʏᴛʜᴏɴ: {python_version}
 Pʏʀᴏɢʀᴀᴍ: {__version__}
@@ -84,7 +84,7 @@ async def show_settings(_, query):
         return await query.answer('This is not for you!', show_alert=False)
   await query.answer("Coming soon", show_alert=False)
 
-@Sophia.on_message(filters.command(["sophia", "stats"], prefixes=HANDLER) & filters.user(OWNER_ID))
+@Sophia.on_message(filters.command(["system", "stats"], prefixes=HANDLER) & filters.user(OWNER_ID))
 async def send_stats(_, message):
     results = await Sophia.get_inline_bot_results(SophiaBot.me.username, 'IRLYMANOFR')
     await Sophia.send_inline_bot_result(
@@ -94,5 +94,5 @@ async def send_stats(_, message):
     )
 
 
-MOD_NAME = 'Sophia'
-MOD_HELP = ".sophia | .stats - To get info of userbot & change settings of userbot."
+MOD_NAME = 'System'
+MOD_HELP = ".system | .stats - To get info of userbot & change settings of userbot."
