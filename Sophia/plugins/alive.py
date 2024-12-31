@@ -30,7 +30,7 @@ async def Sophia_Alive(_, message):
     except Exception as e:
         print(e)
         py_ver = "Error"
-    TEXT = f""" **~  𝑺𝒐𝒑𝒉𝒊𝒂 𝑺𝒚𝒔𝒕𝒆𝒎:**
+    TEXT = f""" **~ 𝑺𝒚𝒔𝒕𝒆𝒎:**
 ━━━━━━━━━━━━━━━━━━━
 
 ❥ **Owner**: {Name_of_ubot}
@@ -40,7 +40,7 @@ async def Sophia_Alive(_, message):
 ❥ **Uptime:** `{int(hours)}h {int(minutes)}m {int(seconds)}s`
 
 ━━━━━━━━━━━━━━━━━━━
-**Join @FutureCity005 & @Hyper_Speed0 ✨🥀**
+**Join @Paradopia & @ParadopiaSupport ✨🥀**
 """
     await message.delete()
     await Sophia.send_photo(message.chat.id, photo="https://telegra.ph/file/c74ff3e597f9598ca7cbb.jpg", caption=TEXT)
