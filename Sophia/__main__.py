@@ -16,7 +16,7 @@ if __name__ == "__main__":
         if 143 == 143:
             SophiaBot.send_photo(
                 Sophia.me.id,
-                photo="https://i.imgur.com/DuoscLX.jpeg",
+                photo="http://ibb.co/zNPxZZy",
                 caption=(
                     f"**✅ System Started ⚡**\n\n"
                     f"**👾 Version:** {MY_VERSION}\n"
